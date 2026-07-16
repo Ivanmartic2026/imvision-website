@@ -67,7 +67,9 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
         )}
       >
         <div className="mx-auto flex h-[78px] max-w-[1600px] items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16">
-          <Link href={localizedHref(locale, "/")} aria-label={locale === "sv" ? "IM Vision startsida" : "IM Vision home"} className="relative z-50">
+          {/* prefetch disabled: static export has no RSC segment endpoints, so
+              Next's Link prefetch would 404 (navigation falls back to full load). */}
+          <Link href={localizedHref(locale, "/")} prefetch={false} aria-label={locale === "sv" ? "IM Vision startsida" : "IM Vision home"} className="relative z-50">
             <Image
               src="/logo.png"
               alt="IM Vision"
@@ -83,6 +85,7 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
               <Link
                 key={link.en}
                 href={localizedHref(locale, link.href)}
+                prefetch={false}
                 aria-current={isActive(localizedHref(locale, link.href)) ? "page" : undefined}
                 className={cn(
                   "relative py-3 text-[13px] font-medium tracking-[0.01em] transition-colors duration-[600ms] ease-[cubic-bezier(.22,.61,.36,1)] after:absolute after:bottom-1 after:left-0 after:h-px after:transition-[width,background-color] after:duration-[700ms] after:ease-[cubic-bezier(.22,.61,.36,1)]",
@@ -107,8 +110,8 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
               <span className="xl:hidden">{locale === "sv" ? "Ring" : "Call"}</span>
             </a>
             <div className="flex items-center rounded-[12px_4px_12px_12px] border border-white/[.08] bg-[#070807]/40 p-1 font-mono text-[10px] uppercase tracking-[0.1em] text-text-muted" aria-label={locale === "sv" ? "Välj språk" : "Choose language"}>
-              <Link href={swedishPath} lang="sv" hrefLang="sv" className={cn("rounded-[7px_2px_7px_7px] px-2 py-1.5 transition-colors", locale === "sv" ? "bg-white/10 text-text-primary" : "hover:text-text-primary")}>SV</Link>
-              <Link href={englishPath} lang="en" hrefLang="en" className={cn("rounded-[7px_2px_7px_7px] px-2 py-1.5 transition-colors", locale === "en" ? "bg-white/10 text-text-primary" : "hover:text-text-primary")}>EN</Link>
+              <Link href={swedishPath} prefetch={false} lang="sv" hrefLang="sv" className={cn("rounded-[7px_2px_7px_7px] px-2 py-1.5 transition-colors", locale === "sv" ? "bg-white/10 text-text-primary" : "hover:text-text-primary")}>SV</Link>
+              <Link href={englishPath} prefetch={false} lang="en" hrefLang="en" className={cn("rounded-[7px_2px_7px_7px] px-2 py-1.5 transition-colors", locale === "en" ? "bg-white/10 text-text-primary" : "hover:text-text-primary")}>EN</Link>
             </div>
           </div>
 
@@ -149,9 +152,9 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
               <div className="flex items-center justify-between">
                 <p className="eyebrow text-accent">IM / {locale === "sv" ? "Meny" : "Menu"}</p>
                 <div className="flex items-center gap-1 font-mono text-xs text-text-muted">
-                  <Link href={swedishPath} lang="sv" hrefLang="sv" className={locale === "sv" ? "text-text-primary" : "px-2"}>SV</Link>
+                  <Link href={swedishPath} prefetch={false} lang="sv" hrefLang="sv" className={locale === "sv" ? "text-text-primary" : "px-2"}>SV</Link>
                   <span>/</span>
-                  <Link href={englishPath} lang="en" hrefLang="en" className={locale === "en" ? "text-text-primary" : "px-2"}>EN</Link>
+                  <Link href={englishPath} prefetch={false} lang="en" hrefLang="en" className={locale === "en" ? "text-text-primary" : "px-2"}>EN</Link>
                 </div>
               </div>
               <div className="mt-10 divide-y divide-border-subtle border-y border-border-subtle">
@@ -164,6 +167,7 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
                   >
                     <Link
                       href={localizedHref(locale, link.href)}
+                      prefetch={false}
                       onClick={() => setMobileOpen(false)}
                       className="flex items-center justify-between py-5 text-3xl font-medium tracking-[-0.04em] text-text-primary"
                     >

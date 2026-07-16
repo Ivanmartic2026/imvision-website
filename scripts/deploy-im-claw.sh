@@ -58,4 +58,6 @@ for path in / /contact/ /sv/contact/ /sales/ /service/ /sv/service/; do
   echo "$path -> HTTP $code"
 done
 
-echo "==> Done. Site live at http://$SERVER/"
+echo "==> Done. Site live at:"
+echo "  • Tailnet:  http://$SERVER/"
+echo "  • Public:   https://imclaw.tail5679ed.ts.net/"

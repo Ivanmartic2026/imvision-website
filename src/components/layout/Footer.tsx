@@ -41,6 +41,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
               </p>
               <Link
                 href={localizedHref(locale, "/contact/")}
+                prefetch={false}
                 className="group mt-8 inline-flex items-center gap-2 border-b border-accent pb-1 text-sm font-semibold text-text-primary"
               >
                 {locale === "sv" ? "Starta ett projekt" : "Start a project"}
@@ -56,7 +57,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                 <ul className="mt-5 space-y-3">
                   {group.links.map(([label, href]) => (
                     <li key={label.en}>
-                      <Link href={localizedHref(locale, href)} className="text-sm text-text-secondary transition-colors hover:text-text-primary">
+                      <Link href={localizedHref(locale, href)} prefetch={false} className="text-sm text-text-secondary transition-colors hover:text-text-primary">
                         {label[locale]}
                       </Link>
                     </li>
