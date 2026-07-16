@@ -45,7 +45,7 @@ export function ServicesPreview({ locale = "en" }: { locale?: Locale }) {
         <div className="max-w-5xl">
           <SectionLabel>{locale === "sv" ? "Våra lösningar" : "Our solutions"}</SectionLabel>
           <h2 id="services-title" className="heading-section mt-8 max-w-[13ch]">
-            {locale === "sv" ? "Två behov. Två tydliga vägar." : "Two needs. Two clear paths."}
+            {locale === "sv" ? "Äg den eller hyr den — vi sköter resten." : "Own it or rent it — we handle the rest."}
           </h2>
         </div>
 

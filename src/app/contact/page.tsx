@@ -1,5 +1,6 @@
 import { Metadata } from "next";
-import { Phone, Mail, MapPin } from "lucide-react";
+
+import { Phone, Mail, MapPin, Check, ArrowRight } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/layout/PageHeader";
@@ -9,28 +10,26 @@ import { Reveal } from "@/components/effects/Reveal";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with IMvision. Let's discuss your LED display project.",
+    "Talk to IM Vision about buying, renting, installing or servicing LED displays across Europe. We reply within one business day.",
+  alternates: {
+    canonical: "/contact/",
+    languages: { en: "/contact/", sv: "/sv/contact/", "x-default": "/contact/" },
+  },
 };
 
-const contactItems = [
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "+46 8 505 204 80",
-    href: "tel:+46850520480",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    value: "sales@imvision.se",
-    href: "mailto:sales@imvision.se",
-  },
-  {
-    icon: MapPin,
-    label: "Office",
-    value: "Spånga, Sweden",
-    href: "#",
-  },
+const process = [
+  { title: "Contact", body: "Share your project." },
+  { title: "Needs analysis", body: "We ask the right questions." },
+  { title: "Quote", body: "You receive a clear quote." },
+  { title: "Delivery", body: "We deliver and install." },
+];
+
+const trust = [
+  "Installations across Europe",
+  "Own project managers and technicians",
+  "Complete engineering, installation and service",
+  "Premium LED partners",
+  "Years of experience in professional LED",
 ];
 
 export default function ContactPage() {
@@ -40,64 +39,81 @@ export default function ContactPage() {
       <main id="main-content">
         <PageHeader
           label="Contact"
-          title="Tell us what you are planning."
-          description="A few lines are enough. We will take it from there."
+          title="How can we help you?"
+          description="Tell us briefly about your project or challenge. We usually reply the same business day."
         />
 
-        <section className="section section-space">
+        <section className="theme-light section section-space bg-background">
           <div className="section-inner">
-            <div className="grid gap-12 lg:grid-cols-5">
-              <div className="lg:col-span-2">
-                <Reveal>
-                  <p className="eyebrow text-accent">Direct contact</p>
-                  <h2 className="mt-6 text-3xl font-medium tracking-[-0.04em] text-text-primary sm:text-4xl">
-                    Begin with a conversation.
-                  </h2>
-                  <p className="mt-4 text-text-secondary">
-                    Permanent LED, rental, and service all begin here.
-                  </p>
-                </Reveal>
-
-                <div className="mt-8 space-y-4">
-                  {contactItems.map((item, index) => (
-                    <Reveal key={item.label} delay={index * 0.1}>
-                      <a
-                        href={item.href}
-                        className="group premium-card flex items-center gap-4 bg-bg-elevated p-5"
-                      >
-                        <div className="flex h-12 w-12 items-center justify-center rounded-[12px_4px_12px_12px] bg-background text-accent">
-                          <item.icon size={22} strokeWidth={1.5} />
-                        </div>
-                        <div>
-                          <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">
-                            {item.label}
-                          </p>
-                          <p className="mt-1 font-medium text-text-primary transition-colors group-hover:text-accent">
-                            {item.value}
-                          </p>
-                        </div>
-                      </a>
-                    </Reveal>
-                  ))}
+            <div className="mx-auto max-w-3xl">
+              <Reveal>
+                <div className="rounded-3xl border border-border-subtle bg-bg-surface p-7 shadow-[0_24px_80px_rgba(0,0,0,.06)] sm:p-10 lg:p-12">
+                  <ContactForm />
                 </div>
+              </Reveal>
+            </div>
 
-                <Reveal delay={0.4}>
-                  <div className="mt-8 rounded-[24px] border border-accent/15 bg-accent/5 p-7">
-                    <p className="font-medium text-text-primary">A useful first brief</p>
-                    <p className="mt-2 text-text-secondary">
-                      Place, timing, and ambition are enough. Technical details can follow.
-                    </p>
-                  </div>
-                </Reveal>
-              </div>
+            <div className="mx-auto mt-20 grid max-w-5xl gap-12 border-t border-border-subtle pt-16 lg:grid-cols-3">
+              <Reveal>
+                <p className="eyebrow text-accent">How it works</p>
+                <ol className="mt-6 space-y-5">
+                  {process.map((step, i) => (
+                    <li key={step.title} className="flex gap-4">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent/10 font-mono text-xs font-semibold text-accent">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <p className="font-medium text-text-primary">{step.title}</p>
+                        <p className="text-sm text-text-secondary">{step.body}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </Reveal>
 
-              <div className="lg:col-span-3">
-                <Reveal delay={0.2}>
-                  <div className="light-gate border border-border-subtle bg-bg-elevated p-7 shadow-[0_30px_90px_rgba(0,0,0,.22)] sm:p-10 lg:p-12">
-                    <ContactForm />
+              <Reveal delay={0.1}>
+                <p className="eyebrow text-accent">Why IM Vision</p>
+                <ul className="mt-6 space-y-3">
+                  {trust.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-sm text-text-secondary">
+                      <Check size={16} className="mt-0.5 shrink-0 text-accent" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+
+              <Reveal delay={0.2}>
+                <p className="eyebrow text-accent">Direct contact</p>
+                <div className="mt-6 space-y-3">
+                  <a
+                    href="tel:+46850520480"
+                    className="group flex items-center gap-3 text-text-primary transition-colors hover:text-accent"
+                  >
+                    <Phone size={18} className="text-accent" strokeWidth={1.5} />
+                    <span className="font-medium">+46 8 505 204 80</span>
+                    <ArrowRight
+                      size={14}
+                      className="ml-auto text-text-muted transition-transform group-hover:translate-x-1"
+                    />
+                  </a>
+                  <a
+                    href="mailto:sales@imvision.se"
+                    className="group flex items-center gap-3 text-text-primary transition-colors hover:text-accent"
+                  >
+                    <Mail size={18} className="text-accent" strokeWidth={1.5} />
+                    <span className="font-medium">sales@imvision.se</span>
+                    <ArrowRight
+                      size={14}
+                      className="ml-auto text-text-muted transition-transform group-hover:translate-x-1"
+                    />
+                  </a>
+                  <div className="flex items-center gap-3 text-text-primary">
+                    <MapPin size={18} className="text-accent" strokeWidth={1.5} />
+                    <span className="font-medium">Spånga, Sweden</span>
                   </div>
-                </Reveal>
-              </div>
+                </div>
+              </Reveal>
             </div>
           </div>
         </section>

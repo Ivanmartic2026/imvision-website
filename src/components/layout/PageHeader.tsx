@@ -42,9 +42,12 @@ export function PageHeader({ label, title, description, children }: PageHeaderPr
             </motion.span>
           )}
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 0.61, 0.36, 1] }}
+            // Visible from first paint (no opacity gate) so it stays the LCP
+            // element and survives even if hydration is slow; the slide is a
+            // pure enhancement.
+            initial={{ y: 22 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 0.61, 0.36, 1] }}
             className="max-w-[13ch] text-balance text-[clamp(3.1rem,7.2vw,7.1rem)] font-[470] leading-[0.98] tracking-[-0.048em] text-text-primary"
           >
             {head}

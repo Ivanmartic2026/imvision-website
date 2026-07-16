@@ -5,6 +5,8 @@ import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/effects/Reveal";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { faqLd } from "@/lib/seo";
 
 const faqs = [
   {
@@ -18,7 +20,7 @@ const faqs = [
       "Depending on your tier, coverage includes preventive maintenance, remote monitoring, spare module management, software updates, and guaranteed response times.",
   },
   {
-    question: "Can IMvision monitor my displays remotely?",
+    question: "Can IM Vision monitor my displays remotely?",
     answer:
       "Yes. Cloud-connected displays can be monitored 24/7 for health, temperature, signal status, and brightness performance.",
   },
@@ -55,22 +57,28 @@ const resources = [
 export const metadata: Metadata = {
   title: "Support",
   description:
-    "IMvision support center. Find FAQs, documentation, and contact options for LED display service.",
+    "IM Vision support centre — FAQs, documentation and contact options for LED display service across Europe.",
+  alternates: {
+    canonical: "/support/",
+    languages: { en: "/support/", sv: "/sv/support/", "x-default": "/support/" },
+  },
 };
 
 export default function SupportPage() {
   return (
     <>
+      <JsonLd data={faqLd(faqs)} />
       <Header />
       <main id="main-content">
         <PageHeader
           label="Support"
           title="We're here when you need us."
-          description="Find answers, documentation, and support options for your IMvision LED installation."
+          description="Find answers, documentation, and support options for your IM Vision LED installation."
         />
 
-        <section className="section section-space">
+        <section className="section section-space" aria-labelledby="support-resources">
           <div className="section-inner">
+            <h2 id="support-resources" className="sr-only">Support resources</h2>
             <div className="grid gap-6 md:grid-cols-3">
               {resources.map((resource, index) => (
                 <Reveal key={resource.title} delay={index * 0.1}>

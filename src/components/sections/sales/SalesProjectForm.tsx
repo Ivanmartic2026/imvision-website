@@ -17,7 +17,8 @@ export function SalesProjectForm({ locale, content }: SalesSectionProps) {
             <p className="mt-6 text-lg leading-relaxed text-text-secondary">{projectForm.body}</p>
           </Reveal>
           <Reveal delay={0.12} className="lg:col-span-7 lg:col-start-6">
-            <div className="light-gate border border-border-subtle bg-bg-surface/95 p-7 backdrop-blur-sm sm:p-10 lg:p-12">              <ContactForm locale={locale} compact defaultProjectType="permanent" />
+            <div className="light-gate border border-border-subtle bg-bg-surface/95 p-7 backdrop-blur-sm sm:p-10 lg:p-12">
+              <ContactForm locale={locale} compact defaultCategory="buy" />
             </div>
           </Reveal>
         </div>

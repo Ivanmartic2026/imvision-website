@@ -6,12 +6,30 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { ProjectVisual } from "@/components/sections/ProjectVisual";
 import { projects, getProjectBySlug } from "@/lib/projects";
 import { swedishProjectCopy } from "@/lib/projects-sv";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbLd, localeUrl } from "@/lib/seo";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
 
-export const metadata: Metadata = { title: "Projekt" };
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const copy = swedishProjectCopy[slug];
+  if (!copy) return { title: "Projekt" };
+  return {
+    title: copy.title,
+    description: copy.description,
+    alternates: {
+      canonical: `/sv/projects/${slug}/`,
+      languages: {
+        en: `/projects/${slug}/`,
+        sv: `/sv/projects/${slug}/`,
+        "x-default": `/projects/${slug}/`,
+      },
+    },
+  };
+}
 
 export default async function SwedishProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const project = getProjectBySlug((await params).slug);
@@ -20,6 +38,13 @@ export default async function SwedishProjectPage({ params }: { params: Promise<{
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "Hem", url: localeUrl("sv", "/") },
+          { name: "Projekt", url: localeUrl("sv", "/projects/") },
+          { name: copy.title, url: localeUrl("sv", `/projects/${project.slug}/`) },
+        ])}
+      />
       <Header locale="sv" />
       <main id="main-content">
         <PageHeader label={copy.category} title={copy.title} description={copy.description}>

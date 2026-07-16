@@ -10,7 +10,11 @@ import { swedishProjectCopy } from "@/lib/projects-sv";
 
 export const metadata: Metadata = {
   title: "Projekt",
-  description: "Utvalda LED-installationer, produkter och driftuppdrag från IM Vision.",
+  description: "Utvalda LED-installationer, produkter och driftuppdrag från IM Vision i hela Europa.",
+  alternates: {
+    canonical: "/sv/projects/",
+    languages: { en: "/projects/", sv: "/sv/projects/", "x-default": "/projects/" },
+  },
 };
 
 export default function SwedishProjectsPage() {

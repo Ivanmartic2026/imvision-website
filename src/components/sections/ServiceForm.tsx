@@ -137,6 +137,7 @@ export function ServiceForm({ locale = "en" }: ServiceFormProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [capturedServerSide, setCapturedServerSide] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [ticketNumber] = useState(() => generateTicketNumber());
   const [submittedAt, setSubmittedAt] = useState<{ date: string; time: string; iso: string } | null>(null);
@@ -205,10 +206,13 @@ export function ServiceForm({ locale = "en" }: ServiceFormProps) {
           : "If the issue is covered by warranty or valid service agreement, no charges will apply as per agreement.",
       },
       success: {
-        title: isSv ? "Tack! Ditt serviceärende har registrerats." : "Thank you! Your service ticket has been registered.",
+        title: isSv ? "Tack — ditt serviceärende är på väg." : "Thank you — your service request is on its way.",
         body: isSv
-          ? "Vi har tagit emot ditt ärende och kommer att behandla det så snart som möjligt. En bekräftelse har skickats till din e-postadress."
-          : "We have received your ticket and will process it as soon as possible. A confirmation has been sent to your email address.",
+          ? "Vi har tagit emot ditt ärende och behandlar det så snart som möjligt."
+          : "We've received your request and will process it as soon as possible.",
+        bodyMailto: isSv
+          ? "Ditt e-postprogram öppnades med ett färdigt ärende — tryck skicka för att nå vårt serviceteam. Spara ärendenumret nedan."
+          : "Your email client opened with a prepared ticket — press send to reach our service team. Keep the ticket number below for reference.",
         urgent: isSv
           ? "Vid akuta driftstopp rekommenderar vi att ni även kontaktar oss via telefon."
           : "For urgent downtime, we recommend that you also contact us by phone.",
@@ -339,6 +343,7 @@ export function ServiceForm({ locale = "en" }: ServiceFormProps) {
           headers: { Accept: "application/json" },
         });
         if (!response.ok) throw new Error("Submission failed");
+        setCapturedServerSide(true);
       } else {
         // Fallback for environments without a backend endpoint configured.
         await new Promise((resolve) => setTimeout(resolve, 800));
@@ -372,6 +377,7 @@ export function ServiceForm({ locale = "en" }: ServiceFormProps) {
           ].join("\n")
         );
         window.location.assign(`mailto:service@imvision.se?subject=${subject}&body=${body}`);
+        setCapturedServerSide(false);
       }
       setIsSuccess(true);
       reset();
@@ -384,7 +390,7 @@ export function ServiceForm({ locale = "en" }: ServiceFormProps) {
   };
 
   const fieldClass =
-    "min-h-14 w-full rounded-[16px_6px_16px_16px] border border-border-subtle bg-background px-5 py-4 text-text-primary outline-none transition-all duration-[500ms] ease-[cubic-bezier(.22,.61,.36,1)] placeholder:text-text-muted focus:border-accent/70 focus:bg-bg-surface focus:px-6 focus:shadow-[0_0_0_4px_rgba(145,169,161,.08)]";
+    "min-h-14 w-full rounded-[16px_6px_16px_16px] border border-border-strong bg-background px-5 py-4 text-text-primary outline-none transition-all duration-[500ms] ease-[cubic-bezier(.22,.61,.36,1)] placeholder:text-text-muted focus:border-accent/70 focus:bg-bg-surface focus:px-6 focus:shadow-[0_0_0_4px_rgba(145,169,161,.08)]";
 
   const labelClass = "mb-2 block text-sm font-medium text-text-primary";
 
@@ -406,7 +412,9 @@ export function ServiceForm({ locale = "en" }: ServiceFormProps) {
             <h2 id="service-success-title" className="heading-section mt-8">
               {t.success.title}
             </h2>
-            <p className="mt-4 text-lg text-text-secondary">{t.success.body}</p>
+            <p className="mt-4 text-lg text-text-secondary">
+              {capturedServerSide ? t.success.body : t.success.bodyMailto}
+            </p>
             <p className="mt-6 text-text-secondary">{t.success.urgent}</p>
 
             <div className="mt-10 grid gap-4 rounded-[24px_6px_24px_24px] border border-border-subtle bg-bg-elevated p-6 text-left sm:grid-cols-3 sm:p-8">
@@ -441,8 +449,17 @@ export function ServiceForm({ locale = "en" }: ServiceFormProps) {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 lg:space-y-8" noValidate>
-          {/* Honeypot */}
-          <input type="text" {...register("honeypot")} className="sr-only" tabIndex={-1} autoComplete="off" />
+          {/* Honeypot — hidden from assistive tech (aria-hidden) so it stays out of
+              the a11y tree and the label check; bots still fill it. */}
+          <input
+            type="text"
+            {...register("honeypot")}
+            className="sr-only"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            aria-label="Leave this field empty"
+          />
 
           {/* Section 1: Contact details */}
           <fieldset className={sectionClass}>
@@ -550,24 +567,27 @@ export function ServiceForm({ locale = "en" }: ServiceFormProps) {
           {/* Section 5: Attachments */}
           <fieldset className={sectionClass}>
             <legend className="text-xl font-medium tracking-[-0.025em] text-text-primary">{t.sections.attachments}</legend>
-            <div
+            {/* Label + sr-only (not hidden) input = pointer AND keyboard operable.
+                focus-within surfaces the keyboard focus ring; drag/drop stays on the label. */}
+            <label
+              htmlFor="service-file-input"
               onDrop={handleDrop}
               onDragOver={handleDragOver}
-              onClick={() => fileInputRef.current?.click()}
-              className="mt-6 cursor-pointer rounded-[16px_6px_16px_16px] border border-dashed border-border-strong bg-background px-6 py-10 text-center transition-all duration-500 hover:border-accent/50 hover:bg-white/[.02]"
+              className="mt-6 flex cursor-pointer flex-col items-center rounded-[16px_6px_16px_16px] border border-dashed border-border-strong bg-background px-6 py-10 text-center transition-all duration-500 hover:border-accent/50 hover:bg-white/[.02] focus-within:border-accent focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-background"
             >
-              <UploadCloud size={32} className="mx-auto text-accent" />
+              <UploadCloud size={32} className="text-accent" aria-hidden="true" />
               <p className="mt-3 text-sm font-medium text-text-primary">{t.fileDrop}</p>
               <p className="mt-1 text-xs text-text-muted">{t.fileTypes}</p>
               <input
+                id="service-file-input"
                 ref={fileInputRef}
                 type="file"
                 multiple
                 accept="image/*,video/*,.pdf,.log,.txt,.zip"
-                className="hidden"
+                className="sr-only"
                 onChange={(e) => addFiles(e.target.files)}
               />
-            </div>
+            </label>
             <AnimatePresence>
               {files.length > 0 && (
                 <motion.ul
@@ -663,7 +683,7 @@ export function ServiceForm({ locale = "en" }: ServiceFormProps) {
           <div className={sectionClass}>
             <label className="flex cursor-pointer items-start gap-4">
               <input type="checkbox" {...register("termsAccepted")} className="peer sr-only" />
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border border-border-strong bg-background transition-all duration-300 peer-checked:border-accent peer-checked:bg-accent">
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border border-border-strong bg-background transition-all duration-300 peer-checked:border-accent peer-checked:bg-accent peer-focus-visible:ring-2 peer-focus-visible:ring-accent peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background">
                 <Check size={12} className="text-background opacity-0 peer-checked:opacity-100" />
               </span>
               <span className="text-sm leading-relaxed text-text-secondary">{t.labels.terms}</span>
@@ -703,12 +723,13 @@ function ErrorMessage({ error, message }: { error?: { message?: string }; messag
     <AnimatePresence>
       {error && (
         <motion.p
+          role="alert"
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
           className="mt-2 flex items-center gap-1.5 text-xs text-red-300"
         >
-          <AlertTriangle size={12} />
+          <AlertTriangle size={12} aria-hidden="true" />
           {message}
         </motion.p>
       )}

@@ -2,6 +2,7 @@
 
 import { useEffect, ReactNode } from "react";
 import Lenis from "lenis";
+import { MotionConfig } from "motion/react";
 
 interface SmoothScrollProps {
   children: ReactNode;
@@ -41,5 +42,7 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
     };
   }, []);
 
-  return <>{children}</>;
+  // reducedMotion="user" makes every Framer Motion animation respect
+  // prefers-reduced-motion (transforms/opacity are skipped to their end state).
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
 }

@@ -36,6 +36,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
           alt="Concept visualization of a monumental LED wall integrated into a dark architectural experience centre"
           fill
           loading="eager"
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover object-[62%_center]"
           priority
@@ -63,7 +64,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
                 <motion.span
                   initial={{ y: "110%" }}
                   animate={{ y: 0 }}
-                  transition={{ duration: 0.9, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.6, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
                   className="block"
                 >
                   {locale === "sv" ? "LED som formar" : "Light, built"}
@@ -73,7 +74,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
                 <motion.span
                   initial={{ y: "110%" }}
                   animate={{ y: 0 }}
-                  transition={{ duration: 0.9, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.6, delay: 0.13, ease: [0.22, 1, 0.36, 1] }}
                   className="block"
                 >
                   {locale === "sv" ? "upplevelsen." : "into space."}
@@ -99,8 +100,8 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
               className="body mt-4 max-w-2xl font-normal text-text-secondary sm:mt-5"
             >
               {locale === "sv"
-                ? "Ett system. Hela vägen – från design till drift, i hela Europa."
-                : "One system. All the way — from design to operation, across Europe."}
+                ? "Köp eller hyr — installerat, servat och driftat av oss, i hela Europa."
+                : "Buy or rent — installed, serviced and operated by us, across Europe."}
             </motion.p>
 
             <motion.div

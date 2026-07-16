@@ -22,7 +22,11 @@ const process = [
 
 export const metadata: Metadata = {
   title: "LED-uthyrning för event",
-  description: "Kompletta LED-system för lanseringar, event, utställningar och tillfälliga miljöer.",
+  description: "Eventklassade LED-skärmar som IM Visions egen personal levererar, installerar, kör och river — för lanseringar, mässor och aktiveringar i hela Europa.",
+  alternates: {
+    canonical: "/sv/rental/",
+    languages: { en: "/rental/", sv: "/sv/rental/", "x-default": "/rental/" },
+  },
 };
 
 export default function SwedishRentalPage() {

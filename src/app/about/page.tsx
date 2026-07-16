@@ -36,9 +36,13 @@ const stats = [
 ];
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About IM Vision",
   description:
-    "IMvision designs, engineers, manufactures, installs, and maintains advanced LED display solutions across Europe.",
+    "IM Vision designs, engineers, installs and services advanced LED display solutions — one accountable partner across Europe.",
+  alternates: {
+    canonical: "/about/",
+    languages: { en: "/about/", sv: "/sv/about/", "x-default": "/about/" },
+  },
 };
 
 export default function AboutPage() {

@@ -7,7 +7,11 @@ import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "Support",
-  description: "Support och kontaktvägar för IMvision LED-installationer.",
+  description: "Support och kontaktvägar för IM Vision LED-installationer i hela Europa.",
+  alternates: {
+    canonical: "/sv/support/",
+    languages: { en: "/support/", sv: "/sv/support/", "x-default": "/support/" },
+  },
 };
 
 export default function SwedishSupportPage() {

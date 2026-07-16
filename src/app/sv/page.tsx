@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { HomePage } from "@/app/page";
 
 export const metadata: Metadata = {
-  title: "Arkitektoniska LED-system",
+  title: "Köp, hyr, installera och serva LED",
   description:
-    "IMvision formar, projekterar, installerar och underhåller arkitektoniska LED-miljöer i Sverige och Europa.",
+    "IM Vision designar, projekterar, installerar och servar avancerade LED-skärmar — en ansvarig partner i hela Europa.",
   alternates: {
     canonical: "/sv/",
-    languages: { en: "/", sv: "/sv/" },
+    languages: { en: "/", sv: "/sv/", "x-default": "/" },
   },
 };
 

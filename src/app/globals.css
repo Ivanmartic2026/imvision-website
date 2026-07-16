@@ -13,7 +13,8 @@
   --accent-glow: rgba(145, 169, 161, 0.16);
   --text-primary: #f2f1ec;
   --text-secondary: #a3aaa6;
-  --text-muted: #6f7773;
+  /* Raised from #6f7773 (4.35:1) to meet WCAG 2.2 AA 4.5:1 on all dark surfaces. */
+  --text-muted: #808983;
   --border: rgba(255, 255, 255, 0.06);
   --border-strong: rgba(255, 255, 255, 0.13);
   --photon-seam: linear-gradient(90deg, #778f87 0%, #c7d2ce 52%, #b8a184 100%);
@@ -94,9 +95,31 @@ body {
   --bg-surface-hover: #e5e7e1;
   --text-primary: #111516;
   --text-secondary: #58615f;
-  --text-muted: #737b78;
+  --text-muted: #5f6764;
   --border: #cdd1cc;
   --border-strong: #adb4ae;
+  /* On light bands the sage accent (#91a9a1) drops to 2.2:1 as small text.
+     Darken it for AA-compliant eyebrows/links; ≥4.8:1 on #f2f0e9 and white. */
+  --accent: #4f6f66;
+  --accent-dim: #3f5c54;
+  --accent-glow: rgba(79, 111, 102, 0.14);
+}
+
+/* Restores dark-theme tokens for a dark panel nested inside a .theme-light
+   section (e.g. the Technology band), so the accent keeps AA contrast on dark. */
+.theme-dark {
+  --background: #070807;
+  --foreground: #f2f1ec;
+  --bg-elevated: #0b0d0c;
+  --bg-surface: #111412;
+  --text-primary: #f2f1ec;
+  --text-secondary: #a3aaa6;
+  --text-muted: #808983;
+  --accent: #91a9a1;
+  --accent-dim: #778f87;
+  --accent-glow: rgba(145, 169, 161, 0.16);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.13);
 }
 
 .section-space {

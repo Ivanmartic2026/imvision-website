@@ -19,6 +19,7 @@ const footerGroups: Array<{
     title: { en: "Explore", sv: "Utforska" },
     links: [
       [{ en: "Projects", sv: "Projekt" }, "/projects/"],
+      [{ en: "Support", sv: "Support" }, "/support/"],
       [{ en: "About IM Vision", sv: "Om IM Vision" }, "/about/"],
       [{ en: "Contact", sv: "Kontakt" }, "/contact/"],
     ],
@@ -32,7 +33,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
         <div className="section-inner">
           <div className="grid gap-16 lg:grid-cols-12">
             <div className="lg:col-span-6">
-              <Image src="/logo.png" alt="IMvision" width={150} height={41} className="h-7 w-auto" />
+              <Image src="/logo.png" alt="IM Vision" width={150} height={41} className="h-7 w-auto" />
               <p className="mt-7 max-w-md text-lg leading-relaxed text-text-secondary">
                 {locale === "sv"
                   ? "IM Vision utvecklar, levererar och installerar professionella LED-lösningar för permanenta installationer och event i hela Europa. Med egen projektering, installation och service säkerställer vi kvalitet genom hela projektets livscykel."
@@ -42,7 +43,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                 href={localizedHref(locale, "/contact/")}
                 className="group mt-8 inline-flex items-center gap-2 border-b border-accent pb-1 text-sm font-semibold text-text-primary"
               >
-                {locale === "sv" ? "Starta ett projekt" : "Discuss a project"}
+                {locale === "sv" ? "Starta ett projekt" : "Start a project"}
                 <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </div>
@@ -77,7 +78,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
           </div>
 
           <div className="mt-16 flex flex-col gap-4 border-t border-border-subtle pt-6 text-xs text-text-muted sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} IMvision. {locale === "sv" ? "Alla rättigheter förbehållna." : "All rights reserved."}</p>
+            <p>© {new Date().getFullYear()} IM Vision. {locale === "sv" ? "Alla rättigheter förbehållna." : "All rights reserved."}</p>
             <p className="font-mono uppercase tracking-[0.12em]">
               {locale === "sv" ? "Ljus, form och teknik i ett system." : "Architectural light, visibly engineered."}
             </p>

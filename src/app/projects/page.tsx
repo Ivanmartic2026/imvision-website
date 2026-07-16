@@ -10,7 +10,11 @@ import { ProjectVisual } from "@/components/sections/ProjectVisual";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Explore IMvision's portfolio of LED display installations across retail, events, showrooms, and digital out-of-home.",
+    "Selected IM Vision LED installations across retail, events, showrooms and digital-out-of-home in Europe.",
+  alternates: {
+    canonical: "/projects/",
+    languages: { en: "/projects/", sv: "/sv/projects/", "x-default": "/projects/" },
+  },
 };
 
 export default function ProjectsPage() {

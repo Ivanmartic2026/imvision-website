@@ -19,7 +19,7 @@ export function Technology({ locale = "en" }: { locale?: Locale }) {
   return (
     <section id="technology" className="theme-light section section-space bg-background text-text-primary" aria-labelledby="technology-title">
       <div className="section-inner">
-        <div className="light-gate relative overflow-hidden border border-border-subtle bg-[#111516] px-6 py-10 text-[#f2f0e9] sm:px-10 lg:px-16 lg:py-20">
+        <div className="theme-dark light-gate relative overflow-hidden border border-border-subtle bg-[#111516] px-6 py-10 text-[#f2f0e9] sm:px-10 lg:px-16 lg:py-20">
           <div className="absolute inset-x-0 top-0 h-px photon-seam" />
           <div className="absolute right-0 top-0 h-full w-1/2 opacity-[0.12] image-grid-overlay" aria-hidden="true" />
 

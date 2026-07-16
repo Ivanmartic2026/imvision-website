@@ -22,8 +22,8 @@ export function SalesPage({ locale }: SalesPageProps) {
 
   return (
     <>
-      <SalesHero locale={locale} content={content} />
       <main id="main-content">
+        <SalesHero locale={locale} content={content} />
         <SalesIntro locale={locale} content={content} />
         <SalesUseCases locale={locale} content={content} />
         <SalesProcess locale={locale} content={content} />

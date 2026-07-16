@@ -15,6 +15,8 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { projects, getProjectBySlug } from "@/lib/projects";
 import { ProjectVisual } from "@/components/sections/ProjectVisual";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbLd, localeUrl } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -32,6 +34,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: project.title,
     description: project.description,
+    alternates: {
+      canonical: `/projects/${slug}/`,
+      languages: {
+        en: `/projects/${slug}/`,
+        sv: `/sv/projects/${slug}/`,
+        "x-default": `/projects/${slug}/`,
+      },
+    },
   };
 }
 
@@ -46,6 +56,13 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "Home", url: localeUrl("en", "/") },
+          { name: "Projects", url: localeUrl("en", "/projects/") },
+          { name: project.title, url: localeUrl("en", `/projects/${project.slug}/`) },
+        ])}
+      />
       <Header />
       <main id="main-content">
         <PageHeader

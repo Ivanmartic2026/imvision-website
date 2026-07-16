@@ -67,9 +67,13 @@ const deliveryScope = [
 ];
 
 export const metadata: Metadata = {
-  title: "Rental",
+  title: "LED Rental for Events",
   description:
-    "Flexible LED display rental for events, launches, exhibitions, and temporary activations across Europe.",
+    "Event-grade LED screens delivered, installed, run and de-rigged by IM Vision's own crew — for launches, exhibitions and activations across Europe.",
+  alternates: {
+    canonical: "/rental/",
+    languages: { en: "/rental/", sv: "/sv/rental/", "x-default": "/rental/" },
+  },
 };
 
 export default function RentalPage() {

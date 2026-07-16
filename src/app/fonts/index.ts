@@ -14,20 +14,20 @@ import { IBM_Plex_Mono, Manrope } from "next/font/google";
  * files placed in this folder (`src/app/fonts/`).
  */
 
-export const headingFont = Manrope({
-  variable: "--font-heading",
-  subsets: ["latin"],
-  display: "swap",
-  // Load a slightly wider weight range so headings can be sharper.
-  weight: ["400", "500", "600", "700"],
-});
-
-export const bodyFont = Manrope({
+/**
+ * Manrope is a variable font. Loading it once (no pinned `weight`) ships a
+ * single WOFF2 covering the full 200–800 axis instead of two instances × four
+ * static weights. Both roles (--font-heading, --font-body) resolve to it, so
+ * headings and body share one download. `adjustFontFallback` keeps CLS at 0.
+ */
+const manrope = Manrope({
   variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
 });
+
+export const bodyFont = manrope;
+export const headingFont = manrope;
 
 export const monoFont = IBM_Plex_Mono({
   variable: "--font-plex-mono",

@@ -5,9 +5,10 @@ import { AnimatePresence, motion, useScroll } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Locale, localizedHref } from "@/lib/i18n";
+import { CONTACT } from "@/lib/seo";
 
 const navLinks = [
   { en: "Buy LED", sv: "Köpa LED", href: "/sales/" },
@@ -66,10 +67,10 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
         )}
       >
         <div className="mx-auto flex h-[78px] max-w-[1600px] items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16">
-          <Link href={localizedHref(locale, "/")} aria-label={locale === "sv" ? "IMvision startsida" : "IMvision home"} className="relative z-50">
+          <Link href={localizedHref(locale, "/")} aria-label={locale === "sv" ? "IM Vision startsida" : "IM Vision home"} className="relative z-50">
             <Image
               src="/logo.png"
-              alt="IMvision"
+              alt="IM Vision"
               width={128}
               height={35}
               className="h-7 w-auto"
@@ -95,7 +96,16 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
             ))}
           </nav>
 
-          <div className="hidden items-center lg:flex">
+          <div className="hidden items-center gap-3 lg:flex">
+            <a
+              href={`tel:${CONTACT.phoneE164}`}
+              className="inline-flex items-center gap-2 rounded-[12px_4px_12px_12px] border border-accent/40 bg-accent/10 px-3.5 py-2 text-[13px] font-medium text-text-primary transition-colors hover:border-accent hover:bg-accent/20"
+              aria-label={locale === "sv" ? `Ring oss på ${CONTACT.phone}` : `Call us on ${CONTACT.phone}`}
+            >
+              <Phone size={15} className="text-accent" strokeWidth={1.75} />
+              <span className="hidden xl:inline">{CONTACT.phone}</span>
+              <span className="xl:hidden">{locale === "sv" ? "Ring" : "Call"}</span>
+            </a>
             <div className="flex items-center rounded-[12px_4px_12px_12px] border border-white/[.08] bg-[#070807]/40 p-1 font-mono text-[10px] uppercase tracking-[0.1em] text-text-muted" aria-label={locale === "sv" ? "Välj språk" : "Choose language"}>
               <Link href={swedishPath} lang="sv" hrefLang="sv" className={cn("rounded-[7px_2px_7px_7px] px-2 py-1.5 transition-colors", locale === "sv" ? "bg-white/10 text-text-primary" : "hover:text-text-primary")}>SV</Link>
               <Link href={englishPath} lang="en" hrefLang="en" className={cn("rounded-[7px_2px_7px_7px] px-2 py-1.5 transition-colors", locale === "en" ? "bg-white/10 text-text-primary" : "hover:text-text-primary")}>EN</Link>
@@ -126,6 +136,9 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
         {mobileOpen && (
           <motion.div
             id="mobile-navigation"
+            role="dialog"
+            aria-modal="true"
+            aria-label={locale === "sv" ? "Meny" : "Menu"}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -136,9 +149,9 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
               <div className="flex items-center justify-between">
                 <p className="eyebrow text-accent">IM / {locale === "sv" ? "Meny" : "Menu"}</p>
                 <div className="flex items-center gap-1 font-mono text-xs text-text-muted">
-                  <Link href={swedishPath} className={locale === "sv" ? "text-text-primary" : "px-2"}>SV</Link>
+                  <Link href={swedishPath} lang="sv" hrefLang="sv" className={locale === "sv" ? "text-text-primary" : "px-2"}>SV</Link>
                   <span>/</span>
-                  <Link href={englishPath} className={locale === "en" ? "text-text-primary" : "px-2"}>EN</Link>
+                  <Link href={englishPath} lang="en" hrefLang="en" className={locale === "en" ? "text-text-primary" : "px-2"}>EN</Link>
                 </div>
               </div>
               <div className="mt-10 divide-y divide-border-subtle border-y border-border-subtle">
@@ -160,8 +173,18 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
                   </motion.div>
                 ))}
               </div>
-              <div className="mt-auto pt-8 font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
-                Spånga, {locale === "sv" ? "Sverige" : "Sweden"} · Europe
+              <div className="mt-auto space-y-5 pt-8">
+                <a
+                  href={`tel:${CONTACT.phoneE164}`}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent/40 bg-accent/10 px-5 py-4 text-base font-medium text-text-primary transition-colors hover:border-accent hover:bg-accent/20"
+                >
+                  <Phone size={17} className="text-accent" strokeWidth={1.75} />
+                  {CONTACT.phone}
+                </a>
+                <div className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
+                  Spånga, {locale === "sv" ? "Sverige" : "Sweden"} · Europe
+                </div>
               </div>
             </nav>
           </motion.div>

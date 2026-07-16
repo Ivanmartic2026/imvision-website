@@ -76,9 +76,13 @@ const slaTiers = [
 ];
 
 export const metadata: Metadata = {
-  title: "Service",
+  title: "Service & Support",
   description:
-    "Installation, monitoring, maintenance, and long-term support for LED display solutions.",
+    "Installation, monitoring, maintenance and long-term support for LED displays — priority response from the team that built your system.",
+  alternates: {
+    canonical: "/service/",
+    languages: { en: "/service/", sv: "/sv/service/", "x-default": "/service/" },
+  },
 };
 
 export default function ServicePage() {
@@ -92,8 +96,9 @@ export default function ServicePage() {
           description="Monitoring, maintenance, and long-term support for reliable operation."
         />
 
-        <section className="section section-space">
+        <section className="section section-space" aria-labelledby="service-capabilities">
           <div className="section-inner">
+            <h2 id="service-capabilities" className="sr-only">What our service covers</h2>
             <StaggerReveal className="grid gap-6 md:grid-cols-2">
               {services.map((service) => (
                 <StaggerItem key={service.title}>
