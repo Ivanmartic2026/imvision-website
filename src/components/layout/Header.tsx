@@ -9,6 +9,7 @@ import { Menu, X, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Locale, localizedHref } from "@/lib/i18n";
 import { CONTACT } from "@/lib/seo";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 
 const navLinks = [
   { en: "Buy LED", sv: "Köpa LED", href: "/sales/" },
@@ -24,10 +25,6 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const { scrollYProgress } = useScroll();
-  const englishPath = pathname.replace(/^\/sv(?=\/|$)/, "") || "/";
-  const swedishPath = pathname.startsWith("/sv")
-    ? pathname
-    : `/sv${pathname === "/" ? "/" : pathname}`;
 
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -109,10 +106,7 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
               <span className="hidden xl:inline">{CONTACT.phone}</span>
               <span className="xl:hidden">{locale === "sv" ? "Ring" : "Call"}</span>
             </a>
-            <div className="flex items-center rounded-[12px_4px_12px_12px] border border-white/[.08] bg-[#070807]/40 p-1 font-mono text-[10px] uppercase tracking-[0.1em] text-text-muted" aria-label={locale === "sv" ? "Välj språk" : "Choose language"}>
-              <Link href={swedishPath} prefetch={false} lang="sv" hrefLang="sv" className={cn("rounded-[7px_2px_7px_7px] px-2 py-1.5 transition-colors", locale === "sv" ? "bg-white/10 text-text-primary" : "hover:text-text-primary")}>SV</Link>
-              <Link href={englishPath} prefetch={false} lang="en" hrefLang="en" className={cn("rounded-[7px_2px_7px_7px] px-2 py-1.5 transition-colors", locale === "en" ? "bg-white/10 text-text-primary" : "hover:text-text-primary")}>EN</Link>
-            </div>
+            <LanguageSwitcher locale={locale} />
           </div>
 
           <button
@@ -151,11 +145,7 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
             <nav className="mx-auto flex min-h-full max-w-xl flex-col pb-8" aria-label="Mobile navigation">
               <div className="flex items-center justify-between">
                 <p className="eyebrow text-accent">IM / {locale === "sv" ? "Meny" : "Menu"}</p>
-                <div className="flex items-center gap-1 font-mono text-xs text-text-muted">
-                  <Link href={swedishPath} prefetch={false} lang="sv" hrefLang="sv" className={locale === "sv" ? "text-text-primary" : "px-2"}>SV</Link>
-                  <span>/</span>
-                  <Link href={englishPath} prefetch={false} lang="en" hrefLang="en" className={locale === "en" ? "text-text-primary" : "px-2"}>EN</Link>
-                </div>
+                <LanguageSwitcher locale={locale} />
               </div>
               <div className="mt-10 divide-y divide-border-subtle border-y border-border-subtle">
                 {navLinks.map((link, index) => (

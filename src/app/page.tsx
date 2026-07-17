@@ -14,7 +14,10 @@ import { pageMeta } from "@/lib/seo";
 export const metadata = pageMeta({
   locale: "en",
   path: "/",
-  title: "LED display solutions across Europe",
+  // Absolute: the root layout's title.template does NOT apply to the same-segment
+  // home page, so the brand must be included here explicitly.
+  title: "IM Vision — LED displays: buy, rent, install & service across Europe",
+  absoluteTitle: true,
   description:
     "IM Vision designs, engineers, installs and services premium LED displays for retail, events and digital-out-of-home — one accountable partner across Europe.",
 });

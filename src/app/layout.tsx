@@ -3,6 +3,7 @@ import "lenis/dist/lenis.css";
 import "./globals.css";
 import { bodyFont, headingFont, monoFont } from "./fonts";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { LanguageGate } from "@/components/providers/LanguageGate";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteGraphLd, SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
@@ -77,6 +78,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <SmoothScroll>{children}</SmoothScroll>
+        <LanguageGate />
         <JsonLd data={siteGraphLd()} />
       </body>
     </html>

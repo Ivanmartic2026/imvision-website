@@ -14,7 +14,7 @@ export const metadata: Metadata = pageMeta({
   path: "/projects/",
   title: "Projects",
   description:
-    "Selected IM Vision LED installations across retail, events, showrooms and digital-out-of-home in Europe.",
+    "Explore selected IM Vision LED installations — retail displays, architectural facades, event screens and digital-out-of-home delivered across Europe.",
 });
 
 export default function ProjectsPage() {
