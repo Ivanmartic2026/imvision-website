@@ -19,25 +19,28 @@ export function LanguagePrompt() {
   const reduceMotion = useReducedMotion();
   const [visible, setVisible] = useState(false);
   const [exiting, setExiting] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const englishRef = useRef<HTMLButtonElement>(null);
+  const [activeLocale, setActiveLocale] = useState<Locale>(pathname.startsWith("/sv") ? "sv" : "en");
+  const toolbarRef = useRef<HTMLDivElement>(null);
 
-  // Delay the entrance slightly so the hero is perceived first.
+  // Reveal after the hero has had a moment to breathe.
   useEffect(() => {
     const stored = getStoredLocale();
     if (stored) return;
-    const timer = setTimeout(() => setVisible(true), reduceMotion ? 0 : 200);
+    const timer = setTimeout(() => setVisible(true), reduceMotion ? 0 : 700);
     return () => clearTimeout(timer);
   }, [reduceMotion]);
 
   useEffect(() => {
-    if (visible && englishRef.current) {
-      englishRef.current.focus();
+    if (visible && toolbarRef.current) {
+      const firstButton = toolbarRef.current.querySelector("button");
+      if (firstButton instanceof HTMLElement) firstButton.focus();
     }
   }, [visible]);
 
   const handleSelect = useCallback(
     (selected: Locale, persist = true) => {
+      setActiveLocale(selected);
+
       if (persist && typeof window !== "undefined") {
         window.localStorage.setItem(STORAGE_KEY, selected);
       }
@@ -52,16 +55,14 @@ export function LanguagePrompt() {
       setExiting(true);
       setTimeout(() => {
         window.location.href = target;
-      }, reduceMotion ? 0 : 380);
+      }, reduceMotion ? 0 : 450);
     },
     [pathname, reduceMotion]
   );
 
   const handleDismiss = useCallback(() => {
-    // Default to the current page locale without persisting a strong preference.
-    const currentLocale: Locale = pathname.startsWith("/sv") ? "sv" : "en";
-    handleSelect(currentLocale, true);
-  }, [handleSelect, pathname]);
+    handleSelect(activeLocale, true);
+  }, [handleSelect, activeLocale]);
 
   useEffect(() => {
     if (!visible) return;
@@ -70,90 +71,81 @@ export function LanguagePrompt() {
       if (event.key === "Escape") handleDismiss();
     };
 
-    const onClick = (event: MouseEvent) => {
-      if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
-        handleDismiss();
-      }
-    };
-
     window.addEventListener("keydown", onKey);
-    window.addEventListener("click", onClick);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      window.removeEventListener("click", onClick);
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [visible, handleDismiss]);
 
   return (
     <AnimatePresence>
       {visible && (
-        <>
-          {/* Transparent overlay keeps the hero fully visible while capturing
-              outside clicks and keyboard focus for accessibility. */}
-          <motion.div
-            role="presentation"
-            aria-hidden="true"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: reduceMotion ? 0 : 0.45 }}
-            className="fixed inset-0 z-[190]"
-          />
+        <motion.div
+          ref={toolbarRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Choose your language"
+          initial={{ y: "100%" }}
+          animate={{ y: exiting ? "100%" : "0%" }}
+          exit={{ y: "100%" }}
+          transition={{
+            duration: reduceMotion ? 0 : 0.65,
+            ease: [0.22, 0.61, 0.36, 1],
+          }}
+          className="fixed bottom-0 left-0 right-0 z-[200] border-t border-white/[0.06] bg-[#070807]/35 backdrop-blur-md"
+        >
+          <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16">
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">
+              IM Vision
+            </p>
 
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-label="Choose your language"
-            className="fixed inset-0 z-[200] pointer-events-none"
-          >
-            <motion.div
-              ref={cardRef}
-              initial={{ opacity: 0, y: 24, scale: 0.98 }}
-              animate={{
-                opacity: exiting ? 0 : 1,
-                y: exiting ? -12 : 0,
-                scale: exiting ? 0.98 : 1,
-              }}
-              exit={{ opacity: 0, y: -12, scale: 0.98 }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.7,
-                ease: [0.22, 0.61, 0.36, 1],
-              }}
-              className="pointer-events-auto absolute bottom-6 left-1/2 w-full max-w-[280px] -translate-x-1/2 border border-white/[0.08] bg-[#070807]/42 p-7 shadow-2xl backdrop-blur-xl sm:bottom-8 sm:right-8 sm:left-auto sm:translate-x-0 rounded-[32px_8px_32px_32px]"
-            >
-              <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.22em] text-text-muted">
-                IM Vision
-              </p>
+            <div className="relative flex items-center gap-5 font-mono text-[11px] uppercase tracking-[0.14em]">
+              <button
+                type="button"
+                onClick={() => handleSelect("en")}
+                aria-label="English"
+                aria-current={activeLocale === "en" ? "true" : undefined}
+                className="group relative py-1.5 text-text-secondary transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60"
+              >
+                <span className={activeLocale === "en" ? "text-text-primary" : undefined}>EN</span>
+                {activeLocale === "en" && (
+                  <motion.span
+                    layoutId="prompt-lang-underline"
+                    initial={false}
+                    transition={{
+                      duration: reduceMotion ? 0 : 0.35,
+                      ease: [0.22, 0.61, 0.36, 1],
+                    }}
+                    className="absolute -bottom-0.5 left-0 right-0 h-px bg-current"
+                  />
+                )}
+              </button>
 
-              <p className="mt-4 text-[13px] font-[450] leading-snug tracking-[-0.01em] text-text-secondary">
-                Experience in
-              </p>
+              <span aria-hidden className="text-white/10">
+                —
+              </span>
 
-              <div className="mt-3 flex items-center gap-4 text-[15px] font-medium tracking-[-0.01em]">
-                <button
-                  ref={englishRef}
-                  type="button"
-                  onClick={() => handleSelect("en")}
-                  className="group relative py-1 text-text-secondary transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60"
-                >
-                  English
-                  <span className="absolute bottom-0 left-0 h-px w-0 bg-accent transition-[width] duration-[450ms] ease-[cubic-bezier(.22,.61,.36,1)] group-hover:w-full" />
-                </button>
-
-                <span aria-hidden className="h-3 w-px bg-white/10" />
-
-                <button
-                  type="button"
-                  onClick={() => handleSelect("sv")}
-                  className="group relative py-1 text-text-secondary transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60"
-                >
-                  Svenska
-                  <span className="absolute bottom-0 left-0 h-px w-0 bg-accent transition-[width] duration-[450ms] ease-[cubic-bezier(.22,.61,.36,1)] group-hover:w-full" />
-                </button>
-              </div>
-            </motion.div>
+              <button
+                type="button"
+                onClick={() => handleSelect("sv")}
+                aria-label="Svenska"
+                aria-current={activeLocale === "sv" ? "true" : undefined}
+                className="group relative py-1.5 text-text-secondary transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60"
+              >
+                <span className={activeLocale === "sv" ? "text-text-primary" : undefined}>SV</span>
+                {activeLocale === "sv" && (
+                  <motion.span
+                    layoutId="prompt-lang-underline"
+                    initial={false}
+                    transition={{
+                      duration: reduceMotion ? 0 : 0.35,
+                      ease: [0.22, 0.61, 0.36, 1],
+                    }}
+                    className="absolute -bottom-0.5 left-0 right-0 h-px bg-current"
+                  />
+                )}
+              </button>
+            </div>
           </div>
-        </>
+        </motion.div>
       )}
     </AnimatePresence>
   );
