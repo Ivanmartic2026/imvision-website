@@ -139,7 +139,12 @@ export function ProjectSlider({ locale = "en" }: ProjectSliderProps) {
     el.scrollBy({ left: direction * (card.offsetWidth + gap), behavior: "smooth" });
   };
 
-  const renderCard = (project: Project, index: number, isPinned: boolean) => (
+  const renderCard = (
+    project: Project,
+    index: number,
+    isPinned: boolean,
+    TitleTag: "h3" | "span" = "h3"
+  ) => (
     <motion.article
       key={project.slug}
       initial={{ opacity: 0, y: 28 }}
@@ -181,9 +186,9 @@ export function ProjectSlider({ locale = "en" }: ProjectSliderProps) {
           <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-accent-dim transition-colors duration-500 group-hover:text-accent">
             {project.category}
           </span>
-          <h3 className="mt-2 text-xl font-medium tracking-[-0.025em] text-text-primary lg:text-2xl">
+          <TitleTag className="mt-2 block text-xl font-medium tracking-[-0.025em] text-text-primary lg:text-2xl">
             {project.title}
-          </h3>
+          </TitleTag>
           <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-text-secondary">
             {project.description}
           </p>
@@ -247,7 +252,7 @@ export function ProjectSlider({ locale = "en" }: ProjectSliderProps) {
             ref={nativeTrackRef}
             className="scrollbar-hide -mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 lg:hidden"
           >
-            {slides.map((project, index) => renderCard(project, index, false))}
+            {slides.map((project, index) => renderCard(project, index, false, "span"))}
           </div>
 
           {/* Desktop: pinned horizontal scroll track */}
@@ -256,7 +261,7 @@ export function ProjectSlider({ locale = "en" }: ProjectSliderProps) {
             className="hidden gap-6 lg:flex"
             style={{ x }}
           >
-            {slides.map((project, index) => renderCard(project, index, true))}
+            {slides.map((project, index) => renderCard(project, index, true, "h3"))}
           </motion.div>
 
           <div className="mt-8 flex items-center justify-between gap-8 lg:mt-10">

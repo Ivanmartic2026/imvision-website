@@ -60,56 +60,27 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
               id="hero-title"
               className="max-w-[980px] text-balance font-[var(--font-heading)] text-[clamp(2.85rem,12vw,5.25rem)] font-semibold leading-[0.92] tracking-[-0.04em] text-text-primary sm:text-[clamp(3.4rem,7.5vw,6rem)]"
             >
-              <span className="block overflow-hidden pb-[0.08em]">
-                <motion.span
-                  initial={{ y: "110%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-                  className="block"
-                >
-                  {locale === "sv" ? "LED som formar" : "Light, built"}
-                </motion.span>
+              <span className="block">
+                {locale === "sv" ? "LED som formar" : "Light, built"}
               </span>
-              <span className="block overflow-hidden pb-[0.08em]">
-                <motion.span
-                  initial={{ y: "110%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.13, ease: [0.22, 1, 0.36, 1] }}
-                  className="block"
-                >
-                  {locale === "sv" ? "upplevelsen." : "into space."}
-                </motion.span>
+              <span className="block">
+                {locale === "sv" ? "upplevelsen." : "into space."}
               </span>
             </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 0.61, 0.36, 1] }}
-              className="mt-5 max-w-3xl text-[clamp(1.35rem,3.6vw,1.85rem)] font-medium leading-snug tracking-[-0.025em] text-accent-soft sm:mt-7"
-            >
+            <p className="mt-5 max-w-3xl text-[clamp(1.35rem,3.6vw,1.85rem)] font-medium leading-snug tracking-[-0.025em] text-accent-soft sm:mt-7">
               {locale === "sv"
                 ? "Från fasad till scen – i samma system."
                 : "From facade to stage — one system."}
-            </motion.p>
+            </p>
 
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.72, ease: [0.22, 0.61, 0.36, 1] }}
-              className="body mt-4 max-w-2xl font-normal text-text-secondary sm:mt-5"
-            >
+            <p className="body mt-4 max-w-2xl font-normal text-text-secondary sm:mt-5">
               {locale === "sv"
                 ? "Köp eller hyr — installerat, servat och driftat av oss, i hela Europa."
                 : "Buy or rent — installed, serviced and operated by us, across Europe."}
-            </motion.p>
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, delay: 0.84, ease: [0.22, 0.61, 0.36, 1] }}
-              className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2"
-            >
+            <div className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2">
               {[
                 {
                   title: locale === "sv" ? "Köpa LED" : "Buy LED",
@@ -168,14 +139,9 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
                   </Link>
                 );
               })}
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1, ease: [0.22, 0.61, 0.36, 1] }}
-              className="mt-5"
-            >
+            <div className="mt-5">
               <Link
                 href={localizedHref(locale, "/contact/")}
                 className="group inline-flex items-center gap-2 text-sm font-medium text-text-primary transition-colors hover:text-accent-soft"
@@ -183,7 +149,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
                 {locale === "sv" ? "Osäker på vad ni behöver? Prata med oss" : "Not sure what you need? Talk to us"}
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </Link>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>

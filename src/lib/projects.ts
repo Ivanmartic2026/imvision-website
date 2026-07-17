@@ -296,9 +296,9 @@ export const projects: Project[] = [
     title: "Grocery Store",
     category: "Retail",
     description:
-      "Bright, energy-efficient digital signage that transforms the shopping experience.",
+      "A concept study for bright, energy-efficient digital signage in grocery environments.",
     longDescription:
-      "End-to-end digital signage network across multiple grocery locations. The displays deliver dynamic pricing, promotional content, and wayfinding while maintaining exceptional visibility under challenging store lighting.",
+      "An editorial concept study exploring how a coordinated digital signage network could support dynamic pricing, promotional content, and wayfinding in grocery environments — while maintaining readability under challenging store lighting.",
     image:
       "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=1920&q=80",
     location: "Gothenburg, Sweden",
@@ -309,18 +309,17 @@ export const projects: Project[] = [
       size: "18m²",
       type: "Digital Signage",
     },
-    results:
-      "Promotional campaign uptake rose 22% after the first quarter of deployment.",
     tags: ["Retail", "Digital Signage", "Indoor"],
+    verified: false,
   },
   {
     slug: "automotive-industry",
     title: "Automotive Industry",
     category: "Showroom",
     description:
-      "Cinematic showroom LED walls that put every vehicle in its best light.",
+      "A concept study for cinematic showroom LED walls that put every vehicle in its best light.",
     longDescription:
-      "A premium automotive showroom installation featuring a sweeping LED backdrop. The screen adapts to different vehicle launches, creating immersive scenes from cityscapes to rugged terrain without moving a single car.",
+      "An editorial concept study for a premium automotive showroom featuring a sweeping LED backdrop. The idea is to let the screen adapt to different vehicle launches, creating immersive scenes from cityscapes to rugged terrain without moving a single car.",
     image:
       "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80",
     location: "Malmö, Sweden",
@@ -331,17 +330,16 @@ export const projects: Project[] = [
       size: "42m²",
       type: "Curved LED Wall",
     },
-    results:
-      "Named the brand's highest-converting showroom in Northern Europe.",
     tags: ["Showroom", "Automotive", "Indoor"],
+    verified: false,
   },
   {
     slug: "outdoor-advertising-dooh",
     title: "Outdoor Advertising",
     category: "Digital Out-of-Home",
-    description: "High-brightness displays built for any environment.",
+    description: "A concept study for high-brightness outdoor displays in urban environments.",
     longDescription:
-      "Weatherproof outdoor LED displays deployed in high-traffic urban environments. Built for 24/7 operation, the screens deliver brilliant visibility in direct sunlight and withstand harsh Nordic winters.",
+      "An editorial concept study for weatherproof outdoor LED displays in high-traffic urban environments. Designed for 24/7 operation, the screens would deliver brilliant visibility in direct sunlight and withstand harsh Nordic winters.",
     image:
       "https://images.unsplash.com/photo-1555445054-8488d058d2a0?w=1920&q=80",
     location: "Copenhagen, Denmark",
@@ -352,9 +350,8 @@ export const projects: Project[] = [
       size: "72m²",
       type: "Outdoor LED",
     },
-    results:
-      "Reached over 2.4 million impressions in the first month of operation.",
     tags: ["DOOH", "Outdoor", "Advertising"],
+    verified: false,
   },
 ];
 

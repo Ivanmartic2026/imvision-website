@@ -171,3 +171,29 @@ export function pageBreadcrumbLd(locale: Locale, path: string, name: string) {
     { name, url: localeUrl(locale, path) },
   ]);
 }
+
+/** Service schema for solution pages (sales, rental, service). */
+export function serviceLd(
+  locale: Locale,
+  {
+    name,
+    description,
+    serviceType,
+  }: { name: string; description: string; serviceType: string }
+) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      organizationLd(),
+      {
+        "@type": "Service",
+        name,
+        description,
+        serviceType,
+        provider: { "@id": `${SITE_URL}/#organization` },
+        areaServed: { "@type": "Place", name: "Europe" },
+        inLanguage: locale === "sv" ? "sv" : "en",
+      },
+    ],
+  };
+}

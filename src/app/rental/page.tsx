@@ -15,6 +15,8 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/effects/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/effects/StaggerReveal";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMeta, serviceLd } from "@/lib/seo";
 
 const capabilities = [
   {
@@ -66,15 +68,13 @@ const deliveryScope = [
   { icon: ShieldCheck, label: "On-site operation" },
 ];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  locale: "en",
+  path: "/rental/",
   title: "LED Rental for Events",
   description:
     "Event-grade LED screens delivered, installed, run and de-rigged by IM Vision's own crew — for launches, exhibitions and activations across Europe.",
-  alternates: {
-    canonical: "/rental/",
-    languages: { en: "/rental/", sv: "/sv/rental/", "x-default": "/rental/" },
-  },
-};
+});
 
 export default function RentalPage() {
   return (
@@ -97,12 +97,10 @@ export default function RentalPage() {
               <Reveal>
                 <p className="eyebrow text-accent">IM / Rental systems</p>
               </Reveal>
-              <Reveal delay={0.08}>
-                <h1 className="mt-7 max-w-5xl text-balance text-[clamp(3.5rem,8.4vw,8.5rem)] font-[470] leading-[0.92] tracking-[-0.055em] text-text-primary">
-                  Built for the
-                  <span className="block text-accent-soft">moment.</span>
-                </h1>
-              </Reveal>
+              <h1 className="mt-7 max-w-5xl text-balance text-[clamp(3.5rem,8.4vw,8.5rem)] font-[470] leading-[0.92] tracking-[-0.055em] text-text-primary">
+                Built for the
+                <span className="block text-accent-soft">moment.</span>
+              </h1>
               <div className="mt-8 grid gap-8 border-t border-white/20 pt-7 lg:grid-cols-12 lg:items-end">
                 <Reveal delay={0.16} className="lg:col-span-6">
                   <p className="max-w-xl text-lg leading-relaxed text-[#d0d5d2] sm:text-xl">
@@ -262,6 +260,14 @@ export default function RentalPage() {
         </section>
       </main>
       <Footer />
+      <JsonLd
+        data={serviceLd("en", {
+          name: "LED Rental for Events",
+          description:
+            "Event-grade LED screens delivered, installed, run and de-rigged by IM Vision's own crew — for launches, exhibitions and activations across Europe.",
+          serviceType: "LED rental",
+        })}
+      />
     </>
   );
 }

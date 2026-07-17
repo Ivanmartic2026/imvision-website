@@ -6,16 +6,15 @@ import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { projects } from "@/lib/projects";
 import { ProjectVisual } from "@/components/sections/ProjectVisual";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  locale: "en",
+  path: "/projects/",
   title: "Projects",
   description:
     "Selected IM Vision LED installations across retail, events, showrooms and digital-out-of-home in Europe.",
-  alternates: {
-    canonical: "/projects/",
-    languages: { en: "/projects/", sv: "/sv/projects/", "x-default": "/projects/" },
-  },
-};
+});
 
 export default function ProjectsPage() {
   return (

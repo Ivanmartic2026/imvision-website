@@ -9,15 +9,15 @@ import { ProjectSlider } from "@/components/sections/ProjectSlider";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import { BusinessIntro } from "@/components/sections/BusinessIntro";
 import { Locale } from "@/lib/i18n";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = {
+export const metadata = pageMeta({
+  locale: "en",
+  path: "/",
+  title: "LED display solutions across Europe",
   description:
     "IM Vision designs, engineers, installs and services premium LED displays for retail, events and digital-out-of-home — one accountable partner across Europe.",
-  alternates: {
-    canonical: "/",
-    languages: { en: "/", sv: "/sv/", "x-default": "/" },
-  },
-};
+});
 
 export function HomePage({ locale = "en" }: { locale?: Locale }) {
   return (

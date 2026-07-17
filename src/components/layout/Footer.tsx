@@ -80,9 +80,15 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
 
           <div className="mt-16 flex flex-col gap-4 border-t border-border-subtle pt-6 text-xs text-text-muted sm:flex-row sm:items-center sm:justify-between">
             <p>© {new Date().getFullYear()} IM Vision. {locale === "sv" ? "Alla rättigheter förbehållna." : "All rights reserved."}</p>
-            <p className="font-mono uppercase tracking-[0.12em]">
-              {locale === "sv" ? "Ljus, form och teknik i ett system." : "Architectural light, visibly engineered."}
-            </p>
+            <div className="flex items-center gap-4">
+              <Link href={localizedHref(locale, "/privacy/")} prefetch={false} className="transition-colors hover:text-text-primary">
+                {locale === "sv" ? "Integritetspolicy" : "Privacy"}
+              </Link>
+              <span aria-hidden className="text-border-subtle">|</span>
+              <Link href={localizedHref(locale, "/terms/")} prefetch={false} className="transition-colors hover:text-text-primary">
+                {locale === "sv" ? "Användarvillkor" : "Terms"}
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -23,6 +23,11 @@ if [[ ! -d "$PROJECT_ROOT/dist" ]]; then
   exit 1
 fi
 
+# Remove Next.js debug artifacts and stray .txt files before publishing.
+echo "==> Cleaning debug artifacts from dist/..."
+find "$PROJECT_ROOT/dist" -type f \( -name '__next*' -o -name '*.txt' \) -delete
+find "$PROJECT_ROOT/dist" -type d -name dev -exec rm -rf {} +
+
 if [[ -z "${IM_CLAW_PASSWORD:-}" ]]; then
   read -rsp "Enter sudo password for $USER@$SERVER: " IM_CLAW_PASSWORD
   echo

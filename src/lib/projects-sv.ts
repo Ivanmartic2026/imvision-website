@@ -1,7 +1,14 @@
-export const swedishProjectCopy: Record<
-  string,
-  { title: string; category: string; description: string; longDescription: string }
-> = {
+import type { Project } from "./projects";
+
+export type SwedishProjectCopy = {
+  title: string;
+  category: string;
+  description: string;
+  longDescription: string;
+  caseStudy?: Project["caseStudy"];
+};
+
+export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
   "the-icon": {
     title: "The Icon",
     category: "Westfield Mall of Scandinavia — Stockholm",
@@ -101,6 +108,20 @@ export const swedishProjectCopy: Record<
     description: "En flexibel visuell scen för butik och liveupplevelser.",
     longDescription:
       "Ett redaktionellt projektutkast som utforskar hur högupplöst LED, reflekterande material och kontrollerad ljussättning kan förvandla en modemiljö till en flexibel visuell scen.",
+    caseStudy: {
+      challenge:
+        "Skapa en visuell miljö som klarar både daglig butiksdrift, säsongskampanjer och livepresentationer utan att det fysiska rummet behöver byggas om.",
+      response:
+        "Behandla LED-ytan, reflektioner, ljussättning, innehåll och kundens siktlinjer som ett enda rumsligt system snarare än separata produktionsmoment.",
+      delivery: [
+        "Kartlägg publikens rörelser och primära betraktningsavstånd",
+        "Definiera skärmgeometrin utifrån arkitekturen",
+        "Samordna innehållsformat med ljus och reflektioner",
+        "Planera serviceåtkomst, kalibrering och daglig drift",
+      ],
+      outcome:
+        "En återanvändbar miljö som kan bygga karaktär genom innehåll samtidigt som den arkitektoniska ramen förblir lugn och konsekvent.",
+    },
   },
   "grocery-store": {
     title: "Dagligvaruhandel",

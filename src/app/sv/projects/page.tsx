@@ -7,15 +7,14 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { ProjectVisual } from "@/components/sections/ProjectVisual";
 import { projects } from "@/lib/projects";
 import { swedishProjectCopy } from "@/lib/projects-sv";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  locale: "sv",
+  path: "/projects/",
   title: "Projekt",
   description: "Utvalda LED-installationer, produkter och driftuppdrag från IM Vision i hela Europa.",
-  alternates: {
-    canonical: "/sv/projects/",
-    languages: { en: "/projects/", sv: "/sv/projects/", "x-default": "/projects/" },
-  },
-};
+});
 
 export default function SwedishProjectsPage() {
   return (

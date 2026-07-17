@@ -6,6 +6,8 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/effects/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/effects/StaggerReveal";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMeta, serviceLd } from "@/lib/seo";
 
 const capabilities = [
   { icon: CalendarRange, number: "01", title: "Skapat för ögonblicket", text: "Från fokuserade varumärkesaktiveringar till flerdagarsproduktioner anpassas LED-systemet efter format, publik och tidsplan." },
@@ -20,14 +22,12 @@ const process = [
   ["04", "Leverans", "Installation, kalibrering, teknisk drift och kontrollerad demontering."],
 ];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
+  locale: "sv",
+  path: "/rental/",
   title: "LED-uthyrning för event",
   description: "Eventklassade LED-skärmar som IM Visions egen personal levererar, installerar, kör och river — för lanseringar, mässor och aktiveringar i hela Europa.",
-  alternates: {
-    canonical: "/sv/rental/",
-    languages: { en: "/rental/", sv: "/sv/rental/", "x-default": "/rental/" },
-  },
-};
+});
 
 export default function SwedishRentalPage() {
   return (
@@ -41,11 +41,9 @@ export default function SwedishRentalPage() {
           <div className="section relative z-10 w-full">
             <div className="section-inner">
               <Reveal><p className="eyebrow text-accent">IM / Uthyrningssystem</p></Reveal>
-              <Reveal delay={0.08}>
-                <h1 className="mt-7 max-w-5xl text-balance text-[clamp(3.5rem,8.4vw,8.5rem)] font-[470] leading-[0.92] tracking-[-0.055em] text-text-primary">
-                  Skapat för<span className="block text-accent-soft">ögonblicket.</span>
-                </h1>
-              </Reveal>
+              <h1 className="mt-7 max-w-5xl text-balance text-[clamp(3.5rem,8.4vw,8.5rem)] font-[470] leading-[0.92] tracking-[-0.055em] text-text-primary">
+                Skapat för<span className="block text-accent-soft">ögonblicket.</span>
+              </h1>
               <div className="mt-8 grid gap-8 border-t border-white/20 pt-7 lg:grid-cols-12 lg:items-end">
                 <Reveal delay={0.16} className="lg:col-span-6"><p className="max-w-xl text-lg leading-relaxed text-[#d0d5d2] sm:text-xl">Projekterade LED-miljöer för lanseringar, utställningar, liveproduktioner och tillfälliga rum – levererade som ett komplett tekniskt system.</p></Reveal>
                 <Reveal delay={0.22} className="flex flex-col gap-3 sm:flex-row lg:col-span-6 lg:justify-end">
@@ -81,6 +79,14 @@ export default function SwedishRentalPage() {
         <section className="section section-space"><div className="section-inner"><div className="light-gate border border-border-subtle bg-bg-elevated p-8 sm:p-12 lg:p-20"><Reveal><p className="eyebrow text-accent">Börja med idén</p><h2 className="mt-7 max-w-5xl text-[clamp(2.7rem,6vw,6.5rem)] font-[470] leading-[0.97] tracking-[-0.052em]">Låt tekniken försvinna in i upplevelsen.</h2><div className="mt-9"><Button href="/sv/contact/" size="large" icon={<ArrowRight size={18} />}>Berätta om ert event</Button></div></Reveal></div></div></section>
       </main>
       <Footer locale="sv" />
+      <JsonLd
+        data={serviceLd("sv", {
+          name: "LED-uthyrning för event",
+          description:
+            "Eventklassade LED-skärmar som IM Visions egen personal levererar, installerar, kör och river — för lanseringar, mässor och aktiveringar i hela Europa.",
+          serviceType: "LED-uthyrning",
+        })}
+      />
     </>
   );
 }
