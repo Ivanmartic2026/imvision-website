@@ -20,9 +20,8 @@ export function LanguagePrompt() {
   const [visible, setVisible] = useState(() => getStoredLocale() === null);
   const [exiting, setExiting] = useState(false);
   const [activeLocale, setActiveLocale] = useState<Locale>(pathname.startsWith("/sv") ? "sv" : "en");
-  const toolbarRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
-  // Lock scrolling while the language gate is active.
   useEffect(() => {
     if (!visible) return;
     const originalOverflow = document.body.style.overflow;
@@ -33,8 +32,8 @@ export function LanguagePrompt() {
   }, [visible]);
 
   useEffect(() => {
-    if (visible && toolbarRef.current) {
-      const firstButton = toolbarRef.current.querySelector("button");
+    if (visible && panelRef.current) {
+      const firstButton = panelRef.current.querySelector("button");
       if (firstButton instanceof HTMLElement) firstButton.focus();
     }
   }, [visible]);
@@ -57,7 +56,7 @@ export function LanguagePrompt() {
       setExiting(true);
       setTimeout(() => {
         window.location.href = target;
-      }, reduceMotion ? 0 : 500);
+      }, reduceMotion ? 0 : 650);
     },
     [pathname, reduceMotion]
   );
@@ -65,88 +64,100 @@ export function LanguagePrompt() {
   return (
     <AnimatePresence>
       {visible && (
-        <>
-          {/* Transparent layer prevents interaction with the page until a
-              language is selected. The hero remains fully visible behind it. */}
-          <motion.div
-            role="presentation"
-            aria-hidden="true"
+        <motion.div
+          ref={panelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Choose your language"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: exiting ? 0 : 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: reduceMotion ? 0 : 0.7, ease: [0.22, 0.61, 0.36, 1] }}
+          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#070807]/88 px-6 backdrop-blur-xl"
+        >
+          <div className="flex max-w-2xl flex-col items-center text-center">
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.8, delay: reduceMotion ? 0 : 0.15, ease: [0.22, 0.61, 0.36, 1] }}
+              className="font-mono text-[10px] uppercase tracking-[0.3em] text-text-muted"
+            >
+              IM Vision
+            </motion.p>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.9, delay: reduceMotion ? 0 : 0.3, ease: [0.22, 0.61, 0.36, 1] }}
+              className="mt-4 font-serif text-4xl font-light tracking-tight text-text-primary sm:text-5xl md:text-6xl"
+            >
+              Select your language
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.8, delay: reduceMotion ? 0 : 0.45, ease: [0.22, 0.61, 0.36, 1] }}
+              className="mt-4 max-w-md text-sm font-light leading-relaxed text-text-secondary"
+            >
+              Välj språk för att fortsätta. Choose a language to enter the site.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.85, delay: reduceMotion ? 0 : 0.6, ease: [0.22, 0.61, 0.36, 1] }}
+              className="mt-10 flex items-center gap-6 font-mono text-xs uppercase tracking-[0.18em] sm:gap-10 sm:text-sm"
+            >
+              <button
+                type="button"
+                onClick={() => handleSelect("en")}
+                aria-label="English"
+                aria-current={activeLocale === "en" ? "true" : undefined}
+                className="group relative px-6 py-3 text-text-secondary transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60 sm:px-8 sm:py-4"
+              >
+                <span className={activeLocale === "en" ? "text-text-primary" : undefined}>English</span>
+                {activeLocale === "en" && (
+                  <motion.span
+                    layoutId="prompt-lang-underline"
+                    initial={false}
+                    transition={{ duration: reduceMotion ? 0 : 0.35, ease: [0.22, 0.61, 0.36, 1] }}
+                    className="absolute -bottom-0.5 left-0 right-0 h-px bg-current"
+                  />
+                )}
+              </button>
+
+              <span aria-hidden className="h-8 w-px bg-white/10" />
+
+              <button
+                type="button"
+                onClick={() => handleSelect("sv")}
+                aria-label="Svenska"
+                aria-current={activeLocale === "sv" ? "true" : undefined}
+                className="group relative px-6 py-3 text-text-secondary transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60 sm:px-8 sm:py-4"
+              >
+                <span className={activeLocale === "sv" ? "text-text-primary" : undefined}>Svenska</span>
+                {activeLocale === "sv" && (
+                  <motion.span
+                    layoutId="prompt-lang-underline"
+                    initial={false}
+                    transition={{ duration: reduceMotion ? 0 : 0.35, ease: [0.22, 0.61, 0.36, 1] }}
+                    className="absolute -bottom-0.5 left-0 right-0 h-px bg-current"
+                  />
+                )}
+              </button>
+            </motion.div>
+          </div>
+
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: reduceMotion ? 0 : 0.45 }}
-            className="fixed inset-0 z-[190] bg-transparent"
-          />
-
-          <motion.div
-            ref={toolbarRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Choose your language"
-            initial={{ y: "100%" }}
-            animate={{ y: exiting ? "100%" : "0%" }}
-            exit={{ y: "100%" }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.7,
-              ease: [0.22, 0.61, 0.36, 1],
-            }}
-            className="fixed bottom-0 left-0 right-0 z-[200] border-t border-white/[0.08] bg-[#070807]/45 backdrop-blur-lg"
+            transition={{ duration: reduceMotion ? 0 : 1, delay: reduceMotion ? 0 : 1, ease: [0.22, 0.61, 0.36, 1] }}
+            className="absolute bottom-8 font-mono text-[10px] uppercase tracking-[0.2em] text-text-muted/60"
           >
-            <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16">
-              <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted">
-                IM Vision
-              </p>
-
-              <div className="relative flex items-center gap-5 font-mono text-[11px] uppercase tracking-[0.14em]">
-                <button
-                  type="button"
-                  onClick={() => handleSelect("en")}
-                  aria-label="English"
-                  aria-current={activeLocale === "en" ? "true" : undefined}
-                  className="group relative py-1.5 text-text-secondary transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60"
-                >
-                  <span className={activeLocale === "en" ? "text-text-primary" : undefined}>EN</span>
-                  {activeLocale === "en" && (
-                    <motion.span
-                      layoutId="prompt-lang-underline"
-                      initial={false}
-                      transition={{
-                        duration: reduceMotion ? 0 : 0.35,
-                        ease: [0.22, 0.61, 0.36, 1],
-                      }}
-                      className="absolute -bottom-0.5 left-0 right-0 h-px bg-current"
-                    />
-                  )}
-                </button>
-
-                <span aria-hidden className="text-white/10">
-                  —
-                </span>
-
-                <button
-                  type="button"
-                  onClick={() => handleSelect("sv")}
-                  aria-label="Svenska"
-                  aria-current={activeLocale === "sv" ? "true" : undefined}
-                  className="group relative py-1.5 text-text-secondary transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60"
-                >
-                  <span className={activeLocale === "sv" ? "text-text-primary" : undefined}>SV</span>
-                  {activeLocale === "sv" && (
-                    <motion.span
-                      layoutId="prompt-lang-underline"
-                      initial={false}
-                      transition={{
-                        duration: reduceMotion ? 0 : 0.35,
-                        ease: [0.22, 0.61, 0.36, 1],
-                      }}
-                      className="absolute -bottom-0.5 left-0 right-0 h-px bg-current"
-                    />
-                  )}
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </>
+            Architecture · Visuals · Technology
+          </motion.p>
+        </motion.div>
       )}
     </AnimatePresence>
   );
