@@ -20,7 +20,13 @@ const navLinks = [
   { en: "Contact", sv: "Kontakt", href: "/contact/" },
 ];
 
-export function Header({ locale = "en" }: { locale?: Locale }) {
+export function Header({
+  locale = "en",
+  variant = "dark",
+}: {
+  locale?: Locale;
+  variant?: "dark" | "light";
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
@@ -57,10 +63,17 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-[700ms] ease-[cubic-bezier(.22,.61,.36,1)]",
-          scrolled
-            ? "border-white/[.06] bg-[#070807]/88 backdrop-blur-2xl"
-            : "border-transparent bg-transparent"
+          "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow,backdrop-filter] duration-[700ms] ease-[cubic-bezier(.22,.61,.36,1)]",
+          variant === "light"
+            ? cn(
+                "theme-light bg-white",
+                scrolled
+                  ? "border-black/[0.08] shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+                  : "border-black/[0.08]"
+              )
+            : scrolled
+              ? "border-white/[.06] bg-[#070807]/88 backdrop-blur-2xl"
+              : "border-transparent bg-transparent"
         )}
       >
         <div className="mx-auto flex h-[78px] max-w-[1600px] items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16">
@@ -112,7 +125,12 @@ export function Header({ locale = "en" }: { locale?: Locale }) {
           <button
             type="button"
             onClick={() => setMobileOpen((open) => !open)}
-            className="relative z-50 grid h-12 w-12 place-items-center rounded-[14px_5px_14px_14px] border border-white/10 bg-[#070807]/55 text-text-primary lg:hidden"
+            className={cn(
+              "relative z-50 grid h-12 w-12 place-items-center rounded-[14px_5px_14px_14px] border text-text-primary lg:hidden",
+              variant === "light"
+                ? "theme-dark border-white/10 bg-[#070807]/55"
+                : "border-white/10 bg-[#070807]/55"
+            )}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             aria-controls="mobile-navigation"

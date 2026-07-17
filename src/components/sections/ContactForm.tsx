@@ -43,8 +43,6 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const formId = useId();
 
-  const endpoint = process.env.NEXT_PUBLIC_CONTACT_FORM_ENDPOINT;
-
   const categories = useMemo(
     () => ({
       buy: {
@@ -173,66 +171,28 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
     setSubmitError(false);
     const config = categories[data.category];
 
-    if (endpoint) {
-      try {
-        const hasFiles = files.length > 0;
-        let res: Response;
+    try {
+      const formData = new FormData();
+      formData.append("category", config.title);
+      formData.append("name", data.name);
+      formData.append("phone", data.phone);
+      formData.append("email", data.email);
+      formData.append("message", data.message);
+      formData.append("locale", locale);
+      if (data.company) formData.append("company", data.company);
+      if (data.eventDate) formData.append("eventDate", data.eventDate);
+      if (data.location) formData.append("location", data.location);
+      if (data.installation) formData.append("installation", data.installation);
+      files.forEach(({ file }, index) => formData.append(`attachment-${index}`, file));
 
-        if (hasFiles) {
-          const formData = new FormData();
-          formData.append("category", data.category);
-          formData.append("name", data.name);
-          formData.append("phone", data.phone);
-          formData.append("email", data.email);
-          formData.append("message", data.message);
-          formData.append("recipient", config.recipient);
-          formData.append("locale", locale);
-          if (data.company) formData.append("company", data.company);
-          if (data.eventDate) formData.append("eventDate", data.eventDate);
-          if (data.location) formData.append("location", data.location);
-          if (data.installation) formData.append("installation", data.installation);
-          files.forEach(({ file }, index) => formData.append(`attachment-${index}`, file));
-          res = await fetch(endpoint, { method: "POST", body: formData });
-        } else {
-          res = await fetch(endpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Accept: "application/json" },
-            body: JSON.stringify({ ...data, recipient: config.recipient, locale }),
-          });
-        }
-
-        if (!res.ok) throw new Error("Bad response");
-        setIsSuccess(true);
-      } catch {
-        setSubmitError(true);
-      }
-    } else {
-      // Mailto fallback
-      const details = [
-        `${locale === "sv" ? "Kategori" : "Category"}: ${config.title}`,
-        `${locale === "sv" ? "Namn" : "Name"}: ${data.name}`,
-        `${locale === "sv" ? "Telefon" : "Phone"}: ${data.phone}`,
-        `Email: ${data.email}`,
-        data.company ? `${locale === "sv" ? "Företag" : "Company"}: ${data.company}` : "",
-        data.eventDate ? `${locale === "sv" ? "Datum" : "Date"}: ${data.eventDate}` : "",
-        data.location ? `${locale === "sv" ? "Plats" : "Location"}: ${data.location}` : "",
-        data.installation
-          ? `${locale === "sv" ? "Produkt/installation" : "Product/installation"}: ${data.installation}`
-          : "",
-        "",
-        locale === "sv" ? "Meddelande:" : "Message:",
-        data.message,
-      ]
-        .filter(Boolean)
-        .join("\n");
-
-      const subject = encodeURIComponent(`${config.title} enquiry from ${data.name}`);
-      const body = encodeURIComponent(details);
-      window.location.assign(`mailto:${config.recipient}?subject=${subject}&body=${body}`);
+      const res = await fetch("/api/contact/", { method: "POST", body: formData });
+      if (!res.ok) throw new Error("Request failed");
       setIsSuccess(true);
+    } catch {
+      setSubmitError(true);
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   };
 
   if (isSuccess && selectedCategory) {

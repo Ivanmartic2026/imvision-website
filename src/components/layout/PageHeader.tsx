@@ -1,21 +1,23 @@
 "use client";
 
 import { motion } from "motion/react";
+import { cn } from "@/lib/utils";
 
 interface PageHeaderProps {
   label?: string;
   title: string;
   description?: string;
   children?: React.ReactNode;
+  className?: string;
 }
 
-export function PageHeader({ label, title, description, children }: PageHeaderProps) {
+export function PageHeader({ label, title, description, children, className }: PageHeaderProps) {
   const words = title.trim().split(" ");
   const last = words.length > 1 ? words.pop() : "";
   const head = words.join(" ");
 
   return (
-    <section className="relative flex min-h-[62vh] w-full items-end overflow-hidden bg-background pb-24 pt-36 lg:min-h-[72vh] lg:pb-36">
+    <section className={cn("relative flex min-h-[62vh] w-full items-end overflow-hidden bg-background pb-24 pt-36 lg:min-h-[72vh] lg:pb-36", className)}>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_20%,rgba(145,169,161,0.10),transparent_40%)]" />
       <div
         aria-hidden

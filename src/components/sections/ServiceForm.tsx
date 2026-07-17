@@ -312,20 +312,23 @@ export function ServiceForm({ locale = "en" }: ServiceFormProps) {
     const dateTime = formatDateTime(locale);
     setSubmittedAt(dateTime);
 
+    const issueLabel = issueTypes.find((i) => i.value === data.issueType)?.[isSv ? "label" : "labelEn"];
+    const priorityLabel = priorities.find((p) => p.value === data.priority)?.[isSv ? "label" : "labelEn"];
+
     const formData = new FormData();
-    formData.append("_ticketNumber", ticketNumber);
-    formData.append("_submittedAt", dateTime.iso);
+    formData.append("formType", "service case");
+    formData.append("ticketNumber", ticketNumber);
     formData.append("company", data.company);
     formData.append("name", data.name);
     formData.append("phone", data.phone);
     formData.append("email", data.email);
     formData.append("project", data.project || "");
     formData.append("address", data.address || "");
-    formData.append("issueType", data.issueType);
-    formData.append("priority", data.priority);
+    formData.append("issueType", issueLabel || data.issueType);
+    formData.append("priority", priorityLabel || data.priority);
     formData.append("description", data.description);
     formData.append("contactMethods", data.contactMethods.join(", "));
-    formData.append("termsAccepted", data.termsAccepted ? "Ja / Yes" : "Nej / No");
+    formData.append("termsAccepted", data.termsAccepted ? "Yes" : "No");
     formData.append("browser", getBrowserInfo().browser);
     formData.append("os", getBrowserInfo().os);
 
@@ -333,52 +336,10 @@ export function ServiceForm({ locale = "en" }: ServiceFormProps) {
       formData.append(`attachment-${index}`, file);
     });
 
-    const endpoint = process.env.NEXT_PUBLIC_SERVICE_FORM_ENDPOINT;
-
     try {
-      if (endpoint) {
-        const response = await fetch(endpoint, {
-          method: "POST",
-          body: formData,
-          headers: { Accept: "application/json" },
-        });
-        if (!response.ok) throw new Error("Submission failed");
-        setCapturedServerSide(true);
-      } else {
-        // Fallback for environments without a backend endpoint configured.
-        await new Promise((resolve) => setTimeout(resolve, 800));
-        const issueLabel = issueTypes.find((i) => i.value === data.issueType)?.[isSv ? "label" : "labelEn"];
-        const priorityLabel = priorities.find((p) => p.value === data.priority)?.[isSv ? "label" : "labelEn"];
-        const subject = encodeURIComponent(`Serviceärende ${ticketNumber} — ${issueLabel}`);
-        const body = encodeURIComponent(
-          [
-            `Ärendenummer / Ticket: ${ticketNumber}`,
-            `Datum / Date: ${dateTime.date}`,
-            `Tid / Time: ${dateTime.time}`,
-            `Prioritet / Priority: ${priorityLabel}`,
-            `Typ / Type: ${issueLabel}`,
-            ``,
-            `Företag / Company: ${data.company}`,
-            `Kontaktperson / Contact: ${data.name}`,
-            `Telefon / Phone: ${data.phone}`,
-            `E-post / Email: ${data.email}`,
-            `Projekt / Project: ${data.project || "-"}`,
-            `Adress / Address: ${data.address || "-"}`,
-            ``,
-            `Felbeskrivning / Issue description:`,
-            data.description,
-            ``,
-            `Önskad kontakt / Preferred contact: ${data.contactMethods.join(", ")}`,
-            `Godkända villkor / Terms accepted: Ja / Yes`,
-            ``,
-            `Bilagor / Attachments: ${files.length} fil(er) — bifogas separat om möjligt`,
-            `Webbläsare / Browser: ${getBrowserInfo().browser}`,
-            `OS: ${getBrowserInfo().os}`,
-          ].join("\n")
-        );
-        window.location.assign(`mailto:service@imvision.se?subject=${subject}&body=${body}`);
-        setCapturedServerSide(false);
-      }
+      const response = await fetch("/api/contact/", { method: "POST", body: formData });
+      if (!response.ok) throw new Error("Submission failed");
+      setCapturedServerSide(true);
       setIsSuccess(true);
       reset();
       setFiles([]);

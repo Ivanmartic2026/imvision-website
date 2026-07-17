@@ -1,5 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { PageHeader } from "@/components/layout/PageHeader";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMeta, pageBreadcrumbLd, CONTACT, SITE_URL } from "@/lib/seo";
@@ -36,9 +37,15 @@ export default function SwedishContactPage() {
   return (
     <>
       <JsonLd data={contactPageLd} />
-      <Header locale="sv" />
+      <Header locale="sv" variant="light" />
       <main id="main-content">
-        <section className="theme-light section section-space bg-background">
+        <PageHeader
+          label="Kontakt"
+          title="Kontakta IM Vision"
+          description="Vi hjälper dig med permanenta LED-installationer, uthyrning och teknisk support. Berätta om ditt projekt så återkommer vi samma arbetsdag."
+          className="pt-[220px] md:pt-[240px] lg:pt-[260px]"
+        />
+        <section className="theme-light section section-space bg-background !pt-12 md:!pt-16 lg:!pt-20">
           <div className="section-inner">
             <ContactForm locale="sv" />
           </div>

@@ -25,11 +25,16 @@ export function Analytics() {
   const [ready, setReady] = useState(false);
   const [locale, setLocale] = useState<"en" | "sv">("en");
 
+  // Reading localStorage / window during render is not allowed in SSR, and a
+  // lazy initializer would create a hydration mismatch, so this one-off sync
+  // on mount is the safest place to restore the saved consent decision.
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored === "granted" || stored === "denied") setConsent(stored);
     setLocale(window.location.pathname.split("/")[1] === "sv" ? "sv" : "en");
     setReady(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   const decide = (value: "granted" | "denied") => {

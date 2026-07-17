@@ -1,5 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { PageHeader } from "@/components/layout/PageHeader";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMeta, pageBreadcrumbLd, CONTACT, SITE_URL } from "@/lib/seo";
@@ -36,9 +37,15 @@ export default function ContactPage() {
   return (
     <>
       <JsonLd data={contactPageLd} />
-      <Header />
+      <Header locale="en" variant="light" />
       <main id="main-content">
-        <section className="theme-light section section-space bg-background">
+        <PageHeader
+          label="Contact"
+          title="Contact IM Vision"
+          description="Get help with permanent LED installations, LED rentals and technical support. Tell us about your project and we'll reply the same business day."
+          className="pt-[220px] md:pt-[240px] lg:pt-[260px]"
+        />
+        <section className="theme-light section section-space bg-background !pt-12 md:!pt-16 lg:!pt-20">
           <div className="section-inner">
             <ContactForm />
           </div>

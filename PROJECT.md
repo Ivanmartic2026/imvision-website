@@ -7,7 +7,7 @@
 Marketing website for **IM Vision**, a premium European LED‑display company. The site must make five things instantly clear: IM Vision **buys/sells**, **rents**, **installs**, **services**, and **operates LED displays across Europe**.
 
 - **Bilingual:** English (default, at `/`) and Swedish (at `/sv/…`).
-- **Fully static** marketing site — no database, no logged‑in users, no server at runtime.
+- Marketing site with a **thin server layer** (one App Router API route for form submissions). No database, no logged‑in users. Runs on Vercel's Next.js serverless runtime.
 - Repo: `github.com/Ivanmartic2026/imvision-website`, branch `main`.
 - Production domain: **imvision.se** (see §7 — not yet pointed at this project).
 
@@ -15,13 +15,14 @@ Marketing website for **IM Vision**, a premium European LED‑display company. T
 
 | Area | Choice |
 |---|---|
-| Framework | **Next.js 16.2.10**, App Router, **`output: "export"`** (static export to `dist/`) |
+| Framework | **Next.js 16.2.10**, App Router, **Vercel server runtime** (NOT static export). Pages are static‑rendered; `/api/contact` is a serverless function. |
+| Email | **Resend** (`resend`) — form submissions emailed server‑side from `/api/contact` |
 | Runtime | React 19.2.4 |
 | Styling | **Tailwind CSS v4** (`@import "tailwindcss"` in `globals.css`, tokens via `@theme inline`) |
 | Animation | `motion` (Framer Motion) + GSAP + **Lenis** smooth scroll |
 | Forms | `react-hook-form` + `zod` |
 | Icons | `lucide-react` |
-| Hosting | **Vercel** (static). A secondary rsync‑to‑nginx script exists (`deploy-imclaw.sh`). |
+| Hosting | **Vercel** (Next.js server runtime). ⚠️ The old `deploy-imclaw.sh` rsync‑to‑nginx path is retired — a static file server can't run the `/api/contact` function. |
 
 ### ⚠️ "This is NOT the Next.js you know"
 This Next version has breaking changes vs. older training data. **Before writing Next‑specific code, read the relevant guide in `node_modules/next/dist/docs/`.** (This is also stated in `AGENTS.md`.)
@@ -30,11 +31,10 @@ This Next version has breaking changes vs. older training data. **Before writing
 
 ```bash
 npm run dev            # local dev (next dev)
-npm run build          # next build && clean:dist  → outputs static site to dist/
-npx vercel --prod      # deploy dist to Vercel production (see §7 — CLI, not auto)
+npm run build          # next build → server build in .next/
+npm run start          # run the production server locally — needed to test /api/contact
+npx vercel --prod      # deploy to Vercel (serverless; CLI, not auto on git push)
 ```
-
-`build` runs `clean:dist` afterward — **read §8 before touching that script.**
 
 ## 4. Structure
 
@@ -92,7 +92,10 @@ public/images/projects/         # project photos
 
 ### Forms
 - `ContactForm` and `ServiceForm` (react-hook-form + zod). They **POST to an endpoint if one is set**, else fall back to a `mailto:` link. Confirmation copy is honest about which happened. Honeypot spam trap included.
-- **No real backend yet** — set the env vars in §9 to capture leads server‑side.
+- **Both forms POST `FormData` (fields + file attachments) to the App Router route `src/app/api/contact/route.ts`**, which emails the enquiry to `sales@imvision.se` via **Resend** (`src/lib/email.ts`) with the files attached. No `mailto:` on submit. `replyTo` = the submitter's email. Honeypot + server‑side required‑field validation. Success/error states are shown in‑page; the submit button disables + shows a spinner while sending.
+- The `mailto:` **links** that remain (footer, "prefer email" card, privacy/terms pages) are intentional "email us" links — not form submissions.
+- ⚠️ **Attachments:** Vercel serverless caps request bodies (~4.5 MB). The route rejects >4 MB total attachments with a clear error. For larger files, move to Vercel Blob and email links (future work).
+- Requires `RESEND_API_KEY` (see §9) to actually send.
 
 ## 6. SEO (this is a big part of the project)
 
@@ -112,19 +115,20 @@ Everything routes through **`src/lib/seo.ts`**. Use the helpers; don't hand‑ro
 
 ## 7. Deployment
 
-- **Vercel**, configured by `vercel.json`: `buildCommand: npm run build`, `outputDirectory: dist`, a `www.imvision.se → imvision.se` redirect, and security headers (X‑Frame‑Options, X‑Content‑Type‑Options, Referrer‑Policy).
+- **Vercel** (Next.js server runtime, auto‑detected). `vercel.json` holds a `www.imvision.se → imvision.se` redirect and security headers (X‑Frame‑Options, X‑Content‑Type‑Options, Referrer‑Policy). No `outputDirectory`/`buildCommand` overrides — Vercel builds the Next app and runs `/api/contact` as a serverless function.
 - **Deploys are currently manual:** `npx vercel --prod`. A GitHub push does **not** auto‑deploy (the Git integration isn't connected). To change that: Vercel → Project → Settings → Git → connect `Ivanmartic2026/imvision-website`.
 - **Domain not connected yet:** `imvision.se` still serves an OLD site. To go live: Vercel → Settings → Domains → add `imvision.se` + `www`, set DNS at the registrar. Until then, verify changes on the deployment URL that `npx vercel --prod` prints.
 - Canonical/hreflang/OG all point to `https://imvision.se` (correct — they resolve once the domain is connected).
 
 ## 8. ⚠️ Critical gotchas (things that already broke)
 
-1. **`clean:dist` deletes `.txt` files.** The build script is `next build && clean:dist`, and `clean:dist` runs `find dist -type f -name '*.txt' … -delete` to strip Next's RSC prefetch payloads. It **must** keep the `! -name 'robots.txt'` exclusion, or `/robots.txt` 404s in production. Do not "simplify" that script.
-2. **robots.txt must be a metadata route, not `public/robots.txt`.** Vercel's Next adapter reserves the `/robots.txt` path and shadows a static `public/` file (→ 404). Use `app/robots.ts` (it emits `dist/robots.txt`, which Vercel serves like `sitemap.xml`).
-3. **`<Link prefetch>` is disabled** on nav (Header/Footer). Static export has no RSC segment endpoints, so prefetch 404s. Keep `prefetch={false}` on internal `<Link>`s (navigation still works via full load).
-4. **Static‑export limits:** no API routes, no server actions, no ISR. `images.unoptimized: true` (so `next/image` serves files as‑is — the hero LCP image is preloaded manually in `app/page.tsx`). No image optimization/WebP conversion at build — images in `public/` are pre‑compressed.
+1. **Do NOT re‑add `output: "export"`.** The site left static export so the `/api/contact` route can run server‑side. Re‑enabling export silently strips API routes and breaks the forms.
+2. **robots.txt is a metadata route** (`app/robots.ts`) — served by the server. (Historically a static `public/robots.txt` was 404'd by Vercel's adapter and a `clean:dist` script deleted the generated one — both problems are gone now that we're on the server runtime; `clean:dist` was removed.)
+3. **`<Link prefetch>` is disabled** on nav (Header/Footer) via `prefetch={false}` — a leftover from the static‑export era. Harmless on the server runtime; can be re‑enabled if desired, but leaving it is fine.
+4. **`images.unoptimized: true`** is still set (images in `public/` are pre‑compressed; the hero LCP image is preloaded in `app/page.tsx`). You may now enable Next image optimization if wanted.
 5. **`trailingSlash: true`** — always link with a trailing slash (`/sales/`).
 6. **Draft projects:** `verified !== true` ⇒ `noindex` **and** excluded from the sitemap. Keep both in sync.
+7. **`/api/contact` + `trailingSlash`:** forms POST to `/api/contact/` (with the slash) to avoid a 308 redirect hop. The route is `runtime = "nodejs"` (needs Buffer for attachments).
 
 ## 9. Environment variables (Vercel → Settings → Environment Variables)
 
@@ -134,8 +138,9 @@ All optional — features stay inert until set, then activate on redeploy:
 |---|---|
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Renders `<meta name="google-site-verification">` (Search Console HTML‑tag method). |
 | `NEXT_PUBLIC_GA_ID` (`G-XXXXXXX`) | Loads GA4 **after** cookie consent (opt‑in, IP‑anonymised). No GA ID ⇒ no cookies, no banner. |
-| `NEXT_PUBLIC_CONTACT_FORM_ENDPOINT` | ContactForm POSTs here (else `mailto:` fallback). |
-| `NEXT_PUBLIC_SERVICE_FORM_ENDPOINT` | ServiceForm POSTs here (else `mailto:` fallback). |
+| **`RESEND_API_KEY`** | **Required for the forms to send email** (from resend.com). Without it, `/api/contact` returns 500 and the form shows its error state. |
+| `MAIL_TO` | Recipient. Defaults to `sales@imvision.se`. |
+| `MAIL_FROM` | Verified Resend sender, e.g. `IM Vision <noreply@imvision.se>`. Defaults to Resend's onboarding sender (testing only — verify `imvision.se` in Resend for production). |
 
 ## 10. Current status
 
@@ -147,6 +152,6 @@ All optional — features stay inert until set, then activate on redeploy:
 2. **Google Search Console** — verify domain, submit `https://imvision.se/sitemap.xml`.
 3. **GA4** — create property, set `NEXT_PUBLIC_GA_ID`.
 4. **`SOCIAL_PROFILES`** — add real social URLs for `sameAs`.
-5. **Form backend** — set the form endpoint env vars (biggest remaining conversion win).
+5. **Form email** — set `RESEND_API_KEY` (+ verify `imvision.se` in Resend, set `MAIL_FROM`). The forms already POST server‑side; they just need the key to actually send.
 6. **Google Business Profile** — create/claim (local SEO).
 7. **Real installation photography** — replace "concept visual" AI renders (trust + image SEO).

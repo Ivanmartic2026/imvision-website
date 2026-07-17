@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
-  distDir: "dist",
+  // Server runtime (Vercel) — NOT static export — so App Router API routes
+  // (e.g. /api/contact) run server-side. Do not re-add `output: "export"`.
   images: {
     unoptimized: true,
     remotePatterns: [
