@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import Image from "next/image";
 import {
   ArrowDown,
@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/effects/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/effects/StaggerReveal";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { pageMeta, serviceLd } from "@/lib/seo";
+import { pageMeta, pageBreadcrumbLd, serviceLd } from "@/lib/seo";
 
 const capabilities = [
   {
@@ -268,6 +268,7 @@ export default function RentalPage() {
           serviceType: "LED rental",
         })}
       />
+      <JsonLd data={pageBreadcrumbLd("en", "/rental/", "LED Rental for Events")} />
     </>
   );
 }

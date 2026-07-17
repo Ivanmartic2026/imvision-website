@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AboutPageContent } from "@/components/sections/about/AboutPageContent";
-import { pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMeta, pageBreadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   locale: "en",
@@ -11,5 +12,10 @@ export const metadata: Metadata = pageMeta({
 });
 
 export default function AboutPage() {
-  return <AboutPageContent locale="en" />;
+  return (
+    <>
+      <AboutPageContent locale="en" />
+      <JsonLd data={pageBreadcrumbLd("en", "/about/", "About IM Vision")} />
+    </>
+  );
 }

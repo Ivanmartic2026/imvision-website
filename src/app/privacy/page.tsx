@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMeta, pageBreadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   locale: "en",
@@ -84,6 +85,7 @@ export default function PrivacyPage() {
         </section>
       </main>
       <Footer />
+      <JsonLd data={pageBreadcrumbLd("en", "/privacy/", "Privacy Policy")} />
     </>
   );
 }

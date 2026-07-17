@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/effects/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/effects/StaggerReveal";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { pageMeta, serviceLd } from "@/lib/seo";
+import { pageMeta, pageBreadcrumbLd, serviceLd } from "@/lib/seo";
 
 const capabilities = [
   { icon: CalendarRange, number: "01", title: "Skapat för ögonblicket", text: "Från fokuserade varumärkesaktiveringar till flerdagarsproduktioner anpassas LED-systemet efter format, publik och tidsplan." },
@@ -87,6 +87,7 @@ export default function SwedishRentalPage() {
           serviceType: "LED-uthyrning",
         })}
       />
+      <JsonLd data={pageBreadcrumbLd("sv", "/rental/", "LED-uthyrning för event")} />
     </>
   );
 }

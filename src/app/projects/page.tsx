@@ -6,7 +6,8 @@ import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { projects } from "@/lib/projects";
 import { ProjectVisual } from "@/components/sections/ProjectVisual";
-import { pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMeta, pageBreadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   locale: "en",
@@ -63,6 +64,7 @@ export default function ProjectsPage() {
         </section>
       </main>
       <Footer />
+      <JsonLd data={pageBreadcrumbLd("en", "/projects/", "Projects")} />
     </>
   );
 }

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMeta, pageBreadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   locale: "sv",
@@ -91,6 +92,7 @@ export default function SwedishTermsPage() {
         </section>
       </main>
       <Footer locale="sv" />
+      <JsonLd data={pageBreadcrumbLd("sv", "/terms/", "Användarvillkor")} />
     </>
   );
 }

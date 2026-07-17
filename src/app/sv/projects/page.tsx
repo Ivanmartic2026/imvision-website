@@ -7,7 +7,8 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { ProjectVisual } from "@/components/sections/ProjectVisual";
 import { projects } from "@/lib/projects";
 import { swedishProjectCopy } from "@/lib/projects-sv";
-import { pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMeta, pageBreadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   locale: "sv",
@@ -66,6 +67,7 @@ export default function SwedishProjectsPage() {
         </section>
       </main>
       <Footer locale="sv" />
+      <JsonLd data={pageBreadcrumbLd("sv", "/projects/", "Projekt")} />
     </>
   );
 }

@@ -5,7 +5,7 @@ import {
   ProjectDetailPage,
   ProjectCopy,
 } from "@/components/sections/projects/ProjectDetailPage";
-import { pageMeta } from "@/lib/seo";
+import { pageMeta, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -20,12 +20,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = getProjectBySlug(slug);
   if (!project) return { title: "Project Not Found" };
 
-  return pageMeta({
-    locale: "en",
-    path: `/projects/${slug}/`,
-    title: project.title,
-    description: project.description,
-  });
+  return {
+    ...pageMeta({
+      locale: "en",
+      path: `/projects/${slug}/`,
+      title: project.title,
+      description: project.description,
+      image: project.image || DEFAULT_OG_IMAGE,
+    }),
+    robots: project.verified ? undefined : { index: false, follow: false },
+  };
 }
 
 export default async function ProjectPage({ params }: Props) {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ServicePageContent } from "@/components/sections/service/ServicePageContent";
-import { pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMeta, pageBreadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   locale: "sv",
@@ -11,5 +12,10 @@ export const metadata: Metadata = pageMeta({
 });
 
 export default function SwedishServicePage() {
-  return <ServicePageContent locale="sv" />;
+  return (
+    <>
+      <ServicePageContent locale="sv" />
+      <JsonLd data={pageBreadcrumbLd("sv", "/service/", "Service och support")} />
+    </>
+  );
 }
