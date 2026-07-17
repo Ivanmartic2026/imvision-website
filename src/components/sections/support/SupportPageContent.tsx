@@ -39,7 +39,7 @@ const copy = {
       {
         question: "How do I request emergency support?",
         answer:
-          "Call our 24/7 support line at +46 8 505 204 80 or email support@imvision.se. Enterprise clients receive priority on-site dispatch.",
+          "Call our 24/7 support line at 010 330 46 36 or email support@imvision.se. Enterprise clients receive priority on-site dispatch.",
       },
       {
         question: "What is covered under a service agreement?",
@@ -96,7 +96,7 @@ const copy = {
       {
         question: "Hur beställer jag akut support?",
         answer:
-          "Ring vår supportlinje dygnet runt på +46 8 505 204 80 eller mejla support@imvision.se. Enterprise-kunder får prioriterad utryckning.",
+          "Ring vår supportlinje dygnet runt på 010 330 46 36 eller mejla support@imvision.se. Enterprise-kunder får prioriterad utryckning.",
       },
       {
         question: "Vad ingår i ett serviceavtal?",
@@ -208,7 +208,7 @@ export function SupportPageContent({ locale = "en" }: { locale?: Locale }) {
                 </h2>
                 <p className="mx-auto mt-4 max-w-2xl text-lg text-text-secondary">{t.ctaBody}</p>
                 <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                  <Button href="tel:+46850520480" variant="secondary" size="large">
+                  <Button href="tel:+46103304636" variant="secondary" size="large">
                     {t.ctaCall}
                   </Button>
                   <Button

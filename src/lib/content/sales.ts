@@ -279,7 +279,7 @@ const sv: SalesContent = {
     body:
       "Dela ritningar, miljö, önskad upplevelse och tidsplan. Vi hjälper er att definiera rätt permanent LED-system.",
     primaryCta: "Starta ert projekt",
-    phone: "+46 8 505 204 80",
+    phone: "010 330 46 36",
     email: "sales@imvision.se",
   },
 };
@@ -445,7 +445,7 @@ const en: SalesContent = {
     body:
       "Share drawings, environment, intended experience and timeline. We will help you define the right permanent LED system.",
     primaryCta: "Start your project",
-    phone: "+46 8 505 204 80",
+    phone: "010 330 46 36",
     email: "sales@imvision.se",
   },
 };

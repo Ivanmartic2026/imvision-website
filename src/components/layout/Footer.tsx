@@ -72,7 +72,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
               </h2>
               <div className="mt-5 space-y-3 text-sm text-text-secondary">
                 <a href="mailto:sales@imvision.se" className="block transition-colors hover:text-text-primary">sales@imvision.se</a>
-                <a href="tel:+46850520480" className="block transition-colors hover:text-text-primary">+46 8 505 204 80</a>
+                <a href="tel:+46103304636" className="block transition-colors hover:text-text-primary">010 330 46 36</a>
                 <p>Spånga, {locale === "sv" ? "Sverige" : "Sweden"}</p>
               </div>
             </div>
