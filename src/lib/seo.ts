@@ -6,8 +6,8 @@ export const SITE_NAME = "IM Vision";
 export const DEFAULT_OG_IMAGE = "/images/photon-material/hero-experience-centre.jpg";
 export const CONTACT = {
   email: "sales@imvision.se",
-  phone: "+46 8 505 204 80",
-  phoneE164: "+46850520480",
+  phone: "010 330 46 36",
+  phoneE164: "+46103304636",
   locality: "Spånga",
   region: "Stockholm",
   country: "SE",

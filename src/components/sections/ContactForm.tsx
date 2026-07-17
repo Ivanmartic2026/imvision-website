@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight, Phone, Mail } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Locale } from "@/lib/i18n";
 import { Input, Textarea, FileUpload, FormField, UploadedFile } from "@/components/ui/form";
@@ -49,7 +49,7 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
         value: "buy" as const,
         title: locale === "sv" ? "Köpa LED" : "Buy LED",
         submitLabel: locale === "sv" ? "Skicka projektförfrågan" : "Send project enquiry",
-        recipient: "sales@imvision.se",
+        recipient: "info@imvision.se",
         messagePlaceholder:
           locale === "sv"
             ? "Exempel: placering, önskad storlek, användningsområde och ungefärlig tidsplan."
@@ -59,7 +59,7 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
         value: "rental" as const,
         title: locale === "sv" ? "Hyra LED" : "Rent LED",
         submitLabel: locale === "sv" ? "Skicka hyresförfrågan" : "Send rental enquiry",
-        recipient: "sales@imvision.se",
+        recipient: "info@imvision.se",
         messagePlaceholder:
           locale === "sv"
             ? "Exempel: datum, plats, skärmstorlek, typ av event och önskad hjälp."
@@ -69,7 +69,7 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
         value: "service" as const,
         title: locale === "sv" ? "Service & support" : "Service & support",
         submitLabel: locale === "sv" ? "Skicka serviceärende" : "Send support case",
-        recipient: "service@imvision.se",
+        recipient: "info@imvision.se",
         messagePlaceholder:
           locale === "sv"
             ? "Beskriv vad som har hänt, när felet uppstod och om installationen fortfarande är i drift."
@@ -86,7 +86,7 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
         locale === "sv"
           ? "Välj vad du behöver hjälp med så återkommer vi samma arbetsdag."
           : "Choose what you need help with and we'll reply the same business day.",
-      phone: "+46 8 505 204 80",
+      phone: "010 330 46 36",
       helpNow: locale === "sv" ? "Behöver du hjälp direkt?" : "Need help right now?",
       callUs: locale === "sv" ? "Ring oss under kontorstid." : "Call us during office hours.",
       preferEmail: locale === "sv" ? "Föredrar du e-post?" : "Prefer email?",
@@ -212,46 +212,10 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
   return (
     <div className={compact ? "space-y-6" : "space-y-10 sm:space-y-12"}>
       {!compact && (
-        <>
-          {/* Direct contact */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            <a
-              href={`tel:${t.phone.replace(/\s/g, "")}`}
-              className="group rounded-2xl border border-border-subtle bg-bg-surface p-5 transition-all duration-200 hover:border-accent hover:bg-bg-elevated"
-            >
-              <div className="flex items-start gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-bg-elevated text-accent transition-colors group-hover:border-accent/30">
-                  <Phone size={18} strokeWidth={1.5} />
-                </span>
-                <div>
-                  <p className="text-sm font-medium text-text-muted">{t.helpNow}</p>
-                  <p className="mt-0.5 text-lg font-semibold text-text-primary">{t.phone}</p>
-                  <p className="mt-1 text-sm text-text-secondary">{t.callUs}</p>
-                </div>
-              </div>
-            </a>
-            <a
-              href={`mailto:${categories.buy.recipient}`}
-              className="group rounded-2xl border border-border-subtle bg-bg-surface p-5 transition-all duration-200 hover:border-accent hover:bg-bg-elevated"
-            >
-              <div className="flex items-start gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-bg-elevated text-accent transition-colors group-hover:border-accent/30">
-                  <Mail size={18} strokeWidth={1.5} />
-                </span>
-                <div>
-                  <p className="text-sm font-medium text-text-muted">{t.preferEmail}</p>
-                  <p className="mt-0.5 text-lg font-semibold text-text-primary">{categories.buy.recipient}</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          {/* Heading */}
-          <div className="text-center">
-            <h1 className="text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">{t.title}</h1>
-            <p className="mx-auto mt-3 max-w-lg text-text-secondary">{t.subtitle}</p>
-          </div>
-        </>
+        <div className="text-center">
+          <h1 className="text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">{t.title}</h1>
+          <p className="mx-auto mt-3 max-w-lg text-text-secondary">{t.subtitle}</p>
+        </div>
       )}
 
       {/* Selector */}
@@ -419,6 +383,23 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Direct contact — below the three category cards */}
+      {!compact && (
+        <a
+          href={`tel:${t.phone.replace(/\s/g, "")}`}
+          className="group mx-auto flex max-w-md items-start gap-4 rounded-2xl border border-border-subtle bg-bg-surface p-5 transition-all duration-200 hover:border-accent hover:bg-bg-elevated"
+        >
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-bg-elevated text-accent transition-colors group-hover:border-accent/30">
+            <Phone size={18} strokeWidth={1.5} />
+          </span>
+          <div>
+            <p className="text-sm font-medium text-text-muted">{t.helpNow}</p>
+            <p className="mt-0.5 text-lg font-semibold text-text-primary">{t.phone}</p>
+            <p className="mt-1 text-sm text-text-secondary">{t.callUs}</p>
+          </div>
+        </a>
+      )}
     </div>
   );
 }

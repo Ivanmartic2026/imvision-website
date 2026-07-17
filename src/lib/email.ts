@@ -23,7 +23,7 @@ function escapeHtml(value: string): string {
  * Sends a lead/enquiry email server-side via Resend.
  * Configure in the environment:
  *   RESEND_API_KEY  (required)   — from resend.com
- *   MAIL_TO         (optional)   — recipient, defaults to sales@imvision.se
+ *   MAIL_TO         (optional)   — recipient, defaults to info@imvision.se
  *   MAIL_FROM       (optional)   — verified sender, e.g. "IM Vision <noreply@imvision.se>"
  *                                  (defaults to Resend's onboarding sender for testing)
  */
