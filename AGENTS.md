@@ -1,3 +1,9 @@
+<!-- BEGIN:project-handbook -->
+# 📖 Read PROJECT.md first
+
+**[`PROJECT.md`](./PROJECT.md) is the source of truth for this whole project** — architecture, bilingual (EN/SV) conventions, the SEO system (`src/lib/seo.ts`), the design‑token system, deployment (Vercel static export), and the **critical gotchas that already broke the build** (e.g. `clean:dist` must not delete `robots.txt`; robots.txt must be a metadata route, not a `public/` file; `<Link>` prefetch is disabled for static export). Read it before making non‑trivial changes, and update it when you change conventions or the deploy pipeline.
+<!-- END:project-handbook -->
+
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
 
