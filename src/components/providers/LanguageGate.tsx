@@ -1,15 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { LanguagePrompt } from "@/components/ui/LanguagePrompt";
 
-export function LanguageGate() {
-  const [show, setShow] = useState(false);
+function subscribe() {
+  // Local storage is only written by the user in this session;
+  // no external subscription is needed for the first-visit prompt.
+  return () => {};
+}
 
-  useEffect(() => {
-    const stored = typeof window !== "undefined" ? localStorage.getItem("imv-locale") : null;
-    setShow(!stored);
-  }, []);
+function getSnapshot() {
+  if (typeof window === "undefined") return false;
+  return window.localStorage.getItem("imv-locale") === null;
+}
+
+function getServerSnapshot() {
+  return false;
+}
+
+export function LanguageGate() {
+  const show = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   if (!show) return null;
   return <LanguagePrompt />;
