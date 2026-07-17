@@ -33,7 +33,7 @@ export async function sendLeadEmail({ subject, fields, replyTo, attachments }: L
     throw new Error("RESEND_API_KEY is not configured");
   }
 
-  const to = process.env.MAIL_TO || "sales@imvision.se";
+  const to = process.env.MAIL_TO || "info@imvision.se";
   const from = process.env.MAIL_FROM || "IM Vision Website <onboarding@resend.dev>";
   const resend = new Resend(apiKey);
 
