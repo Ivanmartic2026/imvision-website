@@ -3,9 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "export",
   distDir: "dist",
-  turbopack: {
-    root: "/Users/ivanmartic/Desktop/KimiV2",
-  },
   images: {
     unoptimized: true,
     remotePatterns: [
