@@ -17,18 +17,10 @@ function getStoredLocale(): Locale | null {
 export function LanguagePrompt() {
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(() => getStoredLocale() === null);
   const [exiting, setExiting] = useState(false);
   const [activeLocale, setActiveLocale] = useState<Locale>(pathname.startsWith("/sv") ? "sv" : "en");
   const toolbarRef = useRef<HTMLDivElement>(null);
-
-  // Reveal after the hero has had a moment to breathe.
-  useEffect(() => {
-    const stored = getStoredLocale();
-    if (stored) return;
-    const timer = setTimeout(() => setVisible(true), reduceMotion ? 0 : 700);
-    return () => clearTimeout(timer);
-  }, [reduceMotion]);
 
   // Lock scrolling while the language gate is active.
   useEffect(() => {
