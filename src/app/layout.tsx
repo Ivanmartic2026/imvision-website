@@ -4,6 +4,7 @@ import "./globals.css";
 import { bodyFont, headingFont, monoFont } from "./fonts";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { LanguageGate } from "@/components/providers/LanguageGate";
+import { Analytics } from "@/components/providers/Analytics";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteGraphLd, SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
@@ -43,6 +44,11 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
+  // Set NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION in Vercel env to the code from
+  // Search Console (HTML-tag method) — renders <meta name="google-site-verification">.
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+    : {}),
 };
 
 export const viewport: Viewport = {
@@ -79,6 +85,7 @@ export default function RootLayout({
         </a>
         <SmoothScroll>{children}</SmoothScroll>
         <LanguageGate />
+        <Analytics />
         <JsonLd data={siteGraphLd()} />
       </body>
     </html>

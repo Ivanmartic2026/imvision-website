@@ -13,6 +13,15 @@ export const CONTACT = {
   country: "SE",
 } as const;
 
+/**
+ * Social / external profiles for `sameAs` (strengthens the entity in Google's
+ * Knowledge Graph). Paste full URLs, e.g.:
+ *   "https://www.linkedin.com/company/imvision",
+ *   "https://www.instagram.com/imvision",
+ * Left empty → `sameAs` is omitted from the schema (no invalid/empty links).
+ */
+export const SOCIAL_PROFILES: string[] = [];
+
 /** EN path always starts and ends with "/". Returns the absolute URL for a locale. */
 export function localeUrl(locale: Locale, path: string): string {
   if (locale === "en") return SITE_URL + path;
@@ -87,6 +96,7 @@ export function organizationLd() {
       addressCountry: CONTACT.country,
     },
     areaServed: { "@type": "Place", name: "Europe" },
+    ...(SOCIAL_PROFILES.length ? { sameAs: SOCIAL_PROFILES } : {}),
   };
 }
 
@@ -116,6 +126,7 @@ export function localBusinessLd() {
       "LED installation",
       "Display service and maintenance",
     ],
+    ...(SOCIAL_PROFILES.length ? { sameAs: SOCIAL_PROFILES } : {}),
   };
 }
 
