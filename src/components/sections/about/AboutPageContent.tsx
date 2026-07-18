@@ -17,7 +17,7 @@ const copy = {
       "We design, engineer, install, and maintain professional LED systems across Europe.",
     introHead: "Technology, design, and scale — delivered with confidence.",
     introBody: [
-      "Based in Spånga, Sweden, we serve clients across the Nordics and Europe. Our team combines deep technical expertise with a sharp eye for design, ensuring every installation is as reliable as it is impressive.",
+      "With our head office in Jönköping and a warehouse and office in the Stockholm area, we serve clients across the Nordics and Europe. Our team combines deep technical expertise with a sharp eye for design, ensuring every installation is as reliable as it is impressive.",
       "From a single retail screen to a city-scale digital facade, we bring the same level of care, precision, and ambition to every project.",
     ],
     stats: [
@@ -59,7 +59,7 @@ const copy = {
       "Mer än en LED-leverantör. Vi designar, projekterar, installerar och underhåller avancerade displaylösningar i Sverige och Europa.",
     introHead: "Teknik, design och skala — levererat med trygghet.",
     introBody: [
-      "Från Spånga arbetar vi med kunder i Norden och övriga Europa. Teamet förenar teknisk kompetens med en stark känsla för form, så att varje installation är lika driftsäker som imponerande.",
+      "Med huvudkontor i Jönköping och lager och kontor i Stockholmsområdet arbetar vi med kunder i Norden och övriga Europa. Teamet förenar teknisk kompetens med en stark känsla för form, så att varje installation är lika driftsäker som imponerande.",
       "Från en enskild butiksskärm till en digital fasad i stadsskalan möter varje projekt samma omsorg, precision och ambition.",
     ],
     stats: [

@@ -1,14 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import "lenis/dist/lenis.css";
-import "./globals.css";
-import { bodyFont, headingFont, monoFont } from "./fonts";
-import { SmoothScroll } from "@/components/providers/SmoothScroll";
-import { LanguageGate } from "@/components/providers/LanguageGate";
-import { Analytics } from "@/components/providers/Analytics";
-import { JsonLd } from "@/components/seo/JsonLd";
-import { siteGraphLd, SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
-export const metadata: Metadata = {
+/**
+ * Shared root metadata + viewport for the two per-locale root layouts
+ * (`(en)/layout.tsx`, `(sv)/layout.tsx`). Page-level metadata (title,
+ * description, canonical, hreflang, per-page OG) is set via `pageMeta()`.
+ */
+export const rootMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: "IM Vision — LED display solutions across Europe",
@@ -21,6 +19,15 @@ export const metadata: Metadata = {
   creator: SITE_NAME,
   publisher: SITE_NAME,
   formatDetection: { telephone: true, email: true, address: true },
+  icons: {
+    // favicon.ico is auto-emitted by Next from public/ — don't re-declare it
+    // here (that produced a duplicate <link rel="icon">). Add only the PNGs.
+    icon: [
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -51,43 +58,7 @@ export const metadata: Metadata = {
     : {}),
 };
 
-export const viewport: Viewport = {
+export const rootViewport: Viewport = {
   themeColor: "#070807",
   colorScheme: "dark light",
 };
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${headingFont.variable} ${bodyFont.variable} ${monoFont.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
-        {/* Set the document language before paint so screen readers use the
-            correct pronunciation on /sv/** (the root layout can only statically
-            declare one lang; a per-locale root-group layout is the fuller fix). */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "document.documentElement.lang=location.pathname.split('/')[1]==='sv'?'sv':'en';",
-          }}
-        />
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-[12px_4px_12px_12px] focus:bg-accent focus:px-4 focus:py-3 focus:text-background"
-        >
-          Skip to main content
-        </a>
-        <SmoothScroll>{children}</SmoothScroll>
-        <LanguageGate />
-        <Analytics />
-        <JsonLd data={siteGraphLd()} />
-      </body>
-    </html>
-  );
-}

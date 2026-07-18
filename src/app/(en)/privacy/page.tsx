@@ -29,7 +29,7 @@ export default function PrivacyPage() {
             <div className="prose prose-lg prose-invert max-w-none text-text-secondary">
               <h2 className="text-2xl font-medium text-text-primary">1. Data controller</h2>
               <p>
-                IM Vision AB (”IM Vision”, ”we”, ”us”) is the data controller for the personal data
+                IM Vision Group AB, org. no. 556924-1200 (”IM Vision”, ”we”, ”us”) is the data controller for the personal data
                 processed through this website and in connection with enquiries about our LED
                 display solutions.
               </p>
@@ -75,10 +75,10 @@ export default function PrivacyPage() {
               <h2 className="mt-12 text-2xl font-medium text-text-primary">8. Contact</h2>
               <p>
                 Questions about privacy can be sent to{" "}
-                <a href="mailto:sales@imvision.se" className="text-accent hover:underline">
-                  sales@imvision.se
+                <a href="mailto:info@imvision.se" className="text-accent hover:underline">
+                  info@imvision.se
                 </a>{" "}
-                or by post to IM Vision, Spånga, Sweden.
+                or by post to IM Vision Group AB, Herkulesvägen 56, 553 02 Jönköping, Sweden.
               </p>
             </div>
           </div>

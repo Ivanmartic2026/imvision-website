@@ -9,30 +9,13 @@ import { ProjectSlider } from "@/components/sections/ProjectSlider";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import { BusinessIntro } from "@/components/sections/BusinessIntro";
 import { Locale } from "@/lib/i18n";
-import { pageMeta } from "@/lib/seo";
 
-export const metadata = pageMeta({
-  locale: "en",
-  path: "/",
-  // Absolute: the root layout's title.template does NOT apply to the same-segment
-  // home page, so the brand must be included here explicitly.
-  title: "IM Vision — Buy, rent & install LED displays across Europe",
-  absoluteTitle: true,
-  description:
-    "IM Vision designs, engineers, installs and services premium LED displays for retail, events and digital-out-of-home — one accountable partner across Europe.",
-});
-
+/** Shared home layout, rendered by both /(en)/page and /(sv)/sv/page. */
 export function HomePage({ locale = "en" }: { locale?: Locale }) {
   return (
     <>
-      {/* Preload the hero LCP image (unoptimized static export doesn't auto-preload it).
-          React 19 hoists this <link> into <head>. */}
-      <link
-        rel="preload"
-        as="image"
-        href="/images/photon-material/hero-experience-centre.jpg"
-        fetchPriority="high"
-      />
+      {/* The hero <Image> below carries `priority`, so Next emits the optimized
+          LCP preload (imagesrcset) automatically — no manual <link>. */}
       <Header locale={locale} />
       <main id="main-content">
         <Hero locale={locale} />
@@ -47,8 +30,4 @@ export function HomePage({ locale = "en" }: { locale?: Locale }) {
       <Footer locale={locale} />
     </>
   );
-}
-
-export default function Home() {
-  return <HomePage />;
 }

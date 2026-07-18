@@ -16,7 +16,7 @@ import { swedishProjectCopy } from "@/lib/projects-sv";
 import { ProjectVisual } from "@/components/sections/ProjectVisual";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Locale, localizedHref } from "@/lib/i18n";
-import { breadcrumbLd, localeUrl } from "@/lib/seo";
+import { projectLd } from "@/lib/seo";
 
 export interface ProjectCopy {
   title: string;
@@ -100,11 +100,18 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
   return (
     <>
       <JsonLd
-        data={breadcrumbLd([
-          { name: t.homeCrumb, url: localeUrl(locale, "/") },
-          { name: t.projectsCrumb, url: localeUrl(locale, "/projects/") },
-          { name: copy.title, url: localeUrl(locale, `/projects/${project.slug}/`) },
-        ])}
+        data={projectLd(locale, {
+          slug: project.slug,
+          title: copy.title,
+          description: copy.description,
+          image: project.image,
+          category: copy.category,
+          location: project.location,
+          imageCredit: project.imageCredit,
+          sourceUrl: project.sourceUrl,
+          specs: project.specs,
+          tags: project.tags,
+        })}
       />
       <Header locale={locale} />
       <main id="main-content">

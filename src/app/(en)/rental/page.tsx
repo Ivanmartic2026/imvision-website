@@ -86,7 +86,8 @@ export default function RentalPage() {
             src="/images/photon-material/event-rental.jpg"
             alt="Immersive LED environment prepared for a premium live event"
             fill
-            loading="eager"
+            priority
+            fetchPriority="high"
             sizes="100vw"
             className="object-cover object-center"
           />

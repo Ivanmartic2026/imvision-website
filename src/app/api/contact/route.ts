@@ -60,6 +60,7 @@ export async function POST(req: NextRequest) {
   let totalBytes = 0;
   let name = "";
   let email = "";
+  let phone = "";
   let message = "";
 
   for (const [key, value] of form.entries()) {
@@ -70,6 +71,7 @@ export async function POST(req: NextRequest) {
       if (!trimmed) continue;
       if (key === "name") name = trimmed;
       if (key === "email") email = trimmed;
+      if (key === "phone") phone = trimmed;
       if (key === "message" || key === "description") message = trimmed;
       fields.push({ label: LABELS[key] ?? prettify(key), value: trimmed });
     } else if (value && typeof (value as Blob).arrayBuffer === "function") {
@@ -90,10 +92,12 @@ export async function POST(req: NextRequest) {
   }
 
   // Server-side required-field validation (defence in depth).
-  if (!name || !email || !message) {
+  // Name + message are required; at least one of email/phone must be present
+  // (the service form allows either, the contact form always sends email).
+  if (!name || !message || (!email && !phone)) {
     return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
   }
-  if (!EMAIL_RE.test(email)) {
+  if (email && !EMAIL_RE.test(email)) {
     return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
   }
 
@@ -105,7 +109,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await sendLeadEmail({ subject, fields, replyTo: email, attachments });
+    await sendLeadEmail({ subject, fields, replyTo: email || undefined, attachments });
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[/api/contact] send failed:", err);

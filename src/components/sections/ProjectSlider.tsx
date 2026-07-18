@@ -201,11 +201,15 @@ export function ProjectSlider({ locale = "en" }: ProjectSliderProps) {
     <section
       ref={sectionRef}
       id="projekt-slider"
-      className="relative bg-background lg:h-screen"
+      className="relative z-30 -mt-8 rounded-tl-[32px] rounded-tr-[8px] bg-background lg:h-screen"
       style={{ height: isLg ? `calc(100vh + ${scrollDistance}px)` : "auto" }}
       aria-labelledby="project-slider-title"
     >
-      <div className="section-inner sticky top-0 flex h-screen flex-col justify-center overflow-hidden py-16 lg:py-24">
+      {/* justify-start (not center): the heading + cards are taller than the
+          viewport on wide/short screens, and centering pushed the heading up
+          past the panel's top edge into the light section above. Top-anchoring
+          keeps the heading inside the dark panel with clear space above it. */}
+      <div className="section-inner sticky top-0 flex h-screen flex-col justify-start overflow-hidden py-16 lg:py-24">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-4xl">
             <SectionLabel>{locale === "sv" ? "Utvalda projekt" : "Selected projects"}</SectionLabel>

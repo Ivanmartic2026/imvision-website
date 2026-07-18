@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Locale, localizedHref } from "@/lib/i18n";
+import { SOCIAL_LINKS, CONTACT, STOCKHOLM_LOCATION } from "@/lib/seo";
+import { SOCIAL_ICONS } from "@/components/ui/social-icons";
 
 const footerGroups: Array<{
   title: Record<Locale, string>;
@@ -71,9 +73,44 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                 {locale === "sv" ? "Kontakt" : "Contact"}
               </h2>
               <div className="mt-5 space-y-3 text-sm text-text-secondary">
-                <a href="mailto:sales@imvision.se" className="block transition-colors hover:text-text-primary">sales@imvision.se</a>
+                <a href="mailto:info@imvision.se" className="block transition-colors hover:text-text-primary">info@imvision.se</a>
                 <a href="tel:+46103304636" className="block transition-colors hover:text-text-primary">010 330 46 36</a>
-                <p>Spånga, {locale === "sv" ? "Sverige" : "Sweden"}</p>
+                {[
+                  { label: locale === "sv" ? "Huvudkontor" : "Head office", street: CONTACT.street, line2: `${CONTACT.postalCode} ${CONTACT.locality}` },
+                  { label: locale === "sv" ? "Lager & kontor" : "Warehouse & office", street: STOCKHOLM_LOCATION.street, line2: `${STOCKHOLM_LOCATION.postalCode} ${STOCKHOLM_LOCATION.locality}` },
+                ].map((office) => (
+                  <a
+                    key={office.street}
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${office.street}, ${office.line2}, Sweden`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block leading-snug transition-colors hover:text-text-primary"
+                  >
+                    <span className="block text-[11px] uppercase tracking-[0.12em] text-text-muted">{office.label}</span>
+                    {office.street}, {office.line2}
+                  </a>
+                ))}
+                <div className="flex items-center gap-4 pt-2">
+                  {SOCIAL_LINKS.map(({ platform, url }) => {
+                    const Icon = SOCIAL_ICONS[platform];
+                    return (
+                      <a
+                        key={platform}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={
+                          locale === "sv"
+                            ? `Följ IM Vision på ${platform}`
+                            : `Follow IM Vision on ${platform}`
+                        }
+                        className="text-text-muted transition-colors hover:text-accent"
+                      >
+                        <Icon />
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>

@@ -35,7 +35,7 @@ export default function SwedishRentalPage() {
       <Header locale="sv" />
       <main id="main-content">
         <section className="relative flex min-h-[92svh] items-end overflow-hidden bg-background pb-10 pt-28 sm:pb-14 lg:pb-16">
-          <Image src="/images/photon-material/event-rental.jpg" alt="Konceptmiljö med en stor LED-installation för ett premiumevent" fill loading="eager" sizes="100vw" className="object-cover object-center" />
+          <Image src="/images/photon-material/event-rental.jpg" alt="Konceptmiljö med en stor LED-installation för ett premiumevent" fill priority fetchPriority="high" sizes="100vw" className="object-cover object-center" />
           <div className="media-grade absolute inset-0" />
           <div className="image-grid-overlay absolute inset-0 opacity-35" />
           <div className="section relative z-10 w-full">

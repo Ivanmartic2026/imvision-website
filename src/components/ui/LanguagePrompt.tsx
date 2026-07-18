@@ -85,14 +85,18 @@ export function LanguagePrompt() {
               IM Vision
             </motion.p>
 
-            <motion.h1
+            {/* Not an <h1>: this modal is client-rendered and, when the WRS
+                (Googlebot) or a first-time visitor renders it, an <h1> here
+                would be a second H1 on top of the page's own. The dialog is
+                already labelled via aria-label, so a <p> is correct. */}
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.9, delay: reduceMotion ? 0 : 0.3, ease: [0.22, 0.61, 0.36, 1] }}
               className="mt-4 font-serif text-4xl font-light tracking-tight text-text-primary sm:text-5xl md:text-6xl"
             >
               Select your language
-            </motion.h1>
+            </motion.p>
 
             <motion.p
               initial={{ opacity: 0, y: 18 }}

@@ -11,7 +11,9 @@ type ChangeFreq = "weekly" | "monthly";
 function localizedEntries(path: string, priority: number, changeFrequency: ChangeFreq) {
   const enUrl = localeUrl("en", path);
   const svUrl = localeUrl("sv", path);
-  const languages = { en: enUrl, sv: svUrl };
+  // x-default points at the EN URL — matches the <link rel="alternate"> set that
+  // pageMeta() emits in each page's <head>, so the two hreflang signals agree.
+  const languages = { en: enUrl, sv: svUrl, "x-default": enUrl };
   const lastModified = new Date();
   return [
     { url: enUrl, lastModified, changeFrequency, priority, alternates: { languages } },

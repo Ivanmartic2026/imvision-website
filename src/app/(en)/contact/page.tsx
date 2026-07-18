@@ -2,6 +2,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ContactForm } from "@/components/sections/ContactForm";
+import { ContactDetails } from "@/components/sections/ContactDetails";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMeta, pageBreadcrumbLd, CONTACT, SITE_URL } from "@/lib/seo";
 
@@ -47,6 +48,7 @@ export default function ContactPage() {
         />
         <section className="theme-light section section-space bg-background !pt-12 md:!pt-16 lg:!pt-20">
           <div className="section-inner">
+            <ContactDetails />
             <ContactForm />
           </div>
         </section>

@@ -5,22 +5,45 @@ export const SITE_URL = "https://imvision.se";
 export const SITE_NAME = "IM Vision";
 export const DEFAULT_OG_IMAGE = "/images/photon-material/hero-experience-centre.jpg";
 export const CONTACT = {
-  email: "sales@imvision.se",
+  email: "info@imvision.se",
   phone: "010 330 46 36",
   phoneE164: "+46103304636",
-  locality: "Spånga",
+  legalName: "IM Vision Group AB",
+  orgNumber: "556924-1200",
+  // Swedish VAT number is deterministically SE + 10-digit org.nr + 01.
+  vatID: "SE556924120001",
+  // Head office (Jönköping).
+  street: "Herkulesvägen 56",
+  postalCode: "553 02",
+  locality: "Jönköping",
+  region: "Jönköping",
+  country: "SE",
+} as const;
+
+/** Secondary location — warehouse & office in the Stockholm area. */
+export const STOCKHOLM_LOCATION = {
+  street: "Svarvarvägen 20",
+  postalCode: "132 38",
+  locality: "Saltsjö-Boo",
   region: "Stockholm",
   country: "SE",
 } as const;
 
 /**
- * Social / external profiles for `sameAs` (strengthens the entity in Google's
- * Knowledge Graph). Paste full URLs, e.g.:
- *   "https://www.linkedin.com/company/imvision",
- *   "https://www.instagram.com/imvision",
- * Left empty → `sameAs` is omitted from the schema (no invalid/empty links).
+ * Verified social / external profiles for `sameAs` — links the IM Vision entity
+ * to its official accounts (a strong Knowledge Graph / entity-disambiguation
+ * signal). Use canonical profile URLs only (no tracking/locale query params).
+ * Add LinkedIn / YouTube / Crunchbase / Wikidata here as they become available.
  */
-export const SOCIAL_PROFILES: string[] = [];
+export const SOCIAL_LINKS = [
+  { platform: "Facebook", url: "https://www.facebook.com/imvision.se" },
+  { platform: "Instagram", url: "https://www.instagram.com/imvision.se" },
+  { platform: "LinkedIn", url: "https://www.linkedin.com/company/improd-ab" },
+] as const;
+
+// Same list, as bare URLs, for schema.org `sameAs`. Single source of truth so
+// the visible footer links and the structured-data entity never drift apart.
+export const SOCIAL_PROFILES: string[] = SOCIAL_LINKS.map((s) => s.url);
 
 /** EN path always starts and ends with "/". Returns the absolute URL for a locale. */
 export function localeUrl(locale: Locale, path: string): string {
@@ -67,7 +90,11 @@ export function pageMeta({
       url: canonical,
       title: absoluteTitle ? title : `${title} | ${SITE_NAME}`,
       description,
-      images: [{ url: image, width: 1672, height: 941, alt: `${SITE_NAME} — ${title}` }],
+      // Don't prepend the brand when the title is already absolute (it already
+      // contains "IM Vision …") — avoids "IM Vision — IM Vision — …".
+      images: [
+        { url: image, width: 1672, height: 941, alt: absoluteTitle ? title : `${SITE_NAME} — ${title}` },
+      ],
     },
     twitter: {
       card: "summary_large_image",
@@ -80,22 +107,79 @@ export function pageMeta({
 
 /* ---------- JSON-LD structured data ---------- */
 
+// Reused across Organization/LocalBusiness so the entity's expertise is
+// declared consistently (topical + entity signal for Google & AI search).
+const KNOWS_ABOUT = [
+  "LED displays",
+  "LED walls",
+  "LED screens",
+  "Digital signage",
+  "DOOH (digital out-of-home)",
+  "LED installation",
+  "LED rental",
+  "Display service and maintenance",
+] as const;
+
+// Logo as a referenceable ImageObject (Google prefers ImageObject with
+// dimensions for the knowledge-panel / rich-result logo).
+const LOGO_LD = {
+  "@type": "ImageObject",
+  "@id": `${SITE_URL}/#logo`,
+  url: `${SITE_URL}/logo.png`,
+  contentUrl: `${SITE_URL}/logo.png`,
+  width: 256,
+  height: 70,
+  caption: SITE_NAME,
+} as const;
+
+const ORG_DESCRIPTION =
+  "IM Vision designs, engineers, installs and services professional LED display solutions — for permanent installations and events across Europe.";
+
 export function organizationLd() {
   return {
     "@type": "Organization",
     "@id": `${SITE_URL}/#organization`,
     name: SITE_NAME,
+    legalName: CONTACT.legalName,
+    alternateName: "IM Vision LED",
     url: SITE_URL,
-    logo: `${SITE_URL}/logo.png`,
+    logo: LOGO_LD,
+    image: { "@id": `${SITE_URL}/#logo` },
+    description: ORG_DESCRIPTION,
     email: CONTACT.email,
     telephone: CONTACT.phoneE164,
+    vatID: CONTACT.vatID,
+    taxID: CONTACT.orgNumber,
+    identifier: {
+      "@type": "PropertyValue",
+      propertyID: "Organisationsnummer",
+      value: CONTACT.orgNumber,
+    },
     address: {
       "@type": "PostalAddress",
+      streetAddress: CONTACT.street,
+      postalCode: CONTACT.postalCode,
       addressLocality: CONTACT.locality,
       addressRegion: CONTACT.region,
       addressCountry: CONTACT.country,
     },
-    areaServed: { "@type": "Place", name: "Europe" },
+    location: [
+      { "@id": `${SITE_URL}/#localbusiness` },
+      { "@id": `${SITE_URL}/#localbusiness-stockholm` },
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: CONTACT.phoneE164,
+      email: CONTACT.email,
+      contactType: "sales",
+      areaServed: ["SE", "EU"],
+      availableLanguage: ["Swedish", "English"],
+    },
+    areaServed: [
+      { "@type": "Place", name: "Europe" },
+      { "@type": "Country", name: "Sweden" },
+    ],
+    knowsAbout: [...KNOWS_ABOUT],
     ...(SOCIAL_PROFILES.length ? { sameAs: SOCIAL_PROFILES } : {}),
   };
 }
@@ -104,28 +188,63 @@ export function localBusinessLd() {
   return {
     "@type": "LocalBusiness",
     "@id": `${SITE_URL}/#localbusiness`,
-    name: SITE_NAME,
+    name: `${SITE_NAME} — Jönköping (HQ)`,
+    legalName: CONTACT.legalName,
     url: SITE_URL,
     image: `${SITE_URL}${DEFAULT_OG_IMAGE}`,
-    logo: `${SITE_URL}/logo.png`,
+    logo: LOGO_LD,
+    description: ORG_DESCRIPTION,
     email: CONTACT.email,
     telephone: CONTACT.phoneE164,
+    vatID: CONTACT.vatID,
     priceRange: "$$$",
+    parentOrganization: { "@id": `${SITE_URL}/#organization` },
     address: {
       "@type": "PostalAddress",
+      streetAddress: CONTACT.street,
+      postalCode: CONTACT.postalCode,
       addressLocality: CONTACT.locality,
       addressRegion: CONTACT.region,
       addressCountry: CONTACT.country,
     },
-    areaServed: { "@type": "Place", name: "Europe" },
-    knowsAbout: [
-      "LED displays",
-      "LED walls",
-      "Digital signage",
-      "DOOH",
-      "LED installation",
-      "Display service and maintenance",
+    areaServed: [
+      { "@type": "Place", name: "Europe" },
+      { "@type": "Country", name: "Sweden" },
     ],
+    knowsAbout: [...KNOWS_ABOUT],
+    ...(SOCIAL_PROFILES.length ? { sameAs: SOCIAL_PROFILES } : {}),
+  };
+}
+
+/** Second physical location — Stockholm-area warehouse & office. */
+export function stockholmBusinessLd() {
+  return {
+    "@type": "LocalBusiness",
+    "@id": `${SITE_URL}/#localbusiness-stockholm`,
+    name: `${SITE_NAME} — Stockholm`,
+    legalName: CONTACT.legalName,
+    url: SITE_URL,
+    image: `${SITE_URL}${DEFAULT_OG_IMAGE}`,
+    logo: LOGO_LD,
+    description: "IM Vision warehouse and office serving the Stockholm region.",
+    email: CONTACT.email,
+    telephone: CONTACT.phoneE164,
+    vatID: CONTACT.vatID,
+    priceRange: "$$$",
+    parentOrganization: { "@id": `${SITE_URL}/#organization` },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: STOCKHOLM_LOCATION.street,
+      postalCode: STOCKHOLM_LOCATION.postalCode,
+      addressLocality: STOCKHOLM_LOCATION.locality,
+      addressRegion: STOCKHOLM_LOCATION.region,
+      addressCountry: STOCKHOLM_LOCATION.country,
+    },
+    areaServed: [
+      { "@type": "Place", name: "Stockholm" },
+      { "@type": "Country", name: "Sweden" },
+    ],
+    knowsAbout: [...KNOWS_ABOUT],
     ...(SOCIAL_PROFILES.length ? { sameAs: SOCIAL_PROFILES } : {}),
   };
 }
@@ -145,7 +264,7 @@ export function websiteLd() {
 export function siteGraphLd() {
   return {
     "@context": "https://schema.org",
-    "@graph": [organizationLd(), localBusinessLd(), websiteLd()],
+    "@graph": [organizationLd(), localBusinessLd(), stockholmBusinessLd(), websiteLd()],
   };
 }
 
@@ -183,6 +302,90 @@ export function pageBreadcrumbLd(locale: Locale, path: string, name: string) {
   ]);
 }
 
+/**
+ * CreativeWork schema for a project case study, bundled with a 3-level
+ * breadcrumb (Home > Projects > project) and the Organization as creator.
+ * Project pages are portfolio/case-study content, so CreativeWork is the
+ * correct type (not Product — nothing is sold on these pages).
+ */
+export function projectLd(
+  locale: Locale,
+  {
+    slug,
+    title,
+    description,
+    image,
+    category,
+    location,
+    imageCredit,
+    sourceUrl,
+    specs,
+    tags,
+  }: {
+    slug: string;
+    title: string;
+    description: string;
+    image?: string;
+    category?: string;
+    location?: string;
+    imageCredit?: string;
+    sourceUrl?: string;
+    specs?: Record<string, string | undefined>;
+    tags?: string[];
+  }
+) {
+  const url = localeUrl(locale, `/projects/${slug}/`);
+  const projectsName = locale === "sv" ? "Projekt" : "Projects";
+  const absImage = image ? (image.startsWith("http") ? image : `${SITE_URL}${image}`) : undefined;
+  const specProps = specs
+    ? Object.entries(specs)
+        .filter(([, v]) => Boolean(v))
+        .map(([name, value]) => ({ "@type": "PropertyValue", name, value }))
+    : [];
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        "@id": `${url}#project`,
+        name: title,
+        headline: title,
+        description,
+        url,
+        ...(absImage
+          ? {
+              image: {
+                "@type": "ImageObject",
+                url: absImage,
+                contentUrl: absImage,
+                caption: title,
+                // Attribution → correct image licensing/credit signal.
+                ...(imageCredit ? { creditText: imageCredit.replace(/^Image:\s*/i, "") } : {}),
+              },
+            }
+          : {}),
+        ...(category ? { genre: category } : {}),
+        ...(location ? { contentLocation: { "@type": "Place", name: location } } : {}),
+        ...(tags?.length ? { keywords: tags.join(", ") } : {}),
+        ...(specProps.length ? { additionalProperty: specProps } : {}),
+        // External authoritative reference to the same installation (E-E-A-T).
+        ...(sourceUrl ? { citation: sourceUrl } : {}),
+        about: { "@type": "Thing", name: "LED display installation" },
+        inLanguage: locale === "sv" ? "sv" : "en",
+        creator: { "@id": `${SITE_URL}/#organization` },
+        publisher: { "@id": `${SITE_URL}/#organization` },
+        copyrightHolder: { "@id": `${SITE_URL}/#organization` },
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+      },
+      breadcrumbLd([
+        { name: locale === "sv" ? "Hem" : "Home", url: localeUrl(locale, "/") },
+        { name: projectsName, url: localeUrl(locale, "/projects/") },
+        { name: title, url },
+      ]),
+    ],
+  };
+}
+
 /** Service schema for solution pages (sales, rental, service). */
 export function serviceLd(
   locale: Locale,
@@ -198,11 +401,22 @@ export function serviceLd(
       organizationLd(),
       {
         "@type": "Service",
+        "@id": `${SITE_URL}/#service-${serviceType.toLowerCase().replace(/\s+/g, "-")}`,
         name,
         description,
         serviceType,
+        category: "LED display solutions",
         provider: { "@id": `${SITE_URL}/#organization` },
-        areaServed: { "@type": "Place", name: "Europe" },
+        brand: { "@id": `${SITE_URL}/#organization` },
+        areaServed: [
+          { "@type": "Place", name: "Europe" },
+          { "@type": "Country", name: "Sweden" },
+        ],
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}${locale === "sv" ? "/sv" : ""}/contact/`,
+          availableLanguage: ["Swedish", "English"],
+        },
         inLanguage: locale === "sv" ? "sv" : "en",
       },
     ],

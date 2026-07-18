@@ -5,9 +5,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight, Phone } from "lucide-react";
+import { ArrowRight, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Locale } from "@/lib/i18n";
+import { CONTACT, STOCKHOLM_LOCATION } from "@/lib/seo";
 import { Input, Textarea, FileUpload, FormField, UploadedFile } from "@/components/ui/form";
 import { ContactTypeSelector } from "./contact/ContactTypeSelector";
 import { ContactSuccessState } from "./contact/ContactSuccessState";
@@ -213,7 +214,9 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
     <div className={compact ? "space-y-6" : "space-y-10 sm:space-y-12"}>
       {!compact && (
         <div className="text-center">
-          <h1 className="text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">{t.title}</h1>
+          {/* h2, not h1: the page's single h1 is the PageHeader above this form.
+              Two h1s on one page is a heading-hierarchy defect for SEO + a11y. */}
+          <h2 className="text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">{t.title}</h2>
           <p className="mx-auto mt-3 max-w-lg text-text-secondary">{t.subtitle}</p>
         </div>
       )}
@@ -399,6 +402,46 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
             <p className="mt-1 text-sm text-text-secondary">{t.callUs}</p>
           </div>
         </a>
+      )}
+
+      {/* Office addresses — Jönköping HQ + Stockholm, each links to Google Maps */}
+      {!compact && (
+        <div className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
+          {[
+            {
+              label: locale === "sv" ? "Huvudkontor" : "Head office",
+              street: CONTACT.street,
+              line2: `${CONTACT.postalCode} ${CONTACT.locality}`,
+            },
+            {
+              label: locale === "sv" ? "Lager & kontor" : "Warehouse & office",
+              street: STOCKHOLM_LOCATION.street,
+              line2: `${STOCKHOLM_LOCATION.postalCode} ${STOCKHOLM_LOCATION.locality}`,
+            },
+          ].map((office) => (
+            <a
+              key={office.street}
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                `${office.street}, ${office.line2}, Sweden`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${office.label}: ${office.street}, ${office.line2}`}
+              className="group flex items-start gap-4 rounded-2xl border border-border-subtle bg-bg-surface p-5 transition-all duration-200 hover:border-accent hover:bg-bg-elevated"
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-bg-elevated text-accent transition-colors group-hover:border-accent/30">
+                <MapPin size={18} strokeWidth={1.5} />
+              </span>
+              <div>
+                <p className="text-sm font-medium text-text-muted">{office.label}</p>
+                <p className="mt-0.5 font-semibold text-text-primary">{office.street}</p>
+                <p className="mt-0.5 text-sm text-text-secondary">
+                  {office.line2}, {locale === "sv" ? "Sverige" : "Sweden"}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
       )}
     </div>
   );

@@ -195,7 +195,7 @@ export function Header({
                   {CONTACT.phone}
                 </a>
                 <div className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
-                  Spånga, {locale === "sv" ? "Sverige" : "Sweden"} · Europe
+                  Jönköping · Stockholm · Europe
                 </div>
               </div>
             </nav>

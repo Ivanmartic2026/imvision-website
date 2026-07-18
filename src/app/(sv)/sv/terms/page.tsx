@@ -82,8 +82,8 @@ export default function SwedishTermsPage() {
               <h2 className="mt-12 text-2xl font-medium text-text-primary">9. Kontakt</h2>
               <p>
                 Vid frågor om dessa villkor, kontakta{" "}
-                <a href="mailto:sales@imvision.se" className="text-accent hover:underline">
-                  sales@imvision.se
+                <a href="mailto:info@imvision.se" className="text-accent hover:underline">
+                  info@imvision.se
                 </a>
                 .
               </p>

@@ -29,7 +29,7 @@ export default function SwedishPrivacyPage() {
             <div className="prose prose-lg prose-invert max-w-none text-text-secondary">
               <h2 className="text-2xl font-medium text-text-primary">1. Personuppgiftsansvarig</h2>
               <p>
-                IM Vision AB (”IM Vision”, ”vi”, ”oss”) är personuppgiftsansvarig för de
+                IM Vision Group AB, org.nr 556924-1200 (”IM Vision”, ”vi”, ”oss”) är personuppgiftsansvarig för de
                 personuppgifter som behandlas via denna webbplats och i samband med förfrågningar
                 om våra LED-lösningar.
               </p>
@@ -77,10 +77,10 @@ export default function SwedishPrivacyPage() {
               <h2 className="mt-12 text-2xl font-medium text-text-primary">8. Kontakt</h2>
               <p>
                 Frågor om integritet kan skickas till{" "}
-                <a href="mailto:sales@imvision.se" className="text-accent hover:underline">
-                  sales@imvision.se
+                <a href="mailto:info@imvision.se" className="text-accent hover:underline">
+                  info@imvision.se
                 </a>{" "}
-                eller per post till IM Vision, Spånga, Sverige.
+                eller per post till IM Vision Group AB, Herkulesvägen 56, 553 02 Jönköping, Sverige.
               </p>
             </div>
           </div>
