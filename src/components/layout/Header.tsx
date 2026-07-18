@@ -5,10 +5,11 @@ import { AnimatePresence, motion, useScroll } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Locale, localizedHref } from "@/lib/i18n";
 import { CONTACT } from "@/lib/seo";
+import { AnalyticsEvent, pushEvent } from "@/lib/analytics";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 
 const navLinks = [
@@ -119,6 +120,18 @@ export function Header({
               <span className="hidden xl:inline">{CONTACT.phone}</span>
               <span className="xl:hidden">{locale === "sv" ? "Ring" : "Call"}</span>
             </a>
+            <Link
+              href={localizedHref(locale, "/contact/")}
+              prefetch={false}
+              onClick={() => {
+                pushEvent(AnalyticsEvent.ctaClick, { source: "header", cta: "quote" });
+                pushEvent(AnalyticsEvent.quoteRequest, { source: "header" });
+              }}
+              className="group/cta inline-flex items-center gap-1.5 rounded-[12px_4px_12px_12px] border border-accent bg-accent px-4 py-2 text-[13px] font-semibold text-[#070807] shadow-[0_8px_24px_rgba(0,0,0,.18)] transition-[background-color,box-shadow,transform] duration-[500ms] ease-[cubic-bezier(.22,.61,.36,1)] hover:-translate-y-0.5 hover:bg-accent-soft hover:shadow-[0_12px_32px_rgba(0,0,0,.24)]"
+            >
+              {locale === "sv" ? "Få offert" : "Get a quote"}
+              <ArrowRight size={14} strokeWidth={2} className="transition-transform duration-[500ms] group-hover/cta:translate-x-[2px]" />
+            </Link>
             <LanguageSwitcher locale={locale} />
           </div>
 
@@ -185,7 +198,20 @@ export function Header({
                   </motion.div>
                 ))}
               </div>
-              <div className="mt-auto space-y-5 pt-8">
+              <div className="mt-auto space-y-4 pt-8">
+                <Link
+                  href={localizedHref(locale, "/contact/")}
+                  prefetch={false}
+                  onClick={() => {
+                    setMobileOpen(false);
+                    pushEvent(AnalyticsEvent.ctaClick, { source: "mobile_menu", cta: "quote" });
+                    pushEvent(AnalyticsEvent.quoteRequest, { source: "mobile_menu" });
+                  }}
+                  className="flex items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent bg-accent px-5 py-4 text-base font-semibold text-[#070807] shadow-[0_10px_30px_rgba(0,0,0,.24)] transition-transform active:scale-[.98]"
+                >
+                  {locale === "sv" ? "Få offert" : "Get a quote"}
+                  <ArrowRight size={17} strokeWidth={2} />
+                </Link>
                 <a
                   href={`tel:${CONTACT.phoneE164}`}
                   onClick={() => setMobileOpen(false)}
