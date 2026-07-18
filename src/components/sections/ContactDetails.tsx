@@ -20,7 +20,7 @@ export function ContactDetails({ locale = "en" }: { locale?: Locale }) {
   const isSv = locale === "sv";
 
   return (
-    <div className="mb-12 lg:mb-16">
+    <div className="mt-16 border-t border-border-subtle pt-16 lg:mt-20 lg:pt-20">
       <p className="eyebrow text-accent">{isSv ? "Direktkontakt" : "Direct contact"}</p>
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <a

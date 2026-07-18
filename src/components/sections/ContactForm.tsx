@@ -1,19 +1,19 @@
 "use client";
 
-import { useState, useMemo, useId, useEffect } from "react";
+import { useState, useMemo, useId, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight, Phone, MapPin } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Locale } from "@/lib/i18n";
-import { CONTACT, STOCKHOLM_LOCATION } from "@/lib/seo";
 import { Input, Textarea, FileUpload, FormField, UploadedFile } from "@/components/ui/form";
 import { ContactTypeSelector } from "./contact/ContactTypeSelector";
 import { ContactSuccessState } from "./contact/ContactSuccessState";
 import { ContactErrorState } from "./contact/ContactErrorState";
 import { ContactCategory } from "./contact/types";
+import { AnalyticsEvent, pushEvent } from "@/lib/analytics";
 
 const contactSchema = z.object({
   category: z.enum(["buy", "rental", "service"]),
@@ -34,15 +34,30 @@ interface ContactFormProps {
   locale?: Locale;
   compact?: boolean;
   defaultCategory?: ContactCategory;
+  /** Hide the 3-card category selector (use with defaultCategory for a single-purpose form). */
+  hideSelector?: boolean;
 }
 
-export function ContactForm({ locale = "en", compact = false, defaultCategory }: ContactFormProps) {
+export function ContactForm({
+  locale = "en",
+  compact = false,
+  defaultCategory,
+  hideSelector = false,
+}: ContactFormProps) {
   const [selectedCategory, setSelectedCategory] = useState<ContactCategory | null>(defaultCategory ?? null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const formId = useId();
+  const started = useRef(false);
+
+  // form_start – vid första interaktionen med formuläret (ingen PII).
+  const handleFirstInteraction = () => {
+    if (started.current) return;
+    started.current = true;
+    pushEvent(AnalyticsEvent.formStart, { form_id: "contact" });
+  };
 
   const categories = useMemo(
     () => ({
@@ -189,6 +204,16 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
       const res = await fetch("/api/contact/", { method: "POST", body: formData });
       if (!res.ok) throw new Error("Request failed");
       setIsSuccess(true);
+
+      // Konverteringsmätning (endast kategori – aldrig namn/e-post/telefon/fritext).
+      pushEvent(AnalyticsEvent.formSubmit, { form_id: "contact", category: data.category });
+      pushEvent(AnalyticsEvent.generateLead, { form_id: "contact", category: data.category });
+      pushEvent(
+        data.category === "service"
+          ? AnalyticsEvent.bookService
+          : AnalyticsEvent.quoteRequest,
+        { form_id: "contact", category: data.category },
+      );
     } catch {
       setSubmitError(true);
     } finally {
@@ -221,8 +246,10 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
         </div>
       )}
 
-      {/* Selector */}
-      <ContactTypeSelector locale={locale} selected={selectedCategory} onSelect={selectCategory} />
+      {/* Selector — hidden when the form is locked to a single category */}
+      {!hideSelector && (
+        <ContactTypeSelector locale={locale} selected={selectedCategory} onSelect={selectCategory} />
+      )}
 
       {/* Expanded form */}
       <AnimatePresence>
@@ -236,6 +263,8 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
           >
             <form
               onSubmit={handleSubmit(onSubmit)}
+              onFocusCapture={handleFirstInteraction}
+              onChangeCapture={handleFirstInteraction}
               className="mx-auto max-w-2xl space-y-5 rounded-3xl border border-border-subtle bg-bg-surface p-6 shadow-[0_12px_40px_rgba(0,0,0,.05)] sm:p-10"
             >
               <input type="hidden" {...register("category")} value={selectedCategory} />
@@ -386,63 +415,6 @@ export function ContactForm({ locale = "en", compact = false, defaultCategory }:
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Direct contact — below the three category cards */}
-      {!compact && (
-        <a
-          href={`tel:${t.phone.replace(/\s/g, "")}`}
-          className="group mx-auto flex max-w-md items-start gap-4 rounded-2xl border border-border-subtle bg-bg-surface p-5 transition-all duration-200 hover:border-accent hover:bg-bg-elevated"
-        >
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-bg-elevated text-accent transition-colors group-hover:border-accent/30">
-            <Phone size={18} strokeWidth={1.5} />
-          </span>
-          <div>
-            <p className="text-sm font-medium text-text-muted">{t.helpNow}</p>
-            <p className="mt-0.5 text-lg font-semibold text-text-primary">{t.phone}</p>
-            <p className="mt-1 text-sm text-text-secondary">{t.callUs}</p>
-          </div>
-        </a>
-      )}
-
-      {/* Office addresses — Jönköping HQ + Stockholm, each links to Google Maps */}
-      {!compact && (
-        <div className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
-          {[
-            {
-              label: locale === "sv" ? "Huvudkontor" : "Head office",
-              street: CONTACT.street,
-              line2: `${CONTACT.postalCode} ${CONTACT.locality}`,
-            },
-            {
-              label: locale === "sv" ? "Lager & kontor" : "Warehouse & office",
-              street: STOCKHOLM_LOCATION.street,
-              line2: `${STOCKHOLM_LOCATION.postalCode} ${STOCKHOLM_LOCATION.locality}`,
-            },
-          ].map((office) => (
-            <a
-              key={office.street}
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                `${office.street}, ${office.line2}, Sweden`
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${office.label}: ${office.street}, ${office.line2}`}
-              className="group flex items-start gap-4 rounded-2xl border border-border-subtle bg-bg-surface p-5 transition-all duration-200 hover:border-accent hover:bg-bg-elevated"
-            >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-bg-elevated text-accent transition-colors group-hover:border-accent/30">
-                <MapPin size={18} strokeWidth={1.5} />
-              </span>
-              <div>
-                <p className="text-sm font-medium text-text-muted">{office.label}</p>
-                <p className="mt-0.5 font-semibold text-text-primary">{office.street}</p>
-                <p className="mt-0.5 text-sm text-text-secondary">
-                  {office.line2}, {locale === "sv" ? "Sverige" : "Sweden"}
-                </p>
-              </div>
-            </a>
-          ))}
-        </div>
-      )}
     </div>
   );
 }

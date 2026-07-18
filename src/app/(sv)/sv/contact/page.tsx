@@ -48,8 +48,8 @@ export default function SwedishContactPage() {
         />
         <section className="theme-light section section-space bg-background !pt-12 md:!pt-16 lg:!pt-20">
           <div className="section-inner">
-            <ContactDetails locale="sv" />
             <ContactForm locale="sv" />
+            <ContactDetails locale="sv" />
           </div>
         </section>
       </main>

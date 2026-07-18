@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Locale, localizedHref } from "@/lib/i18n";
 import { SOCIAL_LINKS, CONTACT, STOCKHOLM_LOCATION } from "@/lib/seo";
 import { SOCIAL_ICONS } from "@/components/ui/social-icons";
+import { CookieSettingsLink } from "@/components/providers/CookieSettingsLink";
 
 const footerGroups: Array<{
   title: Record<Locale, string>;
@@ -125,6 +126,8 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
               <Link href={localizedHref(locale, "/terms/")} prefetch={false} className="transition-colors hover:text-text-primary">
                 {locale === "sv" ? "Användarvillkor" : "Terms"}
               </Link>
+              <span aria-hidden className="text-border-subtle">|</span>
+              <CookieSettingsLink locale={locale} />
             </div>
           </div>
         </div>

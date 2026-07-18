@@ -1,15 +1,16 @@
 "use client";
 
-import { Headphones, Settings, ShieldCheck, Zap, ArrowRight, CheckCircle } from "lucide-react";
+import { useState } from "react";
+import { Headphones, Settings, ShieldCheck, Zap, ArrowRight } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
-import { ServiceForm } from "@/components/sections/ServiceForm";
+import { ContactForm } from "@/components/sections/ContactForm";
 import { Reveal } from "@/components/effects/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/effects/StaggerReveal";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { Locale, localizedHref } from "@/lib/i18n";
+import { Locale } from "@/lib/i18n";
 import { serviceLd } from "@/lib/seo";
 
 const copy = {
@@ -163,12 +164,54 @@ const copy = {
 
 export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
   const t = copy[locale];
+  const [ticketOpen, setTicketOpen] = useState(false);
+
+  const ticket = {
+    heading: locale === "sv" ? "Anmäl ett serviceärende" : "Report a service ticket",
+    body:
+      locale === "sv"
+        ? "Har du ett tekniskt problem eller behöver support på en installation? Öppna ett serviceärende så återkommer vårt team så snart som möjligt."
+        : "Have a technical issue or need support on an installation? Open a service ticket and our team will get back to you as soon as possible.",
+    button: locale === "sv" ? "Anmäl serviceärende" : "Report a service ticket",
+  };
 
   return (
     <>
       <Header locale={locale} />
       <main id="main-content">
         <PageHeader label={t.label} title={t.title} description={t.description} />
+
+        {/* Service ticket — first thing on the page. A single clear CTA that
+            reveals the (category-locked) service enquiry form on click. */}
+        <section
+          id="service-enquiry"
+          className="theme-light section bg-background scroll-mt-24 !pt-12 !pb-16 md:!pt-16 lg:!pt-20"
+        >
+          <div className="section-inner">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">
+                {ticket.heading}
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-text-secondary">{ticket.body}</p>
+              {!ticketOpen ? (
+                <div className="mt-8 flex justify-center">
+                  <Button
+                    type="button"
+                    onClick={() => setTicketOpen(true)}
+                    size="large"
+                    icon={<ArrowRight size={18} />}
+                  >
+                    {ticket.button}
+                  </Button>
+                </div>
+              ) : (
+                <div className="mt-10 text-left">
+                  <ContactForm locale={locale} compact hideSelector defaultCategory="service" />
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
 
         <section className="section section-space" aria-labelledby="service-capabilities">
           <div className="section-inner">
@@ -190,64 +233,6 @@ export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
             </StaggerReveal>
           </div>
         </section>
-
-        <section className="section section-space bg-bg-elevated">
-          <div className="section-inner">
-            <div className="mb-16 max-w-3xl">
-              <Reveal>
-                <h2 className="text-4xl font-[470] leading-[1.08] tracking-[-0.04em] text-text-primary sm:text-5xl">
-                  {t.tiersTitle}
-                </h2>
-              </Reveal>
-            </div>
-
-            <div className="grid gap-6 lg:grid-cols-3">
-              {t.tiers.map((tier, index) => (
-                <Reveal key={tier.name} delay={index * 0.1}>
-                  <div className="premium-card h-full bg-background p-8">
-                    <h3 className="text-xl font-medium text-text-primary">{tier.name}</h3>
-                    <p className="mt-2 font-mono text-2xl font-medium text-accent">{tier.price}</p>
-                    <ul className="mt-6 space-y-3">
-                      {tier.features.map((feature) => (
-                        <li
-                          key={feature}
-                          className="flex items-start gap-3 text-sm text-text-secondary"
-                        >
-                          <CheckCircle size={18} className="mt-0.5 shrink-0 text-accent" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section section-space">
-          <div className="section-inner">
-            <div className="light-gate border border-border-subtle bg-[radial-gradient(circle_at_50%_0%,rgba(145,169,161,0.08),transparent_50%)] p-10 text-center lg:p-20">
-              <Reveal>
-                <h2 className="text-4xl font-[470] tracking-[-0.04em] text-text-primary sm:text-5xl">
-                  {t.ctaTitle}
-                </h2>
-                <p className="mx-auto mt-4 max-w-2xl text-lg text-text-secondary">{t.ctaBody}</p>
-                <div className="mt-8 flex justify-center">
-                  <Button
-                    href={localizedHref(locale, "/contact/")}
-                    size="large"
-                    icon={<ArrowRight size={18} />}
-                  >
-                    {t.ctaButton}
-                  </Button>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </section>
-
-        <ServiceForm locale={locale} />
       </main>
       <Footer locale={locale} />
       <JsonLd

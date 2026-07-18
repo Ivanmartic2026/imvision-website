@@ -48,8 +48,8 @@ export default function ContactPage() {
         />
         <section className="theme-light section section-space bg-background !pt-12 md:!pt-16 lg:!pt-20">
           <div className="section-inner">
-            <ContactDetails />
             <ContactForm />
+            <ContactDetails />
           </div>
         </section>
       </main>
