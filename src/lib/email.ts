@@ -10,6 +10,8 @@ export interface LeadEmailInput {
   fields: { label: string; value: string }[];
   replyTo?: string;
   attachments?: LeadAttachment[];
+  /** Recipient override. Never accept this from the client — derive it server-side. */
+  to?: string;
 }
 
 function escapeHtml(value: string): string {
@@ -23,17 +25,20 @@ function escapeHtml(value: string): string {
  * Sends a lead/enquiry email server-side via Resend.
  * Configure in the environment:
  *   RESEND_API_KEY  (required)   — from resend.com
- *   MAIL_TO         (optional)   — recipient, defaults to info@imvision.se
+ *   MAIL_TO         (optional)   — default recipient, defaults to info@imvision.se
  *   MAIL_FROM       (optional)   — verified sender, e.g. "IM Vision <noreply@imvision.se>"
  *                                  (defaults to Resend's onboarding sender for testing)
+ *
+ * A caller-supplied `to` wins over MAIL_TO (used to route service cases to the
+ * service desk while everything else goes to the default inbox).
  */
-export async function sendLeadEmail({ subject, fields, replyTo, attachments }: LeadEmailInput) {
+export async function sendLeadEmail({ subject, fields, replyTo, attachments, to: toOverride }: LeadEmailInput) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     throw new Error("RESEND_API_KEY is not configured");
   }
 
-  const to = process.env.MAIL_TO || "info@imvision.se";
+  const to = toOverride || process.env.MAIL_TO || "info@imvision.se";
   const from = process.env.MAIL_FROM || "IM Vision Website <onboarding@resend.dev>";
   const resend = new Resend(apiKey);
 

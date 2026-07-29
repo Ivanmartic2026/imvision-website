@@ -85,7 +85,7 @@ export function ContactForm({
         value: "service" as const,
         title: locale === "sv" ? "Service & support" : "Service & support",
         submitLabel: locale === "sv" ? "Skicka serviceärende" : "Send support case",
-        recipient: "info@imvision.se",
+        recipient: "service@imvision.se",
         messagePlaceholder:
           locale === "sv"
             ? "Beskriv vad som har hänt, när felet uppstod och om installationen fortfarande är i drift."
@@ -190,6 +190,8 @@ export function ContactForm({
     try {
       const formData = new FormData();
       formData.append("category", config.title);
+      // Stable, unlocalised key — the server routes on this, not the display title.
+      formData.append("categoryKey", config.value);
       formData.append("name", data.name);
       formData.append("phone", data.phone);
       formData.append("email", data.email);

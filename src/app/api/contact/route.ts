@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 const MAX_TOTAL_ATTACHMENT_BYTES = 4 * 1024 * 1024;
 
 // Fields that must never appear in the email.
-const SKIP_FIELDS = new Set(["honeypot", "company-url", "recipient", "locale"]);
+const SKIP_FIELDS = new Set(["honeypot", "company-url", "recipient", "locale", "categoryKey"]);
 
 // Human labels for known field keys (used by both ContactForm and ServiceForm).
 const LABELS: Record<string, string> = {
@@ -37,6 +37,15 @@ const LABELS: Record<string, string> = {
 
 function prettify(key: string): string {
   return key.replace(/([A-Z])/g, " $1").replace(/^./, (c) => c.toUpperCase());
+}
+
+// Service cases go to the service desk, everything else to the default inbox.
+// Derived from the enquiry type server-side — the client's `recipient` field is
+// ignored (see SKIP_FIELDS) so the endpoint can't be used to mail arbitrary addresses.
+function recipientFor(type: string): string {
+  return /service/i.test(type)
+    ? process.env.MAIL_TO_SERVICE || "service@imvision.se"
+    : process.env.MAIL_TO || "info@imvision.se";
 }
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -104,12 +113,21 @@ export async function POST(req: NextRequest) {
   const type = String(form.get("category") ?? form.get("formType") ?? form.get("issueType") ?? "").trim();
   const subject = `New ${type || "enquiry"} from ${name} — imvision.se`;
 
+  // Prefer the stable category key; fall back to the (localised) display type.
+  const routingKey = String(form.get("categoryKey") ?? "").trim() || type;
+
   if (attachments.length) {
     fields.push({ label: "Attachments", value: `${attachments.length} file(s) attached` });
   }
 
   try {
-    await sendLeadEmail({ subject, fields, replyTo: email || undefined, attachments });
+    await sendLeadEmail({
+      subject,
+      fields,
+      replyTo: email || undefined,
+      attachments,
+      to: recipientFor(routingKey),
+    });
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[/api/contact] send failed:", err);
