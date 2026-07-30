@@ -422,3 +422,98 @@ produktion, konfiguration eller blockerade påståenden.
 
 ⚠️ **Men merga inte förrän Vercel-checkpointen är löst.** En merge till `main` går live
 omedelbart via auto-deploy, och ingenting i denna branch är verifierat mot produktionsdomänen.
+
+---
+
+## 19. Production release verification
+
+**Datum:** 2026-07-30, 19:14–19:18 UTC · **PR:** #2 · **Merge commit:** `92d7109`
+**Deployment:** `2hsQUNGbPkEXKHP9Ym8BGEFQizyU` — status **success**
+
+### Checkpoint
+
+| | |
+|---|---|
+| Före merge | **löst** — `HTTP/2 200`, ingen `x-vercel-mitigated`, noll challenge-markörer |
+| Efter merge | fortsatt rent — `mitigated=0` på samtliga kontrollerade URL:er |
+
+Merge genomfördes först **efter** att villkoret verifierats. HEAD var identisk med den
+slutgranskade commiten `04b7fa5`; PR var `MERGEABLE`/`CLEAN`; Vercel preview `success`; noll
+konfigurations- eller säkerhetsfiler i diffen.
+
+### Verifierat i produktion
+
+| Kontroll | Resultat |
+|---|---|
+| `/` | 200 · canonical `/` · `lang=en` · 1 H1 · noll challenge |
+| `/robots.txt` | 200 · `text/plain` · sitemap-referens finns · `Disallow: /api/` |
+| `/sitemap.xml` | 200 · giltig XML · **47 `<loc>`** · 0 dubbletter · 0 fel domän · 0 localhost/preview · `servicevillkor` finns |
+| `/llms.txt` | 200 · **22 markdown-länkar** · 0 lokala/preview · roll-projekt först · ParkSign ej beskriven som installation · driftposten ej som enskild installation |
+| Legacy-redirects | `/contact-us`→`/contact/` · `/service-and-support`→`/support/` · `/our-projects`→`/projects/` · `/felanmalan`→`/sv/support/` · `/installation`→`/service/` — samtliga 308, 2 hopp, slut 200, inga loopar |
+| `/login` | 404 — **avsiktligt**, kundportal saknas |
+| 8 sidstickprov | 200 · korrekta titlar (46–57 tecken) · beskrivningar 115–205 · canonical korrekt · hreflang `en,sv,x-default` · 1 H1 · JSON-LD parsar |
+| Projektroller | Visas endast där verifierade. `nordstan-facade` Konstruerat · Installerat, `ocean-outdoor-operations` Driftat · Övervakat. `the-icon` saknar rollrad |
+| Relaterade tjänster | Följer rollen: `/sv/sales/` respektive `/sv/service/`. Inga dubbletter, inga självlänkar |
+| Svenska faktavärden | `Göteborg, Sverige` · `Böjd utomhus-LED · 224 gjutna kabinett · 12 m radie` · `26,88 × 7,68 m` — noll engelska värden kvar |
+| JSON-LD vs synligt | Rollen identisk i HTML och schema, per språk |
+| `roleSource` | **0 förekomster** i renderad HTML |
+| Tomma rubriker | 0 |
+
+⚠️ **Två falska positiver i mina egna kontroller**, dokumenterade så de inte återupptäcks:
+rubriker i kort (`Permanent installations`, `Rental & Event` på startsidan; kortrubrikerna
+under *Relaterade projekt*) flaggas felaktigt av en kontroll som bara tittar på rubrikens
+*omedelbara* förälder. Farföräldern innehåller kortinnehållet. Startsidan rördes inte alls av
+denna release — noll av dess komponenter finns i diffen.
+
+### 🔴 LCP: render delay reproduceras
+
+**En** Lighthouse-körning på `https://imvision.se/service/`, simulerad mobil:
+
+| Mätvärde | Produktion | Lokal build (samma sida) |
+|---|---:|---:|
+| Performance | 72 | 90 |
+| LCP | **5,2 s** | 3,7 s |
+| FCP | 3,1 s | 0,9 s |
+| CLS | 0 | 0 |
+| TBT | 20 ms | 16 ms |
+| **Element render delay** | **2 233 ms** | **79 ms** |
+| TTFB | 65 ms | 4 ms |
+
+**LCP-element:** `We stay with you after install.` — H1-texten.
+Ingen challenge i svaret. 643 KB över 27 requests. Två externa requests (googletagmanager).
+
+**Svaret på den avgörande frågan är ja.** De ~2 097 ms som uppmättes före checkpointen var
+**inte** en artefakt — de reproduceras nu som 2 233 ms.
+
+**Men det bekräftar inte den ursprungliga hypotesen.** Två saker gäller samtidigt:
+
+1. **Symptomet är verkligt och reproducerbart i produktion.**
+2. **Den föreslagna orsaken är fortfarande motbevisad.** LCP-elementet är H1-texten, och den
+   är verifierat **inte** `opacity: 0` i den servergenererade HTML:en — på någon sida, i något
+   språk. `Reveal`/`StaggerReveal` döljer den inte.
+
+Den lokala miljön reproducerar inte beteendet (79 ms mot 2 233 ms), så orsaken kan bara
+isoleras mot produktion.
+
+**Ingen ändring gjord. Ingen designändring rekommenderas på nuvarande underlag.** Detta bör
+bli en separat, evidensbaserad felsökningsuppgift — inte fler mätningar i denna release.
+Rimliga hypoteser att pröva en i taget: typsnittsswap, hydreringskostnad över verklig
+nätverkslatens, eller samtyckesbannerns klientrendering.
+
+### Verifieringsnivåer
+
+| Nivå | Vad |
+|---|---|
+| **Verifierat i produktion** | Allt i tabellen ovan + LCP-mätningen |
+| **Verifierat på Vercel preview** | Bygget av `04b7fa5` (status success) |
+| **Endast lokalt verifierat** | Fullständig crawl av alla 47 sidor · samtliga 26 projektsidor · mobil 320/390px · tsc/eslint/build |
+| **Fortfarande ej verifierat** | Fullskalig produktionscrawl (medvetet ej körd — risk att återutlösa mitigeringen) · Core Web Vitals i fält (CrUX saknar data) · Search Console-effekter (kräver dagar) |
+
+### Kvarvarande risker
+
+- **LCP 5,2 s på mobil** — verkligt, reproducerat, orsak okänd. Ej releaseblockerande, men
+  det största kvarvarande tekniska problemet.
+- **Mitigeringen kan återkomma** om automatiserad trafik ökar igen. Håll produktionskontroller
+  sparsamma.
+- Innehållsdjupet på sju projektsidor och de tre `/about/`-påståendena är oförändrat blockerade
+  på uppgifter från verksamheten.

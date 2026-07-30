@@ -147,3 +147,22 @@ motiverad. Ingen designändring bör göras på denna grund.
 3. Cookie-bannern är LCP-element på `/` — den är klientrenderad och kan inte måla före
    hydration. Det är en genuin kandidat, men den rör GDPR-känslig kod och kräver eget beslut.
 4. `unused-javascript` ~1 050 ms och 784 KB totalvikt — bundlingsanalys, inte en snabbfix.
+
+---
+
+## 7. Uppföljning i produktion 2026-07-30 (efter release)
+
+När Vercel-checkpointen släppte kördes **en** mätning på `https://imvision.se/service/`.
+
+**Render delay reproduceras: 2 233 ms** (tidigare 2 097 ms). LCP 5,2 s, FCP 3,1 s, CLS 0,
+TBT 20 ms, TTFB 65 ms. LCP-element: H1-texten *"We stay with you after install."*
+
+Detta ändrar **inte** slutsatsen i §1–2. Två saker gäller samtidigt:
+
+- Symptomet är verkligt och reproducerbart i produktion.
+- Den hypotes som §2 testade är fortfarande motbevisad: H1 är inte `opacity: 0` i
+  server-HTML:en, så reveal-animationerna döljer den inte.
+
+Den lokala miljön reproducerar inte beteendet (79 ms mot 2 233 ms). **Orsaken kan därför
+bara isoleras mot produktion, en hypotes i taget.** Ingen ändring har gjorts och ingen
+designändring rekommenderas på nuvarande underlag.
