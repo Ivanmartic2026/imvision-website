@@ -622,7 +622,8 @@ verkliga, synliga omdömen på sidan — annars bryter det mot Googles riktlinje
 
 | Risk | Allvarlighet | Kommentar |
 |---|---|---|
-| **`llms.txt` regresserar vid deploy från `main`** | **Hög** | Produktion serverar markdown-länkar; `main` genererar nakna URL:er. Ändringen finns bara oincheckad i `~/Desktop/KimiV2`. Lighthouse: produktion 100, `main` 67. **Committa KimiV2:s version innan deploy.** |
+| **LCP 4,4–6,0 s på mobil** | **Hög** | Sajtens största tekniska problem (§11). Orsakas av reveal-animationer, inte av servern. Ej åtgärdat — kräver designbeslut |
+| Dubblett av `llms.txt`-ändringen i KimiV2 | Låg | Fixen ligger nu i branchen; samma ändring är fortfarande oincheckad i den andra klonen och bör kastas där efter merge |
 | Ingen fältdata för Core Web Vitals | Medel | CrUX har otillräcklig data (§13.6). Prestanda kan inte mätas i fält förrän trafiken ökar. |
 | Ingen prestandapoäng alls | Medel | Lighthouse-verktyget exkluderar Performance; PSI kräver API-nyckel |
 | Motstridiga uppgifter om deploy | **Hög** | `PROJECT.md` §7 säger manuell deploy (`npx vercel --prod`); tidigare sessionsanteckningar säger att Vercel↔GitHub-integrationen återkopplades 2026-07-18 och att push till `main` auto-deployar. Bekräfta vilket som gäller **innan** merge — annars riskerar en merge att gå live oavsiktligt. |
@@ -680,6 +681,10 @@ mot valfri URL för att reproducera tabellerna i §10 och §12.
 ## 19. Lista över alla commits
 
 ```
+051208d  docs: record lighthouse performance findings
+fe09e30  seo: improve metadata using search console evidence
+c83711c  seo: restore llms.txt markdown links (regression in main vs production)
+4fc0d2f  docs: add search console findings to seo audit
 9b532d7  seo: redirect English legacy URLs that Search Console shows still 404
 6a332bc  docs: flag the conflicting deploy-path information
 019f5a8  docs: add seo audit and roadmap
@@ -724,14 +729,14 @@ curl -s localhost:3111/    | grep -c servicevillkor      # 0
 # 6. Kontrollera mobil-overflow (regressionen som åtgärdades)
 #    Öppna /sv/ i DevTools @390px — ingen horisontell scroll
 
-# 7. ⛔ STOPP — committa llms.txt-ändringen från KimiV2 FÖRST
-#    Produktion kör markdown-länkar i llms.txt; main gör det inte.
-#    Utan detta steg regresserar en deploy sajtens AI-sökbarhet (§11).
-cd ~/Desktop/KimiV2 && git diff src/app/llms.txt/route.ts   # granska
-# git add src/app/llms.txt/route.ts && git commit -m "seo: keep llms.txt markdown links"
+# 7. Verifiera att llms.txt matchar produktion (regressionen är åtgärdad i branchen)
+curl -s localhost:3111/llms.txt > /tmp/a && curl -s https://imvision.se/llms.txt > /tmp/b
+diff /tmp/a /tmp/b && echo "identiska"
+#    OBS: samma ändring ligger fortfarande oincheckad i ~/Desktop/KimiV2.
+#    Efter merge kan den kastas där (git checkout -- src/app/llms.txt/route.ts),
+#    annars dyker den upp som en till synes orelaterad diff nästa gång.
 
 # 8. Merge
-cd ~/Desktop/imvision-website
 git checkout main
 git merge --no-ff seo/full-audit-and-optimization
 
