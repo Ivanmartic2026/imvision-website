@@ -28,8 +28,15 @@ Fem commits levererade. Under verifieringen **introducerade jag en regression**
 (horisontell overflow på mobil) som upptäcktes och åtgärdades innan arbetet
 avslutades — detaljer i §10.
 
-**Två faser kunde inte genomföras:** Search Console (§13) och Lighthouse-poäng
-(§11) är blockerade av åtkomstskäl som kräver dig.
+**Uppdatering 2026-07-30 — Search Console-data tillagd.** Åtkomsten löstes och §13 bygger nu
+på verklig trafikdata. Den gav ett fynd som är större än allt ovan: **förra webbplatsens
+engelska URL:er 404:ar fortfarande och drog 48 klick och ~1 950 exponeringar under tre
+månader** — på en sajt med 416 klick totalt. Åtgärdat i `9b532d7`. Datan visar också att
+76 % av trafiken är varumärkessökningar och att kommersiell icke-varumärkesefterfrågan i
+praktiken är noll (12 exponeringar på 28 dagar).
+
+⚠️ **Läs §11 innan du driftsätter.** `main` innehåller en regression av `llms.txt` relativt
+produktion, och en deploy härifrån skulle försämra sajtens AI-sökbarhet.
 
 ---
 
@@ -71,22 +78,39 @@ avslutades — detaljer i §10.
 | Playwright/Chromium 1228 | 7 sidtyper × mobil + desktop | ✅ |
 | Produktions-`robots.txt` / `sitemap.xml` | Direkthämtning | ✅ |
 | Google-sökresultat (konkurrenter) | 1 sökning, svenska marknaden | ✅ Begränsad |
-| Google Search Console | — | ❌ Blockerad (§13) |
+| **Google Search Console** | Domänproperty, 24 h / 28 d / 3 mån, 5 dimensioner, indexering, sitemap, CWV, 3 URL-inspektioner | ✅ 2026-07-30 |
+| **Lighthouse (lab)** | 5 sidtyper lokalt + produktion, via Chromium 150.0 / Lighthouse 13.4.0 | ✅ |
 | PageSpeed Insights API | — | ❌ 429, kräver API-nyckel |
-| CrUX fältdata | — | ❌ Kräver API-nyckel |
+| CrUX fältdata | — | ❌ **Finns inte** — otillräcklig trafik (§13.6) |
 
 ---
 
 ## 4. Search Console-perioder och filter
 
-**Inga.** Ingen GSC-data kunde hämtas. Se §13 för orsak och åtgärd.
+**Property:** `sc-domain:imvision.se` — **domänproperty** (verifierad domän, inte URL-prefix),
+åtkomst via kontot `ivan@imvision.se`. Söktyp: Webb. Inga filter utöver de som anges.
+Datafärskhet vid analysen: senaste uppdatering ~6,5 h innan körning; fullständig data t.o.m. **2026-07-27**.
 
-Detta innebär att följande delar av uppdraget **inte** kunde besvaras med data:
-queries med hög impression/låg CTR, sidor i position 4–20, kannibalisering,
-mobil-vs-desktop, land-för-land, indexeringsorsaker, faktisk CWV-fältdata.
-Rekommendationerna nedan bygger därför på crawl och SERP, inte på din trafik.
+| Period | Datumintervall | Klick | Exponeringar | CTR | Position |
+|---|---|---:|---:|---:|---:|
+| 24 timmar | 2026-07-28 – 07-29 | 2 | 44 | 4,5 % | 4,3 |
+| **28 dagar** | **2026-06-30 – 07-27** | **105** | **865** | **12,1 %** | **9,7** |
+| **3 månader** | **2026-04-28 – 07-27** | **416** | **2 880** | **14,4 %** | **7,9** |
 
----
+⚠️ **12 månader finns inte.** `num_of_days=365` returnerade samma 3-månadersfönster —
+propertyn exponerar ingen djupare historik (den skickades in 2026-07-17). Jämförelsen
+"senaste 12 månaderna mot föregående 12" kunde därför inte göras.
+
+⚠️ **Om trendberäkningen.** Jag läste absoluta värden per fönster i stället för att använda
+GSC:s inbyggda jämförelseläge. Trenden nedan är alltså härledd, inte avläst:
+
+- Föregående 63 dagar: (416 − 105) = 311 klick → **4,94 klick/dag**
+- Senaste 28 dagarna: 105 klick → **3,75 klick/dag** (**−24 %**)
+- Position försämrad: 9,7 senaste 28 d mot 7,9 i snitt över 3 mån
+
+**Tolka detta försiktigt.** Volymen är låg (105 klick), och fönstret 2026-06-30 – 07-27 är
+svensk semesterperiod. Nedgången är minst lika sannolikt säsongsbetingad som strukturell.
+Med en bastrafik på ~4 klick/dag krävs flera månader innan en trend är statistiskt meningsfull.
 
 ## 5. Viktigaste nulägesproblemen
 
@@ -254,30 +278,46 @@ Verifierat i Chromium vid 320px och 390px efter fixen: 9/9 testade sidor rena vi
 
 ## 11. Lighthouse-resultat
 
-❌ **Kunde inte köras.**
+**Labbdata.** Kört lokalt i Chromium 150.0 via Lighthouse **13.4.0**, `formFactor: mobile`,
+simulerad strypning (RTT 150 ms, 1 638 kbps, CPU ×4). Detta är **inte** fältdata och kan inte
+jämföras med Core Web Vitals i §13.6 — se den sektionen, där Google konstaterar att fältdata
+saknas helt.
 
-- PageSpeed Insights API returnerade `429 Too Many Requests` utan API-nyckel.
-- Jag lade inte till en API-nyckel eftersom du kräver godkännande för det.
-- Chrome DevTools MCP:s `lighthouse_audit` var blockerad av en upptagen
-  automationsprofil (samma orsak som §13).
+⚠️ **Prestandakategorin ingår inte.** Verktyget kör tillgänglighet, best practices, SEO och
+agentic browsing men exkluderar Performance. Det finns alltså fortfarande **ingen**
+prestandapoäng — varken lab eller fält. PageSpeed Insights returnerar 429 utan API-nyckel.
 
-**Vad jag mätte istället** — verkliga Chromium-mätvärden mot lokal produktionsbuild:
+### Lokal build från `main` + denna branch
 
-| Sida | Enhet | LCP | CLS |
-|---|---|---|---|
-| `/` | mobil | 488 ms | **0.0000** |
-| `/` | desktop | 60 ms | 0.0000 |
-| `/sales/` | mobil | 52 ms | 0.0000 |
-| `/projects/` | mobil | 128 ms | 0.0000 |
-| `/contact/` | mobil | 1112 ms | 0.0000 |
-| `/sv/support/` | mobil | 44 ms | 0.0000 |
-| `/sv/servicevillkor/` | mobil | 44 ms | 0.0000 |
+| Sida | Tillgänglighet | Best Practices | SEO | Agentic Browsing |
+|---|---:|---:|---:|---:|
+| `/` (startsida) | 100 | 100 | 100 | **67** |
+| `/projects/the-curve/` (projekt) | 100 | 100 | 100 | **67** |
+| `/service/` (tjänst) | 100 | 100 | 100 | **67** |
+| `/sv/servicevillkor/` (innehåll) | 100 | 100 | 100 | **67** |
+| `/contact/` (konvertering) | 100 | 100 | 100 | **67** |
 
-⚠️ Dessa siffror är från **localhost utan nätverksstrypning** och säger inget om
-verklig mobilprestanda. De visar att CLS är strukturellt noll och att inget
-renderingsblockerande fel finns — inget mer. Riktiga siffror kräver PSI/CrUX.
+### Produktion
 
----
+| Sida | Tillgänglighet | Best Practices | SEO | Agentic Browsing |
+|---|---:|---:|---:|---:|
+| `https://imvision.se/` | 100 | 100 | 100 | **100** |
+
+### ⚠️ Skillnaden är en regression i `main`, inte ett fel i produktion
+
+Den enda underkända revisionen lokalt är **`llms-txt`** — *"File does not appear to contain
+any links"*. Orsak: `src/app/llms.txt/route.ts` i `main` genererar nakna URL:er
+(`- Home: https://imvision.se/`), medan produktion serverar markdown-länkar
+(`- [Home](https://imvision.se/): overview…`).
+
+Produktion kör alltså **kod som inte finns i git**. Ändringen ligger oincheckad i den andra
+klonen `~/Desktop/KimiV2` (`M src/app/llms.txt/route.ts`) och har driftsatts manuellt därifrån.
+
+**Konsekvens:** att merga denna branch och driftsätta från `main` skulle **regressa llms.txt**
+från markdown-länkar till nakna URL:er och sänka Agentic Browsing från 100 till 67 — en
+försämring för AI-sök. Jag har medvetet **inte** kopierat in ändringen, eftersom det är
+pågående arbete i en annan klon och en kopia riskerar att fånga ett halvfärdigt tillstånd.
+Se §16 och handlingsplanens första rad.
 
 ## 12. Crawlresultat före och efter
 
@@ -297,26 +337,197 @@ sidor utanför sitemap.
 
 ## 13. Search Console-fynd
 
-❌ **Ingen åtkomst — uppdraget kunde inte genomföras.**
+Åtkomst löstes 2026-07-30 genom att avsluta en låst automationswebbläsare som höll
+Chromium-profilen; profilen (med Google-sessionen) återanvändes intakt. Inga irreversibla
+åtgärder utfördes: inga removals, ingen sitemap inskickad, inga behörighets- eller
+ägarskapsändringar, ingen massindexering.
 
-**Orsak, i tur och ordning:**
-1. Chrome DevTools MCP kunde inte starta: `The browser is already running for
-   ~/.cache/chrome-devtools-mcp/chrome-profile`. En annan process håller profilen.
-2. Även med åtkomst är den profilen en ren automationsprofil utan Google-inloggning.
-   GSC kräver din inloggade session.
-3. Alternativvägen — pluginens `gsc_query.py` via OAuth — kräver att Google
-   OAuth-uppgifter läggs upp, vilket är en API-nyckelåtgärd du måste godkänna.
+### 13.1 Trafiken är nästan helt varumärkesdriven
 
-Ingen av dessa kan jag lösa själv: alla tre kräver antingen din Google-inloggning
-(inkl. eventuell tvåfaktor) eller ditt godkännande att lägga till autentiseringsuppgifter.
+28 dagar, per fråga:
 
-**Inga Search Console-åtgärder har utförts.** Inga removals, ingen sitemap
-inskickad, inga behörighets- eller ägarskapsändringar.
+| Fråga | Klick | Expo | CTR | Position |
+|---|---:|---:|---:|---:|
+| imvision | 37 | 120 | 30,8 % | 22,1 |
+| im vision | 36 | 111 | 32,4 % | 2,3 |
+| im vision group ab | 6 | 18 | 33,3 % | 1,1 |
+| imvision login | 1 | 92 | 1,1 % | 2,4 |
+| södertull malmö | 0 | 52 | 0 % | 12,2 |
+| vision | 0 | 44 | 0 % | 6,4 |
+| södertull stockholm | 0 | 12 | 0 % | 7,5 |
+| digital signage solutions | 0 | 4 | 0 % | 13,8 |
+| led skärm installation stockholm | 0 | 2 | 0 % | 25,0 |
+| led display uthyrning event | 0 | 1 | 0 % | 11,0 |
 
-**När du löser åtkomsten, gör detta först:** skicka in den uppdaterade sitemapen
-(47 URL:er mot tidigare 42) och begär indexering av `/sv/servicevillkor/`.
+**80 av 105 klick (76 %) är varumärke** — inklusive felstavningar (`imbision`, `imvison`,
+`immvision`, `imd vision`). Icke-varumärke står för 25 klick och 507 exponeringar.
 
----
+Men den avgörande siffran är denna: **kommersiell icke-varumärkesefterfrågan är i praktiken
+noll.** Summerar man de frågor som faktiskt uttrycker köpintention — "digital signage
+solutions" (4), "led skärm installation stockholm" (2), "signage solutions" (2), "digital
+signage installation" (1), "digital display solutions" (1), "led display uthyrning event" (1),
+"digital signage companies" (1) — blir det **12 exponeringar på 28 dagar**. Resten av
+icke-varumärkestrafiken är brus (`vision`, `images`, `ja`, `nummer`) eller inloggningsintention.
+
+Det bekräftar §14: problemet är inte teknik, det är att det inte finns tillräckligt med
+innehåll för att ranka på kommersiella sökningar.
+
+### 13.2 Det största fyndet: gamla URL:er som 404:ar
+
+Sidrapporten visar att den enskilt största förlustkällan är den förra webbplatsens URL:er.
+3 månader, sidnivå:
+
+| Gammal URL | Klick | Expo | Position | Status idag |
+|---|---:|---:|---:|---|
+| `/contact-us` | 21 | 594 | 6,3 | ✅ omdirigerad → `/contact/` |
+| `/service-and-support` | 11 | 326 | 7,5 | ✅ → `/support/` |
+| `www/felanmalan` | 9 | 196 | 3,1 | ✅ → `/sv/support/` |
+| `www/installation` | 5 | 298 | 4,5 | ✅ → `/service/` |
+| `www/login` | 3 | 487 | 10,4 | ⛔ medvetet kvar (13.3) |
+| `www/inspiration` | 2 | 366 | 6,3 | ✅ → `/projects/` |
+| `/our-projects` | 0 | 166 | 7,4 | ✅ → `/projects/` |
+| `www/rentals` | 0 | 27 | 3,1 | ✅ → `/rental/` |
+| `www/register` | 0 | 14 | 4,6 | ⛔ medvetet kvar |
+| `/file/rental-agreement.pdf` | 0 | 13 | 11,3 | ✅ → `/rental/` |
+| `/cookies` | 0 | 5 | 3,4 | ✅ → `/privacy/` |
+| + `/work-with-us`, `www/term`, `www/rental-conditions`, `www/services`, `www/forgot-password` | 0 | 8 | — | ✅ utom forgot-password |
+
+**48 klick och ~1 950 exponeringar över tre månader landade på 404** — på en sajt som fick
+416 klick totalt. Åtgärdat i commit `9b532d7`.
+
+⚠️ Sidnivåexponeringar summerar inte till totalen (2 880) eftersom GSC deduplicerar över
+dimensioner. Andelsberäkningar mot totalen vore därför missvisande och görs inte här.
+
+De **svenska** legacy-URL:erna (`/kontakt/`, `/om/`, `/kop`, `/hyr-led-skarmar/`, `/kundcase/`,
+`/stc-habo/`, `/goteborgs-opera/`, `/MQ5`, `/produkt-kategori/…`) står kvar i GSC:s 404-lista
+men **fungerar redan** (verifierat 200). Deras genomsökningsdatum är feb–apr 2026, alltså före
+att redirectarna driftsattes. De försvinner vid nästa recrawl.
+
+### 13.3 `imvision login` — 487 exponeringar mot en portal som inte finns
+
+Den mest exponerade enskilda avsikten efter varumärket. `www.imvision.se/login` fick 3 klick
+och 487 exponeringar på tre månader i genomsnittsposition 10,4; frågan "imvision login" 92
+exponeringar på 28 dagar i position 2,4 med **1,1 % CTR**.
+
+Detta är **ingen metadatabrist**. Sidan rankar högt; användarna hittar bara inte det de söker,
+eftersom marknadssajten inte har någon kundportal. Att omdirigera till en marknadsföringssida
+vore en soft 404 och sämre än nuvarande 404. Subdomänerna `admin.imvision.se` (157 expo) och
+`new-admin.imvision.se` (18 expo) finns och rankar — men jag kan inte anta att de är rätt
+destination för kunder. **Affärsbeslut, se handlingsplanen.**
+
+### 13.4 Indexering
+
+| Status | Sidor |
+|---|---:|
+| **Indexerat** | **65** |
+| Ej indexerat | 42 |
+
+| Orsak | Sidor | Bedömning |
+|---|---:|---|
+| Hittades inte (404) | 19 | ⚠️ Validering **misslyckades**. Adresseras av `9b532d7` |
+| Utesluten av taggen noindex | 9 | ✅ Avsiktligt (8 utkastprojekt + 404-sidan) |
+| Alternativ sida med korrekt kanonisk tagg | 6 | ✅ Normalt för EN/SV-paren |
+| Sida med omdirigering | 4 | ✅ Förväntat |
+| Upptäckt – inte indexerad | 3 | Bevaka |
+| Genomsökt – inte indexerad | 1 | Bevaka |
+| Server-fel (5xx) | 0 | ✅ |
+| Dubblett utan användarvald kanonisk | 0 | ✅ |
+
+### 13.5 URL-inspektion (3 representativa URL:er)
+
+| | `/sv/servicevillkor/` | `/terms/` | `/sv/projects/sodertull-city/` |
+|---|---|---|---|
+| Finns på Google | ❌ **Nej** | ✅ Ja | ✅ Ja |
+| Indexeringsstatus | *Webbadressen är okänd för Google* | Indexerad | Indexerad |
+| Hänvisande sitemap | **Inga upptäckta** | — | — |
+| Hänvisande sida | **Inga identifierades** | — | — |
+| Senaste genomsökning | **Saknas** | — | — |
+| Användardeklarerad canonical | Saknas | — | — |
+| Google-vald canonical | Saknas | — | — |
+| HTTPS | — | ✅ | ✅ |
+| Menysökvägar | — | ✅ 1 giltigt objekt | ✅ 1 giltigt objekt |
+
+**Detta är exakt bevis för orphan-diagnosen i §5/H1.** Google har bokstavligen aldrig sett
+`/sv/servicevillkor/` — ingen sitemap pekar dit, ingen sida länkar dit, den har aldrig
+genomsökts. Commit `3080395` + `28f471d` adresserar båda upptäcktsvägarna.
+
+**Nyansering av §5/M2:** `/terms/` visade sig vara **indexerad** trots att den saknades i
+sitemap — footer-länken räckte för upptäckt. Sitemap-tillägget är fortfarande rätt, men
+den bristen var mindre allvarlig än jag först skrev.
+
+### 13.6 Sitemap, Core Web Vitals, HTTPS och förbättringar
+
+**Sitemap**
+
+| | |
+|---|---|
+| URL | `https://imvision.se/sitemap.xml` |
+| Inskickad | 2026-07-17 |
+| Senast läst | **2026-07-29** |
+| Status | Lyckades |
+| Upptäckta sidor | **42** |
+| Fel / varningar | Inga |
+
+Den uppdaterade versionen med 47 URL:er är ännu inte driftsatt, så Google läser fortfarande 42.
+
+**Core Web Vitals — det finns ingen fältdata**
+
+> *"Det finns inte tillräckligt med data om användning från de senaste 90 dagarna för denna
+> enhetstyp."* — för **både mobil och desktop**. Källa: Rapport om användarupplevelse i Chrome
+> (CrUX), uppdaterad 2026-07-28.
+
+Detta ersätter den tidigare noteringen om att CrUX skulle kräva API-nyckel: nyckeln hade inte
+hjälpt, **datan existerar inte**. Sajten har för lite trafik för att komma över CrUX tröskel.
+Praktisk följd: CWV kan inte mätas i fält förrän trafiken ökar väsentligt, och alla
+prestandapåståenden måste tills vidare märkas som labbdata.
+
+**HTTPS och strukturerad data** — URL-inspektionen rapporterar HTTPS ✅ och menysökvägar
+✅ (1 giltigt objekt per kontrollerad sida). Inga fel i förbättringsrapporterna.
+
+### 13.7 Länder och enheter (28 dagar)
+
+| Land | Klick | Expo | CTR | Position |
+|---|---:|---:|---:|---:|
+| Sverige | 86 | 428 | 20,1 % | 6,4 |
+| Danmark | 6 | 13 | 46,2 % | 3,2 |
+| Storbritannien | 3 | 16 | 18,8 % | 14,1 |
+| Kina | 3 | 9 | 33,3 % | 1,6 |
+| Kanada | 1 | 104 | 1,0 % | 3,1 |
+| USA | 1 | 73 | 1,4 % | 20,4 |
+
+**82 % av klicken kommer från Sverige.** Kanada och USA har hög exponering men noll
+substantiella klick — det är de generiska `vision`/`login`-frågorna, inte verklig efterfrågan.
+Trots att sajten positionerar sig mot hela Europa finns ingen mätbar europeisk efterfrågan
+utanför Norden ännu.
+
+| Enhet | Klick | Expo | CTR | Position |
+|---|---:|---:|---:|---:|
+| Desktop | 64 | 485 | 13,2 % | 13,3 |
+| Mobil | 40 | 355 | 11,3 % | **5,0** |
+| Surfplatta | 1 | 25 | 4,0 % | 5,8 |
+
+Mobil rankar **markant bättre** (position 5,0 mot desktops 13,3) men ger färre klick.
+Desktop dominerar volymen — rimligt för B2B-inköp.
+
+**Visningssätt i sökresultaten:** tabellen är tom — inga specialvisningar (rich results,
+sitelinks-rapportering) registrerade för perioden.
+
+### 13.8 Kannibalisering
+
+Ingen kannibalisering mellan EN- och SV-sidor: hreflang är komplett och ömsesidig, och
+GSC visar att paren rankar på skilda frågor i skilda länder.
+
+Däremot fanns **gammal-mot-ny-kannibalisering**, där förra sajtens URL:er konkurrerade med
+de nya om samma avsikt:
+
+| Avsikt | Ny sida | Gammal sida | Åtgärd |
+|---|---|---|---|
+| Kontakt | `/contact/` (8 expo, pos 1,1) | `/contact-us` (129 expo, pos 7,8) | Löst av `9b532d7` |
+| Support | `/support/` (18 expo, pos 4,0) | `/service-and-support` (58 expo, pos 8,3) | Löst av `9b532d7` |
+| Projekt | `/projects/` (11 expo, pos 4,3) | `/our-projects` (36 expo) + `/inspiration` (59 expo) | Löst av `9b532d7` |
+
+Detta är den korrekta lösningen: 301/308 konsoliderar signalerna till en URL. Ingen
+innehållssammanslagning eller canonical-ändring behövdes, och ingen gjordes.
 
 ## 14. Innehållsmöjligheter
 
@@ -370,7 +581,9 @@ verkliga, synliga omdömen på sidan — annars bryter det mot Googles riktlinje
 
 | Risk | Allvarlighet | Kommentar |
 |---|---|---|
-| Ingen GSC-verifiering av effekten | Medel | Ändringarna är låg risk men omätbara tills §13 löses |
+| **`llms.txt` regresserar vid deploy från `main`** | **Hög** | Produktion serverar markdown-länkar; `main` genererar nakna URL:er. Ändringen finns bara oincheckad i `~/Desktop/KimiV2`. Lighthouse: produktion 100, `main` 67. **Committa KimiV2:s version innan deploy.** |
+| Ingen fältdata för Core Web Vitals | Medel | CrUX har otillräcklig data (§13.6). Prestanda kan inte mätas i fält förrän trafiken ökar. |
+| Ingen prestandapoäng alls | Medel | Lighthouse-verktyget exkluderar Performance; PSI kräver API-nyckel |
 | Motstridiga uppgifter om deploy | **Hög** | `PROJECT.md` §7 säger manuell deploy (`npx vercel --prod`); tidigare sessionsanteckningar säger att Vercel↔GitHub-integrationen återkopplades 2026-07-18 och att push till `main` auto-deployar. Bekräfta vilket som gäller **innan** merge — annars riskerar en merge att gå live oavsiktligt. |
 | `PROJECT.md` är delvis inaktuell | Låg | §7 påstår att domänen inte är kopplad; §10–11 att GA4/social saknas. Produktion motsäger båda. |
 | Befintlig lint-varning | Låg | `ServicePageContent.tsx:10` — orörd |
@@ -405,11 +618,16 @@ medel och beroende av utförandekvalitet.
 
 | KPI | Källa | Baslinje | Kontrollintervall |
 |---|---|---|---|
-| Indexerade sidor | GSC → Sidor | Okänd (blockerad) | Varje vecka första månaden |
-| Sitemap-upptäckta URL:er | GSC → Sitemaps | 42 → **47** | Efter varje deploy |
-| CTR på `/projects/`, `/support/`, `/contact/` | GSC → Resultat | Okänd | 28 dagar efter deploy |
-| Genomsnittsposition, icke-varumärke | GSC | Okänd | Månadsvis |
-| LCP / INP / CLS mobil | CrUX | CLS strukturellt 0 | Månadsvis |
+| Indexerade sidor | GSC → Sidor | **65** (2026-07-30) | Varje vecka första månaden |
+| Ej indexerade, orsak "Hittades inte (404)" | GSC → Sidor | **19** | Varje vecka tills 0 |
+| Sitemap-upptäckta URL:er | GSC → Sitemaps | **42** → mål 47 | Efter varje deploy |
+| Klick / exponeringar, 28 d | GSC → Resultat | **105 / 865** | Månadsvis |
+| Genomsnittlig CTR / position, 28 d | GSC → Resultat | **12,1 % / 9,7** | Månadsvis |
+| Klick från gamla 404-URL:er | GSC → Resultat, sidor | **48 klick / 3 mån → mål 0** | Månadsvis |
+| Andel varumärkestrafik | GSC → Resultat, frågor | **76 %** → mål sjunkande | Kvartalsvis |
+| Kommersiella icke-varumärkesexponeringar | GSC → Resultat, frågor | **12 / 28 d** | Månadsvis |
+| LCP / INP / CLS mobil | CrUX via GSC | **Ingen data** (otillräcklig trafik) | Kvartalsvis tills data finns |
+| Lighthouse Agentic Browsing | Lokal Lighthouse 13.4.0 | prod **100**, `main` **67** | Vid varje release |
 | Trasiga länkar | Egen crawl | 0 | Vid varje release |
 | Sidor utanför sitemap | Egen crawl | 0 | Vid varje release |
 
@@ -421,6 +639,9 @@ mot valfri URL för att reproducera tabellerna i §10 och §12.
 ## 19. Lista över alla commits
 
 ```
+9b532d7  seo: redirect English legacy URLs that Search Console shows still 404
+6a332bc  docs: flag the conflicting deploy-path information
+019f5a8  docs: add seo audit and roadmap
 88f1603  seo: stop the language switcher linking to a non-existent English page
 ad38d2a  fix: wrap footer legal row (regression from the servicevillkor link)
 ea6c4a2  seo: give hub pages keyword-bearing titles
@@ -428,7 +649,8 @@ ea6c4a2  seo: give hub pages keyword-bearing titles
 3080395  seo: add legal pages and sv-only servicevillkor to sitemap
 ```
 
-Plus denna dokumentation.
+Plus denna dokumentation. Notera att `019f5a8` och `6a332bc` skrevs före
+Search Console-data fanns; §4, §11, §13, §16 och §18 är uppdaterade i efterhand.
 
 ---
 
@@ -461,11 +683,18 @@ curl -s localhost:3111/    | grep -c servicevillkor      # 0
 # 6. Kontrollera mobil-overflow (regressionen som åtgärdades)
 #    Öppna /sv/ i DevTools @390px — ingen horisontell scroll
 
-# 7. Merge
+# 7. ⛔ STOPP — committa llms.txt-ändringen från KimiV2 FÖRST
+#    Produktion kör markdown-länkar i llms.txt; main gör det inte.
+#    Utan detta steg regresserar en deploy sajtens AI-sökbarhet (§11).
+cd ~/Desktop/KimiV2 && git diff src/app/llms.txt/route.ts   # granska
+# git add src/app/llms.txt/route.ts && git commit -m "seo: keep llms.txt markdown links"
+
+# 8. Merge
+cd ~/Desktop/imvision-website
 git checkout main
 git merge --no-ff seo/full-audit-and-optimization
 
-# 8. ⚠️ Kontrollera deploy-vägen FÖRE merge
+# 9. ⚠️ Kontrollera deploy-vägen
 #    Uppgifterna går isär: PROJECT.md §7 säger manuell deploy, medan
 #    Vercel↔GitHub-integrationen enligt tidigare anteckningar återkopplades
 #    2026-07-18 så att push till main auto-deployar.
@@ -482,5 +711,12 @@ npx vercel --prod   # om manuell deploy gäller
 > för att göra branchen tillgänglig från båda — observera att en branch-push
 > kan trigga en **preview**-deploy, inte produktion.
 
-**Efter deploy:** skicka in `https://imvision.se/sitemap.xml` på nytt i Search
-Console och begär indexering av `https://imvision.se/sv/servicevillkor/`.
+**Efter deploy — i denna ordning:**
+
+1. Skicka in `https://imvision.se/sitemap.xml` på nytt (42 → 47 URL:er).
+2. Begär indexering av `https://imvision.se/sv/servicevillkor/` (Google har aldrig sett den).
+3. Gå till Sidor → *Hittades inte (404)* och klicka **Validera korrigering** — de 19 URL:erna
+   är nu antingen omdirigerade eller redan fungerande. Den förra valideringen misslyckades
+   just för att redirectarna saknades.
+4. Kontrollera efter ~2 veckor att `/contact-us`, `/service-and-support` och `/installation`
+   inte längre får exponeringar som egna URL:er, utan att trafiken flyttats till målsidorna.

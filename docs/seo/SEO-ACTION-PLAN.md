@@ -1,87 +1,108 @@
 # SEO-handlingsplan — imvision.se
 
-**Datum:** 2026-07-30 · **Branch:** `seo/full-audit-and-optimization`
+**Uppdaterad:** 2026-07-30 med verklig Search Console-data · **Branch:** `seo/full-audit-and-optimization`
 **Underlag:** [`SEO-AUDIT-AND-IMPLEMENTATION.md`](./SEO-AUDIT-AND-IMPLEMENTATION.md)
+**GSC-property:** `sc-domain:imvision.se` (domänproperty) · **Perioder:** 28 d (2026-06-30 – 07-27) och 3 mån (2026-04-28 – 07-27)
 
-Status: `Klar` = implementerad och verifierad i denna branch · `Blockerad` = kräver
-åtkomst eller beslut från dig · `Att göra` = redo att plockas upp.
-
-Förväntad effekt anges som riktning med evidensstyrka, inte som utlovad siffra.
+Status: `Klar` = implementerad och verifierad · `Blockerad` = kräver beslut eller underlag från dig · `Att göra` = redo.
+Förväntad effekt anges som **riktning med evidensstyrka**, aldrig som utlovad siffra.
 
 ---
 
-## Implementerat nu
+## ⛔ Gör detta först — annars orsakar en deploy en regression
 
-| Prio | Område | Problem / möjlighet | Berörd URL | Rekommenderad åtgärd | Status | Förväntad effekt | Arbetsinsats | Beroende | Verifieringsmetod |
-|---|---|---|---|---|---|---|---|---|---|
-| P1 | Indexering | Sidan är oupptäckbar: 200 OK men noll interna länkar och saknas i sitemap | `/sv/servicevillkor/` | Lägg till sitemap-post med sv + x-default (ingen EN-tvilling finns) | **Klar** `3080395` | Sidan blir indexerbar. Hög evidens — mekanisk orsak-verkan. 1–4 v efter recrawl | 30 min | — | `curl sitemap.xml \| grep servicevillkor` → 1 träff |
-| P1 | Interna länkar | Samma sida saknar helt inlänkning | `/sv/servicevillkor/` | Footer-länk, endast `locale === "sv"` | **Klar** `28f471d` | Från noll till två upptäcktsvägar. Hög evidens | 20 min | P1 ovan | `curl /sv/ \| grep -c servicevillkor` → 1; `curl /` → 0 |
-| P1 | Trasiga länkar | Språkväxlaren pekar mot `/servicevillkor/` som 404:ar | `/sv/servicevillkor/` | Fixa `getEnglishPath()` med lista över sv-unika routes | **Klar** `88f1603` | Eliminerar 404 i navigation. Hög evidens | 30 min | — | Chromium: EN-länk → `/`; `/sv/support/` → `/support/` |
-| P2 | Indexering | Fyra indexerbara legala sidor utanför sitemap (42 av 47 URL:er listade) | `/privacy/`, `/terms/` × 2 språk | Lägg till med priority 0.2, changefreq yearly | **Klar** `3080395` | Fullständig sitemap-täckning. Hög evidens | 15 min | — | `grep -c "<loc>"` → 47 |
-| P2 | Metadata | Innehållslösa titlar (19–20 tecken), bär inget sökord | `/projects/`, `/support/`, `/contact/` × 2 språk | Sökordsbärande titlar under 60 tecken | **Klar** `ea6c4a2` | CTR-lyft i SERP. Medel evidens. 2–6 v | 1 h | — | `<title>`-längd 42–58; H1 verifierat oförändrade |
-| P2 | Metadata | Svensk beskrivning 73 tecken mot engelskans 146 | `/sv/support/` | Utöka till paritet med EN-innehållet | **Klar** `ea6c4a2` | Bättre SERP-snippet. Medel evidens | 15 min | — | Längd 149 tecken |
-| P1 | Mobil | **Regression jag införde:** footerraden bröt inte rad → +47px overflow på alla `/sv/`-sidor | Alla `/sv/*` | `flex-wrap` + `gap-x`/`gap-y` | **Klar** `ad38d2a` | Återställer mobilvyn. Hög evidens | 15 min | — | Chromium 320px + 390px: 9/9 rena vid 390px |
+| # | Evidens | Berörd URL | Rekommenderad ändring | Förväntad riktning | Insats | Status | Beroende |
+|---|---|---|---|---|---|---|---|
+| 0 | Lighthouse 13.4.0: produktion Agentic Browsing **100**, build från `main` **67**. Underkänd revision `llms-txt`: *"File does not appear to contain any links"*. Produktion serverar markdown-länkar, `main` nakna URL:er. | `/llms.txt` | Committa den oincheckade ändringen i `~/Desktop/KimiV2` (`M src/app/llms.txt/route.ts`) till `main` **innan** denna branch mergas och driftsätts | Förhindrar försämring av AI-sökbarhet. **Hög** evidens — uppmätt | 5 min | **Blockerad** (din WIP) | Att du granskar och committar din egen ändring |
+
+Jag har medvetet inte kopierat in ändringen: det är pågående arbete i en annan klon och en kopia riskerar att fånga ett halvfärdigt tillstånd.
+
+---
+
+## Implementerat i denna branch
+
+| Prio | Område | Evidens från GSC | Fråga / URL | Klick | Expo | CTR | Pos | Ändring | Riktning | Insats | Status |
+|---|---|---|---|---:|---:|---:|---:|---|---|---|---|
+| P1 | Redirects | Sidrapport 3 mån + indexrapport "Hittades inte (404)": 19 URL:er, validering misslyckades | `/contact-us` | 21 | 594 | 3,5 % | 6,3 | 308 → `/contact/` | Återvinner klick som idag går till 404. **Hög** evidens. 2–6 v efter recrawl | 2 h totalt | **Klar** `9b532d7` |
+| P1 | Redirects | Samma | `/service-and-support` | 11 | 326 | 3,4 % | 7,5 | → `/support/` | Som ovan | — | **Klar** `9b532d7` |
+| P1 | Redirects | Samma | `www/felanmalan` | 9 | 196 | 4,6 % | 3,1 | → `/sv/support/` | Som ovan | — | **Klar** `9b532d7` |
+| P1 | Redirects | Samma | `www/installation` | 5 | 298 | 1,7 % | 4,5 | → `/service/` | Som ovan | — | **Klar** `9b532d7` |
+| P1 | Redirects | Samma | `www/inspiration` | 2 | 366 | 0,5 % | 6,3 | → `/projects/` | Som ovan | — | **Klar** `9b532d7` |
+| P1 | Redirects | Samma | `/our-projects` | 0 | 166 | 0 % | 7,4 | → `/projects/` | Som ovan | — | **Klar** `9b532d7` |
+| P2 | Redirects | Samma | `/rentals`, `/cookies`, `/term`, `/services`, `/work-with-us`, `/rental-conditions`, `rental-agreement.pdf` | 0 | 51 | 0 % | — | → närmaste sida | Städar indexet | — | **Klar** `9b532d7` |
+| P1 | Indexering | URL-inspektion: *"Webbadressen är okänd för Google"*, inga hänvisande sitemaps, ingen hänvisande sida, aldrig genomsökt | `/sv/servicevillkor/` | 0 | 0 | — | — | Sitemap-post + footer-länk | Från noll upptäcktsvägar till två. **Hög** evidens | 50 min | **Klar** `3080395`, `28f471d` |
+| P2 | Indexering | Sitemap listade 42 av 47 indexerbara URL:er. *(Nyans: `/terms/` visade sig ändå indexerad — footer-länken räckte)* | `/privacy/`, `/terms/` × 2 språk | 0 | 10 | — | — | Lades till i sitemap | Fullständig täckning. Medel evidens | 15 min | **Klar** `3080395` |
+| P2 | Metadata | Titlar på 19–20 tecken utan sökord | `/projects/`, `/support/`, `/contact/` × 2 språk | 0 | 34 | 0 % | 4,3–25,6 | Sökordsbärande titlar < 60 tecken | CTR-lyft. **Medel** evidens (låg volym att mäta på) | 1 h | **Klar** `ea6c4a2` |
+| P1 | Trasiga länkar | Språkväxlaren pekade mot `/servicevillkor/` (404) | `/sv/servicevillkor/` | — | — | — | — | `SV_ONLY_PATHS` i `getEnglishPath()` | Eliminerar 404 i navigation. Hög evidens | 30 min | **Klar** `88f1603` |
+| P1 | Mobil | Regression jag själv införde: +47px overflow på alla `/sv/`-sidor | Alla `/sv/*` | — | — | — | — | `flex-wrap` i footern | Återställer mobilvyn. Hög evidens | 15 min | **Klar** `ad38d2a` |
+
+---
+
+## Blockerade av affärsbeslut
+
+| Prio | Evidens | Fråga / URL | Klick | Expo | CTR | Pos | Rekommenderad ändring | Riktning | Insats | Status | Beroende |
+|---|---|---|---:|---:|---:|---:|---|---|---|---|---|
+| **P1** | Näst största avsikten efter varumärket. Sajten har ingen kundportal; `admin.imvision.se` (157 expo) och `new-admin.imvision.se` (18 expo) finns och rankar | `www/login` · frågan `imvision login` | 3 | 487 | 0,6 % | 10,4 | Bestäm destination: kundportal, supportsida med portallänk, eller behåll 404. **Redirect till en marknadsföringssida vore soft 404 — gör inte det** | Beror på beslut. Hög evidens för att problemet finns | 30 min när beslutat | **Blockerad** | Finns en kundportal? Var? |
+| P3 | Samma avsikt, mindre volym | `www/register`, `www/forgot-password` | 0 | 16 | 0 % | 4,6 | Följer beslutet ovan | — | 10 min | **Blockerad** | Som ovan |
 
 ---
 
 ## Quick wins — hög nytta, låg insats
 
-| Prio | Område | Problem / möjlighet | Berörd URL | Rekommenderad åtgärd | Status | Förväntad effekt | Arbetsinsats | Beroende | Verifieringsmetod |
-|---|---|---|---|---|---|---|---|---|---|
-| P1 | Search Console | Ny sitemap (47 URL:er) inte inskickad | `sitemap.xml` | Skicka in på nytt + begär indexering av `/sv/servicevillkor/` | **Blockerad** | Snabbare recrawl. Hög evidens | 10 min | GSC-åtkomst; deploy | GSC → Sitemaps visar 47 upptäckta |
-| P2 | Metadata | 18 projektsidor har bara egennamn som titel | `/projects/*`, `/sv/projects/*` | Lägg till typ + plats, t.ex. "The Curve — böjd LED-fasad, Täby Centrum" | Att göra | CTR + long-tail. Medel evidens | 3 h | Projektfakta | Titellängd 35–60; unik per språk |
-| P2 | Metadata | 11 svenska projektsidor har beskrivningar på 40–69 tecken | `/sv/projects/*` | Utöka till 140–155 tecken | Att göra | Bättre snippet. Medel evidens | 2 h | Projektfakta | Längdkontroll via crawl |
-| P3 | Struktur | Projektsidor saknar `datePublished` / `dateModified` | `/projects/*` | Lägg till i `projectLd()` när installationsår finns | Att göra | Färskhetssignal för AI-sök. Medel evidens | 1 h | Installationsår | Rich Results Test |
-| P3 | Mobil | Befintlig overflow vid 320px | `/sv/sales/` +10px, `/sv/projects/` +56px | Begränsa dekorativa `-right-[12%]`-element eller `overflow-x-clip` på wrapper | Att göra | Mindre UX-friktion på små skärmar. Låg-medel evidens | 1 h | Designbeslut | Chromium @320px |
-| P3 | Teknisk | `/_not-found/` svarar 200 på produktion (lokalt korrekt 404) | `/_not-found/` | Verifiera Vercel-routing; sidan är redan `noindex` så risken är låg | Att göra | Städsignal. Låg evidens | 30 min | — | `curl -I` → 404 |
+| Prio | Evidens | Fråga / URL | Klick | Expo | CTR | Pos | Rekommenderad ändring | Riktning | Insats | Status | Beroende |
+|---|---|---|---:|---:|---:|---:|---|---|---|---|---|
+| P1 | Sitemap läst 2026-07-29 med 42 URL:er; branchen ger 47 | `sitemap.xml` | — | — | — | — | Efter deploy: skicka in på nytt + begär indexering av `/sv/servicevillkor/` | Snabbare recrawl. Hög evidens | 10 min | Att göra | Deploy |
+| P1 | Indexrapport: 19 URL:er under "Hittades inte (404)", **validering misslyckades** | — | — | — | — | — | Efter deploy: klicka **Validera korrigering** i GSC | Rensar 404-posten. Hög evidens | 5 min | Att göra | Deploy + `9b532d7` |
+| P2 | 52 exponeringar, noll klick, sida 2. Sidan är verifierat indexerad och tekniskt frisk — det är ett positionsproblem, inte ett tekniskt | `södertull malmö` → `/sv/projects/sodertull-city/` | 0 | 52 | 0 % | 12,2 | Fördjupa sidan (idag ~80 ord) med plats, mått, år; intern länk från `/sv/projects/` | Position 12 → sida 1 är realistiskt. **Medel** evidens | 3 h | **Blockerad** | Projektfakta |
+| P2 | 18 projektsidor har bara egennamn som titel | `/projects/*` | 0 | ~60 | 0 % | 2–35 | Lägg till typ + plats i titeln | CTR + long-tail. Medel evidens | 3 h | **Blockerad** | Projektfakta |
+| P3 | `/service/` rankar djupt trots att det är en kärntjänst | `/service/` | 0 | 13 | 0 % | **25,6** | Tydligare sidfokus och intern länkning från `/`, `/sales/`, `/rental/` | Medel evidens | 2 h | Att göra | — |
+| P3 | Befintlig overflow vid 320px (reproduceras på produktion) | `/sv/sales/` +10px, `/sv/projects/` +56px | — | — | — | — | Begränsa dekorativa `-right-[12%]`-element | Låg-medel evidens | 1 h | Att göra | Designbeslut |
+| P3 | `/_not-found/` svarar 200 på produktion (lokalt korrekt 404); sidan är `noindex` | `/_not-found/` | — | — | — | — | Verifiera Vercel-routing | Låg evidens | 30 min | Att göra | — |
 
 ---
 
 ## Nästa 30 dagar
 
-| Prio | Område | Problem / möjlighet | Berörd URL | Rekommenderad åtgärd | Status | Förväntad effekt | Arbetsinsats | Beroende | Verifieringsmetod |
-|---|---|---|---|---|---|---|---|---|---|
-| P1 | Åtkomst | Ingen GSC-data → ingen mätbarhet | — | Ge åtkomst via inloggad Chrome-profil **eller** Google OAuth för `gsc_query.py` | **Blockerad** | Låser upp all trafikbaserad analys | 30 min | Din inloggning / 2FA | `/seo google` returnerar data |
-| P1 | Innehåll | Projektsidor är 65–102 ord — hälften av sajtens URL:er, minst bidrag | `/projects/*` | Fördjupa de 5 mest värdefulla till 250–400 ord: mått, pixelavstånd, år, uppdragsgivare, teknisk utmaning | Att göra | Största organiska hävstången. Medel evidens. 2–4 mån | 8 h | **Faktaunderlag från dig** | Ordräkning via crawl; position i GSC |
-| P2 | E-E-A-T | Ingen namngiven person eller expertis på sajten | Hela sajten | Lägg till författar-/expertprofil med `Person`-schema | Att göra | Tydligaste E-E-A-T-luckan. Medel evidens | 4 h | Vem som ska stå som avsändare | Rich Results Test; `Person` i grafen |
-| P2 | Förtroende | Konkurrent använder "500+ uthyrningar sedan 2014"; IM Vision kvantifierar inget | `/about/`, `/` | Lägg till verifierbara tal: antal installationer, driftade m², år i branschen | Att göra | Konvertering + citerbarhet. Medel evidens | 2 h | **Verkliga siffror från dig** | Synligt på sida; ej i schema utan belägg |
-| P3 | Mätning | Ingen baslinje för CWV-fältdata | — | Skaffa PageSpeed/CrUX API-nyckel | **Blockerad** | Möjliggör Lighthouse-uppföljning | 20 min | Ditt godkännande för API-nyckel | PSI returnerar 200 |
+| Prio | Evidens | Berörd URL | Klick | Expo | Rekommenderad ändring | Riktning | Insats | Status | Beroende |
+|---|---|---|---:|---:|---|---|---|---|---|
+| **P1** | **Kommersiell icke-varumärkesefterfrågan är 12 exponeringar på 28 dagar.** 76 % av klicken är varumärke. Projektsidorna är 65–102 ord och utgör halva sajtens URL:er | `/projects/*` | 3 | ~90 | Fördjupa de 5 mest värdefulla till 250–400 ord: mått, pixelavstånd, år, uppdragsgivare, teknisk utmaning | Enda vägen till icke-varumärkestrafik. **Medel** evidens, 2–4 mån | 8 h | **Blockerad** | **Faktaunderlag från dig** |
+| P2 | Inga frågor med köpintention rankar över position 10 utom `digital signage installation` (pos 2,0, 1 expo) och `digital display solutions` (pos 2,0, 1 expo) — mikrovolym men rätt avsikt | `/sales/`, `/service/` | 0 | 28 | Bygg ut mot "digital signage" som begrepp, inte bara "LED" — det är så marknaden söker på engelska | Medel evidens | 6 h | Att göra | — |
+| P2 | Ingen namngiven person på sajten; ingen `Person`-schema | Hela sajten | — | — | Författar-/expertprofil | Tydligaste E-E-A-T-luckan. Medel evidens | 4 h | **Blockerad** | Vem ska stå som avsändare |
+| P3 | CrUX: *otillräcklig data* för både mobil och desktop. Lighthouse saknar Performance-kategorin | — | — | — | Skaffa PageSpeed-API-nyckel för labbmätning över tid | Möjliggör uppföljning. Låg evidens för SEO-effekt | 20 min | **Blockerad** | Ditt godkännande för API-nyckel |
+| P3 | 82 % av klicken från Sverige; Kanada 104 expo / 1 klick, USA 73 / 1 — brus, inte efterfrågan | — | — | — | Prioritera svenska/nordiska sökningar före europeisk expansion i innehållet | Medel evidens | — | Att göra | — |
 
 ---
 
 ## Nästa 90 dagar
 
-| Prio | Område | Problem / möjlighet | Berörd URL | Rekommenderad åtgärd | Status | Förväntad effekt | Arbetsinsats | Beroende | Verifieringsmetod |
-|---|---|---|---|---|---|---|---|---|---|
-| P2 | Innehåll | Driftavtal/operations saknar landningssida trots att tjänsten finns | ny `/operations/` | Egen sida för drift och underhåll av LED-installationer | Att göra | Lågkonkurrens-segment. Medel evidens. 3–6 mån | 12 h | Tjänstebeskrivning | Indexerad + `Service`-schema |
-| P2 | Lokal SEO | Två fysiska platser har `LocalBusiness`-schema men ingen sida | ny `/jonkoping/`, `/stockholm/` | Lokala landningssidor med unikt innehåll — **inte** mallade dubbletter | Att göra | Lokal synlighet. Medel evidens | 10 h | Lokalt innehåll | Map-pack-synlighet; GSC land/region |
-| P2 | Lokal SEO | Google Business Profile nämns som ogjord i `PROJECT.md` §11 | — | Skapa/gör anspråk på GBP för båda adresserna | Att göra | Lokal synlighet + NAP-konsistens. Hög evidens | 2 h | Ägarverifiering | GBP live; NAP matchar `seo.ts` |
-| P3 | Topical authority | Inget redaktionellt innehåll om permanenta installationer | ny `/insights/` e.d. | 4–6 djupartiklar om det som differentierar er | Att göra | Topical authority. Medel evidens. 4–8 mån | 30 h | Redaktionell kapacitet | Impressions på icke-varumärke |
-| P3 | Digital PR | Få externa auktoritetslänkar | — | Arkitektur- och retailpress kring genomförda fasadprojekt | Att göra | Domänauktoritet. Låg-medel evidens, hög varians | Löpande | PR-resurs | Referring domains |
-| P3 | Dokumentation | `PROJECT.md` §7/§10/§11 är inaktuell (påstår att domänen inte är kopplad, GA4 saknas, `SOCIAL_PROFILES` tom — produktion motsäger alla tre) | `PROJECT.md` | Uppdatera handboken | Att göra | Undviker felaktiga beslut. Hög evidens | 1 h | — | Läsning mot produktion |
+| Prio | Evidens | Berörd URL | Rekommenderad ändring | Riktning | Insats | Status | Beroende |
+|---|---|---|---|---|---|---|---|
+| P2 | Driftavtal syns i portföljen (`ocean-outdoor-operations`, 2 expo, pos 28) men saknar landningssida | ny `/operations/` | Egen sida för drift och underhåll | Lågkonkurrenssegment. Medel evidens, 3–6 mån | 12 h | Att göra | Tjänstebeskrivning |
+| P2 | Två `LocalBusiness` i schemat, noll lokala sidor. `herkulesvägen 56` förekommer som fråga (1 expo, pos 9) | ny `/jonkoping/`, `/stockholm/` | Lokala sidor med unikt innehåll — **inte** mallade dubbletter | Lokal synlighet. Medel evidens | 10 h | Att göra | Lokalt innehåll |
+| P2 | Nämns som ogjord i `PROJECT.md` §11 | — | Skapa/gör anspråk på Google Business Profile för båda adresserna | Lokal synlighet + NAP. Hög evidens | 2 h | Att göra | Ägarverifiering |
+| P3 | Inget redaktionellt innehåll; topical authority saknas helt | ny `/insights/` | 4–6 djupartiklar om permanenta installationer | Medel evidens, 4–8 mån | 30 h | Att göra | Redaktionell kapacitet |
+| P3 | Få externa auktoritetslänkar | — | Digital PR mot arkitektur- och retailpress | Låg-medel evidens, hög varians | Löpande | Att göra | PR-resurs |
+| P3 | `PROJECT.md` §7/§10/§11 motsägs av produktion (domän kopplad, GA4 aktiv, `SOCIAL_PROFILES` ifylld) | `PROJECT.md` | Uppdatera handboken | Undviker felbeslut. Hög evidens | 1 h | Att göra | — |
 
 ---
 
 ## Beslut som väntar på dig
 
-1. **Search Console-åtkomst** — blockerar hela Fas 3. Antingen en Chrome-profil
-   med din Google-session eller OAuth-uppgifter till pluginen.
-2. **PageSpeed/CrUX API-nyckel** — blockerar Lighthouse-uppföljning.
-3. **Faktaunderlag för projektsidorna** — mått, år, uppdragsgivare, teknik.
-   Utan detta kan innehållsarbetet inte göras utan att uppfinna påståenden.
-4. **Vem som ska stå som namngiven expert** för E-E-A-T.
-5. **Om prisspann ska kommuniceras** — konkurrenter gör det och rankar på det.
+1. **Committa `llms.txt`-ändringen från KimiV2** — blockerar säker deploy (rad 0).
+2. **Destination för `/login`** — 487 exponeringar. Finns en kundportal, och är `admin.imvision.se` rätt adress för kunder?
+3. **Faktaunderlag för projektsidorna** — mått, år, uppdragsgivare, teknik. Utan detta kan innehållsarbetet inte göras utan att uppfinna påståenden, och innehåll är enda vägen till icke-varumärkestrafik.
+4. **Namngiven expert** för E-E-A-T.
+5. **PageSpeed-API-nyckel** — annars finns ingen prestandamätning alls.
+6. **Deploy-vägen** — `PROJECT.md` säger manuell deploy, tidigare anteckningar säger auto-deploy vid push till `main`. Avgör om en merge går live direkt.
 
 ---
 
 ## Vad jag medvetet inte gjorde
 
-- Skickade inte in något i Search Console (ingen åtkomst, och inga irreversibla åtgärder).
-- La inte till `Review`-, `Rating`- eller `AggregateRating`-schema — det finns inga
-  synliga omdömen på sajten, så det skulle bryta mot Googles riktlinjer.
-- Skapade inga programmatiska landningssidor.
-- Rörde inte affärslogik, prissättning, betalning eller autentisering.
-- Ändrade inget synligt innehåll eller varumärkets ton.
-- Åtgärdade inte den befintliga lint-varningen i `ServicePageContent.tsx:10` —
-  den ligger utanför uppdraget och skulle grumla diffen.
-- Mergade och driftsatte inte.
+- **Inga irreversibla åtgärder i Search Console.** Inga removals, ingen sitemap inskickad, ingen property borttagen, inga behörighets- eller ägarskapsändringar, ingen massbegäran om indexering. Endast läsning, filterbyten och tre URL-inspektioner.
+- **Inga Search Console-exporter i Git.** Siffrorna i rapporterna är sammanställda; råexporter ligger utanför repot.
+- **Ingen redirect för `/login`** — det vore en soft 404 utan ett verkligt portalmål.
+- **Ingen innehållskonsolidering eller canonical-ändring** — kannibaliseringen var gammal-mot-ny och löses korrekt av 308-redirects.
+- **Ingen kopiering av din oincheckade `llms.txt`-ändring.**
+- **Inget påhittat innehåll** — inga kundnamn, mått, årtal, priser, certifieringar eller resultat.
+- **Ingen merge, ingen push till `main`, ingen driftsättning.**
