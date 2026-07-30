@@ -71,6 +71,12 @@ const nextConfig: NextConfig = {
       ["/work-with-us", "/contact/"], //                  2 impressions, pos 9.5
       ["/term", "/terms/"], //                            2 impressions, pos 3.0
       ["/services", "/service/"], //                      1 impression,  pos 22.0
+      // Not a real page: Google turned a bare "support@imvision.se" string on the
+      // old site into a relative URL and has had it in the index since 2026-05-16.
+      // It is the only URL left in the "Hittades inte (404)" group that still 404s,
+      // and it blocks the group's validation from passing. A 404 would be defensible,
+      // but sending it to the support page costs nothing and clears the report.
+      ["/support@imvision.se", "/support/"],
     ];
 
     // Deliberately NOT redirected: /login (3 clicks, 487 impressions), /register
