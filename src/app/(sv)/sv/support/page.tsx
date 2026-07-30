@@ -6,8 +6,9 @@ import { pageMeta, pageBreadcrumbLd } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   locale: "sv",
   path: "/support/",
-  title: "Support",
-  description: "Support och kontaktvägar för IM Vision LED-installationer i hela Europa.",
+  title: "Support och service för LED-skärmar",
+  description:
+    "IM Visions supportcenter för LED-skärmar — vanliga frågor, dokumentation, fjärrövervakning och direktkontakt för service och underhåll i hela Europa.",
 });
 
 export default function SwedishSupportPage() {

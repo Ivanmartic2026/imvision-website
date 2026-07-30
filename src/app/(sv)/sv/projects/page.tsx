@@ -13,7 +13,7 @@ import { pageMeta, pageBreadcrumbLd } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   locale: "sv",
   path: "/projects/",
-  title: "Projekt",
+  title: "LED-projekt och installationer",
   description: "Utvalda LED-installationer, produkter och driftuppdrag från IM Vision i hela Europa.",
 });
 
