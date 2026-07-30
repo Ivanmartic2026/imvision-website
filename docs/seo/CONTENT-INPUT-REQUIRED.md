@@ -172,6 +172,51 @@ Se även [`SEO-NEXT-STEPS.md`](./SEO-NEXT-STEPS.md) §4.
 
 ---
 
+### Var påståendena finns i koden
+
+Samtliga tre står på **ett enda ställe**: `src/components/sections/about/AboutPageContent.tsx`
+— rad 24–26 (engelska) och 66–68 (svenska). Fyra förekomster totalt. Ingen dokumenterad
+metod, källa eller mätperiod finns någonstans i repot, och inget grundningsår heller.
+
+**Om ni väljer att ta bort "98% Client satisfaction"** — exakt ersättning, som kräver noll ny
+data och behåller fyra statistikrutor:
+
+| | Engelska | Svenska |
+|---|---|---|
+| Värde | `24/7` | `24/7` |
+| Etikett | `Support availability` | `Supporttillgänglighet` |
+
+Den uppgiften är redan publicerad på `/support/` och är därför verifierbar mot sajtens eget
+innehåll. Säg till så genomför jag bytet — jag gör det inte på eget initiativ, eftersom det
+är ett centralt marknadspåstående.
+
+---
+
+## D. Expertprofil — datamall
+
+Ingen namngiven person finns någonstans på sajten, och det är den tydligaste E-E-A-T-luckan.
+Jag skapar **inte** någon `Person`-komponent eller schema förrän riktiga uppgifter finns —
+platshållaridentiteter vore värre än ingenting.
+
+Fyll i för **en** verklig person, så bygger jag komponenten och schemat:
+
+| Fält | Krav | Ert svar |
+|---|---|---|
+| Namn | Fullständigt, som personen vill synas | |
+| Titel | Faktisk roll | |
+| Ansvarsområde | En mening | |
+| Kort bakgrund | 1–2 meningar, verifierbart | |
+| Expertområden | 3–5 stycken | |
+| År i branschen | Siffra, inte "lång erfarenhet" | |
+| Profilbild | Filnamn + rätt att publicera | |
+| LinkedIn eller annan verifierbar profil | URL | |
+| **Samtycke till publicering** | Ja/nej — obligatoriskt | |
+| Ska stå som granskare eller författare för | Vilka sidtyper: tjänstesidor / projektsidor / hela sajten | |
+
+Utan raden om samtycke publicerar jag ingenting.
+
+---
+
 ## Rekommenderad ordning om tiden är knapp
 
 1. **IM Visions roll på alla 13** — bör vara känt internt, kräver inget fältarbete, och är den
