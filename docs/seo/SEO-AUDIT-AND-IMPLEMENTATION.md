@@ -700,6 +700,67 @@ Search Console-data fanns; §4, §11, §13, §16 och §18 är uppdaterade i efte
 
 ---
 
+## 19b. Driftsättning — genomförd 2026-07-30
+
+Branchen mergades och gick live. Vercels Git-integration är aktiv, så merge till `main`
+byggde och promoverade automatiskt (bekräftat via commit-status `Vercel: success`).
+
+| Steg | Utfall |
+|---|---|
+| PR #1 mergad | `9835240`, 2026-07-30 08:29 UTC |
+| Deploy | Automatisk via Vercel, status `success` |
+| Efterföljande fix | `b3060ad` — redirect för `/support@imvision.se`, deployad separat |
+
+### Verifierat i produktion efter deploy
+
+| Kontroll | Före | Efter |
+|---|---|---|
+| Sitemap-URL:er | 42 | **47** |
+| Sidor crawlade / statuskoder | 54 / 100 % 200 | **55 / 100 % 200** |
+| Duplicerade EN/SV-titlar | 9 par | **0** |
+| Indexerbara utanför sitemap | 12 | **8** (samtliga avsedda noindex) |
+| Trasiga interna länkar | 0 | **0** |
+| Legacy-URL:er som 404:ar | 13 | **0** |
+| URL:er i GSC:s 404-grupp som löser sig | 0 / 19 | **19 / 19** |
+
+Alla tolv legacy-redirects landar på rätt destination. `/login`, `/register` och
+`/forgot-password` returnerar fortfarande 404 — avsiktligt, se §13.3.
+
+### Lighthouse i produktion efter deploy (mobil, Lighthouse 13.4.1)
+
+| Sida | Perf | A11y | BP | SEO | Agentic | LCP | CLS |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `/` | 69 | 100 | 100 | 100 | **100** | 6,1 s | 0 |
+| `/contact/` | 82 | 100 | 100 | 100 | **100** | 5,0 s | 0 |
+| `/service/` | 94 | 100 | 100 | 100 | **100** | 3,0 s | 0 |
+| `/projects/the-curve/` | 72 | 100 | 100 | 100 | **100** | 5,1 s | 0 |
+| `/sv/servicevillkor/` | 95 | 100 | 100 | 100 | **100** | 2,9 s | 0 |
+
+Agentic Browsing är 100 på samtliga — llms.txt-regressionen nådde alltså aldrig produktion.
+
+⚠️ **Läs inte in en prestandatrend i detta.** Enskilda körningar med simulerad strypning mot
+en live-sajt varierar kraftigt: `/service/` gick 73 → 94 och `/projects/the-curve/` 85 → 72
+mellan två körningar samma dag. Ändringarna i denna release rörde metadata, redirects och
+sitemap — inget som påverkar renderingsprestanda. LCP-problemet i §11 kvarstår oförändrat.
+
+### Search Console-åtgärder efter deploy
+
+| Åtgärd | Utfall |
+|---|---|
+| Sitemap inskickad på nytt | ✅ *"Webbplatskartan har skickats"*, daterad 2026-07-30 |
+| Indexering begärd för `/sv/servicevillkor/` | ✅ *"Webbadressen har lagts till i en prioriterad genomsökningskö"* |
+| Validering av 404-gruppen | ✅ *"Verifieringen startat"* — den tidigare startade 2026-07-17 och misslyckades 07-25 |
+
+**Sidan som var osynlig är nu upptäckt.** URL-inspektionen av `/sv/servicevillkor/` gick
+direkt från *"Webbadressen är okänd för Google"* till *"Upptäckt – inte indexerad för
+närvarande"*, med `https://imvision.se/sitemap.xml` listad som upptäcktskälla. Det är exakt
+den förflyttning fixen syftade till; indexering återstår och ligger hos Google.
+
+Inga irreversibla åtgärder utfördes: inga removals, ingen property borttagen, inga
+behörighets- eller ägarskapsändringar, ingen massbegäran om indexering.
+
+---
+
 ## 20. Exakta steg för granskning och sammanslagning
 
 ```bash
