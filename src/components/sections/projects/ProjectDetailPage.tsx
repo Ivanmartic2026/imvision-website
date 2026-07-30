@@ -8,6 +8,7 @@ import {
   Layers,
   Monitor,
   Wrench,
+  ArrowUpRight,
 } from "lucide-react";
 import type { ProjectRole } from "@/lib/projects";
 import { Header } from "@/components/layout/Header";
@@ -55,6 +56,7 @@ const labels = {
     detailsTitleVerified: "Project details",
     detailsTitleDraft: "Draft specification",
     relatedHeading: "Related projects",
+    relatedServicesHeading: "Related services",
     backLink: "Back to all projects",
     discussButton: "Discuss a similar project",
     homeCrumb: "Home",
@@ -78,6 +80,7 @@ const labels = {
     detailsTitleVerified: "Projektdetaljer",
     detailsTitleDraft: "Utkast till specifikation",
     relatedHeading: "Relaterade projekt",
+    relatedServicesHeading: "Relaterade tjänster",
     backLink: "Tillbaka till alla projekt",
     discussButton: "Diskutera ett liknande projekt",
     homeCrumb: "Hem",
@@ -124,6 +127,27 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
   const roleText = project.role?.length
     ? project.role.map((r) => roleLabels[locale][r]).join(" · ")
     : null;
+
+  // Related services are derived from the verified role, not from the fact that a
+  // project exists. Where no role is documented — the six Ocean Outdoor sites — the
+  // block is absent rather than implying IM Vision delivered a service it may not have.
+  const serviceLinks = (() => {
+    if (!project.role?.length) return [];
+    const wants = new Set<"sales" | "service">();
+    for (const r of project.role) {
+      if (r === "designed" || r === "engineered" || r === "delivered" || r === "installed")
+        wants.add("sales");
+      if (r === "serviced" || r === "operated" || r === "monitored") wants.add("service");
+    }
+    const labelsByLocale = {
+      en: { sales: "Permanent installations", service: "Service & operations" },
+      sv: { sales: "Permanenta installationer", service: "Service och drift" },
+    } as const;
+    return [...wants].map((k) => ({
+      href: localizedHref(locale, k === "sales" ? "/sales/" : "/service/"),
+      label: labelsByLocale[locale][k],
+    }));
+  })();
 
   // The body should only say what the hero hasn't. Two patterns occur in the data:
   // longDescription identical to description (four English entries), and
@@ -175,6 +199,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
             ...(copy.specsType ? { type: copy.specsType } : {}),
             ...(copy.specsSize ? { size: copy.specsSize } : {}),
           },
+          ...(roleText ? { role: roleText } : {}),
           tags: project.tags,
         })}
       />
@@ -352,6 +377,28 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                     )}
                   </ul>
                 </div>
+
+                {serviceLinks.length > 0 && (
+                  <div className="light-gate border border-border-subtle bg-bg-elevated p-7">
+                    <h3 className="text-sm font-semibold uppercase tracking-wider text-text-muted">
+                      {t.relatedServicesHeading}
+                    </h3>
+                    <ul className="mt-4 space-y-3">
+                      {serviceLinks.map((l) => (
+                        <li key={l.href}>
+                          <Link
+                            href={l.href}
+                            prefetch={false}
+                            className="inline-flex items-center gap-2 text-text-secondary transition-colors hover:text-text-primary"
+                          >
+                            <ArrowUpRight size={16} className="text-accent" />
+                            {l.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 <Button href={localizedHref(locale, "/contact/")} className="w-full">
                   {t.discussButton}
