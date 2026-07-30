@@ -125,10 +125,17 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
     ? project.role.map((r) => roleLabels[locale][r]).join(" · ")
     : null;
 
-  // True when longDescription carries information the hero description doesn't already state.
-  const bodyAddsSomething =
-    copy.longDescription.trim() !== "" &&
-    copy.longDescription.trim() !== copy.description.trim();
+  // The body should only say what the hero hasn't. Two patterns occur in the data:
+  // longDescription identical to description (four English entries), and
+  // longDescription opening with the description verbatim and then continuing
+  // (the Swedish Nordstan entry). Strip the repeated opening and render what's left.
+  const bodyText = (() => {
+    const body = copy.longDescription.trim();
+    const lead = copy.description.trim();
+    if (!body || body === lead) return null;
+    const rest = body.startsWith(lead) ? body.slice(lead.length).trim() : body;
+    return rest || null;
+  })();
 
   // Was `.slice(0, 2)`, so every project page showed the first two entries in the
   // array — The Icon and The Halo — regardless of what the page was about. Score by
@@ -261,9 +268,9 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                         page. Show the body only when it actually says something new; the
                         check is data-driven, so these pages start rendering it again the
                         moment real copy is written. */}
-                    {bodyAddsSomething && (
+                    {bodyText && (
                       <p className="mt-4 text-lg leading-relaxed text-text-secondary">
-                        {copy.longDescription}
+                        {bodyText}
                       </p>
                     )}
                     {project.sourceUrl && (
