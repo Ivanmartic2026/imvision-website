@@ -30,7 +30,8 @@ export default function SwedishProjectsPage() {
 
         <section className="section section-space">
           <div className="section-inner border-y border-border-subtle">
-            {projects.map((project, index) => {
+            {/* Same predicate as sitemap.ts — see the English twin for the reasoning. */}
+            {projects.filter((project) => project.verified === true).map((project, index) => {
               const copy = swedishProjectCopy[project.slug];
 
               return (
