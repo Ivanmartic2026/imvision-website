@@ -9,13 +9,15 @@ Förväntad effekt anges som **riktning med evidensstyrka**, aldrig som utlovad 
 
 ---
 
-## ⛔ Gör detta först — annars orsakar en deploy en regression
+## ⚠️ Största kvarvarande tekniska problemet: LCP
 
-| # | Evidens | Berörd URL | Rekommenderad ändring | Förväntad riktning | Insats | Status | Beroende |
-|---|---|---|---|---|---|---|---|
-| 0 | Lighthouse 13.4.0: produktion Agentic Browsing **100**, build från `main` **67**. Underkänd revision `llms-txt`: *"File does not appear to contain any links"*. Produktion serverar markdown-länkar, `main` nakna URL:er. | `/llms.txt` | Committa den oincheckade ändringen i `~/Desktop/KimiV2` (`M src/app/llms.txt/route.ts`) till `main` **innan** denna branch mergas och driftsätts | Förhindrar försämring av AI-sökbarhet. **Hög** evidens — uppmätt | 5 min | **Blockerad** (din WIP) | Att du granskar och committar din egen ändring |
+| Evidens | Berörd URL | Rekommenderad ändring | Förväntad riktning | Insats | Status | Beroende |
+|---|---|---|---|---|---|---|
+| Lighthouse 13.4.1 mot produktion, mobil: **LCP 4,4–6,0 s** mot gränsvärdet 2,5 s. `lcp-breakdown-insight` visar att LCP-elementet är **text** och att tiden är *element render delay*: `/service/` 2 097 ms, `/contact/` 1 612 ms. CLS 0, TBT 10–40 ms, TTFB 53–131 ms — allt annat är utmärkt | `/`, `/service/`, `/contact/` och alla sidor med reveal-animation | Låt innehåll **ovanför vikningen** måla direkt i stället för att starta på `opacity: 0` i `Reveal`/`StaggerReveal`. Behåll animationen för allt under vikningen | Störst enskild prestandavinst som finns. **Hög** evidens — uppmätt orsakssamband (sidan utan animation får 95/2,9 s, sidan med mest får 73/5,1 s) | 4 h | **Blockerad** | **Designbeslut** — ändrar sajtens synliga rörelse, som `PROJECT.md` behandlar som medvetet val |
+| Samma körning: `unused-javascript` ~281 KiB / 1 350 ms; `gtag.js` är 175 KB, största enskilda resursen | Alla sidor | Överväg att skjuta upp gtag.js till efter LCP | Medel evidens. Rör GDPR-känslig kod | 2 h | **Blockerad** | Får inte bryta Consent Mode v2 |
 
-Jag har medvetet inte kopierat in ändringen: det är pågående arbete i en annan klon och en kopia riskerar att fånga ett halvfärdigt tillstånd.
+**Not:** LCP kan inte verifieras i fält — CrUX saknar data för sajten (§13.6). Uppföljning
+måste ske med Lighthouse-labbkörningar tills trafiken ökar.
 
 ---
 
@@ -34,6 +36,8 @@ Jag har medvetet inte kopierat in ändringen: det är pågående arbete i en ann
 | P2 | Indexering | Sitemap listade 42 av 47 indexerbara URL:er. *(Nyans: `/terms/` visade sig ändå indexerad — footer-länken räckte)* | `/privacy/`, `/terms/` × 2 språk | 0 | 10 | — | — | Lades till i sitemap | Fullständig täckning. Medel evidens | 15 min | **Klar** `3080395` |
 | P2 | Metadata | Titlar på 19–20 tecken utan sökord | `/projects/`, `/support/`, `/contact/` × 2 språk | 0 | 34 | 0 % | 4,3–25,6 | Sökordsbärande titlar < 60 tecken | CTR-lyft. **Medel** evidens (låg volym att mäta på) | 1 h | **Klar** `ea6c4a2` |
 | P1 | Trasiga länkar | Språkväxlaren pekade mot `/servicevillkor/` (404) | `/sv/servicevillkor/` | — | — | — | — | `SV_ONLY_PATHS` i `getEnglishPath()` | Eliminerar 404 i navigation. Hög evidens | 30 min | **Klar** `88f1603` |
+| P1 | GEO | Lighthouse: produktion Agentic Browsing 100, `main` 67 — `llms.txt` genererade nakna URL:er i git medan produktion serverade markdown-länkar | `/llms.txt` | — | — | — | — | Lyfte in produktionsversionen från KimiV2 | Förhindrar regression av AI-sökbarhet. **Hög** evidens — uppmätt | 15 min | **Klar** |
+| P2 | Metadata | `södertull malmö`: 52 expo, **0 klick**, position 12,2 mot `/sv/projects/sodertull-city/` vars titel var enbart "Södertull City" | 18 projektsidor | 0 | ~90 | 0 % | 2–35 | `projectTitle()` bygger titel av **befintliga** fält (`title` + `location`): "Södertull City — LED-skärm, Malmö" | CTR + long-tail på ortsökningar. **Medel** evidens | 1 h | **Klar** |
 | P1 | Mobil | Regression jag själv införde: +47px overflow på alla `/sv/`-sidor | Alla `/sv/*` | — | — | — | — | `flex-wrap` i footern | Återställer mobilvyn. Hög evidens | 15 min | **Klar** `ad38d2a` |
 
 ---
@@ -54,7 +58,7 @@ Jag har medvetet inte kopierat in ändringen: det är pågående arbete i en ann
 | P1 | Sitemap läst 2026-07-29 med 42 URL:er; branchen ger 47 | `sitemap.xml` | — | — | — | — | Efter deploy: skicka in på nytt + begär indexering av `/sv/servicevillkor/` | Snabbare recrawl. Hög evidens | 10 min | Att göra | Deploy |
 | P1 | Indexrapport: 19 URL:er under "Hittades inte (404)", **validering misslyckades** | — | — | — | — | — | Efter deploy: klicka **Validera korrigering** i GSC | Rensar 404-posten. Hög evidens | 5 min | Att göra | Deploy + `9b532d7` |
 | P2 | 52 exponeringar, noll klick, sida 2. Sidan är verifierat indexerad och tekniskt frisk — det är ett positionsproblem, inte ett tekniskt | `södertull malmö` → `/sv/projects/sodertull-city/` | 0 | 52 | 0 % | 12,2 | Fördjupa sidan (idag ~80 ord) med plats, mått, år; intern länk från `/sv/projects/` | Position 12 → sida 1 är realistiskt. **Medel** evidens | 3 h | **Blockerad** | Projektfakta |
-| P2 | 18 projektsidor har bara egennamn som titel | `/projects/*` | 0 | ~60 | 0 % | 2–35 | Lägg till typ + plats i titeln | CTR + long-tail. Medel evidens | 3 h | **Blockerad** | Projektfakta |
+| P2 | 11 svenska projektsidor har beskrivningar på 40–69 tecken mot Googles ~155 | `/sv/projects/*` | 0 | ~40 | 0 % | 2–35 | Utöka beskrivningarna. *(Titlarna är redan åtgärdade via `projectTitle()`)* | Bättre SERP-snippet. Medel evidens | 2 h | **Blockerad** | Projektfakta |
 | P3 | `/service/` rankar djupt trots att det är en kärntjänst | `/service/` | 0 | 13 | 0 % | **25,6** | Tydligare sidfokus och intern länkning från `/`, `/sales/`, `/rental/` | Medel evidens | 2 h | Att göra | — |
 | P3 | Befintlig overflow vid 320px (reproduceras på produktion) | `/sv/sales/` +10px, `/sv/projects/` +56px | — | — | — | — | Begränsa dekorativa `-right-[12%]`-element | Låg-medel evidens | 1 h | Att göra | Designbeslut |
 | P3 | `/_not-found/` svarar 200 på produktion (lokalt korrekt 404); sidan är `noindex` | `/_not-found/` | — | — | — | — | Verifiera Vercel-routing | Låg evidens | 30 min | Att göra | — |
@@ -88,8 +92,7 @@ Jag har medvetet inte kopierat in ändringen: det är pågående arbete i en ann
 
 ## Beslut som väntar på dig
 
-1. **Committa `llms.txt`-ändringen från KimiV2** — blockerar säker deploy (rad 0).
-2. **Destination för `/login`** — 487 exponeringar. Finns en kundportal, och är `admin.imvision.se` rätt adress för kunder?
+1. **Destination för `/login`** — 487 exponeringar. Finns en kundportal, och är `admin.imvision.se` rätt adress för kunder?
 3. **Faktaunderlag för projektsidorna** — mått, år, uppdragsgivare, teknik. Utan detta kan innehållsarbetet inte göras utan att uppfinna påståenden, och innehåll är enda vägen till icke-varumärkestrafik.
 4. **Namngiven expert** för E-E-A-T.
 5. **PageSpeed-API-nyckel** — annars finns ingen prestandamätning alls.
@@ -103,6 +106,7 @@ Jag har medvetet inte kopierat in ändringen: det är pågående arbete i en ann
 - **Inga Search Console-exporter i Git.** Siffrorna i rapporterna är sammanställda; råexporter ligger utanför repot.
 - **Ingen redirect för `/login`** — det vore en soft 404 utan ett verkligt portalmål.
 - **Ingen innehållskonsolidering eller canonical-ändring** — kannibaliseringen var gammal-mot-ny och löses korrekt av 308-redirects.
-- **Ingen kopiering av din oincheckade `llms.txt`-ändring.**
+- **Ingen ändring av rörelsedesignen** trots att den är sajtens största prestandaproblem — det är ett synligt produktbeslut.
+- **Ingen ändring av samtyckesflödet eller gtag-laddningen** — GDPR-känslig kod.
 - **Inget påhittat innehåll** — inga kundnamn, mått, årtal, priser, certifieringar eller resultat.
 - **Ingen merge, ingen push till `main`, ingen driftsättning.**

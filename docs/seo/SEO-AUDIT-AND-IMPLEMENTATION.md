@@ -35,8 +35,11 @@ månader** — på en sajt med 416 klick totalt. Åtgärdat i `9b532d7`. Datan v
 76 % av trafiken är varumärkessökningar och att kommersiell icke-varumärkesefterfrågan i
 praktiken är noll (12 exponeringar på 28 dagar).
 
-⚠️ **Läs §11 innan du driftsätter.** `main` innehåller en regression av `llms.txt` relativt
-produktion, och en deploy härifrån skulle försämra sajtens AI-sökbarhet.
+**Andra omgången (samma dag)** lade till fullständig Lighthouse med Performance-kategorin,
+vilket avslöjade sajtens största tekniska problem: **LCP är 4,4–6,0 s på mobil** därför att
+scroll-reveal-animationer håller innehållet ovanför vikningen osynligt tills JavaScript kört
+(§11). CLS är 0 och TTFB 53–131 ms — det är enbart animationerna. Dessutom är
+llms.txt-regressionen nu åtgärdad och projektsidornas titlar bär sökord.
 
 ---
 
@@ -227,22 +230,26 @@ sedan 2014"); IM Vision har jämförbara referenser men kvantifierar dem inte.
 ## 9. Ändrade filer
 
 ```
- src/app/(en)/contact/page.tsx     |  2 +-
- src/app/(en)/projects/page.tsx    |  2 +-
- src/app/(en)/support/page.tsx     |  2 +-
- src/app/(sv)/sv/contact/page.tsx  |  2 +-
- src/app/(sv)/sv/projects/page.tsx |  2 +-
- src/app/(sv)/sv/support/page.tsx  |  5 +++--
- src/app/sitemap.ts                | 26 ++++++++++++++++++++++++--
- src/components/layout/Footer.tsx  | 16 +++++++++++++++-
- src/lib/i18n.ts                   | 10 ++++++++++
- 9 files changed, 57 insertions(+), 10 deletions(-)
+ docs/seo/SEO-ACTION-PLAN.md
+ docs/seo/SEO-AUDIT-AND-IMPLEMENTATION.md
+ next.config.ts                          # 12 legacy-redirects
+ src/app/(en)/contact/page.tsx            # titel
+ src/app/(en)/projects/[slug]/page.tsx    # projekttitel-helper
+ src/app/(en)/projects/page.tsx           # titel
+ src/app/(en)/support/page.tsx            # titel
+ src/app/(sv)/sv/contact/page.tsx         # titel
+ src/app/(sv)/sv/projects/[slug]/page.tsx # projekttitel-helper
+ src/app/(sv)/sv/projects/page.tsx        # titel
+ src/app/(sv)/sv/support/page.tsx         # titel + beskrivning
+ src/app/llms.txt/route.ts                # regressionsfix (från KimiV2)
+ src/app/sitemap.ts                       # 42 → 47 URL:er
+ src/components/layout/Footer.tsx         # servicevillkor-länk + flex-wrap
+ src/lib/i18n.ts                          # SV_ONLY_PATHS
+ src/lib/seo.ts                           # projectTitle()
 ```
 
-Ingen affärslogik, prissättning, betalning eller autentisering berörd.
-Inget synligt innehåll ändrat — H1:or verifierat oförändrade.
-
----
+Ingen affärslogik, prissättning, betalning eller autentisering berörd. Inget synligt
+innehåll ändrat — H1:or verifierat oförändrade. Rörelsedesign och samtyckesflöde orörda.
 
 ## 10. Före- och efterresultat
 
@@ -278,46 +285,80 @@ Verifierat i Chromium vid 320px och 390px efter fixen: 9/9 testade sidor rena vi
 
 ## 11. Lighthouse-resultat
 
-**Labbdata.** Kört lokalt i Chromium 150.0 via Lighthouse **13.4.0**, `formFactor: mobile`,
-simulerad strypning (RTT 150 ms, 1 638 kbps, CPU ×4). Detta är **inte** fältdata och kan inte
-jämföras med Core Web Vitals i §13.6 — se den sektionen, där Google konstaterar att fältdata
-saknas helt.
+**Uppdaterad 2026-07-30 med fullständiga körningar.** Lighthouse **13.4.1** via CLI
+(`npx lighthouse`), headless Chrome, `--form-factor=mobile`, simulerad strypning.
+Nu ingår **Performance**, som saknades i den tidigare körningen.
 
-⚠️ **Prestandakategorin ingår inte.** Verktyget kör tillgänglighet, best practices, SEO och
-agentic browsing men exkluderar Performance. Det finns alltså fortfarande **ingen**
-prestandapoäng — varken lab eller fält. PageSpeed Insights returnerar 429 utan API-nyckel.
+Detta är **labbdata**. Det kan inte jämföras med Core Web Vitals i §13.6 — där konstaterar
+Google att fältdata inte existerar för den här sajten.
 
-### Lokal build från `main` + denna branch
+### Produktion (mobil) — den relevanta mätningen
 
-| Sida | Tillgänglighet | Best Practices | SEO | Agentic Browsing |
-|---|---:|---:|---:|---:|
-| `/` (startsida) | 100 | 100 | 100 | **67** |
-| `/projects/the-curve/` (projekt) | 100 | 100 | 100 | **67** |
-| `/service/` (tjänst) | 100 | 100 | 100 | **67** |
-| `/sv/servicevillkor/` (innehåll) | 100 | 100 | 100 | **67** |
-| `/contact/` (konvertering) | 100 | 100 | 100 | **67** |
+| Sida | Perf | A11y | BP | SEO | Agentic | LCP | CLS | TBT |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `/` | **74** | 100 | 100 | 100 | 100 | **6,0 s** | 0 | 10 ms |
+| `/contact/` | **82** | 100 | 100 | 100 | 100 | **5,0 s** | 0 | 40 ms |
+| `/service/` | **73** | 100 | 100 | 100 | 100 | **5,1 s** | 0 | 10 ms |
+| `/projects/the-curve/` | **85** | 100 | 100 | 100 | 100 | **4,4 s** | 0 | 10 ms |
+| `/sv/servicevillkor/` | **95** | 100 | 100 | 100 | 100 | 2,9 s | 0 | 10 ms |
 
-### Produktion
+### ⚠️ LCP är sajtens största tekniska problem
 
-| Sida | Tillgänglighet | Best Practices | SEO | Agentic Browsing |
-|---|---:|---:|---:|---:|
-| `https://imvision.se/` | 100 | 100 | 100 | **100** |
+Allt utom LCP är utmärkt: **CLS är 0 på varje sida**, TBT är försumbar (10–40 ms) och
+TTFB ligger på 53–131 ms. Servern och layouten är alltså inte problemet.
 
-### ⚠️ Skillnaden är en regression i `main`, inte ett fel i produktion
+Men **LCP är 4,4–6,0 s på mobil** mot Googles gränsvärde 2,5 s. Fyra av fem testade sidor
+ligger i "dåligt"-spannet.
 
-Den enda underkända revisionen lokalt är **`llms-txt`** — *"File does not appear to contain
-any links"*. Orsak: `src/app/llms.txt/route.ts` i `main` genererar nakna URL:er
-(`- Home: https://imvision.se/`), medan produktion serverar markdown-länkar
-(`- [Home](https://imvision.se/): overview…`).
+Orsaken syns i `lcp-breakdown-insight`. LCP-elementet är **text**, inte hjältebilden, och
+den mesta tiden är *element render delay*:
 
-Produktion kör alltså **kod som inte finns i git**. Ändringen ligger oincheckad i den andra
-klonen `~/Desktop/KimiV2` (`M src/app/llms.txt/route.ts`) och har driftsatts manuellt därifrån.
+| Sida | TTFB | Render delay | LCP-element |
+|---|---:|---:|---|
+| `/service/` | 60 ms | **2 097 ms** | "We stay with you after install." |
+| `/contact/` | 131 ms | **1 612 ms** | "Get help with permanent LED installations…" |
+| `/` | 53 ms | 650 ms | cookie-bannerns text (`div.fixed > p`) |
+| `/projects/the-curve/` | 58 ms | 242 ms | "The Curve" |
+| `/sv/servicevillkor/` | 53 ms | 170 ms | "Allmänna servicevillkor." |
 
-**Konsekvens:** att merga denna branch och driftsätta från `main` skulle **regressa llms.txt**
-från markdown-länkar till nakna URL:er och sänka Agentic Browsing från 100 till 67 — en
-försämring för AI-sök. Jag har medvetet **inte** kopierat in ändringen, eftersom det är
-pågående arbete i en annan klon och en kopia riskerar att fånga ett halvfärdigt tillstånd.
-Se §16 och handlingsplanens första rad.
+**Mönstret är entydigt:** ju mer scroll-reveal-animation en sida har, desto senare målas
+dess största textblock. `Reveal` och `StaggerReveal` startar på `opacity: 0`
+(`src/components/effects/Reveal.tsx`) och animerar in efter hydrering. Innehåll ovanför
+vikningen är alltså osynligt tills JavaScript har körts — och det är precis vad LCP mäter.
+
+Sidan med minst animation (`/sv/servicevillkor/`, ren text) får 95 och LCP 2,9 s. Sidan med
+mest (`/service/`) får 73 och 5,1 s.
+
+**Jag har inte ändrat detta.** Att låta innehåll ovanför vikningen måla direkt är den enskilt
+största prestandavinsten som finns att hämta, men det ändrar sajtens synliga rörelsedesign,
+som `PROJECT.md` behandlar som ett medvetet val. Det hör hemma hos dig, inte i en SEO-PR.
+Rekommendationen ligger som P1 i handlingsplanen.
+
+Sekundärt: `unused-javascript` uppskattar 281 KiB / ~1 350 ms, varav **gtag.js är 175 KB** —
+den största enskilda resursen på startsidan. Consent Mode v2 laddar skriptet även innan
+samtycke (med nekad lagring), vilket är korrekt implementerat men inte gratis.
+
+### Lokal build från denna branch (mobil)
+
+| Sida | Perf | A11y | BP | SEO | Agentic |
+|---|---:|---:|---:|---:|---:|
+| `/` | 82 | 100 | 100 | 100 | **100** |
+| `/contact/` | 80 | 100 | 100 | 100 | **100** |
+| `/service/` | 90 | 100 | 100 | 100 | **100** |
+| `/projects/the-curve/` | 90 | 100 | 100 | 100 | **100** |
+| `/sv/servicevillkor/` | 92 | 100 | 100 | 100 | **100** |
+
+**Agentic Browsing är nu 100 överallt** — llms.txt-regressionen är åtgärdad (se nedan).
+
+⚠️ Prestandasiffrorna för lokal build är **inte** jämförbara med produktion: localhost har
+ingen nätverkslatens. De visar bara att branchen inte försämrar något.
+
+### llms.txt — regressionen är åtgärdad
+
+`main` genererade nakna URL:er medan produktion serverade markdown-länkar; ändringen fanns
+bara oincheckad i klonen `~/Desktop/KimiV2`. Den är nu inlyft i branchen och
+`GET /llms.txt` från den lokala byggen är **byte-identisk med produktion** (verifierat med
+`diff`). Utan detta hade en deploy från `main` sänkt Agentic Browsing från 100 till 67.
 
 ## 12. Crawlresultat före och efter
 
