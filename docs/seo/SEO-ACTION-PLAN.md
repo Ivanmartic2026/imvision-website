@@ -2,6 +2,7 @@
 
 **Uppdaterad:** 2026-07-30 med verklig Search Console-data · **Branch:** `seo/full-audit-and-optimization`
 **Underlag:** [`SEO-AUDIT-AND-IMPLEMENTATION.md`](./SEO-AUDIT-AND-IMPLEMENTATION.md)
+**➡️ Framåtblickande plan:** [`SEO-NEXT-STEPS.md`](./SEO-NEXT-STEPS.md) — vad som görs härnäst och i vilken ordning, efter driftsättningen 2026-07-30.
 **GSC-property:** `sc-domain:imvision.se` (domänproperty) · **Perioder:** 28 d (2026-06-30 – 07-27) och 3 mån (2026-04-28 – 07-27)
 
 Status: `Klar` = implementerad och verifierad · `Blockerad` = kräver beslut eller underlag från dig · `Att göra` = redo.
