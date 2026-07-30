@@ -41,11 +41,24 @@ Volymerna är små, men positionerna 2,0 på två av dem visar att Google redan 
 
 ### Våg 0 — Vokabulärbryggan (ingen ny URL, störst utväxling)
 
-| Åtgärd | Sida | Bevis | Blockerad? |
+**✅ Genomförd 2026-07-30** i commit `168e496`.
+
+| Sida | Före | Efter | Längd |
 |---|---|---|---|
-| Omrikta titel, H1 och meta mot "digital signage" | `/sales/` | Två frågor rankar redan pos 2,0 | Nej |
-| Samma | `/service/` | Rankar pos 25,6 trots kärntjänst | Nej |
-| Samma, "LED display support & SLA response times" | `/support/` | — | Nej |
+| `/sales/` | Permanent LED Installations | **Digital Signage & Permanent LED Installations** | 57 |
+| `/sv/sales/` | Permanenta LED-installationer | **Permanenta LED-skärmar och digital skyltning** | 56 |
+| `/service/` | Service & Support *(17 tecken, oskiljbar från `/support/`)* | **Digital Signage & LED Display Maintenance** | 53 |
+| `/sv/service/` | Service och support | **Service och underhåll av LED-skärmar** | 48 |
+
+Beskrivningarna bär samma vokabulär, 152–159 tecken. **Inget synligt innehåll ändrat** —
+H1:or verifierat oförändrade på alla fyra sidor, canonical och hreflang orörda.
+
+`/support/` lämnades som den var (`LED Display Support & Service`, satt tidigare samma dag)
+för att inte skapa överlapp med `/service/`s nya titel.
+
+Svenskan behåller medvetet LED först — Search Console visar svensk efterfrågan på
+"led skärm", inte "digital skyltning", och den svenska SERP:en har egna aktörer.
+Det är alltså ett tillägg, inte ett utbyte.
 
 Förväntad riktning: fler exponeringar på icke-varumärkesfrågor inom 4–8 veckor. **Medel evidens** — SERP-samplingen är gjord med WebSearch, inte DataForSEO, så domänöverlappen är kalibrerade uppskattningar, inte exakta topp-10-snitt.
 
@@ -81,6 +94,14 @@ Bygg i denna ordning:
 5. Serviceavtal, fjärrövervakning, drifttid
 
 Inga programmatiska sidor. Inga ortsdubbletter.
+
+### Ej åtgärdat, och varför
+
+**Intern länkning till `/service/`** — SXO-analysen rekommenderade att lägga till interna
+länkar för att lyfta sidan från position 25,6. Kontrollerat: sidan har redan **46 inkommande
+interna länkar** från nav och footer på varje sida. Rekommendationen var alltså redan
+uppfylld. Sidans problem är innehållsdjup — inga SLA-siffror, inga case, ingen FAQ — vilket
+ligger i våg 1/2 och kräver ert underlag.
 
 ### Parallellt — LCP
 
