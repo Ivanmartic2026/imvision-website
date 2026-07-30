@@ -32,6 +32,21 @@ måste ske med Lighthouse-labbkörningar tills trafiken ökar.
 
 ---
 
+## Implementerat — fas 3 (innehåll, 2026-07-30)
+
+| Prio | Område | Evidens | Ändring | Status |
+|---|---|---|---|---|
+| P1 | E-E-A-T | Ingen case-sida sa vad IM Vision gjort. Fyra projekt sa det i egen text, begravt i brödtext | Typat `ProjectRole`-fält med `roleSource`, synligt i faktarutan. **Sex Ocean Outdoor-ytor får ingen roll** — inget publicerat säger vem som byggde dem | **Klar** |
+| P1 | Innehåll | Ingressen upprepades som brödtext — två mönster: identisk (4 EN) och inledande upprepning (SV Nordstan) | Båda hanterade. Noll duplicerade stycken i något språk | **Klar** |
+| P2 | Internlänkar | Relaterade projekt var `.slice(0,2)` → The Icon + The Halo på varje sida | Poängsatt på taggar, anläggning, ort, displaytyp | **Klar** |
+| P2 | i18n | Faktarutan renderade engelska på svenska sidor; decimaltecken inkonsekvent inom samma sida | Lokaliserad `specsType`, `location`, `specsSize`. JSON-LD följer med | **Klar** |
+| P2 | Schema | `contentLocation` och `additionalProperty` var engelska på `/sv/` | Lokaliserade — schemat beskriver nu det svenska besökaren ser | **Klar** |
+| — | Innehåll | 7 projekt saknar mått, år eller roll | Formulär per sida | **Blockerad** — [`CONTENT-INPUT-REQUIRED.md`](./CONTENT-INPUT-REQUIRED.md) |
+
+Full redovisning: [`PROJECT-CONTENT-ENHANCEMENT-REPORT.md`](./PROJECT-CONTENT-ENHANCEMENT-REPORT.md)
+
+---
+
 ## Implementerat i denna branch
 
 | Prio | Område | Evidens från GSC | Fråga / URL | Klick | Expo | CTR | Pos | Ändring | Riktning | Insats | Status |
