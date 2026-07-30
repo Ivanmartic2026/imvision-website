@@ -10,15 +10,40 @@ Förväntad effekt anges som **riktning med evidensstyrka**, aldrig som utlovad 
 
 ---
 
-## ⚠️ Största kvarvarande tekniska problemet: LCP
+## ⚠️ LCP — hypotesen testad och motbevisad
 
-| Evidens | Berörd URL | Rekommenderad ändring | Förväntad riktning | Insats | Status | Beroende |
-|---|---|---|---|---|---|---|
+**Uppdaterad 2026-07-30.** Denna sektion sa tidigare att LCP orsakas av att
+`Reveal`/`StaggerReveal` håller innehåll ovanför vikningen på `opacity: 0`. Kontrollerad A/B
+mot lokal production build motbevisar det: ingen H1 är dold, render delay är 43–185 ms, FCP
+är 903 ms, CLS är 0. Full redovisning i [`LCP-OPTIMIZATION-RESULTS.md`](./LCP-OPTIMIZATION-RESULTS.md).
+
+| Evidens | Åtgärd | Status | Beroende |
+|---|---|---|---|
+| Reveal-hypotesen motbevisad lokalt. Ingen rubrik ovanför vikningen är dold | **Ingen.** Den föreslagna designändringen är inte längre motiverad | **Avförd** | — |
+| Experiment: `gtag.js` → `lazyOnload`. LCP oförändrad på 4 sidor, 151 ms sämre på `/sales/` | Återställd | **Avförd** | — |
+| Produktionsmätning före checkpointen visade render delay 2 097 ms på `/service/` — reproduceras inte lokalt | Mät om i produktion och avgör om problemet ens finns | **Blockerad** | Vercel-checkpointen löst |
+
+---|---|---|---|---|---|---|
 | Lighthouse 13.4.1 mot produktion, mobil: **LCP 4,4–6,0 s** mot gränsvärdet 2,5 s. `lcp-breakdown-insight` visar att LCP-elementet är **text** och att tiden är *element render delay*: `/service/` 2 097 ms, `/contact/` 1 612 ms. CLS 0, TBT 10–40 ms, TTFB 53–131 ms — allt annat är utmärkt | `/`, `/service/`, `/contact/` och alla sidor med reveal-animation | Låt innehåll **ovanför vikningen** måla direkt i stället för att starta på `opacity: 0` i `Reveal`/`StaggerReveal`. Behåll animationen för allt under vikningen | Störst enskild prestandavinst som finns. **Hög** evidens — uppmätt orsakssamband (sidan utan animation får 95/2,9 s, sidan med mest får 73/5,1 s) | 4 h | **Blockerad** | **Designbeslut** — ändrar sajtens synliga rörelse, som `PROJECT.md` behandlar som medvetet val |
 | Samma körning: `unused-javascript` ~281 KiB / 1 350 ms; `gtag.js` är 175 KB, största enskilda resursen | Alla sidor | Överväg att skjuta upp gtag.js till efter LCP | Medel evidens. Rör GDPR-känslig kod | 2 h | **Blockerad** | Får inte bryta Consent Mode v2 |
 
 **Not:** LCP kan inte verifieras i fält — CrUX saknar data för sajten (§13.6). Uppföljning
 måste ske med Lighthouse-labbkörningar tills trafiken ökar.
+
+---
+
+## Implementerat — fas 3 (innehåll, 2026-07-30)
+
+| Prio | Område | Evidens | Ändring | Status |
+|---|---|---|---|---|
+| P1 | E-E-A-T | Ingen case-sida sa vad IM Vision gjort. Fyra projekt sa det i egen text, begravt i brödtext | Typat `ProjectRole`-fält med `roleSource`, synligt i faktarutan. **Sex Ocean Outdoor-ytor får ingen roll** — inget publicerat säger vem som byggde dem | **Klar** |
+| P1 | Innehåll | Ingressen upprepades som brödtext — två mönster: identisk (4 EN) och inledande upprepning (SV Nordstan) | Båda hanterade. Noll duplicerade stycken i något språk | **Klar** |
+| P2 | Internlänkar | Relaterade projekt var `.slice(0,2)` → The Icon + The Halo på varje sida | Poängsatt på taggar, anläggning, ort, displaytyp | **Klar** |
+| P2 | i18n | Faktarutan renderade engelska på svenska sidor; decimaltecken inkonsekvent inom samma sida | Lokaliserad `specsType`, `location`, `specsSize`. JSON-LD följer med | **Klar** |
+| P2 | Schema | `contentLocation` och `additionalProperty` var engelska på `/sv/` | Lokaliserade — schemat beskriver nu det svenska besökaren ser | **Klar** |
+| — | Innehåll | 7 projekt saknar mått, år eller roll | Formulär per sida | **Blockerad** — [`CONTENT-INPUT-REQUIRED.md`](./CONTENT-INPUT-REQUIRED.md) |
+
+Full redovisning: [`PROJECT-CONTENT-ENHANCEMENT-REPORT.md`](./PROJECT-CONTENT-ENHANCEMENT-REPORT.md)
 
 ---
 

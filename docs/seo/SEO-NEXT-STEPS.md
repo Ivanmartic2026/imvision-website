@@ -118,9 +118,26 @@ ligger i våg 1/2 och kräver ert underlag.
 
 ### Parallellt — LCP
 
-Sajtens största tekniska brist, oförändrad: **4,4–6,1 s på mobil** mot gränsvärdet 2,5 s. CLS är 0, TTFB 53–131 ms — det är enbart `Reveal`/`StaggerReveal` som håller innehåll ovanför vikningen på `opacity: 0` tills JavaScript kört. Sidan utan animation får 95, sidan med mest 73.
+> ⚠️ **Korrigerad 2026-07-30 efter test.** Formuleringen nedan stod tidigare som att LCP
+> orsakas av reveal-animationerna. **Den hypotesen är motbevisad.** Se
+> [`LCP-OPTIMIZATION-RESULTS.md`](./LCP-OPTIMIZATION-RESULTS.md) för A/B-mätningen.
 
-Åtgärden är att låta innehåll ovanför vikningen målas direkt och behålla animationen under vikningen. **Det ändrar sajtens synliga rörelsedesign och är ditt beslut.**
+Kontrollerad mätning mot lokal production build visar att **ingen rubrik ovanför vikningen är
+dold**. `opacity:0` finns i server-HTML:en, men på element under vikningen — projektkort och
+dekorativa blur-cirklar — plus första CTA på två sidor. Element render delay är **43–185 ms**,
+inte sekunder. FCP är 903 ms och identisk på alla sidor, CLS är 0, TBT är 8–16 ms, och det
+finns inga render-blockerande resurser.
+
+**Den föreslagna ändringen av rörelsedesignen är därmed inte längre motiverad** och bör inte
+göras på den här grunden.
+
+Ett experiment testades ändå — att skjuta upp `gtag.js` (175 KB, sidans största resurs) till
+idle-tid. Resultat: LCP oförändrad på fyra sidor, 151 ms **sämre** på `/sales/`. Återställd.
+
+LCP är fortfarande hög i den produktionsmätning som gjordes innan Vercel-checkpointen slog
+till (4,4–6,0 s), men **orsaken är inte fastställd**, och de lokala siffrorna reproducerar
+inte produktionens beteende — render delay var 79 ms lokalt mot 2 097 ms i produktion för
+`/service/`. Frågan är därför pausad tills produktionsdomänen går att mäta igen.
 
 ---
 

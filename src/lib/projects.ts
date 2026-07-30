@@ -1,3 +1,24 @@
+/**
+ * What IM Vision verifiably did on a project.
+ *
+ * Structured rather than free text so the same fact renders identically in both
+ * locales — the component owns the wording, the data owns the fact.
+ *
+ * ⚠️ Only set this where the project's own published copy states the role. Being
+ * in the portfolio is not evidence of having built something: several entries are
+ * Ocean Outdoor OOH sites credited to Ocean Outdoor, and nothing published says
+ * who engineered or installed them. Leave `role` unset there — the field simply
+ * does not render.
+ */
+export type ProjectRole =
+  | "designed"
+  | "engineered"
+  | "delivered"
+  | "installed"
+  | "serviced"
+  | "operated"
+  | "monitored";
+
 export interface Project {
   slug: string;
   title: string;
@@ -19,6 +40,10 @@ export interface Project {
     type?: string;
   };
   results?: string;
+  /** Set only where the project's own copy states it — see ProjectRole. */
+  role?: ProjectRole[];
+  /** Source for `role`, so a reviewer can check the claim without hunting. */
+  roleSource?: string;
   tags: string[];
   verified?: boolean;
   caseStudy?: {
@@ -186,6 +211,8 @@ export const projects: Project[] = [
     location: "Nordic region",
     year: "",
     specs: { type: "LED & digital display systems" },
+    role: ["delivered", "installed"],
+    roleSource: 'longDescription: "IM Vision has delivered and installed LED and digital display solutions for SAS lounges…"',
     tags: ["Aviation", "Lounges", "Digital signage"],
     verified: true,
   },
@@ -202,7 +229,14 @@ export const projects: Project[] = [
     visualLabel: "Case photo — Nordstan",
     location: "Gothenburg, Sweden",
     year: "",
-    specs: { size: "26.88 × 7.68 m", type: "Curved outdoor LED" },
+    // Cabinet count and radius were already published in the page copy; moving them
+    // into specs makes them visible in the fact block instead of buried in prose.
+    specs: {
+      size: "26.88 × 7.68 m",
+      type: "Curved outdoor LED · 224 cast cabinets · 12 m radius",
+    },
+    role: ["engineered", "installed"],
+    roleSource: 'description: "custom steel structure, in-house engineering, and our own installation team"',
     tags: ["DOOH", "Façade", "Engineering"],
     verified: true,
   },
@@ -220,6 +254,8 @@ export const projects: Project[] = [
     location: "Täby, Sweden",
     year: "",
     specs: { type: "Retail LED" },
+    role: ["installed", "serviced"],
+    roleSource: 'longDescription: "Installed to be seen — serviced to keep performing."',
     tags: ["Retail", "Digital surfaces", "Service"],
     verified: true,
   },
@@ -237,6 +273,8 @@ export const projects: Project[] = [
     location: "Sweden",
     year: "",
     specs: { type: "Monitoring & operations" },
+    role: ["operated", "monitored"],
+    roleSource: 'longDescription: "Operations agreements for Mall of Scandinavia and Täby Centrum… connection to IM Monitoring"',
     tags: ["Operations", "Monitoring", "Service"],
     verified: true,
   },
@@ -254,6 +292,10 @@ export const projects: Project[] = [
     location: "Sweden",
     year: "",
     specs: { type: "Digital parking signage" },
+    // category is "In-house product" and the copy says it is designed and rendered
+    // in-house. That covers design only — nothing published says where it is installed.
+    role: ["designed"],
+    roleSource: 'category: "In-house product"; description: "Designed and rendered down to the final detail"',
     tags: ["Product", "Parking", "Digital signage"],
     verified: true,
   },

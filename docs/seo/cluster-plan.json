@@ -1,477 +1,892 @@
 {
-  "version": "2.2.4-adapted-multipillar",
-  "site": "https://imvision.se",
-  "created_at": "2026-07-30",
-  "seed_input": "imvision.se LED display / digital signage (EN root + /sv/ Swedish twin)",
-  "architecture_note": "IM Vision has three genuinely separate commercial motions (permanent sales/install, event rental, service/ops) that returned near-zero SERP overlap with each other in sampling. Rather than force a single mega-pillar (which the base schema assumes), this plan defines THREE parallel hub-and-spoke clusters, one per existing commercial hub page (/sales/, /rental/, /service/). Each independently satisfies the 2-5 clusters x 2-4 posts constraint. /about/, /contact/, and / (home) are excluded as navigational/utility. /projects/ is treated as a cross-cutting proof layer (18 existing case studies), not a keyword-targeted spoke -- individual case studies are used as internal-link evidence, not rewritten.",
-  "data_source_disclosure": "SERP data collected via WebSearch (not DataForSEO), so scores below are ESTIMATES calibrated from observed domain overlap across ~24 representative queries (documented per pair), not exhaustive top-10 URL-set intersections. No search-volume numbers are stated anywhere in this file; all volume/impact language is qualitative and labelled 'estimate' in the markdown summary. GSC 28-day actuals (to 2026-07-27) are the only hard numbers used.",
-  "excluded_pages": {
-    "navigational_or_utility": ["/", "/sv/", "/about/", "/sv/about/", "/contact/", "/sv/contact/"],
-    "proof_layer_not_a_spoke": ["/projects/ (+18 case studies, EN+SV)"]
-  },
-  "gsc_baseline_28d_to_2026-07-27": {
-    "total_clicks": 105,
-    "total_impressions": 865,
-    "brand_click_share_pct": 76,
-    "non_brand_impressions_est": 12,
-    "existing_non_brand_queries": [
-      {"query": "digital signage solutions", "impressions": 4, "position": 13.8, "lang": "en"},
-      {"query": "digital signage installation", "impressions": 1, "position": 2.0, "lang": "en"},
-      {"query": "digital display solutions", "impressions": 1, "position": 2.0, "lang": "en"},
-      {"query": "signage solutions", "impressions": 2, "position": 6.0, "lang": "en"},
-      {"query": "digital signage companies", "impressions": 1, "position": 22.0, "lang": "en"},
-      {"query": "led skärm installation stockholm", "impressions": 2, "position": 25.0, "lang": "sv"},
-      {"query": "led display uthyrning event", "impressions": 1, "position": 11.0, "lang": "sv"}
-    ],
-    "signal": "English demand vocabulary clusters on 'digital signage', not 'LED display' -- the vocabulary the site currently uses. 'digital signage installation' and 'digital display solutions' already rank pos 2.0 on near-zero impressions, meaning the site is one content/vocabulary fix away from real traffic on terms it can already win."
-  },
-  "pillars": [
+ "version": "2.2.4-adapted-multipillar",
+ "site": "https://imvision.se",
+ "created_at": "2026-07-30",
+ "seed_input": "imvision.se LED display / digital signage (EN root + /sv/ Swedish twin)",
+ "architecture_note": "IM Vision has three genuinely separate commercial motions (permanent sales/install, event rental, service/ops) that returned near-zero SERP overlap with each other in sampling. Rather than force a single mega-pillar (which the base schema assumes), this plan defines THREE parallel hub-and-spoke clusters, one per existing commercial hub page (/sales/, /rental/, /service/). Each independently satisfies the 2-5 clusters x 2-4 posts constraint. /about/, /contact/, and / (home) are excluded as navigational/utility. /projects/ is treated as a cross-cutting proof layer (18 existing case studies), not a keyword-targeted spoke -- individual case studies are used as internal-link evidence, not rewritten.",
+ "data_source_disclosure": "SERP data collected via WebSearch (not DataForSEO), so scores below are ESTIMATES calibrated from observed domain overlap across ~24 representative queries (documented per pair), not exhaustive top-10 URL-set intersections. No search-volume numbers are stated anywhere in this file; all volume/impact language is qualitative and labelled 'estimate' in the markdown summary. GSC 28-day actuals (to 2026-07-27) are the only hard numbers used.",
+ "excluded_pages": {
+  "navigational_or_utility": [
+   "/",
+   "/sv/",
+   "/about/",
+   "/sv/about/",
+   "/contact/",
+   "/sv/contact/"
+  ],
+  "proof_layer_not_a_spoke": [
+   "/projects/ (+18 case studies, EN+SV)"
+  ]
+ },
+ "gsc_baseline_28d_to_2026-07-27": {
+  "total_clicks": 105,
+  "total_impressions": 865,
+  "brand_click_share_pct": 76,
+  "non_brand_impressions_est": 12,
+  "existing_non_brand_queries": [
+   {
+    "query": "digital signage solutions",
+    "impressions": 4,
+    "position": 13.8,
+    "lang": "en"
+   },
+   {
+    "query": "digital signage installation",
+    "impressions": 1,
+    "position": 2.0,
+    "lang": "en"
+   },
+   {
+    "query": "digital display solutions",
+    "impressions": 1,
+    "position": 2.0,
+    "lang": "en"
+   },
+   {
+    "query": "signage solutions",
+    "impressions": 2,
+    "position": 6.0,
+    "lang": "en"
+   },
+   {
+    "query": "digital signage companies",
+    "impressions": 1,
+    "position": 22.0,
+    "lang": "en"
+   },
+   {
+    "query": "led skärm installation stockholm",
+    "impressions": 2,
+    "position": 25.0,
+    "lang": "sv"
+   },
+   {
+    "query": "led display uthyrning event",
+    "impressions": 1,
+    "position": 11.0,
+    "lang": "sv"
+   }
+  ],
+  "signal": "English demand vocabulary clusters on 'digital signage', not 'LED display' -- the vocabulary the site currently uses. 'digital signage installation' and 'digital display solutions' already rank pos 2.0 on near-zero impressions, meaning the site is one content/vocabulary fix away from real traffic on terms it can already win."
+ },
+ "pillars": [
+  {
+   "id": "pillar-sales",
+   "existing_page": {
+    "en": "/sales/",
+    "sv": "/sv/sales/"
+   },
+   "title": "Digital Signage Solutions & Permanent LED Displays",
+   "title_sv": "Digital skyltning och permanenta LED-skärmar för företag",
+   "primary_keyword_en": "digital signage solutions",
+   "primary_keyword_sv": "digital skyltning för företag / LED-skärmar för företag",
+   "secondary_keywords_en": [
+    "digital signage installation",
+    "digital display solutions",
+    "signage solutions",
+    "led display company"
+   ],
+   "intent": "Commercial",
+   "template": "ultimate-guide",
+   "word_count_target": 3200,
+   "status": "planned_expansion_of_existing_page",
+   "rationale": "Existing page already gets the only two decently-positioned non-brand impressions in GSC ('digital signage installation' pos 2.0, 'digital display solutions' pos 2.0). Retargeting the primary keyword to 'digital signage solutions' (currently pos 13.8, the single highest-impression non-brand query) instead of the site's current 'LED display' framing directly fixes the stated vocabulary gap without a new URL.",
+   "clusters": [
     {
-      "id": "pillar-sales",
-      "existing_page": {"en": "/sales/", "sv": "/sv/sales/"},
-      "title": "Digital Signage Solutions & Permanent LED Displays",
-      "title_sv": "Digital skyltning och permanenta LED-skärmar för företag",
-      "primary_keyword_en": "digital signage solutions",
-      "primary_keyword_sv": "digital skyltning för företag / LED-skärmar för företag",
-      "secondary_keywords_en": ["digital signage installation", "digital display solutions", "signage solutions", "led display company"],
-      "intent": "Commercial",
-      "template": "ultimate-guide",
-      "word_count_target": 3200,
-      "status": "planned_expansion_of_existing_page",
-      "rationale": "Existing page already gets the only two decently-positioned non-brand impressions in GSC ('digital signage installation' pos 2.0, 'digital display solutions' pos 2.0). Retargeting the primary keyword to 'digital signage solutions' (currently pos 13.8, the single highest-impression non-brand query) instead of the site's current 'LED display' framing directly fixes the stated vocabulary gap without a new URL.",
-      "clusters": [
-        {
-          "name": "Retail & Shopping Centre Digital Signage",
-          "posts": [
-            {
-              "id": "sales-a1",
-              "title_en": "Digital Signage for Retail Stores: In-Store Screens That Drive Sales",
-              "title_sv": "Digital signage för butik: skärmar som ökar försäljningen",
-              "keyword_en": "digital signage for retail stores",
-              "keyword_sv": "digital signage för butik",
-              "url_en": "/sales/retail-digital-signage/",
-              "url_sv": "/sv/sales/digital-signage-butik/",
-              "intent": "Commercial",
-              "template": "landing-page",
-              "word_count_target": 1500,
-              "status": "planned",
-              "proof_evidence": ["Kappahl (retail rollout)", "Grocery Store", "Fashion Environment"]
-            },
-            {
-              "id": "sales-a2",
-              "title_en": "Shopping Centre & Mall Digital Signage Screens",
-              "title_sv": "LED-skärmar för köpcentrum och gallerior",
-              "keyword_en": "shopping centre digital signage screens",
-              "keyword_sv": "LED-skärmar för köpcentrum",
-              "url_en": "/sales/shopping-centre-digital-signage/",
-              "url_sv": "/sv/sales/led-skarmar-kopcentrum/",
-              "intent": "Commercial",
-              "template": "landing-page",
-              "word_count_target": 1600,
-              "status": "planned",
-              "proof_evidence": ["The Icon (Westfield Mall of Scandinavia)", "The Halo", "The Geminis / The Curve (Westfield Täby Centrum)", "Retail in motion (Täby Centrum)"]
-            }
-          ]
-        },
-        {
-          "name": "Architectural & Outdoor Displays",
-          "posts": [
-            {
-              "id": "sales-b1",
-              "title_en": "LED Façade Displays: Media Architecture for Buildings",
-              "title_sv": "LED-skärm för fasad: mediearkitektur för fastigheter",
-              "keyword_en": "led facade display architectural",
-              "keyword_sv": "LED-skärm fasad byggnad",
-              "url_en": "/sales/led-facade-displays/",
-              "url_sv": "/sv/sales/led-skarm-fasad/",
-              "intent": "Commercial",
-              "template": "landing-page",
-              "word_count_target": 1500,
-              "status": "planned",
-              "proof_evidence": ["A façade that turns (Nordstan P-hus)", "The Icon @ The Node (Sergels torg)"]
-            },
-            {
-              "id": "sales-b2",
-              "title_en": "DOOH Roadside Advertising Screens for Landlords & Media Owners",
-              "title_sv": "DOOH-skärmar för utomhusreklam till fastighetsägare",
-              "keyword_en": "dooh advertising screens roadside",
-              "keyword_sv": "DOOH utomhusreklam skärmar",
-              "url_en": "/sales/dooh-roadside-screens/",
-              "url_sv": "/sv/sales/dooh-utomhusreklam/",
-              "intent": "Commercial",
-              "template": "landing-page",
-              "word_count_target": 1400,
-              "status": "planned",
-              "differentiation_note": "SERP for 'DOOH' is dominated by ad-network/media-buying vocabulary (JCDecaux, agencies). Explicitly position as hardware install/engineering for the screen OWNER (landlord, mall, media-owner), not ad-space sales, to avoid mismatched intent capture.",
-              "proof_evidence": ["E4 Trädet North - Impact (roadside)", "Södertull City (city-centre DOOH)"]
-            }
-          ]
-        },
-        {
-          "name": "Buyer Education (vocabulary bridge + long sales-cycle nurture)",
-          "posts": [
-            {
-              "id": "sales-c1",
-              "title_en": "Digital Signage vs LED Display: What's the Difference?",
-              "title_sv": "Digital signage eller LED-skärm: vad är skillnaden?",
-              "keyword_en": "digital signage vs led display difference",
-              "keyword_sv": "digital signage eller led-skärm skillnad",
-              "url_en": "/sales/digital-signage-vs-led-display/",
-              "url_sv": "/sv/sales/digital-signage-eller-led-skarm/",
-              "intent": "Informational",
-              "template": "explainer",
-              "word_count_target": 1300,
-              "status": "planned",
-              "rationale": "Directly resolves the vocabulary gap identified in GSC data. Designed as the internal-linking spine of the whole site: links to all three pillars and functions as the glossary anchor for both vocabularies."
-            },
-            {
-              "id": "sales-c2",
-              "title_en": "LED Display Pixel Pitch Guide: Choosing the Right Screen",
-              "title_sv": "Pixel pitch-guide: så väljer du rätt LED-skärm",
-              "keyword_en": "led display pixel pitch guide",
-              "keyword_sv": "pixel pitch guide led-skärm",
-              "url_en": "/sales/led-pixel-pitch-guide/",
-              "url_sv": "/sv/sales/pixel-pitch-guide/",
-              "intent": "Informational",
-              "template": "how-to",
-              "word_count_target": 1400,
-              "status": "planned"
-            },
-            {
-              "id": "sales-c3",
-              "title_en": "How Much Does Digital Signage / an LED Display Cost?",
-              "title_sv": "Vad kostar en LED-skärm för företag?",
-              "keyword_en": "digital signage cost how much",
-              "keyword_sv": "led-skärm pris kostnad",
-              "url_en": "/sales/digital-signage-cost-guide/",
-              "url_sv": "/sv/sales/vad-kostar-en-led-skarm/",
-              "intent": "Commercial",
-              "template": "explainer",
-              "word_count_target": 1500,
-              "status": "planned",
-              "rationale": "Zero current capture in GSC despite being a top qualifying question in B2B long sales cycles. No invented price figures -- use real ranges only if sourced from IM Vision's own quoting process; otherwise frame as a cost-driver explainer (size, pixel pitch, indoor/outdoor, install complexity, service tier), not a fabricated price table."
-            },
-            {
-              "id": "sales-c4",
-              "title_en": "How to Choose a Digital Signage Installation Partner in Europe",
-              "title_sv": "Så väljer du rätt leverantör av digital skyltning i Europa",
-              "keyword_en": "digital signage companies europe how to choose",
-              "keyword_sv": "digital signage företag sverige leverantör",
-              "url_en": "/sales/choosing-a-digital-signage-partner/",
-              "url_sv": "/sv/sales/valja-leverantor-digital-skyltning/",
-              "intent": "Commercial",
-              "template": "comparison",
-              "word_count_target": 1600,
-              "status": "planned",
-              "differentiation_note": "Criteria-based buyer's guide (installation coverage, service SLAs, monitoring, manufacturer partnerships), not a literal 'best digital signage companies' ranked listicle -- avoids promoting named competitors while still capturing the query."
-            }
-          ]
-        }
-      ]
+     "name": "Retail & Shopping Centre Digital Signage",
+     "posts": [
+      {
+       "id": "sales-a1",
+       "title_en": "Digital Signage for Retail Stores: In-Store Screens That Drive Sales",
+       "title_sv": "Digital signage för butik: skärmar som ökar försäljningen",
+       "keyword_en": "digital signage for retail stores",
+       "keyword_sv": "digital signage för butik",
+       "url_en": "/sales/retail-digital-signage/",
+       "url_sv": "/sv/sales/digital-signage-butik/",
+       "intent": "Commercial",
+       "template": "landing-page",
+       "word_count_target": 1500,
+       "status": "planned",
+       "proof_evidence": [
+        "Kappahl (retail rollout)",
+        "Grocery Store",
+        "Fashion Environment"
+       ]
+      },
+      {
+       "id": "sales-a2",
+       "title_en": "Shopping Centre & Mall Digital Signage Screens",
+       "title_sv": "LED-skärmar för köpcentrum och gallerior",
+       "keyword_en": "shopping centre digital signage screens",
+       "keyword_sv": "LED-skärmar för köpcentrum",
+       "url_en": "/sales/shopping-centre-digital-signage/",
+       "url_sv": "/sv/sales/led-skarmar-kopcentrum/",
+       "intent": "Commercial",
+       "template": "landing-page",
+       "word_count_target": 1600,
+       "status": "planned",
+       "proof_evidence": [
+        "The Icon (Westfield Mall of Scandinavia)",
+        "The Halo",
+        "The Geminis / The Curve (Westfield Täby Centrum)",
+        "Retail in motion (Täby Centrum)"
+       ]
+      }
+     ]
     },
     {
-      "id": "pillar-rental",
-      "existing_page": {"en": "/rental/", "sv": "/sv/rental/"},
-      "title": "LED Screen Rental for Events",
-      "title_sv": "Hyra LED-skärm för event",
-      "primary_keyword_en": "led screen rental for events",
-      "primary_keyword_sv": "hyra led-skärm för event",
-      "secondary_keywords_en": ["event led screen hire", "led display uthyrning event"],
-      "intent": "Commercial",
-      "template": "ultimate-guide",
-      "word_count_target": 2800,
-      "status": "planned_expansion_of_existing_page",
-      "rationale": "'led display uthyrning event' already surfaces in GSC (pos 11.0) -- this pillar has the clearest existing foothold of the three and should confirm/expand the ranking rather than fight for a new position.",
-      "clusters": [
-        {
-          "name": "Event Types",
-          "posts": [
-            {
-              "id": "rental-a1",
-              "title_en": "LED Screen Hire for Corporate Events & Conferences",
-              "title_sv": "Hyra LED-skärm för företagsevent och konferenser",
-              "keyword_en": "led screen hire corporate events conferences",
-              "keyword_sv": "hyra led-skärm företagsevent konferens",
-              "url_en": "/rental/corporate-event-led-screens/",
-              "url_sv": "/sv/rental/foretagsevent-led-skarm/",
-              "intent": "Commercial",
-              "template": "landing-page",
-              "word_count_target": 1300,
-              "status": "planned"
-            },
-            {
-              "id": "rental-a2",
-              "title_en": "Outdoor LED Screen Rental for Festivals & Sports Events",
-              "title_sv": "Hyra utomhus-LED-skärm för festival och sportevent",
-              "keyword_en": "outdoor led screen rental festivals sports events",
-              "keyword_sv": "utomhus led-skärm uthyrning festival sport",
-              "url_en": "/rental/outdoor-festival-sports-led-rental/",
-              "url_sv": "/sv/rental/utomhus-led-uthyrning-festival-sport/",
-              "intent": "Commercial",
-              "template": "landing-page",
-              "word_count_target": 1300,
-              "status": "planned"
-            }
-          ]
-        },
-        {
-          "name": "Technical & Logistics",
-          "posts": [
-            {
-              "id": "rental-b1",
-              "title_en": "LED Video Wall Installation Guide (Temporary Event Setups)",
-              "title_sv": "Guide: installation av tillfällig LED-videovägg",
-              "keyword_en": "led video wall installation guide",
-              "keyword_sv": "installation tillfällig led-videovägg",
-              "url_en": "/rental/led-video-wall-setup-guide/",
-              "url_sv": "/sv/rental/installation-tillfallig-ledvagg/",
-              "intent": "Informational",
-              "template": "how-to",
-              "word_count_target": 1400,
-              "status": "planned"
-            },
-            {
-              "id": "rental-b2",
-              "title_en": "Indoor vs Outdoor LED Screen Rental: Which Should You Choose?",
-              "title_sv": "Inomhus eller utomhus LED-skärm: vad ska du hyra?",
-              "keyword_en": "indoor vs outdoor led screen rental",
-              "keyword_sv": "inomhus eller utomhus led-skärm hyra",
-              "url_en": "/rental/indoor-vs-outdoor-rental/",
-              "url_sv": "/sv/rental/inomhus-eller-utomhus-hyra/",
-              "intent": "Commercial",
-              "template": "comparison",
-              "word_count_target": 1300,
-              "status": "planned"
-            }
-          ]
-        },
-        {
-          "name": "Buy vs Rent Decision (cross-sell bridge to Sales pillar)",
-          "posts": [
-            {
-              "id": "rental-c1",
-              "title_en": "Renting vs Buying an LED Display: Which Is Right for You?",
-              "title_sv": "Hyra eller köpa LED-skärm?",
-              "keyword_en": "renting vs buying led display",
-              "keyword_sv": "hyra eller köpa led-skärm",
-              "url_en": "/rental/renting-vs-buying-led-display/",
-              "url_sv": "/sv/rental/hyra-eller-kopa-led-skarm/",
-              "intent": "Commercial",
-              "template": "comparison",
-              "word_count_target": 1400,
-              "status": "planned",
-              "rationale": "Structural bridge post -- mandatory cross-link to both pillar-sales and pillar-rental, and to pillar-service (ongoing monitoring/maintenance is a deciding factor in buy-vs-rent)."
-            },
-            {
-              "id": "rental-c2",
-              "title_en": "How Long Can You Rent an LED Screen? Short vs Long-Term Hire",
-              "title_sv": "Kort- eller långtidshyra av LED-skärm?",
-              "keyword_en": "how long rent led screen short vs long term hire",
-              "keyword_sv": "korttidshyra långtidshyra led-skärm",
-              "url_en": "/rental/short-term-vs-long-term-hire/",
-              "url_sv": "/sv/rental/korttid-langtidshyra-led-skarm/",
-              "intent": "Informational",
-              "template": "how-to",
-              "word_count_target": 1200,
-              "status": "planned"
-            }
-          ]
-        }
-      ]
+     "name": "Architectural & Outdoor Displays",
+     "posts": [
+      {
+       "id": "sales-b1",
+       "title_en": "LED Façade Displays: Media Architecture for Buildings",
+       "title_sv": "LED-skärm för fasad: mediearkitektur för fastigheter",
+       "keyword_en": "led facade display architectural",
+       "keyword_sv": "LED-skärm fasad byggnad",
+       "url_en": "/sales/led-facade-displays/",
+       "url_sv": "/sv/sales/led-skarm-fasad/",
+       "intent": "Commercial",
+       "template": "landing-page",
+       "word_count_target": 1500,
+       "status": "planned",
+       "proof_evidence": [
+        "A façade that turns (Nordstan P-hus)",
+        "The Icon @ The Node (Sergels torg)"
+       ]
+      },
+      {
+       "id": "sales-b2",
+       "title_en": "DOOH Roadside Advertising Screens for Landlords & Media Owners",
+       "title_sv": "DOOH-skärmar för utomhusreklam till fastighetsägare",
+       "keyword_en": "dooh advertising screens roadside",
+       "keyword_sv": "DOOH utomhusreklam skärmar",
+       "url_en": "/sales/dooh-roadside-screens/",
+       "url_sv": "/sv/sales/dooh-utomhusreklam/",
+       "intent": "Commercial",
+       "template": "landing-page",
+       "word_count_target": 1400,
+       "status": "planned",
+       "differentiation_note": "SERP for 'DOOH' is dominated by ad-network/media-buying vocabulary (JCDecaux, agencies). Explicitly position as hardware install/engineering for the screen OWNER (landlord, mall, media-owner), not ad-space sales, to avoid mismatched intent capture.",
+       "proof_evidence": [
+        "E4 Trädet North - Impact (roadside)",
+        "Södertull City (city-centre DOOH)"
+       ]
+      }
+     ]
     },
     {
-      "id": "pillar-service",
-      "existing_page": {"en": "/service/", "sv": "/sv/service/"},
-      "title": "Digital Signage Maintenance & Monitoring",
-      "title_sv": "Service och drift av LED-skärmar",
-      "primary_keyword_en": "digital signage maintenance and monitoring",
-      "primary_keyword_sv": "service och drift av led-skärmar",
-      "secondary_keywords_en": ["digital signage support", "led display service contract"],
-      "intent": "Commercial",
-      "template": "ultimate-guide",
-      "word_count_target": 2600,
-      "status": "planned_expansion_of_existing_page",
-      "clusters": [
-        {
-          "name": "Maintenance & Support",
-          "posts": [
-            {
-              "id": "service-a1",
-              "title_en": "Digital Signage Maintenance Contracts: What's Included?",
-              "title_sv": "Serviceavtal för LED-skärmar: vad ingår?",
-              "keyword_en": "digital signage maintenance contract what's included",
-              "keyword_sv": "serviceavtal led-skärmar vad ingår",
-              "url_en": "/service/maintenance-contracts/",
-              "url_sv": "/sv/service/serviceavtal-led-skarmar/",
-              "intent": "Commercial",
-              "template": "explainer",
-              "word_count_target": 1400,
-              "status": "planned"
-            },
-            {
-              "id": "service-a2",
-              "title_en": "LED Display Support & SLA Response Times",
-              "title_sv": "Support och SLA för LED-skärmar",
-              "keyword_en": "led display support sla response times",
-              "keyword_sv": "support sla led-skärmar",
-              "url_en": "/support/",
-              "url_sv": "/sv/support/",
-              "intent": "Transactional",
-              "template": "landing-page",
-              "word_count_target": 1200,
-              "status": "planned_retarget_of_existing_page",
-              "rationale": "Reuse the existing /support/ URL rather than create a new one -- retarget its primary keyword/H1 to this specific, narrower query instead of overlapping generically with the /service/ pillar."
-            }
-          ]
-        },
-        {
-          "name": "Remote Monitoring & Operations",
-          "posts": [
-            {
-              "id": "service-b1",
-              "title_en": "Remote Monitoring & Content Management for LED Displays",
-              "title_sv": "Fjärrövervakning och drift av LED-skärmar",
-              "keyword_en": "remote monitoring content management led displays",
-              "keyword_sv": "fjärrövervakning drift led-skärmar",
-              "url_en": "/service/remote-monitoring/",
-              "url_sv": "/sv/service/fjarrovervakning-drift/",
-              "intent": "Commercial",
-              "template": "explainer",
-              "word_count_target": 1400,
-              "status": "planned",
-              "proof_evidence": ["Screens never left alone (Ocean Outdoor -- nationwide operations)"]
-            },
-            {
-              "id": "service-b2",
-              "title_en": "Uptime & Reliability: How Proactive LED Monitoring Reduces Downtime",
-              "title_sv": "Driftsäkerhet: så minskar proaktiv övervakning stillestånd",
-              "keyword_en": "uptime reliability proactive led display monitoring",
-              "keyword_sv": "driftsäkerhet proaktiv övervakning led-skärm",
-              "url_en": "/service/uptime-reliability/",
-              "url_sv": "/sv/service/driftsakerhet-overvakning/",
-              "intent": "Informational",
-              "template": "explainer",
-              "word_count_target": 1200,
-              "status": "planned",
-              "gap_note": "Literal Swedish query 'led-skärm drift övervakning uptime' returned noisy/irrelevant SERP (CCTV monitors, hosting uptime tools) -- confirms this must be a reframed long-tail concept page, not a page built to match the literal phrase."
-            }
-          ]
-        }
-      ]
+     "name": "Buyer Education (vocabulary bridge + long sales-cycle nurture)",
+     "posts": [
+      {
+       "id": "sales-c1",
+       "title_en": "Digital Signage vs LED Display: What's the Difference?",
+       "title_sv": "Digital signage eller LED-skärm: vad är skillnaden?",
+       "keyword_en": "digital signage vs led display difference",
+       "keyword_sv": "digital signage eller led-skärm skillnad",
+       "url_en": "/sales/digital-signage-vs-led-display/",
+       "url_sv": "/sv/sales/digital-signage-eller-led-skarm/",
+       "intent": "Informational",
+       "template": "explainer",
+       "word_count_target": 1300,
+       "status": "planned",
+       "rationale": "Directly resolves the vocabulary gap identified in GSC data. Designed as the internal-linking spine of the whole site: links to all three pillars and functions as the glossary anchor for both vocabularies."
+      },
+      {
+       "id": "sales-c2",
+       "title_en": "LED Display Pixel Pitch Guide: Choosing the Right Screen",
+       "title_sv": "Pixel pitch-guide: så väljer du rätt LED-skärm",
+       "keyword_en": "led display pixel pitch guide",
+       "keyword_sv": "pixel pitch guide led-skärm",
+       "url_en": "/sales/led-pixel-pitch-guide/",
+       "url_sv": "/sv/sales/pixel-pitch-guide/",
+       "intent": "Informational",
+       "template": "how-to",
+       "word_count_target": 1400,
+       "status": "planned"
+      },
+      {
+       "id": "sales-c3",
+       "title_en": "How Much Does Digital Signage / an LED Display Cost?",
+       "title_sv": "Vad kostar en LED-skärm för företag?",
+       "keyword_en": "digital signage cost how much",
+       "keyword_sv": "led-skärm pris kostnad",
+       "url_en": "/sales/digital-signage-cost-guide/",
+       "url_sv": "/sv/sales/vad-kostar-en-led-skarm/",
+       "intent": "Commercial",
+       "template": "explainer",
+       "word_count_target": 1500,
+       "status": "planned",
+       "rationale": "Zero current capture in GSC despite being a top qualifying question in B2B long sales cycles. No invented price figures -- use real ranges only if sourced from IM Vision's own quoting process; otherwise frame as a cost-driver explainer (size, pixel pitch, indoor/outdoor, install complexity, service tier), not a fabricated price table."
+      },
+      {
+       "id": "sales-c4",
+       "title_en": "How to Choose a Digital Signage Installation Partner in Europe",
+       "title_sv": "Så väljer du rätt leverantör av digital skyltning i Europa",
+       "keyword_en": "digital signage companies europe how to choose",
+       "keyword_sv": "digital signage företag sverige leverantör",
+       "url_en": "/sales/choosing-a-digital-signage-partner/",
+       "url_sv": "/sv/sales/valja-leverantor-digital-skyltning/",
+       "intent": "Commercial",
+       "template": "comparison",
+       "word_count_target": 1600,
+       "status": "planned",
+       "differentiation_note": "Criteria-based buyer's guide (installation coverage, service SLAs, monitoring, manufacturer partnerships), not a literal 'best digital signage companies' ranked listicle -- avoids promoting named competitors while still capturing the query."
+      }
+     ]
     }
-  ],
-  "cross_pillar_links": [
-    {"from": "sales-c1", "to": "pillar-rental", "type": "optional", "anchor": "renting an LED screen for a one-off event"},
-    {"from": "sales-c1", "to": "pillar-service", "type": "optional", "anchor": "keeping a display running once it's installed"},
-    {"from": "rental-c1", "to": "pillar-sales", "type": "recommended", "anchor": "permanent LED display installation"},
-    {"from": "rental-c1", "to": "pillar-service", "type": "optional", "anchor": "ongoing monitoring and maintenance"},
-    {"from": "pillar-service", "to": "pillar-sales", "type": "mandatory", "anchor": "the displays we install and maintain"},
-    {"from": "pillar-sales", "to": "pillar-service", "type": "recommended", "anchor": "service and monitoring plans"},
-    {"from": "sales-b2", "to": "service-b1", "type": "optional", "anchor": "remote monitoring for roadside DOOH screens"}
-  ],
-  "cannibalization_check": {
-    "method": "All 21 primary keywords (7 pillar + variants, 8 sales spokes, 6 rental spokes, 4 service spokes) compared for text/intent near-duplicates.",
-    "near_duplicates_folded_into_existing_targets": [
-      {"variant_queries": ["signage solutions", "digital display solutions"], "folded_into": "pillar-sales (digital signage solutions)", "reason": "Same intent, near-identical phrasing already ranking pos 2.0-6.0 on the existing page -- no separate page created to avoid self-competition."},
-      {"variant_queries": ["digital signage companies"], "folded_into": "sales-c4 (choosing a partner)", "reason": "Avoided a literal 'best digital signage companies' ranked listicle that would require naming/ranking competitors."}
-    ],
-    "result": "0 posts share a primary keyword. PASS."
+   ]
   },
-  "serp_matrices": {
-    "note": "Estimated overlap scores from WebSearch domain-overlap sampling (see data_source_disclosure). Diagonal = 10.",
-    "pillar_sales_en": {
-      "keywords": [
-        "digital signage solutions",
-        "digital signage installation service",
-        "digital signage for retail",
-        "digital signage vs led display",
-        "led facade display architectural",
-        "dooh advertising screens roadside",
-        "digital signage cost",
-        "digital signage companies europe",
-        "led pixel pitch guide",
-        "shopping centre digital signage"
-      ],
-      "scores": [
-        [10, 1, 1, 0, 0, 0, 2, 1, 0, 1],
-        [1, 10, 0, 0, 0, 0, 1, 0, 0, 0],
-        [1, 0, 10, 0, 0, 0, 0, 0, 0, 2],
-        [0, 0, 0, 10, 0, 0, 0, 0, 1, 0],
-        [0, 0, 0, 0, 10, 0, 0, 0, 1, 1],
-        [0, 0, 0, 0, 0, 10, 0, 0, 0, 0],
-        [2, 1, 0, 0, 0, 0, 10, 0, 0, 0],
-        [1, 0, 0, 0, 0, 0, 0, 10, 1, 0],
-        [0, 0, 0, 1, 1, 0, 0, 1, 10, 0],
-        [1, 0, 2, 0, 1, 0, 0, 0, 0, 10]
-      ]
+  {
+   "id": "pillar-rental",
+   "existing_page": {
+    "en": "/rental/",
+    "sv": "/sv/rental/"
+   },
+   "title": "LED Screen Rental for Events",
+   "title_sv": "Hyra LED-skärm för event",
+   "primary_keyword_en": "led screen rental for events",
+   "primary_keyword_sv": "hyra led-skärm för event",
+   "secondary_keywords_en": [
+    "event led screen hire",
+    "led display uthyrning event"
+   ],
+   "intent": "Commercial",
+   "template": "ultimate-guide",
+   "word_count_target": 2800,
+   "status": "planned_expansion_of_existing_page",
+   "rationale": "'led display uthyrning event' already surfaces in GSC (pos 11.0) -- this pillar has the clearest existing foothold of the three and should confirm/expand the ranking rather than fight for a new position.",
+   "clusters": [
+    {
+     "name": "Event Types",
+     "posts": [
+      {
+       "id": "rental-a1",
+       "title_en": "LED Screen Hire for Corporate Events & Conferences",
+       "title_sv": "Hyra LED-skärm för företagsevent och konferenser",
+       "keyword_en": "led screen hire corporate events conferences",
+       "keyword_sv": "hyra led-skärm företagsevent konferens",
+       "url_en": "/rental/corporate-event-led-screens/",
+       "url_sv": "/sv/rental/foretagsevent-led-skarm/",
+       "intent": "Commercial",
+       "template": "landing-page",
+       "word_count_target": 1300,
+       "status": "planned"
+      },
+      {
+       "id": "rental-a2",
+       "title_en": "Outdoor LED Screen Rental for Festivals & Sports Events",
+       "title_sv": "Hyra utomhus-LED-skärm för festival och sportevent",
+       "keyword_en": "outdoor led screen rental festivals sports events",
+       "keyword_sv": "utomhus led-skärm uthyrning festival sport",
+       "url_en": "/rental/outdoor-festival-sports-led-rental/",
+       "url_sv": "/sv/rental/utomhus-led-uthyrning-festival-sport/",
+       "intent": "Commercial",
+       "template": "landing-page",
+       "word_count_target": 1300,
+       "status": "planned"
+      }
+     ]
     },
-    "pillar_sales_sv": {
-      "keywords": [
-        "led-skärm installation stockholm",
-        "led-skärm fasad byggnad",
-        "led-skärm köpcentrum digital skyltning",
-        "digital signage lösningar butik",
-        "led-skärm pris kostnad sverige"
-      ],
-      "scores": [
-        [10, 2, 2, 1, 1],
-        [2, 10, 3, 1, 2],
-        [2, 3, 10, 2, 1],
-        [1, 1, 2, 10, 1],
-        [1, 2, 1, 1, 10]
-      ],
-      "note": "Swedish commercial-product queries show noticeably higher cross-overlap than the English equivalents (displayteknik.se, avexpert.se, trefyr.se recur across facade/mall/retail/price queries) -- the SV market has few dominant vendor domains, which is why these four spokes are kept in the SAME cluster group with strong recommended interlinking rather than treated as fully independent verticals."
+    {
+     "name": "Technical & Logistics",
+     "posts": [
+      {
+       "id": "rental-b1",
+       "title_en": "LED Video Wall Installation Guide (Temporary Event Setups)",
+       "title_sv": "Guide: installation av tillfällig LED-videovägg",
+       "keyword_en": "led video wall installation guide",
+       "keyword_sv": "installation tillfällig led-videovägg",
+       "url_en": "/rental/led-video-wall-setup-guide/",
+       "url_sv": "/sv/rental/installation-tillfallig-ledvagg/",
+       "intent": "Informational",
+       "template": "how-to",
+       "word_count_target": 1400,
+       "status": "planned"
+      },
+      {
+       "id": "rental-b2",
+       "title_en": "Indoor vs Outdoor LED Screen Rental: Which Should You Choose?",
+       "title_sv": "Inomhus eller utomhus LED-skärm: vad ska du hyra?",
+       "keyword_en": "indoor vs outdoor led screen rental",
+       "keyword_sv": "inomhus eller utomhus led-skärm hyra",
+       "url_en": "/rental/indoor-vs-outdoor-rental/",
+       "url_sv": "/sv/rental/inomhus-eller-utomhus-hyra/",
+       "intent": "Commercial",
+       "template": "comparison",
+       "word_count_target": 1300,
+       "status": "planned"
+      }
+     ]
     },
-    "pillar_rental": {
-      "keywords": [
-        "event led screen rental hire",
-        "led video wall installation guide",
-        "led screen rental corporate events",
-        "hyra led-skärm event",
-        "led-skärm installation stockholm"
-      ],
-      "scores": [
-        [10, 0, 3, 2, 1],
-        [0, 10, 1, 0, 1],
-        [3, 1, 10, 3, 0],
-        [2, 0, 3, 10, 2],
-        [1, 1, 0, 2, 10]
-      ]
-    },
-    "pillar_service": {
-      "keywords": [
-        "digital signage maintenance service contract",
-        "digital signage content management monitoring remote",
-        "digital signage installation service",
-        "led-skärm underhåll service avtal",
-        "led-skärm drift övervakning uptime"
-      ],
-      "scores": [
-        [10, 1, 1, 3, 1],
-        [1, 10, 0, 1, 1],
-        [1, 0, 10, 0, 0],
-        [3, 1, 0, 10, 1],
-        [1, 1, 0, 1, 10]
-      ],
-      "note": "'led-skärm drift övervakning uptime' scored low against everything including its own conceptual sibling -- the literal Swedish phrase returns a noisy SERP (CCTV monitors, hosting uptime tools). Confirms service-b2 must target a reframed long-tail concept, not the literal phrase."
+    {
+     "name": "Buy vs Rent Decision (cross-sell bridge to Sales pillar)",
+     "posts": [
+      {
+       "id": "rental-c1",
+       "title_en": "Renting vs Buying an LED Display: Which Is Right for You?",
+       "title_sv": "Hyra eller köpa LED-skärm?",
+       "keyword_en": "renting vs buying led display",
+       "keyword_sv": "hyra eller köpa led-skärm",
+       "url_en": "/rental/renting-vs-buying-led-display/",
+       "url_sv": "/sv/rental/hyra-eller-kopa-led-skarm/",
+       "intent": "Commercial",
+       "template": "comparison",
+       "word_count_target": 1400,
+       "status": "planned",
+       "rationale": "Structural bridge post -- mandatory cross-link to both pillar-sales and pillar-rental, and to pillar-service (ongoing monitoring/maintenance is a deciding factor in buy-vs-rent)."
+      },
+      {
+       "id": "rental-c2",
+       "title_en": "How Long Can You Rent an LED Screen? Short vs Long-Term Hire",
+       "title_sv": "Kort- eller långtidshyra av LED-skärm?",
+       "keyword_en": "how long rent led screen short vs long term hire",
+       "keyword_sv": "korttidshyra långtidshyra led-skärm",
+       "url_en": "/rental/short-term-vs-long-term-hire/",
+       "url_sv": "/sv/rental/korttid-langtidshyra-led-skarm/",
+       "intent": "Informational",
+       "template": "how-to",
+       "word_count_target": 1200,
+       "status": "planned"
+      }
+     ]
     }
+   ]
   },
-  "priority_build_order": [
-    {"phase": 0, "action": "Retarget primary keyword/H1/meta on existing /sales/, /service/, /support/ pages to 'digital signage' vocabulary (no new URLs)", "commercial_value": "highest / fastest", "effort": "low"},
-    {"phase": 1, "items": ["sales-c1", "sales-a2", "sales-b1", "sales-a1"], "rationale": "Vocabulary-bridge post first (it links everywhere), then the two verticals with the deepest existing proof (4 mall case studies, 3 façade/roadside case studies), then retail."},
-    {"phase": 2, "items": ["sales-c3", "sales-c2", "sales-b2", "sales-c4"], "rationale": "Buyer-education content for the long B2B sales cycle -- cost guide is highest-value gap (currently zero capture)."},
-    {"phase": 3, "items": ["rental-c1", "rental-a2", "rental-a1", "rental-b1", "rental-b2", "rental-c2"], "rationale": "Rental has the clearest existing GSC foothold (pos 11.0) of any non-brand query -- consolidate it, then expand outward. Buy-vs-rent bridge built first to start cross-linking early."},
-    {"phase": 4, "items": ["service-a2", "service-a1", "service-b1", "service-b2"], "rationale": "Retention/upsell value rather than new-customer acquisition -- lowest priority for a lead-generation-focused first pass, but reuses an existing URL (/support/) and unlocks the Ocean Outdoor proof story."}
-  ],
-  "scorecard": {
-    "coverage": 0.0,
-    "planned_posts_total": 21,
-    "new_urls_required": 17,
-    "existing_urls_retargeted": 1,
-    "existing_pillar_pages_expanded": 3,
-    "linkDensity_target": ">=3.0 incoming links per post",
-    "orphanPages": 0,
-    "cannibalization": 0,
-    "contentGaps": 21
+  {
+   "id": "pillar-service",
+   "existing_page": {
+    "en": "/service/",
+    "sv": "/sv/service/"
+   },
+   "title": "Digital Signage Maintenance & Monitoring",
+   "title_sv": "Service och drift av LED-skärmar",
+   "primary_keyword_en": "digital signage maintenance and monitoring",
+   "primary_keyword_sv": "service och drift av led-skärmar",
+   "secondary_keywords_en": [
+    "digital signage support",
+    "led display service contract"
+   ],
+   "intent": "Commercial",
+   "template": "ultimate-guide",
+   "word_count_target": 2600,
+   "status": "planned_expansion_of_existing_page",
+   "clusters": [
+    {
+     "name": "Maintenance & Support",
+     "posts": [
+      {
+       "id": "service-a1",
+       "title_en": "Digital Signage Maintenance Contracts: What's Included?",
+       "title_sv": "Serviceavtal för LED-skärmar: vad ingår?",
+       "keyword_en": "digital signage maintenance contract what's included",
+       "keyword_sv": "serviceavtal led-skärmar vad ingår",
+       "url_en": "/service/maintenance-contracts/",
+       "url_sv": "/sv/service/serviceavtal-led-skarmar/",
+       "intent": "Commercial",
+       "template": "explainer",
+       "word_count_target": 1400,
+       "status": "planned"
+      },
+      {
+       "id": "service-a2",
+       "title_en": "LED Display Support & SLA Response Times",
+       "title_sv": "Support och SLA för LED-skärmar",
+       "keyword_en": "led display support sla response times",
+       "keyword_sv": "support sla led-skärmar",
+       "url_en": "/support/",
+       "url_sv": "/sv/support/",
+       "intent": "Transactional",
+       "template": "landing-page",
+       "word_count_target": 1200,
+       "status": "planned_retarget_of_existing_page",
+       "rationale": "Reuse the existing /support/ URL rather than create a new one -- retarget its primary keyword/H1 to this specific, narrower query instead of overlapping generically with the /service/ pillar."
+      }
+     ]
+    },
+    {
+     "name": "Remote Monitoring & Operations",
+     "posts": [
+      {
+       "id": "service-b1",
+       "title_en": "Remote Monitoring & Content Management for LED Displays",
+       "title_sv": "Fjärrövervakning och drift av LED-skärmar",
+       "keyword_en": "remote monitoring content management led displays",
+       "keyword_sv": "fjärrövervakning drift led-skärmar",
+       "url_en": "/service/remote-monitoring/",
+       "url_sv": "/sv/service/fjarrovervakning-drift/",
+       "intent": "Commercial",
+       "template": "explainer",
+       "word_count_target": 1400,
+       "status": "planned",
+       "proof_evidence": [
+        "Screens never left alone (Ocean Outdoor -- nationwide operations)"
+       ]
+      },
+      {
+       "id": "service-b2",
+       "title_en": "Uptime & Reliability: How Proactive LED Monitoring Reduces Downtime",
+       "title_sv": "Driftsäkerhet: så minskar proaktiv övervakning stillestånd",
+       "keyword_en": "uptime reliability proactive led display monitoring",
+       "keyword_sv": "driftsäkerhet proaktiv övervakning led-skärm",
+       "url_en": "/service/uptime-reliability/",
+       "url_sv": "/sv/service/driftsakerhet-overvakning/",
+       "intent": "Informational",
+       "template": "explainer",
+       "word_count_target": 1200,
+       "status": "planned",
+       "gap_note": "Literal Swedish query 'led-skärm drift övervakning uptime' returned noisy/irrelevant SERP (CCTV monitors, hosting uptime tools) -- confirms this must be a reframed long-tail concept page, not a page built to match the literal phrase."
+      }
+     ]
+    }
+   ]
   }
+ ],
+ "cross_pillar_links": [
+  {
+   "from": "sales-c1",
+   "to": "pillar-rental",
+   "type": "optional",
+   "anchor": "renting an LED screen for a one-off event"
+  },
+  {
+   "from": "sales-c1",
+   "to": "pillar-service",
+   "type": "optional",
+   "anchor": "keeping a display running once it's installed"
+  },
+  {
+   "from": "rental-c1",
+   "to": "pillar-sales",
+   "type": "recommended",
+   "anchor": "permanent LED display installation"
+  },
+  {
+   "from": "rental-c1",
+   "to": "pillar-service",
+   "type": "optional",
+   "anchor": "ongoing monitoring and maintenance"
+  },
+  {
+   "from": "pillar-service",
+   "to": "pillar-sales",
+   "type": "mandatory",
+   "anchor": "the displays we install and maintain"
+  },
+  {
+   "from": "pillar-sales",
+   "to": "pillar-service",
+   "type": "recommended",
+   "anchor": "service and monitoring plans"
+  },
+  {
+   "from": "sales-b2",
+   "to": "service-b1",
+   "type": "optional",
+   "anchor": "remote monitoring for roadside DOOH screens"
+  }
+ ],
+ "cannibalization_check": {
+  "method": "All 21 primary keywords (7 pillar + variants, 8 sales spokes, 6 rental spokes, 4 service spokes) compared for text/intent near-duplicates.",
+  "near_duplicates_folded_into_existing_targets": [
+   {
+    "variant_queries": [
+     "signage solutions",
+     "digital display solutions"
+    ],
+    "folded_into": "pillar-sales (digital signage solutions)",
+    "reason": "Same intent, near-identical phrasing already ranking pos 2.0-6.0 on the existing page -- no separate page created to avoid self-competition."
+   },
+   {
+    "variant_queries": [
+     "digital signage companies"
+    ],
+    "folded_into": "sales-c4 (choosing a partner)",
+    "reason": "Avoided a literal 'best digital signage companies' ranked listicle that would require naming/ranking competitors."
+   }
+  ],
+  "result": "0 posts share a primary keyword. PASS."
+ },
+ "serp_matrices": {
+  "note": "Estimated overlap scores from WebSearch domain-overlap sampling (see data_source_disclosure). Diagonal = 10.",
+  "pillar_sales_en": {
+   "keywords": [
+    "digital signage solutions",
+    "digital signage installation service",
+    "digital signage for retail",
+    "digital signage vs led display",
+    "led facade display architectural",
+    "dooh advertising screens roadside",
+    "digital signage cost",
+    "digital signage companies europe",
+    "led pixel pitch guide",
+    "shopping centre digital signage"
+   ],
+   "scores": [
+    [
+     10,
+     1,
+     1,
+     0,
+     0,
+     0,
+     2,
+     1,
+     0,
+     1
+    ],
+    [
+     1,
+     10,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    [
+     1,
+     0,
+     10,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     0,
+     0,
+     0,
+     10,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     10,
+     0,
+     0,
+     0,
+     1,
+     1
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     10,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     10,
+     0,
+     0,
+     0
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     10,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     1,
+     10,
+     0
+    ],
+    [
+     1,
+     0,
+     2,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     10
+    ]
+   ]
+  },
+  "pillar_sales_sv": {
+   "keywords": [
+    "led-skärm installation stockholm",
+    "led-skärm fasad byggnad",
+    "led-skärm köpcentrum digital skyltning",
+    "digital signage lösningar butik",
+    "led-skärm pris kostnad sverige"
+   ],
+   "scores": [
+    [
+     10,
+     2,
+     2,
+     1,
+     1
+    ],
+    [
+     2,
+     10,
+     3,
+     1,
+     2
+    ],
+    [
+     2,
+     3,
+     10,
+     2,
+     1
+    ],
+    [
+     1,
+     1,
+     2,
+     10,
+     1
+    ],
+    [
+     1,
+     2,
+     1,
+     1,
+     10
+    ]
+   ],
+   "note": "Swedish commercial-product queries show noticeably higher cross-overlap than the English equivalents (displayteknik.se, avexpert.se, trefyr.se recur across facade/mall/retail/price queries) -- the SV market has few dominant vendor domains, which is why these four spokes are kept in the SAME cluster group with strong recommended interlinking rather than treated as fully independent verticals."
+  },
+  "pillar_rental": {
+   "keywords": [
+    "event led screen rental hire",
+    "led video wall installation guide",
+    "led screen rental corporate events",
+    "hyra led-skärm event",
+    "led-skärm installation stockholm"
+   ],
+   "scores": [
+    [
+     10,
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     0,
+     10,
+     1,
+     0,
+     1
+    ],
+    [
+     3,
+     1,
+     10,
+     3,
+     0
+    ],
+    [
+     2,
+     0,
+     3,
+     10,
+     2
+    ],
+    [
+     1,
+     1,
+     0,
+     2,
+     10
+    ]
+   ]
+  },
+  "pillar_service": {
+   "keywords": [
+    "digital signage maintenance service contract",
+    "digital signage content management monitoring remote",
+    "digital signage installation service",
+    "led-skärm underhåll service avtal",
+    "led-skärm drift övervakning uptime"
+   ],
+   "scores": [
+    [
+     10,
+     1,
+     1,
+     3,
+     1
+    ],
+    [
+     1,
+     10,
+     0,
+     1,
+     1
+    ],
+    [
+     1,
+     0,
+     10,
+     0,
+     0
+    ],
+    [
+     3,
+     1,
+     0,
+     10,
+     1
+    ],
+    [
+     1,
+     1,
+     0,
+     1,
+     10
+    ]
+   ],
+   "note": "'led-skärm drift övervakning uptime' scored low against everything including its own conceptual sibling -- the literal Swedish phrase returns a noisy SERP (CCTV monitors, hosting uptime tools). Confirms service-b2 must target a reframed long-tail concept, not the literal phrase."
+  }
+ },
+ "priority_build_order": [
+  {
+   "phase": 0,
+   "action": "Retarget primary keyword/H1/meta on existing /sales/, /service/, /support/ pages to 'digital signage' vocabulary (no new URLs)",
+   "commercial_value": "highest / fastest",
+   "effort": "low"
+  },
+  {
+   "phase": 1,
+   "items": [
+    "sales-c1",
+    "sales-a2",
+    "sales-b1",
+    "sales-a1"
+   ],
+   "rationale": "Vocabulary-bridge post first (it links everywhere), then the two verticals with the deepest existing proof (4 mall case studies, 3 façade/roadside case studies), then retail."
+  },
+  {
+   "phase": 2,
+   "items": [
+    "sales-c3",
+    "sales-c2",
+    "sales-b2",
+    "sales-c4"
+   ],
+   "rationale": "Buyer-education content for the long B2B sales cycle -- cost guide is highest-value gap (currently zero capture)."
+  },
+  {
+   "phase": 3,
+   "items": [
+    "rental-c1",
+    "rental-a2",
+    "rental-a1",
+    "rental-b1",
+    "rental-b2",
+    "rental-c2"
+   ],
+   "rationale": "Rental has the clearest existing GSC foothold (pos 11.0) of any non-brand query -- consolidate it, then expand outward. Buy-vs-rent bridge built first to start cross-linking early."
+  },
+  {
+   "phase": 4,
+   "items": [
+    "service-a2",
+    "service-a1",
+    "service-b1",
+    "service-b2"
+   ],
+   "rationale": "Retention/upsell value rather than new-customer acquisition -- lowest priority for a lead-generation-focused first pass, but reuses an existing URL (/support/) and unlocks the Ocean Outdoor proof story."
+  }
+ ],
+ "scorecard": {
+  "coverage": 0.0,
+  "planned_posts_total": 21,
+  "new_urls_required": 17,
+  "existing_urls_retargeted": 1,
+  "existing_pillar_pages_expanded": 3,
+  "linkDensity_target": ">=3.0 incoming links per post",
+  "orphanPages": 0,
+  "cannibalization": 0,
+  "contentGaps": 21
+ },
+ "pilot_status_2026_07_30": {
+  "decision": "Pilot 1 briefed, not published. Pilots 2 and 3 blocked upstream.",
+  "serp_recheck": {
+   "date": "2026-07-30",
+   "method": "live WebSearch, both locales",
+   "en_ranking_domains": [
+    "chainzone.com",
+    "megasigninc.com",
+    "ssa-digital.com",
+    "comsightdisplay.com",
+    "edu-display.com",
+    "sostron.com"
+   ],
+   "sv_ranking_domains": [
+    "signcast.se",
+    "displayteknik.se",
+    "trefyr.se",
+    "ledtec.se"
+   ],
+   "page_type_google_rewards": "explainer/comparison article on a hardware vendor's own site",
+   "separate_intent_confirmed": true,
+   "swedish_intent_independently_verified": true,
+   "note": "Comparison-query SERP is won by LED hardware peers, not by the CMS vendors that own 'digital signage solutions'. Competitive bar is moderate."
+  },
+  "pilot_1": {
+   "slug_proposed": "digital-signage-vs-led-display",
+   "status": "BLOCKED — brief complete, not published",
+   "brief": "docs/seo/CONTENT-BRIEF-digital-signage-vs-led.md",
+   "blocked_on": [
+    "Technical sign-off on the comparison table (nits, pixel pitch, lifespan, cost drivers, when LCD/projection beats LED) — not present anywhere in project material",
+    "Positioning decision: how explicitly to state IM Vision is not a CMS vendor, given /sales/ was just retargeted toward 'digital signage'"
+   ],
+   "cannibalisation": {
+    "keyword_level": "low",
+    "messaging_level": "real — must frame IM Vision as the hardware and operations half, and link out to /sales/, /rental/, /service/"
+   }
+  },
+  "pilot_2_and_3": {
+   "status": "BLOCKED upstream",
+   "reason": "Both are meant to rest on existing case studies (4 for shopping centre, 3 for facade). Those cases are 74-128 words and lack installation year, client and IM Vision's role. A cluster page built on thin cases is a thin cluster page.",
+   "sequence": "Fill in project facts -> deepen the cases -> then build the cluster page on top of them. See docs/seo/CONTENT-INPUT-REQUIRED.md"
+  }
+ }
 }

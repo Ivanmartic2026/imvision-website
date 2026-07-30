@@ -6,7 +6,11 @@ import {
   Ruler,
   Sun,
   Layers,
+  Monitor,
+  Wrench,
+  ArrowUpRight,
 } from "lucide-react";
+import type { ProjectRole } from "@/lib/projects";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/layout/PageHeader";
@@ -23,6 +27,10 @@ export interface ProjectCopy {
   category: string;
   description: string;
   longDescription: string;
+  /** Localised wording for the fact block; each falls back to the English string. */
+  specsType?: string;
+  location?: string;
+  specsSize?: string;
   caseStudy?: Project["caseStudy"];
 }
 
@@ -48,6 +56,7 @@ const labels = {
     detailsTitleVerified: "Project details",
     detailsTitleDraft: "Draft specification",
     relatedHeading: "Related projects",
+    relatedServicesHeading: "Related services",
     backLink: "Back to all projects",
     discussButton: "Discuss a similar project",
     homeCrumb: "Home",
@@ -71,6 +80,7 @@ const labels = {
     detailsTitleVerified: "Projektdetaljer",
     detailsTitleDraft: "Utkast till specifikation",
     relatedHeading: "Relaterade projekt",
+    relatedServicesHeading: "Relaterade tjänster",
     backLink: "Tillbaka till alla projekt",
     discussButton: "Diskutera ett liknande projekt",
     homeCrumb: "Hem",
@@ -92,10 +102,83 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
   const t = labels[locale];
   const caseStudy = copy.caseStudy ?? project.caseStudy;
 
+  // The component owns the wording so the same structured fact reads naturally in
+  // both languages, rather than being translated twice in the data.
+  const roleLabels: Record<"en" | "sv", Record<ProjectRole, string>> = {
+    en: {
+      designed: "Designed",
+      engineered: "Engineered",
+      delivered: "Delivered",
+      installed: "Installed",
+      serviced: "Serviced",
+      operated: "Operated",
+      monitored: "Monitored",
+    },
+    sv: {
+      designed: "Formgivet",
+      engineered: "Konstruerat",
+      delivered: "Levererat",
+      installed: "Installerat",
+      serviced: "Servat",
+      operated: "Driftat",
+      monitored: "Övervakat",
+    },
+  };
+  const roleText = project.role?.length
+    ? project.role.map((r) => roleLabels[locale][r]).join(" · ")
+    : null;
+
+  // Related services are derived from the verified role, not from the fact that a
+  // project exists. Where no role is documented — the six Ocean Outdoor sites — the
+  // block is absent rather than implying IM Vision delivered a service it may not have.
+  const serviceLinks = (() => {
+    if (!project.role?.length) return [];
+    const wants = new Set<"sales" | "service">();
+    for (const r of project.role) {
+      if (r === "designed" || r === "engineered" || r === "delivered" || r === "installed")
+        wants.add("sales");
+      if (r === "serviced" || r === "operated" || r === "monitored") wants.add("service");
+    }
+    const labelsByLocale = {
+      en: { sales: "Permanent installations", service: "Service & operations" },
+      sv: { sales: "Permanenta installationer", service: "Service och drift" },
+    } as const;
+    return [...wants].map((k) => ({
+      href: localizedHref(locale, k === "sales" ? "/sales/" : "/service/"),
+      label: labelsByLocale[locale][k],
+    }));
+  })();
+
+  // The body should only say what the hero hasn't. Two patterns occur in the data:
+  // longDescription identical to description (four English entries), and
+  // longDescription opening with the description verbatim and then continuing
+  // (the Swedish Nordstan entry). Strip the repeated opening and render what's left.
+  const bodyText = (() => {
+    const body = copy.longDescription.trim();
+    const lead = copy.description.trim();
+    if (!body || body === lead) return null;
+    const rest = body.startsWith(lead) ? body.slice(lead.length).trim() : body;
+    return rest || null;
+  })();
+
+  // Was `.slice(0, 2)`, so every project page showed the first two entries in the
+  // array — The Icon and The Halo — regardless of what the page was about. Score by
+  // what the projects actually have in common instead.
+  const venue = project.category.split("—")[0].trim().toLowerCase();
+  const city = project.location.split(",")[0].trim().toLowerCase();
   const relatedProjects = projects
-    .filter((p) => p.slug !== project.slug)
+    .filter((p) => p.slug !== project.slug && p.verified === true)
+    .map((p) => {
+      const sharedTags = p.tags.filter((t) => project.tags.includes(t)).length;
+      const sameVenue = p.category.split("—")[0].trim().toLowerCase() === venue ? 3 : 0;
+      const sameCity = p.location.split(",")[0].trim().toLowerCase() === city ? 2 : 0;
+      const sameType = p.specs.type && project.specs.type
+        && p.specs.type.split("·")[0].trim() === project.specs.type.split("·")[0].trim() ? 2 : 0;
+      return { p, score: sharedTags + sameVenue + sameCity + sameType };
+    })
+    .sort((a, b) => b.score - a.score)
     .slice(0, 2)
-    .map((p) => localizeRelatedProject(locale, p));
+    .map(({ p }) => localizeRelatedProject(locale, p));
 
   return (
     <>
@@ -106,10 +189,17 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
           description: copy.description,
           image: project.image,
           category: copy.category,
-          location: project.location,
+          // Localised so the structured data states the same thing the page shows —
+          // the fact block is Swedish on /sv/, and the schema now follows it.
+          location: copy.location || project.location,
           imageCredit: project.imageCredit,
           sourceUrl: project.sourceUrl,
-          specs: project.specs,
+          specs: {
+            ...project.specs,
+            ...(copy.specsType ? { type: copy.specsType } : {}),
+            ...(copy.specsSize ? { size: copy.specsSize } : {}),
+          },
+          ...(roleText ? { role: roleText } : {}),
           tags: project.tags,
         })}
       />
@@ -192,14 +282,22 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
 
             <div className="mt-12 grid gap-12 lg:grid-cols-3">
               <div className="lg:col-span-2">
-                {!caseStudy && (
+                {/* On four English projects (nordstan-facade, taby-centrum,
+                    ocean-outdoor-operations, parksign) longDescription is byte-identical to
+                    the hero description, so the body is suppressed rather than printing the
+                    same sentence twice. The heading has to be suppressed with it — otherwise
+                    those pages render "About the project" with nothing beneath it. The whole
+                    block is data-driven and returns the moment real copy is written. */}
+                {!caseStudy && (bodyText || project.sourceUrl) && (
                   <>
                     <h2 className="text-3xl font-medium tracking-[-0.035em] text-text-primary sm:text-4xl">
                       {t.aboutHeading}
                     </h2>
-                    <p className="mt-4 text-lg leading-relaxed text-text-secondary">
-                      {copy.longDescription}
-                    </p>
+                    {bodyText && (
+                      <p className="mt-4 text-lg leading-relaxed text-text-secondary">
+                        {bodyText}
+                      </p>
+                    )}
                     {project.sourceUrl && (
                       <a
                         href={project.sourceUrl}
@@ -229,7 +327,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                   <ul className="mt-4 space-y-4">
                     <li className="flex items-center gap-3 text-text-secondary">
                       <MapPin size={18} className="text-accent" />
-                      {project.location}
+                      {copy.location || project.location}
                     </li>
                     {project.year && (
                       <li className="flex items-center gap-3 text-text-secondary">
@@ -237,10 +335,32 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                         {project.year}
                       </li>
                     )}
+                    {/* specs.type is set on every project and was already being emitted as
+                        an additionalProperty in the JSON-LD, but never shown on the page —
+                        structured data describing something the user cannot see. It is the
+                        one field that states what kind of installation this actually is
+                        ("Curved outdoor LED", "Monitoring & operations", "Double-sided DOOH"),
+                        so it earns a place above the dimensions. */}
+                    {(copy.specsType || project.specs.type) && (
+                      <li className="flex items-center gap-3 text-text-secondary">
+                        <Monitor size={18} className="text-accent" />
+                        {copy.specsType || project.specs.type}
+                      </li>
+                    )}
+                    {/* What IM Vision actually did. Rendered only where the project's
+                        own copy states it — six of the thirteen say nothing about who
+                        engineered or installed them, and the row is simply absent there
+                        rather than filled with a guess. */}
+                    {roleText && (
+                      <li className="flex items-center gap-3 text-text-secondary">
+                        <Wrench size={18} className="text-accent" />
+                        {roleText}
+                      </li>
+                    )}
                     {project.specs.size && (
                       <li className="flex items-center gap-3 text-text-secondary">
                         <Ruler size={18} className="text-accent" />
-                        {project.specs.size}
+                        {copy.specsSize || project.specs.size}
                       </li>
                     )}
                     {project.specs.brightness && (
@@ -257,6 +377,28 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                     )}
                   </ul>
                 </div>
+
+                {serviceLinks.length > 0 && (
+                  <div className="light-gate border border-border-subtle bg-bg-elevated p-7">
+                    <h3 className="text-sm font-semibold uppercase tracking-wider text-text-muted">
+                      {t.relatedServicesHeading}
+                    </h3>
+                    <ul className="mt-4 space-y-3">
+                      {serviceLinks.map((l) => (
+                        <li key={l.href}>
+                          <Link
+                            href={l.href}
+                            prefetch={false}
+                            className="inline-flex items-center gap-2 text-text-secondary transition-colors hover:text-text-primary"
+                          >
+                            <ArrowUpRight size={16} className="text-accent" />
+                            {l.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 <Button href={localizedHref(locale, "/contact/")} className="w-full">
                   {t.discussButton}

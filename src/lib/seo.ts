@@ -348,6 +348,7 @@ export function projectLd(
     imageCredit,
     sourceUrl,
     specs,
+    role,
     tags,
   }: {
     slug: string;
@@ -359,6 +360,8 @@ export function projectLd(
     imageCredit?: string;
     sourceUrl?: string;
     specs?: Record<string, string | undefined>;
+    /** Localised label for IM Vision's verified role, e.g. "Engineered · Installed". */
+    role?: string;
     tags?: string[];
   }
 ) {
@@ -370,6 +373,15 @@ export function projectLd(
         .filter(([, v]) => Boolean(v))
         .map(([name, value]) => ({ "@type": "PropertyValue", name, value }))
     : [];
+  // Only stated in schema because it is now stated on the page. Projects with no
+  // documented role carry no role property, exactly as they carry no role row.
+  if (role) {
+    specProps.push({
+      "@type": "PropertyValue",
+      name: locale === "sv" ? "IM Visions roll" : "IM Vision's role",
+      value: role,
+    });
+  }
   return {
     "@context": "https://schema.org",
     "@graph": [

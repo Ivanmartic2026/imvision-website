@@ -761,6 +761,92 @@ behörighets- eller ägarskapsändringar, ingen massbegäran om indexering.
 
 ---
 
+## 19c. Fas 2 — lokalt arbete 2026-07-30
+
+Branch `seo/phase-2-lcp-content-local`, bas `a191f20`. **Inget pushat, mergat eller
+driftsatt.** All mätning gjord mot lokal production build; produktionsdomänen orörd.
+
+### Production verification pending — Vercel Security Checkpoint
+
+`imvision.se` returnerar `403` med `x-vercel-mitigated: challenge` till alla automatiserade
+klienter. Fullständig uppdelning av vad som är verifierat var finns i
+[`SEO-MEASUREMENT-BASELINE.md`](./SEO-MEASUREMENT-BASELINE.md) §4, tillsammans med ett
+minimalt testprotokoll att köra när checkpointen är löst.
+
+Kort: allt nedan är **lokalt verifierat**. Delar av det bekräftades på deployment-URL:en
+tidigare samma dag. **Ingenting är verifierat på produktionsdomänen efter fas 2.**
+
+### Arbetsström A — LCP
+
+Hypotesen om `Reveal`/`StaggerReveal` är **motbevisad**. Ingen kodändring gjord. Full
+A/B-redovisning i [`LCP-OPTIMIZATION-RESULTS.md`](./LCP-OPTIMIZATION-RESULTS.md).
+
+### Arbetsström B — projektsidor
+
+Två defekter åtgärdade med enbart befintlig data:
+
+- `specs.type` fanns på alla 13 projekt och låg redan i JSON-LD som `additionalProperty`, men
+  renderades aldrig. Strukturerad data beskrev något användaren inte kunde se. Nu synlig.
+- På fyra projekt var `longDescription` ordagrant identisk med ingressen, så samma mening
+  trycktes två gånger. Renderas nu bara när den skiljer sig.
+
+Frågelista per sida i [`CONTENT-INPUT-REQUIRED.md`](./CONTENT-INPUT-REQUIRED.md).
+
+### Arbetsström C — E-E-A-T
+
+De tre påståendena på `/about/` finns på **ett ställe**: `AboutPageContent.tsx`, fyra
+förekomster. **Ingen dokumenterad metod för "98% Client satisfaction"** och **inget
+grundningsår** finns någonstans i repot. Exakt ersättningstext föreslagen — inte genomförd,
+eftersom det är ett centralt marknadspåstående. Datamall för expertprofil skapad; ingen
+platshållaridentitet publicerad.
+
+### Arbetsström D — lokal SEO
+
+[`LOCAL-SEO-DECISION-PACK.md`](./LOCAL-SEO-DECISION-PACK.md). Ingenting utfört i Google
+Business Profile. Koordinater inte gissade.
+
+### Arbetsström E — pilotkluster
+
+SERP-kontroll körd på nytt i båda språken. Verdikt: bygg — men **briefen är blockerad** på
+teknisk granskning. Se [`CONTENT-BRIEF-digital-signage-vs-led.md`](./CONTENT-BRIEF-digital-signage-vs-led.md).
+**Noll nya sidor publicerade.**
+
+### Arbetsström F — schema och GEO
+
+Grafen validerad mot synligt innehåll på lokal build. **Inga avvikelser:**
+
+| Kontroll | Resultat |
+|---|---|
+| JSON-LD parsar | ✅ noll fel på samtliga kontrollerade sidor |
+| `@id`-integritet | ✅ alla referenser upplösta (`#logo` definieras inline i `Organization.logo`) |
+| FAQPage på `/support/` | ✅ 5 frågor, samtliga synliga på sidan |
+| `CreativeWork.additionalProperty` | ✅ samtliga värden nu synliga — den enda avvikelsen var `specs.type`, åtgärdad |
+| Service på `/sales/`, `/rental/`, `/service/` | ✅ finns, serviceType matchar sidans faktiska tjänst |
+| BreadcrumbList | ✅ följer verklig navigationsväg; `/sv/servicevillkor/` använder korrekt `/sv/` som hem |
+
+Inget `aggregateRating`, `review`, `Person`, `geo` eller `openingHours` tillagt — samtliga
+blockerade på uppgifter från er.
+
+### Verifiering efter fas 2
+
+| Kontroll | Resultat |
+|---|---|
+| `tsc --noEmit` | Ren |
+| `eslint` | 1 varning — befintlig sedan tidigare, orörd |
+| `npm run build` | Ren |
+| Crawl av lokal build | 47 sidor, samtliga 200 |
+| Duplicerade titlar | 0 |
+| Föräldralösa sidor | 0 |
+| Indexerbara utanför sitemap | 0 |
+| Trasiga interna länkar | 0 |
+| Mobil 320px / 390px | Ingen overflow |
+
+⚠️ Crawlen rapporterar canonical-avvikelse på samtliga sidor. Det är förväntat: canonical
+pekar korrekt på `https://imvision.se/...` medan crawlen körs mot `localhost`. Sökvägarna
+matchar exakt — bara värdnamnet skiljer.
+
+---
+
 ## 20. Exakta steg för granskning och sammanslagning
 
 ```bash

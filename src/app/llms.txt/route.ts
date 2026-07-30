@@ -10,9 +10,34 @@ export const dynamic = "force-static";
  */
 export function GET() {
   const verified = projects.filter((p) => p.verified === true);
-  const notable = verified
+
+  const ROLE_LABELS: Record<string, string> = {
+    designed: "designed",
+    engineered: "engineered",
+    delivered: "delivered",
+    installed: "installed",
+    serviced: "serviced",
+    operated: "operated",
+    monitored: "monitored",
+  };
+
+  // Projects where IM Vision's role is documented come first. `.slice(0, 6)` on the
+  // raw array returned exactly the six Ocean Outdoor sites — the ones where nothing
+  // published says what IM Vision did — while omitting every project that does say.
+  // For an LLM deciding what it can attribute to this company, that was backwards.
+  const notable = [...verified]
+    .sort((a, b) => Number(Boolean(b.role?.length)) - Number(Boolean(a.role?.length)))
     .slice(0, 6)
-    .map((p) => `- [${p.title}](${SITE_URL}/projects/${p.slug}/): ${p.description} (${p.location})`)
+    .map((p) => {
+      // Neutral phrasing on purpose: the entries are not all installations —
+      // ParkSign is an in-house product and the operations entry is an agreement
+      // covering several screens, so "IM Vision installed this installation" would
+      // misdescribe them.
+      const role = p.role?.length
+        ? ` IM Vision's role: ${p.role.map((r) => ROLE_LABELS[r]).join(", ")}.`
+        : "";
+      return `- [${p.title}](${SITE_URL}/projects/${p.slug}/): ${p.description} (${p.location})${role}`;
+    })
     .join("\n");
 
   const body = `# IM Vision
