@@ -282,17 +282,17 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
 
             <div className="mt-12 grid gap-12 lg:grid-cols-3">
               <div className="lg:col-span-2">
-                {!caseStudy && (
+                {/* On four English projects (nordstan-facade, taby-centrum,
+                    ocean-outdoor-operations, parksign) longDescription is byte-identical to
+                    the hero description, so the body is suppressed rather than printing the
+                    same sentence twice. The heading has to be suppressed with it — otherwise
+                    those pages render "About the project" with nothing beneath it. The whole
+                    block is data-driven and returns the moment real copy is written. */}
+                {!caseStudy && (bodyText || project.sourceUrl) && (
                   <>
                     <h2 className="text-3xl font-medium tracking-[-0.035em] text-text-primary sm:text-4xl">
                       {t.aboutHeading}
                     </h2>
-                    {/* On four projects (nordstan-facade, taby-centrum,
-                        ocean-outdoor-operations, parksign) longDescription is byte-identical
-                        to the hero description, so the same sentence rendered twice on the
-                        page. Show the body only when it actually says something new; the
-                        check is data-driven, so these pages start rendering it again the
-                        moment real copy is written. */}
                     {bodyText && (
                       <p className="mt-4 text-lg leading-relaxed text-text-secondary">
                         {bodyText}
