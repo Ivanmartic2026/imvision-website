@@ -5,7 +5,7 @@ import {
   ProjectDetailPage,
   ProjectCopy,
 } from "@/components/sections/projects/ProjectDetailPage";
-import { pageMeta, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { pageMeta, projectTitle, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ...pageMeta({
       locale: "en",
       path: `/projects/${slug}/`,
-      title: project.title,
+      title: projectTitle("en", project.title, project.location),
       description: project.description,
       image: project.image || DEFAULT_OG_IMAGE,
     }),

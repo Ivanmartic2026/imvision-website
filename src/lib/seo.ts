@@ -105,6 +105,34 @@ export function pageMeta({
   };
 }
 
+/**
+ * SERP title for a project page.
+ *
+ * A bare project name carries no query terms. Search Console (3 months to
+ * 2026-07-27) shows these pages ranking on location intent the title never
+ * mentions: "södertull malmö" drew 52 impressions and 0 clicks at position 12.2
+ * against /sv/projects/sodertull-city/, whose title was just "Södertull City".
+ * This appends the display type and the city.
+ *
+ * Everything comes from fields that already exist in the project data; nothing
+ * is invented. The candidate list degrades progressively so the result always
+ * fits the ~60-character SERP limit once the root template appends the brand —
+ * project names range from "The Curve" to "SAS — Lounges & Express Check-in".
+ */
+export function projectTitle(locale: Locale, base: string, location: string): string {
+  // "Täby, Sweden" → "Täby". Region-only values ("Nordic region", "Sweden")
+  // have no comma and add nothing to a title, so they are dropped.
+  const city = location.includes(",") ? location.split(",")[0].trim() : null;
+  const kind = locale === "sv" ? "LED-skärm" : "LED display";
+  const brandSuffix = ` | ${SITE_NAME}`.length;
+  const candidates = [
+    ...(city ? [`${base} — ${kind}, ${city}`, `${base} — ${city}`] : []),
+    `${base} — ${kind}`,
+    base,
+  ];
+  return candidates.find((c) => c.length + brandSuffix <= 60) ?? base;
+}
+
 /* ---------- JSON-LD structured data ---------- */
 
 // Reused across Organization/LocalBusiness so the entity's expertise is
