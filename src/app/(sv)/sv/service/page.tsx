@@ -6,9 +6,9 @@ import { pageMeta, pageBreadcrumbLd } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   locale: "sv",
   path: "/service/",
-  title: "Service och support",
+  title: "Service och underhåll av LED-skärmar",
   description:
-    "Installation, övervakning, underhåll och långsiktig support för LED-system — prioriterad respons från teamet som byggde er installation.",
+    "Installation, övervakning, underhåll och långsiktig support för LED-skärmar och digital skyltning — prioriterad respons från teamet som byggde er installation.",
 });
 
 export default function SwedishServicePage() {
