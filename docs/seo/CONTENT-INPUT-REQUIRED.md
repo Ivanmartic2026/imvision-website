@@ -172,6 +172,25 @@ Se även [`SEO-NEXT-STEPS.md`](./SEO-NEXT-STEPS.md) §4.
 
 ---
 
+### Fullständigt beslutsunderlag per påstående
+
+| | 500+ Projects delivered | 15+ Years of experience | 98% Client satisfaction |
+|---|---|---|---|
+| **Fil** | `AboutPageContent.tsx` | samma | samma |
+| **Rad** | 25 (EN) / 67 (SV) | 24 / 66 | 26 / 68 |
+| **Engelska** | "500+" / "Projects delivered" | "15+" / "Years of experience" | "98%" / "Client satisfaction" |
+| **Svenska** | "500+" / "Projekt levererade" | "15+" / "Års erfarenhet" | "98%" / "Kundnöjdhet" |
+| **Bevis som krävs** | Projektlogg eller räkning som stödjer talet | Verkligt startår | **Mätmetod, urval, period, datakälla** |
+| **Risk** | Medel — portföljen visar 13 case, glappet syns | Låg | **Hög** — sifferpåstående om kundnöjdhet utan metod är det som granskas hårdast, både av kvalitetsgranskare och av en kund som ifrågasätter |
+| **Rekommendation** | Backa med kundlogotyper (Ocean Outdoor, Kappahl, SAS — redan publika) | Ange startår så "sedan [år]" kan användas | **Belägg eller ta bort** |
+| **Neutral ersättning** | *(behåll)* | *(behåll)* | `24/7` / `Support availability` — `Supporttillgänglighet`. Redan publicerad på `/support/`, alltså verifierbar mot sajtens eget innehåll |
+| **Om siffran kan verifieras** | Lägg till "sedan [år]" | — | Ange metod synligt i närheten, t.ex. *"baserat på X svar, 2024–2025"* |
+
+⚠️ **För 98 % saknas metod, period, urval och datakälla helt.** Ingenting i repot dokumenterar
+hur talet räknats fram. Det är den enda siffran på sajten som inte kan verifieras mot något.
+
+**Ingen av dessa har ändrats.** Ändring kräver ert uttryckliga beslut.
+
 ### Var påståendena finns i koden
 
 Samtliga tre står på **ett enda ställe**: `src/components/sections/about/AboutPageContent.tsx`
@@ -189,6 +208,52 @@ data och behåller fyra statistikrutor:
 Den uppgiften är redan publicerad på `/support/` och är därför verifierbar mot sajtens eget
 innehåll. Säg till så genomför jag bytet — jag gör det inte på eget initiativ, eftersom det
 är ett centralt marknadspåstående.
+
+---
+
+## C2. Komplett projektformulär
+
+Fyll i ett per blockerat projekt. **Fet = obligatorisk**, övrigt valfritt. Skrivet för att
+kunna fyllas i utan teknisk bakgrund — hoppa över det du inte vet.
+
+| Fält | Obligatoriskt? | Ert svar |
+|---|---|---|
+| **Projektnamn** | ✅ | |
+| **Kund eller uppdragsgivare** | ✅ | |
+| **Plats** (ort, gärna adress eller anläggning) | ✅ | |
+| **År installationen färdigställdes** | ✅ | |
+| **IM Visions roll** — kryssa alla som gäller: sålde ☐ · hyrde ut ☐ · projekterade ☐ · installerade ☐ · driftsatte ☐ · övervakar ☐ · servar ☐ | ✅ | |
+| **Permanent installation eller uthyrning?** | ✅ | |
+| **Skärmtyp** (t.ex. fasad-LED, DOOH, inomhusvägg, skyltning) | ✅ | |
+| Mått (m² eller bredd × höjd) | valfritt | |
+| Upplösning (pixlar) | valfritt | |
+| Pixelavstånd (t.ex. P2.6) | valfritt | |
+| Antal skärmar eller kabinett | valfritt | |
+| Inomhus eller utomhus | valfritt | |
+| Installationsperiod (från–till) | valfritt | |
+| Användningsområde (reklam, information, varumärke, wayfinding) | valfritt | |
+| Teknisk utmaning i projektet | valfritt | |
+| Vald lösning på utmaningen | valfritt | |
+| Drift- eller serviceavtal? Vad omfattar det? | valfritt | |
+| Mätbart resultat — **endast om dokumenterat** | valfritt | |
+| **Vilka bilder får användas?** | ✅ | |
+| **Får kundens namn och logotyp publiceras?** | ✅ | |
+| **Vem hos IM Vision kan verifiera uppgifterna?** | ✅ | |
+
+> Om ett mått inte är dokumenterat internt är rätt svar "vet ej". Uppskatta inte — en
+> felaktig siffra på en referenssida är värre än ingen siffra.
+
+---
+
+## C3. En fråga som kan låsa upp fem sidor på en gång
+
+Driftprojektet säger *"Driftavtal för Mall of Scandinavia och Täby Centrum"*. Det är samma
+anläggningar där The Icon, The Halo, The Geminis och The Curve står.
+
+⬜ **Omfattar driftavtalen dessa specifika skärmar?**
+
+Om ja kan fyra projektsidor plus driftsidan omedelbart ange IM Visions roll — utan något nytt
+fältarbete. Idag saknar de rollfältet helt, eftersom ingenting publicerat kopplar ihop dem.
 
 ---
 
