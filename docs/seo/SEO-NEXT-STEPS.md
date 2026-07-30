@@ -95,6 +95,19 @@ Bygg i denna ordning:
 
 Inga programmatiska sidor. Inga ortsdubbletter.
 
+### Bonusfynd under Våg 0-verifieringen ✅
+
+Lighthouse mot `/sales/` — en sida som aldrig granskats tidigare — visade **A11y 95 och
+Agentic Browsing 67**. Orsak: filuppladdningens `<input type="file" class="sr-only">` i
+`FileUpload.tsx` saknade label, vilket också fick tillgänglighetsträdet att underkännas.
+
+`PROJECT.md` sätter WCAG 2.2 AA / Lighthouse 100 som mål, så detta var ett stående glapp mot
+er egen ribba — det syntes bara aldrig eftersom `ServiceForm`s motsvarande input redan ligger
+inuti ett `<label>` (därför fick `/contact/` och `/service/` 100).
+
+Åtgärdat i `3b5b94c` med `aria-label` som faller tillbaka genom `label` → `dragLabel` →
+"Upload files". Ingen synlig text ändrad. **`/sales/`: A11y 95 → 100, Agentic 67 → 100.**
+
 ### Ej åtgärdat, och varför
 
 **Intern länkning till `/service/`** — SXO-analysen rekommenderade att lägga till interna
