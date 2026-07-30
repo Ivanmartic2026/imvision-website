@@ -250,6 +250,40 @@ b9eb80d  content: state IM Vision's verified role on the projects that document 
 
 ---
 
+## 16b. Tillägg efter rapporten skrevs
+
+Tre ytterligare förbättringar, samtliga byggda på `role`-fältet och därmed på redan
+publicerade fakta.
+
+**Relaterade tjänster på projektsidorna.** Projektsidorna länkade till `/sales/`,
+`/rental/` och `/service/` **enbart via nav och footer** — noll tjänstelänkar i `<main>`.
+Länkarna härleds nu ur den verifierade rollen:
+
+| Roll | Länkar till |
+|---|---|
+| formgivet / konstruerat / levererat / installerat | `/sales/` |
+| servat / driftat / övervakat | `/service/` |
+
+Nordstan → permanenta installationer. Driftprojektet → service. Täby Centrum → båda.
+**De sex Ocean Outdoor-ytorna får inget block alls** — samma disciplin som för rollraden,
+i stället för att antyda ett tjänsteförhållande som kanske inte finns.
+
+**Rollen i JSON-LD.** Nu när den är synlig på sidan anges den även som `additionalProperty`,
+lokaliserad: `IM Vision's role = Engineered · Installed` respektive
+`IM Visions roll = Konstruerat · Installerat`. Projekt utan roll får ingen egenskap.
+
+**llms.txt vände på urvalet.** Filen tog `.slice(0, 6)` av råa listan, vilket returnerade
+exakt de sex Ocean Outdoor-ytorna — de där ingenting publicerat säger vad IM Vision gjort —
+och utelämnade varenda projekt som *gör* det. För en språkmodell som ska avgöra vad den kan
+tillskriva bolaget var det bakvänt. Nu sorteras dokumenterade roller först, med rollen
+utskriven.
+
+Formuleringen är medvetet neutral (*"IM Vision's role: engineered, installed"*) i stället för
+*"installed this installation"* — posterna är inte alla installationer: ParkSign är en egen
+produkt och driftposten är ett avtal som omfattar flera skärmar.
+
+---
+
 ## 17. Rekommenderade nästa steg
 
 1. **Bekräfta rollen på de sex Ocean Outdoor-ytorna.** Driftavtalet nämner Mall of Scandinavia
