@@ -118,7 +118,10 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
 
           <div className="mt-16 flex flex-col gap-4 border-t border-border-subtle pt-6 text-xs text-text-muted sm:flex-row sm:items-center sm:justify-between">
             <p>© {new Date().getFullYear()} IM Vision. {locale === "sv" ? "Alla rättigheter förbehållna." : "All rights reserved."}</p>
-            <div className="flex items-center gap-4">
+            {/* Wraps: the Swedish labels are long and the row gained a fourth item
+                (Servicevillkor). Without flex-wrap the row overflowed the mobile
+                viewport by ~47px on every /sv/ page. */}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <Link href={localizedHref(locale, "/privacy/")} prefetch={false} className="transition-colors hover:text-text-primary">
                 {locale === "sv" ? "Integritetspolicy" : "Privacy"}
               </Link>
