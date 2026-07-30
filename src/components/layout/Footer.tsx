@@ -126,6 +126,17 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
               <Link href={localizedHref(locale, "/terms/")} prefetch={false} className="transition-colors hover:text-text-primary">
                 {locale === "sv" ? "Användarvillkor" : "Terms"}
               </Link>
+              {/* Swedish-only legal document — no English twin exists, so the link is
+                  rendered for sv only. It was previously unreachable: 200 OK but zero
+                  internal links and absent from the sitemap. */}
+              {locale === "sv" && (
+                <>
+                  <span aria-hidden className="text-border-subtle">|</span>
+                  <Link href="/sv/servicevillkor/" prefetch={false} className="transition-colors hover:text-text-primary">
+                    Servicevillkor
+                  </Link>
+                </>
+              )}
               <span aria-hidden className="text-border-subtle">|</span>
               <CookieSettingsLink locale={locale} />
             </div>
