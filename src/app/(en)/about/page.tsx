@@ -6,7 +6,7 @@ import { pageMeta, pageBreadcrumbLd } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   locale: "en",
   path: "/about/",
-  title: "About IM Vision",
+  title: "About Us — LED Display Partner Across Europe",
   description:
     "IM Vision designs, engineers, installs and services advanced LED display solutions — one accountable partner across Europe.",
 });

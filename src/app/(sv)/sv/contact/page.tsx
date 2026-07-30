@@ -9,7 +9,7 @@ import { pageMeta, pageBreadcrumbLd, CONTACT, SITE_URL } from "@/lib/seo";
 export const metadata = pageMeta({
   locale: "sv",
   path: "/contact/",
-  title: "Kontakt",
+  title: "Kontakt — köp, hyra och service av LED-skärmar",
   description:
     "Kontakta IM Vision om köp, hyra, installation eller service av LED-skärmar i hela Europa. Vi svarar inom en arbetsdag.",
 });

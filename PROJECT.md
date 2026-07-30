@@ -33,7 +33,8 @@ This Next version has breaking changes vs. older training data. **Before writing
 npm run dev            # local dev (next dev)
 npm run build          # next build → server build in .next/
 npm run start          # run the production server locally — needed to test /api/contact
-npx vercel --prod      # deploy to Vercel (serverless; CLI, not auto on git push)
+git push origin main   # deploys to production automatically (Vercel Git integration)
+npx vercel --prod      # manual deploy — fallback only
 ```
 
 ## 4. Structure
@@ -116,9 +117,14 @@ Everything routes through **`src/lib/seo.ts`**. Use the helpers; don't hand‑ro
 ## 7. Deployment
 
 - **Vercel** (Next.js server runtime, auto‑detected). `vercel.json` holds a `www.imvision.se → imvision.se` redirect and security headers (X‑Frame‑Options, X‑Content‑Type‑Options, Referrer‑Policy). No `outputDirectory`/`buildCommand` overrides — Vercel builds the Next app and runs `/api/contact` as a serverless function.
-- **Deploys are currently manual:** `npx vercel --prod`. A GitHub push does **not** auto‑deploy (the Git integration isn't connected). To change that: Vercel → Project → Settings → Git → connect `Ivanmartic2026/imvision-website`.
-- **Domain not connected yet:** `imvision.se` still serves an OLD site. To go live: Vercel → Settings → Domains → add `imvision.se` + `www`, set DNS at the registrar. Until then, verify changes on the deployment URL that `npx vercel --prod` prints.
-- Canonical/hreflang/OG all point to `https://imvision.se` (correct — they resolve once the domain is connected).
+- **Deploys are automatic.** The Vercel Git integration is connected, so a push to `main`
+  builds and promotes to production. Verified 2026-07-30: Vercel posts a commit status
+  (context `Vercel`) on `main`. `npx vercel --prod` still works as a manual fallback.
+  ⚠️ A merge to `main` therefore goes **live immediately** — there is no separate deploy gate.
+- **The domain is connected.** `imvision.se` serves this project. Verified 2026-07-30:
+  `/api/contact` → 308, `/llms.txt` → 200, `/manifest.webmanifest` → 200, and
+  `www.imvision.se` → 308 to the apex.
+- Canonical/hreflang/OG all point to `https://imvision.se` — correct and live.
 
 ## 8. ⚠️ Critical gotchas (things that already broke)
 
@@ -148,10 +154,20 @@ All optional — features stay inert until set, then activate on redeploy:
 
 ## 11. Outstanding (needs the owner / accounts)
 
-1. **Connect `imvision.se`** to this Vercel project (+ DNS). *Nothing is live on the real domain until this is done.*
-2. **Google Search Console** — verify domain, submit `https://imvision.se/sitemap.xml`.
-3. **GA4** — create property, set `NEXT_PUBLIC_GA_ID`.
-4. **`SOCIAL_PROFILES`** — add real social URLs for `sameAs`.
+Items 1–4 below were done and are kept only as a record — verified 2026-07-30.
+
+1. ~~**Connect `imvision.se`**~~ — done, the domain serves this project.
+2. ~~**Google Search Console**~~ — done. Domain property `sc-domain:imvision.se`;
+   sitemap submitted 2026-07-17, last read 2026-07-29, 42 URLs discovered.
+3. ~~**GA4**~~ — done, `G-19WKG4GBH4` live behind Consent Mode v2.
+4. ~~**`SOCIAL_PROFILES`**~~ — done, Facebook / Instagram / LinkedIn feed `sameAs`.
 5. **Form email** — set `RESEND_API_KEY` (+ verify `imvision.se` in Resend, set `MAIL_FROM`). The forms already POST server‑side; they just need the key to actually send.
 6. **Google Business Profile** — create/claim (local SEO).
 7. **Real installation photography** — replace "concept visual" AI renders (trust + image SEO).
+8. **LCP is 4.4–6.0 s on mobile** (threshold 2.5 s). Cause is measured: `Reveal` /
+   `StaggerReveal` hold above‑the‑fold text at `opacity: 0` until hydration, so element
+   render delay reaches ~2,100 ms. CLS is 0 and TTFB is 53–131 ms, so it is not the server.
+   Fixing it means letting above‑the‑fold content paint immediately — a visible motion‑design
+   decision. See `docs/seo/SEO-ACTION-PLAN.md`.
+9. **`/login` returns 404** while taking 487 impressions in 3 months. Decide whether a
+   customer portal exists and where it lives; a redirect to a marketing page would be a soft 404.
