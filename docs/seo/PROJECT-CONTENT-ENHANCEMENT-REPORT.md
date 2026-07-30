@@ -294,3 +294,131 @@ produkt och driftposten är ett avtal som omfattar flera skärmar.
 3. **Installationsår på alla tretton** — låser upp `datePublished`.
 4. **Södertull City först** av fördjupningarna. Enda projektet med bevisad efterfrågan.
 5. **Klargör ParkSign** — produkt eller installation?
+
+---
+
+## 18. Final branch review
+
+**Datum:** 2026-07-30 · **Granskningsläge:** senior kodgranskare, ingen ny utveckling.
+
+| | |
+|---|---|
+| Branch | `seo/phase-2-lcp-content-local` |
+| Bascommit | `a191f20` |
+| HEAD | `fc1be41` |
+| Commits sedan bas | **17** (16 + en rättning från denna granskning) |
+| Arbetsträd | Rent, noll otrackade filer |
+
+### Ett fel hittades och rättades
+
+`fc1be41` — commit `82f3fe8` dolde brödtexten på de fyra engelska projekt vars
+`longDescription` är byte-identisk med ingressen, men **lät rubriken stå kvar**. Resultatet
+var ett tomt `<h2>About the project</h2>` på `nordstan-facade`, `taby-centrum`,
+`ocean-outdoor-operations` och `parksign`.
+
+Villkoret omfattar även källänken, så projekt med citat men utan egen brödtext behåller
+sektionen — The Icon och Kappahl påverkas inte. Svenska sidor var aldrig drabbade.
+
+Efter fixen: **noll tomma rubriker** på samtliga 26 projektsidor.
+
+### Tjänstelänkslogiken
+
+Härledd ur den verifierade rollen, aldrig ur att projektet existerar:
+
+| Roll | Tjänst |
+|---|---|
+| `designed`, `engineered`, `delivered`, `installed` | `/sales/` |
+| `serviced`, `operated`, `monitored` | `/service/` |
+
+Verifierat på 13 projekt × 2 språk: rätt tjänst per roll, inga dubbletter, korrekt
+`/sv/`-prefix, naturliga länktexter i båda språken, **inget block på de åtta projekt utan
+dokumenterad roll**.
+
+⚠️ **Observation för framtiden:** `ProjectRole` saknar värden för uthyrning och support, så
+`/rental/` och `/support/` kan i dag aldrig länkas. Inget projekt har sådan roll, så det är
+korrekt nu — men typen behöver utökas när ett uthyrningsprojekt läggs till.
+
+### Roller i JSON-LD
+
+| Projekt | Roll | Synlig i HTML | I JSON-LD | Språk |
+|---|---|---|---|---|
+| sas-nordic-lounges | Delivered · Installed / Levererat · Installerat | ✅ | ✅ | ✅ |
+| nordstan-facade | Engineered · Installed / Konstruerat · Installerat | ✅ | ✅ | ✅ |
+| taby-centrum | Installed · Serviced / Installerat · Servat | ✅ | ✅ | ✅ |
+| ocean-outdoor-operations | Operated · Monitored / Driftat · Övervakat | ✅ | ✅ | ✅ |
+| parksign | Designed / Formgivet | ✅ | ✅ | ✅ |
+
+**Utan roll, utan egenskap:** the-icon, the-halo, the-geminis, the-curve, the-node,
+e4-tradet-nord, sodertull-city, kappahl.
+
+`roleSource` förekommer **noll gånger** i renderad HTML på samtliga 26 sidor — fältet läses
+aldrig av någon komponent och serialiseras därför inte. Inga dubbletter i
+`additionalProperty`.
+
+### Urvalsprincip i llms.txt
+
+```
+verified = projects.filter(verified === true)
+sortera: projekt med role[] först        (stabil sort → oförändrad inbördes ordning)
+ta de 6 första
+rolltext: " IM Vision's role: <roller kommaseparerade>."  — endast om role finns
+```
+
+Faktisk ordning, verifierad mot den **genererade** filen och identisk över tre hämtningar:
+
+1. SAS — Lounges & Express Check-in · delivered, installed
+2. A façade that turns · engineered, installed
+3. Retail in motion · installed, serviced
+4. Screens never left alone · operated, monitored
+5. ParkSign · designed
+6. The Icon · *(ingen roll, ingen tillskrivning)*
+
+Formuleringen är neutral — inte *"installed this installation"* — eftersom ParkSign är en egen
+produkt och driftposten ett avtal över flera skärmar. 22 markdown-länkar, samtliga
+`https://imvision.se`, noll lokala eller trasiga, samtliga löser till 200 lokalt.
+
+### Slutliga tester *(lokala labbresultat)*
+
+| Kontroll | Resultat |
+|---|---|
+| `tsc --noEmit` | Ren |
+| `eslint` | 1 varning — befintlig före basen, orörd |
+| `npm run build` | Ren |
+| Crawl | **47/47 sidor 200** |
+| Trasiga länkmål · föräldralösa · utanför sitemap | 0 · 0 · 0 |
+| Dubblettitlar · hreflang-brott · H1-avvikelser | 0 · 0 · 0 |
+| Tomma rubriker (26 projektsidor) | **0** efter `fc1be41` |
+| Duplicerade stycken · självrelaterade · dubbla tjänstelänkar | 0 · 0 · 0 |
+| Overflow @320px och @390px | 0 sidor |
+| JSON-LD parsar · matchar synligt innehåll | ✅ · ✅ |
+| robots.txt · sitemap.xml (47) · llms.txt | 200 · 200 · 200 |
+| Produktionsanrop | **inga** |
+
+### Diffgranskning mot basen
+
+Fem källfiler ändrade. **Ingen** konfigurationsfil rörd — inte `next.config.ts`,
+`vercel.json`, `package.json`, `robots.ts` eller `sitemap.ts`. Inga nya externa nätverksanrop,
+inga nya hårdkodade URL:er, inget `Person`/`Review`/`aggregateRating`.
+
+### Blockerade affärsbeslut — samtliga oförändrade
+
+`162 010 kontakter/dag` (byte-identisk före och efter, båda språken) · `500+ Projects
+delivered` · `15+ Years of experience` · `98% Client satisfaction` (`AboutPageContent.tsx`
+förekommer inte i diffen) · GBP-kategorier · namngiven expertprofil · tekniska
+rekommendationer i jämförelseartikeln · rollerna för The Icon, The Halo, The Geminis och
+The Curve.
+
+**Inget drift- eller serviceförhållande har härletts ur att projekt ligger på samma
+anläggning.** Att driftavtalet nämner Mall of Scandinavia och Täby Centrum har uteslutande
+använts som en öppen fråga i [`CONTENT-INPUT-REQUIRED.md`](./CONTENT-INPUT-REQUIRED.md) §C3 —
+aldrig som ett publicerat påstående.
+
+### Rekommendation
+
+**Redo att pushas: ja.** **Redo för PR: ja.**
+
+Grinden är grön, det enda funna felet är rättat och verifierat, och inget i diffen rör
+produktion, konfiguration eller blockerade påståenden.
+
+⚠️ **Men merga inte förrän Vercel-checkpointen är löst.** En merge till `main` går live
+omedelbart via auto-deploy, och ingenting i denna branch är verifierat mot produktionsdomänen.
