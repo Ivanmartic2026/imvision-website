@@ -371,7 +371,7 @@ verkliga, synliga omdömen på sidan — annars bryter det mot Googles riktlinje
 | Risk | Allvarlighet | Kommentar |
 |---|---|---|
 | Ingen GSC-verifiering av effekten | Medel | Ändringarna är låg risk men omätbara tills §13 löses |
-| Deploy sker manuellt (`npx vercel --prod`) | Medel | Git-push deployar **inte**. Merge räcker inte för att nå produktion. |
+| Motstridiga uppgifter om deploy | **Hög** | `PROJECT.md` §7 säger manuell deploy (`npx vercel --prod`); tidigare sessionsanteckningar säger att Vercel↔GitHub-integrationen återkopplades 2026-07-18 och att push till `main` auto-deployar. Bekräfta vilket som gäller **innan** merge — annars riskerar en merge att gå live oavsiktligt. |
 | `PROJECT.md` är delvis inaktuell | Låg | §7 påstår att domänen inte är kopplad; §10–11 att GA4/social saknas. Produktion motsäger båda. |
 | Befintlig lint-varning | Låg | `ServicePageContent.tsx:10` — orörd |
 | 320px-overflow | Låg | Befintlig, designberoende |
@@ -465,9 +465,22 @@ curl -s localhost:3111/    | grep -c servicevillkor      # 0
 git checkout main
 git merge --no-ff seo/full-audit-and-optimization
 
-# 8. ⚠️ Deploy sker INTE via git push
-npx vercel --prod
+# 8. ⚠️ Kontrollera deploy-vägen FÖRE merge
+#    Uppgifterna går isär: PROJECT.md §7 säger manuell deploy, medan
+#    Vercel↔GitHub-integrationen enligt tidigare anteckningar återkopplades
+#    2026-07-18 så att push till main auto-deployar.
+#    Om auto-deploy är aktiv går en merge till main LIVE direkt.
+#    Verifiera i Vercel → Project → Settings → Git innan du mergar.
+npx vercel --prod   # om manuell deploy gäller
 ```
+
+> **Två lokala kloner finns.** `~/Desktop/KimiV2` är din befintliga arbetsklon
+> (står på samma commit `aaa6493`, med en oincheckad ändring i
+> `src/app/llms.txt/route.ts` som jag medvetet inte rört). Denna branch ligger i
+> en separat klon, `~/Desktop/imvision-website`, just för att inte störa det
+> pågående arbetet. Kör `git push -u origin seo/full-audit-and-optimization`
+> för att göra branchen tillgänglig från båda — observera att en branch-push
+> kan trigga en **preview**-deploy, inte produktion.
 
 **Efter deploy:** skicka in `https://imvision.se/sitemap.xml` på nytt i Search
 Console och begär indexering av `https://imvision.se/sv/servicevillkor/`.
