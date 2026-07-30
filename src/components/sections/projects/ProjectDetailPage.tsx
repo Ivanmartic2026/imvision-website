@@ -6,6 +6,7 @@ import {
   Ruler,
   Sun,
   Layers,
+  Monitor,
 } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -91,6 +92,11 @@ function localizeRelatedProject(locale: Locale, project: Project) {
 export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPageProps) {
   const t = labels[locale];
   const caseStudy = copy.caseStudy ?? project.caseStudy;
+
+  // True when longDescription carries information the hero description doesn't already state.
+  const bodyAddsSomething =
+    copy.longDescription.trim() !== "" &&
+    copy.longDescription.trim() !== copy.description.trim();
 
   const relatedProjects = projects
     .filter((p) => p.slug !== project.slug)
@@ -197,9 +203,17 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                     <h2 className="text-3xl font-medium tracking-[-0.035em] text-text-primary sm:text-4xl">
                       {t.aboutHeading}
                     </h2>
-                    <p className="mt-4 text-lg leading-relaxed text-text-secondary">
-                      {copy.longDescription}
-                    </p>
+                    {/* On four projects (nordstan-facade, taby-centrum,
+                        ocean-outdoor-operations, parksign) longDescription is byte-identical
+                        to the hero description, so the same sentence rendered twice on the
+                        page. Show the body only when it actually says something new; the
+                        check is data-driven, so these pages start rendering it again the
+                        moment real copy is written. */}
+                    {bodyAddsSomething && (
+                      <p className="mt-4 text-lg leading-relaxed text-text-secondary">
+                        {copy.longDescription}
+                      </p>
+                    )}
                     {project.sourceUrl && (
                       <a
                         href={project.sourceUrl}
@@ -235,6 +249,18 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                       <li className="flex items-center gap-3 text-text-secondary">
                         <Calendar size={18} className="text-accent" />
                         {project.year}
+                      </li>
+                    )}
+                    {/* specs.type is set on every project and was already being emitted as
+                        an additionalProperty in the JSON-LD, but never shown on the page —
+                        structured data describing something the user cannot see. It is the
+                        one field that states what kind of installation this actually is
+                        ("Curved outdoor LED", "Monitoring & operations", "Double-sided DOOH"),
+                        so it earns a place above the dimensions. */}
+                    {project.specs.type && (
+                      <li className="flex items-center gap-3 text-text-secondary">
+                        <Monitor size={18} className="text-accent" />
+                        {project.specs.type}
                       </li>
                     )}
                     {project.specs.size && (
