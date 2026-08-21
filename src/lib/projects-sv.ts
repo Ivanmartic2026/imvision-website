@@ -9,6 +9,14 @@ export type SwedishProjectCopy = {
 };
 
 export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
+  "boland-city": {
+    title: "Boland City",
+    category: "Rapsgatan — Uppsala",
+    description:
+      "En dubbelsidig digital pylon med två LED-skärmar på 4,0 × 1,75 meter, levererad och driftsatt vid Boland City i Uppsala.",
+    longDescription:
+      "Den 18 augusti 2026 färdigställdes och driftsattes den fristående pylonen vid Rapsgatan i Boland City. Pylonen bär två Unilumin USK5.9-skärmar monterade rygg mot rygg — totalt 14 m² aktiv skärmyta — under en belyst topskylt. En ljussensor styr ljusstyrkan automatiskt, och två 4G-routrar ger fjärråtkomst till innehåll och skärmstyrning utan platsbesök. Leveransen omfattade stålpylon och fasadbeklädnad, ett integrerat teknikutrymme i pylonens nederdel samt fullständig idrifttagning, injustering och funktionsprov.",
+  },
   "the-icon": {
     title: "The Icon",
     category: "Westfield Mall of Scandinavia — Stockholm",
@@ -94,13 +102,6 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     description: "Driftavtal för Mall of Scandinavia och Täby Centrum.",
     longDescription:
       "Driftavtal för Mall of Scandinavia och Täby Centrum. Besiktning före start, uppkoppling mot IM Monitoring, åtgärd innan kunden hunnit ringa.",
-  },
-  parksign: {
-    title: "ParkSign",
-    category: "Egen produkt",
-    description: "Digital skyltning för parkeringsmiljöer.",
-    longDescription:
-      "Digital skyltning för parkeringsmiljöer. Designad och renderad in i minsta detalj innan första skruven dras.",
   },
   "fashion-industry": {
     title: "Modemiljö",

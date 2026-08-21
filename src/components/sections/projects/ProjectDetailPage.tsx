@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/Button";
 import { projects, Project, getProjectBySlug } from "@/lib/projects";
 import { swedishProjectCopy } from "@/lib/projects-sv";
 import { ProjectVisual } from "@/components/sections/ProjectVisual";
+import { ProjectGallery } from "@/components/sections/ProjectGallery";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Locale, localizedHref } from "@/lib/i18n";
 import { projectLd } from "@/lib/seo";
@@ -41,6 +42,7 @@ const labels = {
     responseEyebrow: "IM / Response",
     deliveryEyebrow: "IM / Delivery logic",
     outcomeEyebrow: "Intended outcome",
+    galleryHeading: "Photo gallery",
     aboutHeading: "About the project",
     projectFacts: "Project facts",
     defaultSourceLabel: "Ocean Outdoor",
@@ -64,6 +66,7 @@ const labels = {
     responseEyebrow: "IM / Svar",
     deliveryEyebrow: "IM / Leveranslogik",
     outcomeEyebrow: "Förväntat resultat",
+    galleryHeading: "Bildspel",
     aboutHeading: "Om projektet",
     projectFacts: "Projektfakta",
     defaultSourceLabel: "Ocean Outdoor",
@@ -141,6 +144,12 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                 </figcaption>
               )}
             </figure>
+
+            {project.gallery && project.gallery.length > 0 && (
+              <div className="mt-16">
+                <ProjectGallery images={project.gallery} label={t.galleryHeading} />
+              </div>
+            )}
 
             {caseStudy && (
               <div className="mt-20">

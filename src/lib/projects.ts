@@ -21,6 +21,7 @@ export interface Project {
   results?: string;
   tags: string[];
   verified?: boolean;
+  gallery?: { src: string; alt: string }[];
   caseStudy?: {
     challenge: string;
     response: string;
@@ -30,6 +31,65 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    slug: "boland-city",
+    title: "Boland City",
+    category: "Rapsgatan — Uppsala",
+    description:
+      "A double-sided digital pylon with two 4.0 × 1.75 m LED screens, delivered and commissioned at Boland City in Uppsala.",
+    longDescription:
+      "Delivered and commissioned on 18 August 2026, the freestanding pylon at Rapsgatan in Boland City carries two Unilumin USK5.9 LED screens mounted back-to-back — 14 m² of active display area in total — beneath an illuminated top sign. A light sensor drives automatic brightness control, and dual 4G routers give remote access to content and screen management without a site visit. The scope covered the steel pylon and cladding, an integrated technical compartment at the base, and full commissioning, calibration, and function testing.",
+    image: "/images/projects/boland-city/hero.jpg",
+    visualLabel: "Boland City — Rapsgatan, Uppsala",
+    location: "Uppsala, Sweden",
+    year: "2026",
+    specs: {
+      size: "14.0 m² · 2 × 4.0 × 1.75 m",
+      pixelPitch: "5.95 mm",
+      brightness: "4,500 cd/m²",
+      type: "Double-sided digital pylon",
+    },
+    tags: ["DOOH", "Pylon", "Uppsala"],
+    verified: true,
+    gallery: [
+      {
+        src: "/images/projects/boland-city/01-placering.jpg",
+        alt: "The pylon in its parking-lot setting at Rapsgatan, Uppsala",
+      },
+      {
+        src: "/images/projects/boland-city/02-vinklad-vy.jpg",
+        alt: "Angled view of the pylon and LED screen cassette",
+      },
+      {
+        src: "/images/projects/boland-city/03-siluett.jpg",
+        alt: "The pylon in silhouette against the sky",
+      },
+      {
+        src: "/images/projects/boland-city/04-topskylt.jpg",
+        alt: "Close-up of the illuminated Boland City top sign above the LED screen",
+      },
+      {
+        src: "/images/projects/boland-city/05-skarmkassett.jpg",
+        alt: "Double-sided screen cassette seen from below",
+      },
+      {
+        src: "/images/projects/boland-city/06-ljussensor.jpg",
+        alt: "The light sensor beneath the screen cassette that drives automatic brightness control",
+      },
+      {
+        src: "/images/projects/boland-city/07-idrifttagning.jpg",
+        alt: "Commissioning with the technical compartment door open",
+      },
+      {
+        src: "/images/projects/boland-city/08-teknikutrymme.jpg",
+        alt: "Access door to the technical compartment at the base of the pylon",
+      },
+      {
+        src: "/images/projects/boland-city/09-lasning.jpg",
+        alt: "Locking the electrical cabinet with the Rittal key",
+      },
+    ],
+  },
   {
     slug: "the-icon",
     title: "The Icon",
@@ -238,23 +298,6 @@ export const projects: Project[] = [
     year: "",
     specs: { type: "Monitoring & operations" },
     tags: ["Operations", "Monitoring", "Service"],
-    verified: true,
-  },
-  {
-    slug: "parksign",
-    title: "ParkSign",
-    category: "In-house product",
-    description:
-      "Digital signage for parking environments. Designed and rendered down to the final detail before the first screw is fixed.",
-    longDescription:
-      "Digital signage for parking environments. Designed and rendered down to the final detail before the first screw is fixed.",
-    image: "",
-    visualPlaceholder: true,
-    visualLabel: "Product visual — ParkSign",
-    location: "Sweden",
-    year: "",
-    specs: { type: "Digital parking signage" },
-    tags: ["Product", "Parking", "Digital signage"],
     verified: true,
   },
   {
