@@ -68,26 +68,6 @@ export const projects: Project[] = [
         src: "/images/projects/boland-city/04-topskylt.jpg",
         alt: "Close-up of the illuminated Boland City top sign above the LED screen",
       },
-      {
-        src: "/images/projects/boland-city/05-skarmkassett.jpg",
-        alt: "Double-sided screen cassette seen from below",
-      },
-      {
-        src: "/images/projects/boland-city/06-ljussensor.jpg",
-        alt: "The light sensor beneath the screen cassette that drives automatic brightness control",
-      },
-      {
-        src: "/images/projects/boland-city/07-idrifttagning.jpg",
-        alt: "Commissioning with the technical compartment door open",
-      },
-      {
-        src: "/images/projects/boland-city/08-teknikutrymme.jpg",
-        alt: "Access door to the technical compartment at the base of the pylon",
-      },
-      {
-        src: "/images/projects/boland-city/09-lasning.jpg",
-        alt: "Locking the electrical cabinet with the Rittal key",
-      },
     ],
   },
   {
