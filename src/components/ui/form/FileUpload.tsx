@@ -138,7 +138,19 @@ export function FileUpload({
           error && "border-red-400/50"
         )}
       >
-        <input ref={inputRef} type="file" multiple accept={accept} onChange={handleChange} className="sr-only" />
+        {/* The input is visually replaced by the drop zone above, so it has no visible
+            label to associate with. aria-label gives assistive tech and Lighthouse's
+            accessibility-tree check something to name it by — without it the page fails
+            the `label` audit and drags the agentic-browsing score down with it. */}
+        <input
+          ref={inputRef}
+          type="file"
+          multiple
+          accept={accept}
+          onChange={handleChange}
+          aria-label={label || dragLabel || "Upload files"}
+          className="sr-only"
+        />
         <div className="flex flex-col items-center justify-center gap-2 text-center">
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-bg-elevated text-accent">
             <Upload size={20} />

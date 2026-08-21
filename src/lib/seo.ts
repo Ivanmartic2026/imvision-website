@@ -105,6 +105,34 @@ export function pageMeta({
   };
 }
 
+/**
+ * SERP title for a project page.
+ *
+ * A bare project name carries no query terms. Search Console (3 months to
+ * 2026-07-27) shows these pages ranking on location intent the title never
+ * mentions: "södertull malmö" drew 52 impressions and 0 clicks at position 12.2
+ * against /sv/projects/sodertull-city/, whose title was just "Södertull City".
+ * This appends the display type and the city.
+ *
+ * Everything comes from fields that already exist in the project data; nothing
+ * is invented. The candidate list degrades progressively so the result always
+ * fits the ~60-character SERP limit once the root template appends the brand —
+ * project names range from "The Curve" to "SAS — Lounges & Express Check-in".
+ */
+export function projectTitle(locale: Locale, base: string, location: string): string {
+  // "Täby, Sweden" → "Täby". Region-only values ("Nordic region", "Sweden")
+  // have no comma and add nothing to a title, so they are dropped.
+  const city = location.includes(",") ? location.split(",")[0].trim() : null;
+  const kind = locale === "sv" ? "LED-skärm" : "LED display";
+  const brandSuffix = ` | ${SITE_NAME}`.length;
+  const candidates = [
+    ...(city ? [`${base} — ${kind}, ${city}`, `${base} — ${city}`] : []),
+    `${base} — ${kind}`,
+    base,
+  ];
+  return candidates.find((c) => c.length + brandSuffix <= 60) ?? base;
+}
+
 /* ---------- JSON-LD structured data ---------- */
 
 // Reused across Organization/LocalBusiness so the entity's expertise is
@@ -320,6 +348,7 @@ export function projectLd(
     imageCredit,
     sourceUrl,
     specs,
+    role,
     tags,
   }: {
     slug: string;
@@ -331,6 +360,8 @@ export function projectLd(
     imageCredit?: string;
     sourceUrl?: string;
     specs?: Record<string, string | undefined>;
+    /** Localised label for IM Vision's verified role, e.g. "Engineered · Installed". */
+    role?: string;
     tags?: string[];
   }
 ) {
@@ -342,6 +373,15 @@ export function projectLd(
         .filter(([, v]) => Boolean(v))
         .map(([name, value]) => ({ "@type": "PropertyValue", name, value }))
     : [];
+  // Only stated in schema because it is now stated on the page. Projects with no
+  // documented role carry no role property, exactly as they carry no role row.
+  if (role) {
+    specProps.push({
+      "@type": "PropertyValue",
+      name: locale === "sv" ? "IM Visions roll" : "IM Vision's role",
+      value: role,
+    });
+  }
   return {
     "@context": "https://schema.org",
     "@graph": [

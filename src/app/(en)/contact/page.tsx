@@ -9,7 +9,7 @@ import { pageMeta, pageBreadcrumbLd, CONTACT, SITE_URL } from "@/lib/seo";
 export const metadata = pageMeta({
   locale: "en",
   path: "/contact/",
-  title: "Contact",
+  title: "Contact — LED Display Sales, Rental & Service",
   description:
     "Talk to IM Vision about buying, renting, installing or servicing LED displays across Europe. We reply within one business day.",
 });

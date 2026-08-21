@@ -6,9 +6,11 @@ import { pageMeta, pageBreadcrumbLd, serviceLd } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   locale: "sv",
   path: "/sales/",
-  title: "Permanenta LED-installationer",
+  // Swedish keeps "LED" first: Search Console shows Swedish demand using "LED skärm",
+  // not "digital skyltning", so the latter is a secondary term here — not a swap.
+  title: "Permanenta LED-skärmar och digital skyltning",
   description:
-    "IM Vision designar, projekterar, installerar och servar permanenta LED-system för retail, fastigheter och offentliga miljöer i hela Europa.",
+    "IM Vision projekterar, installerar och servar permanenta LED-skärmar och digital skyltning för retail, fastigheter och offentliga miljöer i hela Europa.",
 });
 
 export default function SwedishSalesPage() {

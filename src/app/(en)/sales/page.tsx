@@ -6,9 +6,11 @@ import { pageMeta, pageBreadcrumbLd, serviceLd } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   locale: "en",
   path: "/sales/",
-  title: "Permanent LED Installations",
+  // "digital signage" is the vocabulary the incoming English demand actually uses —
+  // see the note in docs/seo/SEO-NEXT-STEPS.md §2. Kept alongside "LED", not instead of it.
+  title: "Digital Signage & Permanent LED Installations",
   description:
-    "IM Vision designs, engineers, installs and services permanent LED systems for retail, property and public environments across Europe.",
+    "IM Vision designs, engineers, installs and services digital signage and permanent LED systems for retail, property and public environments across Europe.",
 });
 
 export default function EnglishSalesPage() {

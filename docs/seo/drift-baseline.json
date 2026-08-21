@@ -1,0 +1,1088 @@
+{
+ "captured": "2026-07-30",
+ "source": "local production build (next start)",
+ "base": "http://localhost:3111",
+ "note": "Produktionsbaslinje kan inte tas — imvision.se är bakom Vercel Security Checkpoint.",
+ "pages": {
+  "/": {
+   "status": 200,
+   "title": "IM Vision — Buy, rent & install LED displays across Europe",
+   "description_len": 156,
+   "canonical": "/",
+   "robots": "index, follow",
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 40,
+   "word_count": 693
+  },
+  "/about/": {
+   "status": 200,
+   "title": "About Us — LED Display Partner Across Europe | IM Vision",
+   "description_len": 123,
+   "canonical": "/about/",
+   "robots": "index, follow",
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 21,
+   "word_count": 179
+  },
+  "/contact/": {
+   "status": 200,
+   "title": "Contact — LED Display Sales, Rental & Service | IM Vision",
+   "description_len": 126,
+   "canonical": "/contact/",
+   "robots": "index, follow",
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "ContactPoint",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 20,
+   "word_count": 93
+  },
+  "/privacy/": {
+   "status": 200,
+   "title": "Privacy Policy | IM Vision",
+   "description_len": 125,
+   "canonical": "/privacy/",
+   "robots": "index, follow",
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 20,
+   "word_count": 255
+  },
+  "/projects/": {
+   "status": 200,
+   "title": "LED Display Projects & Installations | IM Vision",
+   "description_len": 149,
+   "canonical": "/projects/",
+   "robots": "index, follow",
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 33,
+   "word_count": 688
+  },
+  "/projects/e4-tradet-nord/": {
+   "status": 200,
+   "title": "E4 Trädet North — Impact — Upplands Väsby | IM Vision",
+   "description_len": 131,
+   "canonical": "/projects/e4-tradet-nord/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 125
+  },
+  "/projects/kappahl/": {
+   "status": 200,
+   "title": "Kappahl — LED display | IM Vision",
+   "description_len": 122,
+   "canonical": "/projects/kappahl/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 127
+  },
+  "/projects/nordstan-facade/": {
+   "status": 200,
+   "title": "A façade that turns — LED display, Gothenburg | IM Vision",
+   "description_len": 205,
+   "canonical": "/projects/nordstan-facade/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 94
+  },
+  "/projects/ocean-outdoor-operations/": {
+   "status": 200,
+   "title": "Screens never left alone — LED display | IM Vision",
+   "description_len": 162,
+   "canonical": "/projects/ocean-outdoor-operations/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 83
+  },
+  "/projects/parksign/": {
+   "status": 200,
+   "title": "ParkSign — LED display | IM Vision",
+   "description_len": 121,
+   "canonical": "/projects/parksign/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 71
+  },
+  "/projects/sas-nordic-lounges/": {
+   "status": 200,
+   "title": "SAS — Lounges & Express Check-in — LED display | IM Vision",
+   "description_len": 107,
+   "canonical": "/projects/sas-nordic-lounges/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 144
+  },
+  "/projects/sodertull-city/": {
+   "status": 200,
+   "title": "Södertull City — LED display, Malmö | IM Vision",
+   "description_len": 120,
+   "canonical": "/projects/sodertull-city/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 132
+  },
+  "/projects/taby-centrum/": {
+   "status": 200,
+   "title": "Retail in motion — LED display, Täby | IM Vision",
+   "description_len": 126,
+   "canonical": "/projects/taby-centrum/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 78
+  },
+  "/projects/the-curve/": {
+   "status": 200,
+   "title": "The Curve — LED display, Täby | IM Vision",
+   "description_len": 136,
+   "canonical": "/projects/the-curve/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 130
+  },
+  "/projects/the-geminis/": {
+   "status": 200,
+   "title": "The Geminis — LED display, Täby | IM Vision",
+   "description_len": 103,
+   "canonical": "/projects/the-geminis/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 122
+  },
+  "/projects/the-halo/": {
+   "status": 200,
+   "title": "The Halo — LED display, Solna | IM Vision",
+   "description_len": 131,
+   "canonical": "/projects/the-halo/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 132
+  },
+  "/projects/the-icon/": {
+   "status": 200,
+   "title": "The Icon — LED display, Solna | IM Vision",
+   "description_len": 78,
+   "canonical": "/projects/the-icon/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 121
+  },
+  "/projects/the-node/": {
+   "status": 200,
+   "title": "The Icon @ The Node — LED display, Stockholm | IM Vision",
+   "description_len": 119,
+   "canonical": "/projects/the-node/",
+   "robots": null,
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 24,
+   "word_count": 129
+  },
+  "/rental/": {
+   "status": 200,
+   "title": "LED Rental for Events | IM Vision",
+   "description_len": 146,
+   "canonical": "/rental/",
+   "robots": "index, follow",
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "Service",
+    "WebSite"
+   ],
+   "internal_links_out": 22,
+   "word_count": 247
+  },
+  "/sales/": {
+   "status": 200,
+   "title": "Digital Signage & Permanent LED Installations | IM Vision",
+   "description_len": 153,
+   "canonical": "/sales/",
+   "robots": "index, follow",
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "Service",
+    "WebSite"
+   ],
+   "internal_links_out": 27,
+   "word_count": 625
+  },
+  "/service/": {
+   "status": 200,
+   "title": "Digital Signage & LED Display Maintenance | IM Vision",
+   "description_len": 154,
+   "canonical": "/service/",
+   "robots": "index, follow",
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "Service",
+    "WebSite"
+   ],
+   "internal_links_out": 20,
+   "word_count": 109
+  },
+  "/support/": {
+   "status": 200,
+   "title": "LED Display Support & Service | IM Vision",
+   "description_len": 144,
+   "canonical": "/support/",
+   "robots": "index, follow",
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "FAQPage",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 21,
+   "word_count": 204
+  },
+  "/sv/": {
+   "status": 200,
+   "title": "Köp, hyr, installera och serva LED | IM Vision",
+   "description_len": 115,
+   "canonical": "/sv/",
+   "robots": "index, follow",
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 41,
+   "word_count": 572
+  },
+  "/sv/about/": {
+   "status": 200,
+   "title": "Om oss — LED-leverantör i Sverige och Europa | IM Vision",
+   "description_len": 114,
+   "canonical": "/sv/about/",
+   "robots": "index, follow",
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 22,
+   "word_count": 170
+  },
+  "/sv/contact/": {
+   "status": 200,
+   "title": "Kontakt — köp, hyra och service av LED-skärmar | IM Vision",
+   "description_len": 118,
+   "canonical": "/sv/contact/",
+   "robots": "index, follow",
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "ContactPoint",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 21,
+   "word_count": 84
+  },
+  "/sv/privacy/": {
+   "status": 200,
+   "title": "Integritetspolicy | IM Vision",
+   "description_len": 128,
+   "canonical": "/sv/privacy/",
+   "robots": "index, follow",
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 21,
+   "word_count": 238
+  },
+  "/sv/projects/": {
+   "status": 200,
+   "title": "LED-projekt och installationer | IM Vision",
+   "description_len": 84,
+   "canonical": "/sv/projects/",
+   "robots": "index, follow",
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 34,
+   "word_count": 615
+  },
+  "/sv/projects/e4-tradet-nord/": {
+   "status": 200,
+   "title": "E4 Trädet Nord — Impact — Upplands Väsby | IM Vision",
+   "description_len": 95,
+   "canonical": "/sv/projects/e4-tradet-nord/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 109
+  },
+  "/sv/projects/kappahl/": {
+   "status": 200,
+   "title": "Kappahl — LED-skärm | IM Vision",
+   "description_len": 115,
+   "canonical": "/sv/projects/kappahl/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 116
+  },
+  "/sv/projects/nordstan-facade/": {
+   "status": 200,
+   "title": "En fasad som svänger — LED-skärm, Gothenburg | IM Vision",
+   "description_len": 66,
+   "canonical": "/sv/projects/nordstan-facade/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 93
+  },
+  "/sv/projects/ocean-outdoor-operations/": {
+   "status": 200,
+   "title": "Skärmar som aldrig lämnas ensamma — LED-skärm | IM Vision",
+   "description_len": 52,
+   "canonical": "/sv/projects/ocean-outdoor-operations/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 85
+  },
+  "/sv/projects/parksign/": {
+   "status": 200,
+   "title": "ParkSign — LED-skärm | IM Vision",
+   "description_len": 40,
+   "canonical": "/sv/projects/parksign/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 68
+  },
+  "/sv/projects/sas-nordic-lounges/": {
+   "status": 200,
+   "title": "SAS — Lounger & Express Check-in — LED-skärm | IM Vision",
+   "description_len": 89,
+   "canonical": "/sv/projects/sas-nordic-lounges/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 127
+  },
+  "/sv/projects/sodertull-city/": {
+   "status": 200,
+   "title": "Södertull City — LED-skärm, Malmö | IM Vision",
+   "description_len": 86,
+   "canonical": "/sv/projects/sodertull-city/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 120
+  },
+  "/sv/projects/taby-centrum/": {
+   "status": 200,
+   "title": "Retail i rörelse — LED-skärm, Täby | IM Vision",
+   "description_len": 56,
+   "canonical": "/sv/projects/taby-centrum/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 82
+  },
+  "/sv/projects/the-curve/": {
+   "status": 200,
+   "title": "The Curve — LED-skärm, Täby | IM Vision",
+   "description_len": 65,
+   "canonical": "/sv/projects/the-curve/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 109
+  },
+  "/sv/projects/the-geminis/": {
+   "status": 200,
+   "title": "The Geminis — LED-skärm, Täby | IM Vision",
+   "description_len": 77,
+   "canonical": "/sv/projects/the-geminis/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 108
+  },
+  "/sv/projects/the-halo/": {
+   "status": 200,
+   "title": "The Halo — LED-skärm, Solna | IM Vision",
+   "description_len": 88,
+   "canonical": "/sv/projects/the-halo/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 114
+  },
+  "/sv/projects/the-icon/": {
+   "status": 200,
+   "title": "The Icon — LED-skärm, Solna | IM Vision",
+   "description_len": 77,
+   "canonical": "/sv/projects/the-icon/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 109
+  },
+  "/sv/projects/the-node/": {
+   "status": 200,
+   "title": "The Icon @ The Node — LED-skärm, Stockholm | IM Vision",
+   "description_len": 92,
+   "canonical": "/sv/projects/the-node/",
+   "robots": null,
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "CreativeWork",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 25,
+   "word_count": 120
+  },
+  "/sv/rental/": {
+   "status": 200,
+   "title": "LED-uthyrning för event | IM Vision",
+   "description_len": 150,
+   "canonical": "/sv/rental/",
+   "robots": "index, follow",
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "Service",
+    "WebSite"
+   ],
+   "internal_links_out": 23,
+   "word_count": 148
+  },
+  "/sv/sales/": {
+   "status": 200,
+   "title": "Permanenta LED-skärmar och digital skyltning | IM Vision",
+   "description_len": 152,
+   "canonical": "/sv/sales/",
+   "robots": "index, follow",
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "Service",
+    "WebSite"
+   ],
+   "internal_links_out": 28,
+   "word_count": 563
+  },
+  "/sv/service/": {
+   "status": 200,
+   "title": "Service och underhåll av LED-skärmar | IM Vision",
+   "description_len": 159,
+   "canonical": "/sv/service/",
+   "robots": "index, follow",
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "Service",
+    "WebSite"
+   ],
+   "internal_links_out": 21,
+   "word_count": 105
+  },
+  "/sv/servicevillkor/": {
+   "status": 200,
+   "title": "Allmänna servicevillkor | IM Vision",
+   "description_len": 137,
+   "canonical": "/sv/servicevillkor/",
+   "robots": "index, follow",
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 21,
+   "word_count": 723
+  },
+  "/sv/support/": {
+   "status": 200,
+   "title": "Support och service för LED-skärmar | IM Vision",
+   "description_len": 149,
+   "canonical": "/sv/support/",
+   "robots": "index, follow",
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "FAQPage",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 22,
+   "word_count": 176
+  },
+  "/sv/terms/": {
+   "status": 200,
+   "title": "Användarvillkor | IM Vision",
+   "description_len": 69,
+   "canonical": "/sv/terms/",
+   "robots": "index, follow",
+   "lang": "sv",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 21,
+   "word_count": 220
+  },
+  "/terms/": {
+   "status": 200,
+   "title": "Terms of Service | IM Vision",
+   "description_len": 93,
+   "canonical": "/terms/",
+   "robots": "index, follow",
+   "lang": "en",
+   "h1_count": 1,
+   "hreflang": [
+    "en",
+    "sv",
+    "x-default"
+   ],
+   "schema_types": [
+    "BreadcrumbList",
+    "LocalBusiness",
+    "Organization",
+    "WebSite"
+   ],
+   "internal_links_out": 20,
+   "word_count": 249
+  }
+ },
+ "sitemap": {
+  "url_count": 47,
+  "sha256": "fecd8bb667b48219"
+ },
+ "robots": {
+  "sha256": "7bba67307d2de18b",
+  "body": "User-Agent: *\nAllow: /\nDisallow: /api/\n\nHost: https://imvision.se\nSitemap: https://imvision.se/sitemap.xml"
+ },
+ "totals": {
+  "pages": 47,
+  "all_200": true,
+  "noindex": 0
+ }
+}

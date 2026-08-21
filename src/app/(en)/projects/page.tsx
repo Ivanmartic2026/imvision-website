@@ -12,7 +12,7 @@ import { pageMeta, pageBreadcrumbLd } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   locale: "en",
   path: "/projects/",
-  title: "Projects",
+  title: "LED Display Projects & Installations",
   description:
     "Explore selected IM Vision LED installations — retail displays, architectural facades, event screens and digital-out-of-home delivered across Europe.",
 });
@@ -31,7 +31,12 @@ export default function ProjectsPage() {
         <section className="section section-space">
           <div className="section-inner">
             <div className="border-y border-border-subtle">
-              {projects.map((project, index) => (
+              {/* Same predicate as sitemap.ts. Unverified projects render an
+                  "Editorial draft · verification required" banner and a placeholder
+                  image, so surfacing them in the public portfolio undercut the
+                  "500+ Projects delivered" claim on /about/ and spent internal links
+                  on pages that are already noindex. They stay reachable by direct URL. */}
+              {projects.filter((project) => project.verified === true).map((project, index) => (
                 <Link
                   key={project.slug}
                   href={`/projects/${project.slug}/`}

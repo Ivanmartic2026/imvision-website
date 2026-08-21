@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { projects, getProjectBySlug } from "@/lib/projects";
 import { swedishProjectCopy } from "@/lib/projects-sv";
 import { ProjectDetailPage } from "@/components/sections/projects/ProjectDetailPage";
-import { pageMeta, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { pageMeta, projectTitle, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -23,7 +23,7 @@ export async function generateMetadata({
     ...pageMeta({
       locale: "sv",
       path: `/projects/${slug}/`,
-      title: copy.title,
+      title: projectTitle("sv", copy.title, project.location),
       description: copy.description,
       image: project.image || DEFAULT_OG_IMAGE,
     }),
