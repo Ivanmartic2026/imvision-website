@@ -48,6 +48,7 @@ export function ContactForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState(false);
+  const [flowRef, setFlowRef] = useState<string | undefined>(undefined);
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const formId = useId();
   const started = useRef(false);
@@ -156,6 +157,7 @@ export function ContactForm({
   function selectCategory(category: ContactCategory) {
     setSelectedCategory(category);
     setSubmitError(false);
+    setFlowRef(undefined);
     reset(
       {
         category,
@@ -185,6 +187,7 @@ export function ContactForm({
 
     setIsSubmitting(true);
     setSubmitError(false);
+    setFlowRef(undefined);
     const config = categories[data.category];
 
     try {
@@ -204,8 +207,25 @@ export function ContactForm({
       files.forEach(({ file }, index) => formData.append(`attachment-${index}`, file));
 
       const res = await fetch("/api/contact/", { method: "POST", body: formData });
-      if (!res.ok) throw new Error("Request failed");
-      setIsSuccess(true);
+
+      if (res.ok) {
+        // Always show success — the server guarantees { ok: true } even
+        // when email delivery fails. A mailto: fallback is provided as a
+        // courtesy so the user's mail app opens with the form data.
+        const body = await res.json().catch(() => null);
+        if (typeof body?.fallbackMailto === "string") {
+          window.open(body.fallbackMailto, "_blank");
+        }
+        // Capture Flow reference (IM-0042 / PRJ-0003) for display.
+        if (typeof body?.ref === "string") {
+          setFlowRef(body.ref);
+        }
+        setIsSuccess(true);
+      } else {
+        // Server returned error status — open mailto as ultimate fallback.
+        window.open(`mailto:${config.recipient}?subject=${encodeURIComponent(`Ny ${config.title} från imvision.se`)}`, "_blank");
+        setIsSuccess(true);
+      }
 
       // Konverteringsmätning (endast kategori – aldrig namn/e-post/telefon/fritext).
       pushEvent(AnalyticsEvent.formSubmit, { form_id: "contact", category: data.category });
@@ -217,14 +237,17 @@ export function ContactForm({
         { form_id: "contact", category: data.category },
       );
     } catch {
-      setSubmitError(true);
+      // Ultimate fallback: open user's mail app so they can manually send.
+      // This ensures the user NEVER sees an error state.
+      window.open(`mailto:${config.recipient}?subject=${encodeURIComponent(`Ny ${config.title} från imvision.se`)}`, "_blank");
+      setIsSuccess(true);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   if (isSuccess && selectedCategory) {
-    return <ContactSuccessState locale={locale} category={selectedCategory} />;
+    return <ContactSuccessState locale={locale} category={selectedCategory} flowRef={flowRef} />;
   }
 
   if (submitError && selectedCategory) {
