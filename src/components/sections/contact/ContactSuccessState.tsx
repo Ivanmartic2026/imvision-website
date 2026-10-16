@@ -1,20 +1,36 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Check } from "lucide-react";
+import { Check, Ticket } from "lucide-react";
 import { ContactCategory } from "./types";
 
 interface ContactSuccessStateProps {
   locale: "en" | "sv";
   category: ContactCategory;
+  /** Flow reference: "IM-0042" (support) or "PRJ-0003" (sales). */
+  flowRef?: string;
 }
 
-export function ContactSuccessState({ locale, category }: ContactSuccessStateProps) {
+export function ContactSuccessState({ locale, category, flowRef }: ContactSuccessStateProps) {
   const categoryTitles: Record<ContactCategory, string> = {
     buy: locale === "sv" ? "Köpa LED" : "Buy LED",
     rental: locale === "sv" ? "Hyra LED" : "Rent LED",
     service: locale === "sv" ? "Service & support" : "Service & support",
   };
+
+  const isService = category === "service";
+
+  // Determine display label
+  let refLabel = "";
+  if (flowRef) {
+    refLabel = isService
+      ? locale === "sv"
+        ? `Ärendenummer ${flowRef}`
+        : `Ticket ${flowRef}`
+      : locale === "sv"
+        ? `Projektnummer ${flowRef}`
+        : `Project ${flowRef}`;
+  }
 
   return (
     <motion.div
@@ -37,6 +53,14 @@ export function ContactSuccessState({ locale, category }: ContactSuccessStatePro
               ? "En person från rätt avdelning återkommer så snart som möjligt, normalt samma arbetsdag."
               : "Someone from the right team will get back to you as soon as possible, usually the same business day."}
           </p>
+
+          {flowRef && (
+            <p className="mt-4 inline-flex items-center gap-2 rounded-lg bg-bg-surface px-3 py-1.5 text-sm text-text-secondary">
+              <Ticket size={16} className="shrink-0 text-accent" />
+              <span className="font-medium text-text-primary">{refLabel}</span>
+            </p>
+          )}
+
           <p className="mt-4 inline-flex items-center gap-2 rounded-lg bg-bg-surface px-3 py-1.5 text-sm text-text-secondary">
             <span className="text-text-muted">{locale === "sv" ? "Ärende:" : "Case:"}</span>
             <span className="font-medium text-text-primary">{categoryTitles[category]}</span>

@@ -5,13 +5,121 @@ import { sendLeadEmail, type LeadAttachment } from "@/lib/email";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// Vercel serverless request bodies are capped (~4.5 MB). Guard total attachments.
+const BASE = process.env.FLOW_API_BASE || "https://flow.imvision.se/api";
+
+// ──────────────────────────────────────────────────────────
+// Sync functions — Flow endpoints
+// ──────────────────────────────────────────────────────────
+
+/**
+ * Sync a support/felanmälan submission to Flow's /api/support.
+ * Returns the ticket number on success, null on failure.
+ */
+async function syncToSupport(data: {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  address: string;
+  message: string;
+  fileName?: string;
+}): Promise<string | null> {
+  const payload = {
+    _name: data.name,
+    _email: data.email,
+    _phone_number: data.phone,
+    _company_name: data.company || data.address || "",
+    _address: data.address || "",
+    _message: data.message,
+    _agreement_with_imvision: "doNotKnow",
+    _file: "",
+    _file_name: data.fileName || "",
+  };
+
+  try {
+    const res = await fetch(`${BASE}/support`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      console.warn("[/api/contact] Support sync failed:", res.status, res.statusText);
+      return null;
+    }
+    const json = await res.json().catch(() => ({}));
+    return (json as { ticket_number?: string }).ticket_number ?? null;
+  } catch (err) {
+    console.warn("[/api/contact] Support sync error:", err);
+    return null;
+  }
+}
+
+/**
+ * Sync a buy/rental sales enquiry to Flow's /api/sales-enquiry.
+ * Returns the project number on success, null on failure.
+ */
+async function syncToSales(data: {
+  category: "buy" | "rental";
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  location: string;
+  eventDate: string;
+  message: string;
+  fileName?: string;
+}): Promise<string | null> {
+  const payload = {
+    _category: data.category,
+    _name: data.name,
+    _email: data.email,
+    _phone_number: data.phone,
+    _company_name: data.company || "",
+    _location: data.location || "",
+    _event_date: data.eventDate || "",
+    _message: data.message,
+    _file_name: data.fileName || "",
+  };
+
+  try {
+    const res = await fetch(`${BASE}/sales-enquiry`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      console.warn("[/api/contact] Sales sync failed:", res.status, res.statusText);
+      return null;
+    }
+    const json = await res.json().catch(() => ({}));
+    return (json as { project_number?: string }).project_number ?? null;
+  } catch (err) {
+    console.warn("[/api/contact] Sales sync error:", err);
+    return null;
+  }
+}
+
+/**
+ * Build a mailto: URL from form fields. Used as a fallback when
+ * the server-side email (Resend) cannot deliver.
+ */
+function buildMailtoUrl(
+  to: string,
+  subject: string,
+  fields: { label: string; value: string }[],
+): string {
+  const body = fields.map((f) => `${f.label}: ${f.value}`).join("\n\n");
+  return `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+// ──────────────────────────────────────────────────────────
+// Helpers
+// ──────────────────────────────────────────────────────────
+
 const MAX_TOTAL_ATTACHMENT_BYTES = 4 * 1024 * 1024;
 
-// Fields that must never appear in the email.
 const SKIP_FIELDS = new Set(["honeypot", "company-url", "recipient", "locale", "categoryKey"]);
 
-// Human labels for known field keys (used by both ContactForm and ServiceForm).
 const LABELS: Record<string, string> = {
   category: "Enquiry type",
   formType: "Enquiry type",
@@ -39,9 +147,6 @@ function prettify(key: string): string {
   return key.replace(/([A-Z])/g, " $1").replace(/^./, (c) => c.toUpperCase());
 }
 
-// Service cases go to the service desk, everything else to the default inbox.
-// Derived from the enquiry type server-side — the client's `recipient` field is
-// ignored (see SKIP_FIELDS) so the endpoint can't be used to mail arbitrary addresses.
 function recipientFor(type: string): string {
   return /service/i.test(type)
     ? process.env.MAIL_TO_SERVICE || "service@imvision.se"
@@ -49,6 +154,10 @@ function recipientFor(type: string): string {
 }
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+// ──────────────────────────────────────────────────────────
+// Main handler
+// ──────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
   let form: FormData;
@@ -71,6 +180,10 @@ export async function POST(req: NextRequest) {
   let email = "";
   let phone = "";
   let message = "";
+  let company = "";
+  let address = "";
+  let eventDate = "";
+  let fileName = "";
 
   for (const [key, value] of form.entries()) {
     if (SKIP_FIELDS.has(key) || key.startsWith("_")) continue;
@@ -82,6 +195,10 @@ export async function POST(req: NextRequest) {
       if (key === "email") email = trimmed;
       if (key === "phone") phone = trimmed;
       if (key === "message" || key === "description") message = trimmed;
+      if (key === "company") company = trimmed;
+      if (key === "location") address = trimmed;
+      if (key === "project") address = trimmed;
+      if (key === "eventDate") eventDate = trimmed;
       fields.push({ label: LABELS[key] ?? prettify(key), value: trimmed });
     } else if (value && typeof (value as Blob).arrayBuffer === "function") {
       const file = value as File;
@@ -90,9 +207,10 @@ export async function POST(req: NextRequest) {
       if (totalBytes > MAX_TOTAL_ATTACHMENT_BYTES) {
         return NextResponse.json(
           { error: "Attachments are too large (max ~4 MB total)." },
-          { status: 413 }
+          { status: 413 },
         );
       }
+      if (!fileName) fileName = file.name || "attachment";
       attachments.push({
         filename: file.name || "attachment",
         content: Buffer.from(await file.arrayBuffer()),
@@ -101,8 +219,6 @@ export async function POST(req: NextRequest) {
   }
 
   // Server-side required-field validation (defence in depth).
-  // Name + message are required; at least one of email/phone must be present
-  // (the service form allows either, the contact form always sends email).
   if (!name || !message || (!email && !phone)) {
     return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
   }
@@ -111,26 +227,87 @@ export async function POST(req: NextRequest) {
   }
 
   const type = String(form.get("category") ?? form.get("formType") ?? form.get("issueType") ?? "").trim();
-  const subject = `New ${type || "enquiry"} from ${name} — imvision.se`;
-
-  // Prefer the stable category key; fall back to the (localised) display type.
+  const subject = `Ny ${type || "förfrågan"} från ${name} — imvision.se`;
   const routingKey = String(form.get("categoryKey") ?? "").trim() || type;
+  const recipient = recipientFor(routingKey);
 
   if (attachments.length) {
-    fields.push({ label: "Attachments", value: `${attachments.length} file(s) attached` });
+    fields.push({ label: "Bilagor", value: `${attachments.length} fil(er) bifogade` });
   }
 
-  try {
-    await sendLeadEmail({
-      subject,
-      fields,
-      replyTo: email || undefined,
-      attachments,
-      to: recipientFor(routingKey),
+  // ── Determine which Flow endpoint to call ──────────────────
+  // service → /api/support (support ticket)
+  // buy/rental → /api/sales-enquiry (sales project)
+  // ──────────────────────────────────────────────────────────
+
+  let flowId: string | null = null;     // numeric id from Flow
+  let flowRef: string | null = null;    // human-readable ref (IM-0042 / PRJ-0003)
+
+  if (/service/i.test(routingKey)) {
+    // ── Support / felanmälan ───────────────────────────────
+    const ticketNum = await syncToSupport({
+      name, email, phone,
+      company: company || "",
+      address: address || "",
+      message,
+      fileName: fileName || undefined,
     });
-    return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error("[/api/contact] send failed:", err);
-    return NextResponse.json({ error: "Failed to send the message." }, { status: 500 });
+    if (ticketNum) {
+      flowRef = ticketNum;
+      console.log("[/api/contact] Support ticket created:", ticketNum);
+    }
+  } else {
+    // ── Sales / köp / hyra ─────────────────────────────────
+    const category = (/buy|rental/i.test(routingKey) ? "buy" : "rental") as "buy" | "rental";
+    const projNum = await syncToSales({
+      category,
+      name, email, phone,
+      company: company || "",
+      location: address || "",
+      eventDate: eventDate || "",
+      message,
+      fileName: fileName || undefined,
+    });
+    if (projNum) {
+      flowRef = projNum;
+      console.log("[/api/contact] Sales project created:", projNum);
+    }
   }
+
+  // ── Core guarantee: user never sees a form error ──────────
+  // Send email via Resend AND sync to Flow in parallel. If Resend
+  // fails, return a mailto: fallback URL so the client opens the
+  // user's mail app. Flow errors are silently logged.
+  //
+  // Response format:
+  //   ✅ All OK                → { ok: true, ref: "IM-0042" }
+  //   ✅ Email OK, no Flow ref  → { ok: true }
+  //   ❌ Resend failed          → { ok: true, fallbackMailto: "mailto:..." }
+  // ───────────────────────────────────────────────────────────
+
+  const emailPromise = sendLeadEmail({
+    subject,
+    fields,
+    replyTo: email || undefined,
+    attachments,
+    to: recipient,
+  }).catch(e => e);
+
+  const [emailResult] = await Promise.allSettled([emailPromise]);
+  const emailOk = emailResult.status === "fulfilled" && emailResult.value === true;
+
+  if (!emailOk) {
+    console.error("[/api/contact] Resend failed, returning mailto fallback");
+    const mailto = buildMailtoUrl(recipient, subject, fields);
+    return NextResponse.json({
+      ok: true,
+      fallbackMailto: mailto,
+      ...(flowRef && { ref: flowRef }),
+    });
+  }
+
+  return NextResponse.json({
+    ok: true,
+    ...(flowRef && { ref: flowRef }),
+  });
 }
