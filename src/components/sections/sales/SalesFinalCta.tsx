@@ -43,7 +43,7 @@ export function SalesFinalCta({ locale, content }: SalesSectionProps) {
           <Reveal delay={0.28}>
             <div className="relative mt-8 flex flex-col gap-2 text-sm text-text-secondary sm:flex-row sm:gap-8">
               <a
-                href={`tel:${finalCta.phone.replace(/\s/g, "")}`}
+                href={`tel:${finalCta.phoneE164}`}
                 className="transition-colors duration-300 hover:text-text-primary"
               >
                 {finalCta.phone}

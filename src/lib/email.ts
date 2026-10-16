@@ -54,7 +54,7 @@ export async function sendLeadEmail({ subject, fields, replyTo, attachments, to:
     )
     .join("");
   const html = `<div style="font-family:system-ui,-apple-system,Segoe UI,sans-serif;font-size:15px;line-height:1.6">
-    <h2 style="margin:0 0 16px;font-size:18px">New enquiry from imvision.se</h2>
+    <h2 style="margin:0 0 16px;font-size:18px">${subject}</h2>
     <table style="border-collapse:collapse">${rows}</table>
   </div>`;
 

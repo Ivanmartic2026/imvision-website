@@ -221,10 +221,11 @@ export function ContactForm({
           setFlowRef(body.ref);
         }
         setIsSuccess(true);
+        setSubmitError(false);
       } else {
-        // Server returned error status — open mailto as ultimate fallback.
+        // Server returned error status — open mailto as courtesy.
         window.open(`mailto:${config.recipient}?subject=${encodeURIComponent(`Ny ${config.title} från imvision.se`)}`, "_blank");
-        setIsSuccess(true);
+        setSubmitError(true);
       }
 
       // Konverteringsmätning (endast kategori – aldrig namn/e-post/telefon/fritext).
@@ -237,10 +238,9 @@ export function ContactForm({
         { form_id: "contact", category: data.category },
       );
     } catch {
-      // Ultimate fallback: open user's mail app so they can manually send.
-      // This ensures the user NEVER sees an error state.
+      // Network failure / fetch crash — open mailto so the user can still send.
       window.open(`mailto:${config.recipient}?subject=${encodeURIComponent(`Ny ${config.title} från imvision.se`)}`, "_blank");
-      setIsSuccess(true);
+      setSubmitError(true);
     } finally {
       setIsSubmitting(false);
     }

@@ -107,6 +107,7 @@ export interface SalesContent {
     body: string;
     primaryCta: string;
     phone: string;
+    phoneE164: string;
     email: string;
   };
 }
@@ -280,6 +281,7 @@ const sv: SalesContent = {
       "Dela ritningar, miljö, önskad upplevelse och tidsplan. Vi hjälper er att definiera rätt permanent LED-system.",
     primaryCta: "Starta ert projekt",
     phone: "010 330 46 36",
+    phoneE164: "+46103304636",
     email: "info@imvision.se",
   },
 };
@@ -446,6 +448,7 @@ const en: SalesContent = {
       "Share drawings, environment, intended experience and timeline. We will help you define the right permanent LED system.",
     primaryCta: "Start your project",
     phone: "010 330 46 36",
+    phoneE164: "+46103304636",
     email: "info@imvision.se",
   },
 };
