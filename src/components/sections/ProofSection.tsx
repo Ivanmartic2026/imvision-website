@@ -245,10 +245,17 @@ function ProjectCard({
         </span>
       </div>
 
-      {/* Link wraps the entire card */}
+      {/* Invisible overlay so the whole card is clickable. It must carry its own
+          accessible name: the card's text lives in a sibling element, so without
+          aria-label a screen reader announces a link with no purpose. */}
       <Link
         href={localizedHref(locale, `/projects/${project.slug}/`)}
         className="absolute inset-0"
+        aria-label={
+          locale === "sv"
+            ? `Visa projektet ${project.title}`
+            : `View the ${project.title} project`
+        }
         prefetch={false}
       />
     </motion.article>
