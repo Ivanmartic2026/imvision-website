@@ -31,16 +31,15 @@ async function syncToSupport(data: {
   message: string;
   fileName?: string;
 }): Promise<string | null> {
+  // Fältnamnen är Flow-endpointens kontrakt (apps/core/public_website.py).
+  // De hette tidigare _name/_email/_phone_number — ett Jotform-format som
+  // endpointen aldrig tog emot, så varje anrop avvisades tyst.
   const payload = {
-    _name: data.name,
-    _email: data.email,
-    _phone_number: data.phone,
-    _company_name: data.company || data.address || "",
-    _address: data.address || "",
-    _message: data.message,
-    _agreement_with_imvision: "doNotKnow",
-    _file: "",
-    _file_name: data.fileName || "",
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    company: data.company || data.address || "",
+    message: data.message,
   };
 
   try {
@@ -54,7 +53,8 @@ async function syncToSupport(data: {
       return null;
     }
     const json = await res.json().catch(() => ({}));
-    return (json as { ticket_number?: string }).ticket_number ?? null;
+    // Flow svarar { ok, ref } där ref är CRM:ets eget ärendenummer (S-1644).
+    return (json as { ref?: string }).ref ?? null;
   } catch (err) {
     console.warn("[/api/contact] Support sync error:", err);
     return null;
@@ -77,15 +77,15 @@ async function syncToSales(data: {
   fileName?: string;
 }): Promise<string | null> {
   const payload = {
-    _category: data.category,
-    _name: data.name,
-    _email: data.email,
-    _phone_number: data.phone,
-    _company_name: data.company || "",
-    _location: data.location || "",
-    _event_date: data.eventDate || "",
-    _message: data.message,
-    _file_name: data.fileName || "",
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    company: data.company || "",
+    category: data.category,
+    location: data.location || "",
+    message: data.eventDate
+      ? `${data.message}\n\nDatum: ${data.eventDate}`
+      : data.message,
   };
 
   try {
@@ -99,7 +99,9 @@ async function syncToSales(data: {
       return null;
     }
     const json = await res.json().catch(() => ({}));
-    return (json as { project_number?: string }).project_number ?? null;
+    // Säljförfrågan hamnar i CRM:ets säljinkorg, som inte har ett kundvänt
+    // nummer än. Inget ref att visa — kunden får sin bekräftelse på mejl.
+    return (json as { ref?: string }).ref ?? null;
   } catch (err) {
     console.warn("[/api/contact] Sales sync error:", err);
     return null;
@@ -286,7 +288,7 @@ export async function POST(req: NextRequest) {
   // user's mail app. Flow errors are silently logged.
   //
   // Response format:
-  //   ✅ All OK                → { ok: true, ref: "IM-0042" }
+  //   ✅ All OK                → { ok: true, ref: "S-1644" }
   //   ✅ Email OK, no Flow ref  → { ok: true }
   //   ❌ Resend failed          → { ok: true, fallbackMailto: "mailto:..." }
   // ───────────────────────────────────────────────────────────
