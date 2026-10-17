@@ -6,6 +6,8 @@ import { ServicesPreview } from "@/components/sections/ServicesPreview";
 import { Technology } from "@/components/sections/Technology";
 import { PortfolioPreview } from "@/components/sections/PortfolioPreview";
 import { ProjectSlider } from "@/components/sections/ProjectSlider";
+import { ProofSection } from "@/components/sections/ProofSection";
+import { FaqSection } from "@/components/sections/FaqSection";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import { BusinessIntro } from "@/components/sections/BusinessIntro";
 import { Locale } from "@/lib/i18n";
@@ -25,6 +27,10 @@ export function HomePage({ locale = "en" }: { locale?: Locale }) {
         <Technology locale={locale} />
         <PortfolioPreview locale={locale} />
         <StoryTimeline locale={locale} />
+        {/* Credibility before objections: show the delivered work first, then
+            answer the purchase questions, then ask for the contact. */}
+        <ProofSection locale={locale} />
+        <FaqSection locale={locale} />
         <ContactCTA locale={locale} />
       </main>
       <Footer locale={locale} />

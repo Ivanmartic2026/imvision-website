@@ -22,7 +22,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
     <section
       ref={heroRef}
       id="hero"
-      className="relative mb-16 min-h-svh overflow-hidden bg-[#070807] lg:mb-24 lg:min-h-[900px]"
+      className="theme-dark relative mb-16 min-h-svh overflow-hidden bg-[#070807] lg:mb-24 lg:min-h-[900px]"
       aria-labelledby="hero-title"
     >
       <motion.div

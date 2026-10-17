@@ -2,6 +2,7 @@ import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { LanguageGate } from "@/components/providers/LanguageGate";
 import { Analytics } from "@/components/providers/Analytics";
 import { StickyCTA } from "@/components/layout/StickyCTA";
+import { BackToTop } from "@/components/ui/BackToTop";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteGraphLd } from "@/lib/seo";
 import type { Locale } from "@/lib/i18n";
@@ -36,8 +37,9 @@ export function RootShell({
       </a>
       <SmoothScroll>{children}</SmoothScroll>
       <StickyCTA locale={locale} />
+      <BackToTop locale={locale} />
       <LanguageGate />
-      <Analytics />
+      <Analytics locale={locale} />
       <JsonLd data={siteGraphLd()} />
     </>
   );
