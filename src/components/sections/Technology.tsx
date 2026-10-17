@@ -39,7 +39,7 @@ export function Technology({ locale = "en" }: { locale?: Locale }) {
                 {capabilities.map(([titleEn, titleSv], index) => (
                   <motion.li
                     key={titleEn}
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={{ y: 8 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.8, delay: index * 0.08, ease: [0.22, 0.61, 0.36, 1] }}

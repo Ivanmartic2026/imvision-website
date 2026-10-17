@@ -77,6 +77,21 @@ export const projects: Project[] = [
     role: ["delivered", "installed"],
     roleSource:
       'longDescription: "The scope covered the steel pylon and cladding, an integrated technical compartment at the base, and full commissioning, calibration, and function testing."',
+    caseStudy: {
+      // Source: longDescription describes the full scope, screens, and commissioning date.
+      challenge:
+        "Deliver a complete outdoor LED display — structural steel, screens, electrical systems, and full commissioning — for a busy commercial area in Uppsala.",
+      response:
+        "Two Unilumin USK5.9 LED screens mounted back-to-back on a custom steel pylon with an integrated technical compartment, automatic brightness control via a light sensor, and dual 4G routers for remote content and screen management.",
+      delivery: [
+        "Steel pylon fabrication and cladding",
+        "Integrated technical compartment at the base",
+        "Mounting of two 4.0 × 1.75 m LED screens (14 m² active area)",
+        "Full commissioning, calibration, and function testing",
+      ],
+      outcome:
+        "A 14 m² double-sided display operating autonomously with automatic brightness and remote management, commissioned on 18 August 2026 at Rapsgatan, Boland City.",
+    },
     tags: ["DOOH", "Pylon", "Uppsala"],
     verified: true,
     gallery: [
@@ -109,6 +124,18 @@ export const projects: Project[] = [
     image: "/images/projects/the-icon.jpg",
     visualLabel: "The Icon — Westfield Mall of Scandinavia",
     imageCredit: "Image: Ocean Outdoor",
+    caseStudy: {
+      // Source: longDescription states dimensions, visibility, and scale.
+      challenge:
+        "Create one of Europe's largest digital out-of-home screens in a prime Stockholm location where it is visible from motorways, pedestrian areas, and passing trains.",
+      response:
+        "A 41 × 13 metre double-sided display covering 525 m² — the largest commercial screen in the Nordics.",
+      delivery: [
+        "Installation of a 525 m² double-sided LED display at Westfield Mall of Scandinavia",
+      ],
+      outcome:
+        "A 525 m² DOOH screen visible from motorways, pedestrian areas, and passing trains, positioned at one of the Nordic region's most trafficked locations.",
+    },
     sourceUrl: "https://oceanoutdoor.com/se/ooh-site/the-icon-westfield-mall-of-scandinavia/",
     location: "Solna, Sweden",
     year: "",
@@ -127,6 +154,20 @@ export const projects: Project[] = [
     image: "/images/projects/the-halo.jpg",
     visualLabel: "The Halo — Westfield Mall of Scandinavia",
     imageCredit: "Image: Ocean Outdoor",
+    caseStudy: {
+      // Source: longDescription describes the multi-format LED installation at the shopping centre.
+      challenge:
+        "Create a 360-degree digital landmark at the heart of a major shopping centre that draws campaigns, events, and brand activations to its centre point.",
+      response:
+        "Two monumental LED rings (one per floor) combined with three large-format LED cubes providing full 360-degree coverage.",
+      delivery: [
+        "Installation of two LED rings on separate floors",
+        "Mounting of three large-format LED cubes with 360° visibility",
+        "Integration at the centre point of Westfield Mall of Scandinavia",
+      ],
+      outcome:
+        "A multi-format LED environment that creates a natural gathering point for campaigns, events, and brand activations at the shopping centre's heart.",
+    },
     sourceUrl: "https://oceanoutdoor.com/se/ooh-site/the-halo-westfield-mall-of-scandinavia/",
     location: "Solna, Sweden",
     year: "",
@@ -145,6 +186,18 @@ export const projects: Project[] = [
     image: "/images/projects/the-geminis.jpg",
     visualLabel: "The Geminis — Westfield Täby Centrum",
     imageCredit: "Image: Ocean Outdoor",
+    caseStudy: {
+      // Source: longDescription describes four portrait screens at Täby Centrum.
+      challenge:
+        "Create a high-impact digital centre point at one of Sweden's busiest shopping centres, welcoming 13 million visitors annually.",
+      response:
+        "Four large-format portrait screens positioned in the central square at Westfield Täby Centrum.",
+      delivery: [
+        "Installation of four portrait-format LED screens in the central square",
+      ],
+      outcome:
+        "A high-impact digital presence at a location with over 13 million annual visitors and an average visit time exceeding 90 minutes.",
+    },
     sourceUrl: "https://oceanoutdoor.com/se/ooh-site/the-icon-geminis/",
     location: "Täby, Sweden",
     year: "",
@@ -164,6 +217,18 @@ export const projects: Project[] = [
     visualLabel: "The Curve — Westfield Täby Centrum",
     imageCredit: "Image: Ocean Outdoor",
     sourceUrl: "https://oceanoutdoor.com/se/ooh-site/the-curve-westfield-taby-centrum/",
+    caseStudy: {
+      // Source: longDescription describes a 40 m² curved screen integrated into the façade.
+      challenge:
+        "Turn the building edge of a major shopping destination into a highly visible large-format digital surface.",
+      response:
+        "A 40 m² curved LED screen integrated along the façade of Westfield Täby Centrum.",
+      delivery: [
+        "Custom curved LED screen fabrication and mounting along the building façade",
+      ],
+      outcome:
+        "A sweeping curved digital surface that gives campaigns a natural presence in one of Sweden's largest shopping destinations.",
+    },
     location: "Täby, Sweden",
     year: "",
     specs: { size: "40 m²", type: "Curved large-format DOOH" },
@@ -181,6 +246,18 @@ export const projects: Project[] = [
     image: "/images/projects/the-node.jpg",
     visualLabel: "The Icon @ The Node — Sergels torg",
     imageCredit: "Image: Ocean Outdoor",
+    caseStudy: {
+      // Source: longDescription describes three 6-metre-wide screens at Sergels torg.
+      challenge:
+        "Create a full-motion digital presence at one of Stockholm's most iconic and trafficked locations beneath the fountain at Sergels torg.",
+      response:
+        "Three large high-resolution screens, each six metres wide, positioned in the central hub.",
+      delivery: [
+        "Installation of three 6 m wide high-resolution screens beneath Sergels torg fountain",
+      ],
+      outcome:
+        "A constant digital presence meeting a flow of residents, commuters, and visitors from morning to night at one of Stockholm's busiest hubs.",
+    },
     sourceUrl: "https://oceanoutdoor.com/se/ooh-site/the-icon-/",
     location: "Stockholm, Sweden",
     year: "",
@@ -199,6 +276,18 @@ export const projects: Project[] = [
     image: "/images/projects/e4-tradet-nord.jpg",
     visualLabel: "E4 Trädet North — Upplands Väsby",
     imageCredit: "Image: Ocean Outdoor",
+    caseStudy: {
+      // Source: longDescription describes the E4 roadside placement and target audience.
+      challenge:
+        "Connect with Stockholm commuters and travellers heading to Arlanda through large-format digital roadside media positioned along the heavily travelled E4.",
+      response:
+        "A large-format digital placement in Upplands Väsby along the E4, targeting commuters and travellers on one of the region's most important routes.",
+      delivery: [
+        "Installation of large-format digital roadside display along the E4 corridor",
+      ],
+      outcome:
+        "A clear roadside presence reaching commuters to and from Stockholm and travellers heading toward Arlanda on a key regional route.",
+    },
     sourceUrl: "https://oceanoutdoor.com/se/ooh-site/stockholm-e4-tradet-n-impact/",
     location: "Upplands Väsby, Sweden",
     year: "",
@@ -219,6 +308,18 @@ export const projects: Project[] = [
     location: "Malmö, Sweden",
     year: "",
     specs: { size: "7.37 m²", type: "Large-format city DOOH · 936 × 832 · 5 s" },
+    caseStudy: {
+      // Source: longDescription describes a 7.37 m² city screen with 162,010 daily contacts.
+      challenge:
+        "Create a high-impact large-format city screen at one of Malmö's busiest commercial intersections.",
+      response:
+        "A 7.37 m² display on the corner of Södra Vallgatan in central Malmö, one block from Gustav Adolfs Torg.",
+      delivery: [
+        "Installation of a 7.37 m² large-format screen at a high-traffic city intersection",
+      ],
+      outcome:
+        "A city screen reaching around 162,010 contacts per day in Malmö's commercial heart.",
+    },
     tags: ["DOOH", "City centre", "Retail"],
     verified: true,
   },
@@ -235,6 +336,19 @@ export const projects: Project[] = [
     imageCredit: "Image: Grassfish",
     sourceUrl: "https://grassfish.com/cases/kappahl/",
     sourceLabel: "Grassfish",
+    caseStudy: {
+      // Source: longDescription describes a digital in-store network across 160 locations and 6 markets.
+      challenge:
+        "Create a consistent digital foundation for faster campaigns, moving content, and future store concepts across six European markets.",
+      response:
+        "A scalable digital in-store network connecting approximately 160 locations and 220 touchpoints across Sweden, Norway, Finland, Poland, the UK, and Iceland.",
+      delivery: [
+        "Major rollout across Kappahl and Newbie stores in 2025",
+        "Network deployment across six European markets",
+      ],
+      outcome:
+        "A consistent digital foundation enabling faster campaigns and moving content for a European retail chain.",
+    },
     location: "Six European markets",
     year: "2025",
     specs: { size: "Approx. 160 locations · 220 touchpoints", type: "Digital in-store rollout" },
@@ -256,6 +370,19 @@ export const projects: Project[] = [
     specs: { type: "LED & digital display systems" },
     role: ["delivered", "installed"],
     roleSource: 'longDescription: "IM Vision has delivered and installed LED and digital display solutions for SAS lounges…"',
+    caseStudy: {
+      // Source: longDescription explicitly states IM Vision delivered and installed LED solutions for SAS.
+      challenge:
+        "Create a unified digital display environment across SAS lounges and Express Check-in throughout the Nordic region.",
+      response:
+        "LED and digital display solutions adapted to each location's architecture, viewing distance, ambient light, and operational demands.",
+      delivery: [
+        "LED and digital display delivery for SAS lounges across the Nordic region",
+        "Display installation for Express Check-in environments",
+      ],
+      outcome:
+        "One coherent visual identity throughout the passenger journey — built for clear communication, reliable operation, and a premium Scandinavian experience.",
+    },
     tags: ["Aviation", "Lounges", "Digital signage"],
     verified: true,
   },
@@ -280,6 +407,20 @@ export const projects: Project[] = [
     },
     role: ["engineered", "installed"],
     roleSource: 'description: "custom steel structure, in-house engineering, and our own installation team"',
+    caseStudy: {
+      // Source: description states "custom steel structure, in-house engineering, and our own installation team."
+      challenge:
+        "Create a striking LED façade around the corner of a major Gothenburg intersection — large enough to be seen from multiple directions.",
+      response:
+        "26.88 × 7.68 metres of LED on a twelve-metre radius curve, supported by 224 cast cabinets and a custom steel structure.",
+      delivery: [
+        "Custom steel structure for a twelve-metre curved façade",
+        "Installation of 224 cast LED cabinets",
+        "In-house engineering and own installation team execution",
+      ],
+      outcome:
+        "A full-corner LED façade at Nils Ericsonsgatan and Kanaltorget — a custom-engineered, in-house built installation.",
+    },
     tags: ["DOOH", "Façade", "Engineering"],
     verified: true,
   },
@@ -299,6 +440,19 @@ export const projects: Project[] = [
     specs: { type: "Retail LED" },
     role: ["installed", "serviced"],
     roleSource: 'longDescription: "Installed to be seen — serviced to keep performing."',
+    caseStudy: {
+      // Source: longDescription describes digital surfaces at Sweden's largest shopping centre, installed and serviced.
+      challenge:
+        "Deploy digital surfaces at the heart of one of Sweden's largest shopping centres that are built to perform reliably over time.",
+      response:
+        "Digital LED surfaces installed for maximum visibility and serviced to keep performing.",
+      delivery: [
+        "Installation of retail LED surfaces at Täby Centrum",
+        "Ongoing service agreements to maintain performance",
+      ],
+      outcome:
+        "Digital surfaces at the heart of one of Sweden's largest shopping centres, installed to be seen and serviced to keep performing.",
+    },
     tags: ["Retail", "Digital surfaces", "Service"],
     verified: true,
   },
@@ -318,6 +472,20 @@ export const projects: Project[] = [
     specs: { type: "Monitoring & operations" },
     role: ["operated", "monitored"],
     roleSource: 'longDescription: "Operations agreements for Mall of Scandinavia and Täby Centrum… connection to IM Monitoring"',
+    caseStudy: {
+      // Source: longDescription describes operations agreements with inspection, monitoring, and proactive action.
+      challenge:
+        "Ensure critical digital screens at major Swedish shopping centres never go unnoticed when issues arise.",
+      response:
+        "Inspection before launch, connection to IM Monitoring, and proactive action before the client needs to call.",
+      delivery: [
+        "Pre-launch inspection for Mall of Scandinalia screens",
+        "Pre-launch inspection for Täby Centrum screens",
+        "Connection to IM Monitoring for continuous oversight",
+      ],
+      outcome:
+        "Proactive operations for screens at Mall of Scandinavia and Täby Centrum — action before the client needs to call.",
+    },
     tags: ["Operations", "Monitoring", "Service"],
     verified: true,
   },

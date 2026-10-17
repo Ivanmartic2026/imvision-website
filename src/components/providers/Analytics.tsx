@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Script from "next/script";
 import {
   analyticsEnabled,
   CONSENT_KEY,
-  CONSENT_REOPEN,
   GA_ID,
 } from "@/lib/analytics";
 import { AnalyticsTracker } from "@/components/providers/AnalyticsTracker";
+import { CookieConsent } from "@/components/providers/CookieConsent";
+import { Locale } from "@/lib/i18n";
 
 /**
  * GDPR-anpassad GA4 med Google Consent Mode v2.
@@ -21,7 +21,8 @@ import { AnalyticsTracker } from "@/components/providers/AnalyticsTracker";
  *   (sajten använder inga annonser).
  * - Valet sparas i localStorage (`im-cookie-consent`) och återställs innan GA4
  *   laddas, så återkommande besökare får rätt läge direkt.
- * - Bannern kan öppnas igen (t.ex. via sidfoten) för att ändra samtycket.
+ * - Bannern (CookieConsent) hanterar användarinteraktionen och öppnas igen via
+ *   CONSENT_REOPEN-eventet (t.ex. från CookieSettingsLink i sidfoten).
  */
 
 // Körs synkront vid parse, dvs. innan gtag.js (afterInteractive) laddas – så att
@@ -42,60 +43,21 @@ try{if(localStorage.getItem('${CONSENT_KEY}')==='granted'){
 }}catch(e){}
 `;
 
-type Consent = "granted" | "denied" | null;
+/**
+ * Samtyckesbanner med två steg:
+ *  - Steg 1: snabbval "Acceptera alla" / "Endast nödvändiga"
+ *  - Steg 2: individuell toggle för analys (öppnas automatiskt vid återöppning)
+ *
+ * Huvudkomponenten (Analytics) lämnar över all presentation och interaktion
+ * till CookieConsent och koncentrerar sig på script-taggarna.
+ *
+ * `locale` träds ner från rotlayouten i stället för att gissas ur URL:en i en
+ * effekt: annars serveras bannern på engelska på /sv/ och byter språk först
+ * efter hydrering, vilket syns som en språkblinkning.
+ */
 
-export function Analytics() {
-  const [consent, setConsent] = useState<Consent>(null);
-  const [ready, setReady] = useState(false);
-  const [locale, setLocale] = useState<"en" | "sv">("en");
-
-  // Läser localStorage/window först efter montering (undviker hydration-mismatch).
-  useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect -- engångssynk av sparat samtycke vid montering */
-    const stored =
-      typeof localStorage !== "undefined"
-        ? localStorage.getItem(CONSENT_KEY)
-        : null;
-    if (stored === "granted" || stored === "denied") setConsent(stored);
-    setLocale(window.location.pathname.split("/")[1] === "sv" ? "sv" : "en");
-    setReady(true);
-    /* eslint-enable react-hooks/set-state-in-effect */
-
-    const reopen = () => setConsent(null);
-    window.addEventListener(CONSENT_REOPEN, reopen);
-    return () => window.removeEventListener(CONSENT_REOPEN, reopen);
-  }, []);
-
-  const decide = (value: "granted" | "denied") => {
-    try {
-      localStorage.setItem(CONSENT_KEY, value);
-    } catch {
-      /* storage blockerat — val gäller sessionen */
-    }
-    if (typeof window.gtag === "function") {
-      window.gtag("consent", "update", {
-        analytics_storage: value === "granted" ? "granted" : "denied",
-      });
-    }
-    setConsent(value);
-  };
-
+export function Analytics({ locale = "en" }: { locale?: Locale }) {
   if (!analyticsEnabled) return null; // ogiltigt/avstängt GA-ID → ingen mätning
-
-  const t =
-    locale === "sv"
-      ? {
-          text: "Vi använder analyscookies för att förstå hur sajten används. Inga cookies sätts förrän du accepterat, och ingen personlig information skickas.",
-          accept: "Acceptera",
-          decline: "Neka",
-          label: "Cookie-samtycke",
-        }
-      : {
-          text: "We use analytics cookies to understand how the site is used. No cookies are set until you accept, and no personal data is sent.",
-          accept: "Accept",
-          decline: "Decline",
-          label: "Cookie consent",
-        };
 
   return (
     <>
@@ -114,32 +76,8 @@ export function Analytics() {
       {/* Klient-mätning: sidvisningar vid navigering, klick, scroll */}
       <AnalyticsTracker />
 
-      {/* Samtyckesbanner (visas tills ett val gjorts) */}
-      {ready && consent === null && (
-        <div
-          role="region"
-          aria-label={t.label}
-          className="fixed inset-x-3 bottom-3 z-[90] mx-auto max-w-xl rounded-[16px_6px_16px_16px] border border-border-strong bg-[#0b0d0c]/95 p-4 shadow-[0_24px_70px_rgba(0,0,0,.5)] backdrop-blur-xl sm:inset-x-auto sm:right-5 sm:bottom-5 sm:p-5"
-        >
-          <p className="text-sm leading-relaxed text-text-secondary">{t.text}</p>
-          <div className="mt-4 flex gap-2">
-            <button
-              type="button"
-              onClick={() => decide("granted")}
-              className="rounded-[10px_3px_10px_10px] bg-[#91a9a1] px-4 py-2 text-sm font-medium text-[#070807] transition-colors hover:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
-              {t.accept}
-            </button>
-            <button
-              type="button"
-              onClick={() => decide("denied")}
-              className="rounded-[10px_3px_10px_10px] border border-border-strong px-4 py-2 text-sm font-medium text-text-primary transition-colors hover:bg-white/[.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
-              {t.decline}
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Samtyckesbanner – renderas bara när inget val finns (consent === null). */}
+      <CookieConsent locale={locale} />
     </>
   );
 }

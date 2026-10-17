@@ -21,7 +21,7 @@ import { ProjectVisual } from "@/components/sections/ProjectVisual";
 import { ProjectGallery } from "@/components/sections/ProjectGallery";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Locale, localizedHref } from "@/lib/i18n";
-import { projectLd } from "@/lib/seo";
+import { projectLd, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export interface ProjectCopy {
   title: string;
@@ -131,6 +131,27 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
     ? project.role.map((r) => roleLabels[locale][r]).join(" · ")
     : null;
 
+  // Icon per IM Vision roll — each maps to a Lucide icon that conveys the action.
+  function iconForRole(role: ProjectRole) {
+    const props = { size: 14, className: "text-accent shrink-0" };
+    switch (role) {
+      case "designed":
+        return <Wrench {...props} />;
+      case "engineered":
+        return <Layers {...props} />;
+      case "delivered":
+        return <Layers {...props} />;
+      case "installed":
+        return <Wrench {...props} />;
+      case "serviced":
+        return <Wrench {...props} />;
+      case "operated":
+        return <Sun {...props} />;
+      case "monitored":
+        return <Monitor {...props} />;
+    }
+  }
+
   // Related services are derived from the verified role, not from the fact that a
   // project exists. Where no role is documented — the six Ocean Outdoor sites — the
   // block is absent rather than implying IM Vision delivered a service it may not have.
@@ -190,7 +211,11 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
           slug: project.slug,
           title: copy.title,
           description: copy.description,
-          image: project.image,
+          // Three verified projects (nordstan-facade, taby-centrum,
+          // ocean-outdoor-operations) ship without a photo and render a CSS
+          // placeholder instead. Structured data still needs an image, so fall
+          // back to the site default — the same guard the page metadata uses.
+          image: project.image || DEFAULT_OG_IMAGE,
           category: copy.category,
           // Localised so the structured data states the same thing the page shows —
           // the fact block is Swedish on /sv/, and the schema now follows it.
@@ -220,6 +245,82 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
           )}
         </PageHeader>
 
+        {/* Compact fact row — key details visible at a glance before the hero image. */}
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mt-4 grid grid-cols-2 gap-y-3 gap-x-8 sm:grid-cols-4 lg:grid-cols-6">
+            {/* Year */}
+            {project.year && (
+              <div className="flex items-center gap-2 text-sm text-text-secondary">
+                <Calendar size={16} className="text-accent shrink-0" />
+                <span className="truncate">{project.year}</span>
+              </div>
+            )}
+            {/* Location */}
+            <div className="flex items-center gap-2 text-sm text-text-secondary">
+              <MapPin size={16} className="text-accent shrink-0" />
+              <span className="truncate">
+                {copy.location || project.location}
+              </span>
+            </div>
+            {/* Type */}
+            {(copy.specsType || project.specs.type) && (
+              <div className="flex items-center gap-2 text-sm text-text-secondary">
+                <Monitor size={16} className="text-accent shrink-0" />
+                <span className="truncate">
+                  {copy.specsType || project.specs.type}
+                </span>
+              </div>
+            )}
+            {/* Size */}
+            {project.specs.size && (
+              <div className="flex items-center gap-2 text-sm text-text-secondary">
+                <Ruler size={16} className="text-accent shrink-0" />
+                <span className="truncate">
+                  {copy.specsSize || project.specs.size}
+                </span>
+              </div>
+            )}
+            {/* Pixel pitch */}
+            {project.specs.pixelPitch && (
+              <div className="flex items-center gap-2 text-sm text-text-secondary">
+                <Layers size={16} className="text-accent shrink-0" />
+                <span className="truncate">
+                  {project.specs.pixelPitch} pitch
+                </span>
+              </div>
+            )}
+            {/* Brightness */}
+            {project.specs.brightness && (
+              <div className="flex items-center gap-2 text-sm text-text-secondary">
+                <Sun size={16} className="text-accent shrink-0" />
+                <span className="truncate">{project.specs.brightness}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* IM / Roll — role badges with icon and source attribution. Hidden when the
+            project has no documented role (e.g. Ocean Outdoor sites). */}
+        {project.role?.length && (
+          <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              {project.role.map((r) => (
+                <span
+                  key={r}
+                  className="inline-flex items-center gap-2 rounded-[10px_3px_10px_10px] border border-border-subtle bg-bg-elevated px-3 py-1.5 text-sm font-medium text-text-secondary"
+                >
+                  {iconForRole(r)} {roleLabels[locale][r]}
+                  {project.roleSource && (
+                    <span className="text-[10px] font-normal text-text-muted">
+                      [{project.roleSource.slice(0, 25)}…]
+                    </span>
+                  )}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
         <section className="section py-12 lg:py-20">
           <div className="section-inner">
             <figure
@@ -234,6 +335,11 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                 </figcaption>
               )}
             </figure>
+            {project.imageCredit && (
+              <p className="mt-3 text-xs text-text-muted">
+                {project.imageCredit}
+              </p>
+            )}
 
             {project.gallery && project.gallery.length > 0 && (
               <div className="mt-16">
@@ -289,6 +395,50 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
               </div>
             )}
 
+            {/* Technical specifications as a definition list — only fields with
+                values are rendered. Accessible semantics, not a table. */}
+            <div className="mt-16">
+              <h3 className="mb-6 text-sm font-semibold uppercase tracking-wider text-text-muted">
+                {t.projectFacts}
+              </h3>
+              <dl className="grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-3 lg:grid-cols-4">
+                {project.specs.pixelPitch && (
+                  <>
+                    <dt className="text-xs uppercase tracking-wider text-text-muted">Pixel pitch</dt>
+                    <dd className="text-sm font-medium text-text-primary">
+                      {project.specs.pixelPitch}
+                    </dd>
+                  </>
+                )}
+                {project.specs.brightness && (
+                  <>
+                    <dt className="text-xs uppercase tracking-wider text-text-muted">
+                      Brightness
+                    </dt>
+                    <dd className="text-sm font-medium text-text-primary">
+                      {project.specs.brightness}
+                    </dd>
+                  </>
+                )}
+                {project.specs.size && (
+                  <>
+                    <dt className="text-xs uppercase tracking-wider text-text-muted">Size</dt>
+                    <dd className="text-sm font-medium text-text-primary">
+                      {copy.specsSize || project.specs.size}
+                    </dd>
+                  </>
+                )}
+                {(copy.specsType || project.specs.type) && (
+                  <>
+                    <dt className="text-xs uppercase tracking-wider text-text-muted">Type</dt>
+                    <dd className="text-sm font-medium text-text-primary">
+                      {copy.specsType || project.specs.type}
+                    </dd>
+                  </>
+                )}
+              </dl>
+            </div>
+
             <div className="mt-12 grid gap-12 lg:grid-cols-3">
               <div className="lg:col-span-2">
                 {/* On three English projects (nordstan-facade, taby-centrum,
@@ -311,7 +461,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                       <a
                         href={project.sourceUrl}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         className="mt-7 inline-flex border-b border-accent pb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-text-muted transition-colors duration-[700ms] hover:text-text-primary"
                       >
                         {t.projectFacts}: {project.sourceLabel ?? t.defaultSourceLabel}

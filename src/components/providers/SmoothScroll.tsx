@@ -3,6 +3,7 @@
 import { useEffect, ReactNode } from "react";
 import Lenis from "lenis";
 import { MotionConfig } from "motion/react";
+import { registerSmoothScroller } from "@/lib/scroll";
 
 interface SmoothScrollProps {
   children: ReactNode;
@@ -37,7 +38,12 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
       },
     });
 
+    // Expose the live instance so components can request an animated scroll
+    // (see lib/scroll) without a native window.scrollTo that Lenis would fight.
+    registerSmoothScroller(lenis);
+
     return () => {
+      registerSmoothScroller(null);
       lenis.destroy();
     };
   }, []);

@@ -1,6 +1,24 @@
 import Image from "next/image";
 import { Project } from "@/lib/projects";
 
+/**
+ * Project image with a loading placeholder.
+ *
+ * The skeleton is a sibling rendered BEHIND the image rather than an overlay
+ * that waits for `onLoad`. That ordering is deliberate:
+ *
+ * - It keeps this a Server Component. A `useState`/`onLoad` variant would ship
+ *   client JS for every project card in the archive, and the archive renders
+ *   one per project.
+ * - It has no hydration hazard. An image that starts at `opacity-0` and waits
+ *   for `onLoad` stays invisible forever when it is already in cache by the
+ *   time React hydrates, because the event never fires.
+ * - The image is opaque and covers the skeleton the moment it paints, so no
+ *   fade bookkeeping is needed. If the image fails outright, the pulsing
+ *   skeleton remains as a neutral placeholder instead of a broken icon.
+ *
+ * `motion-reduce:animate-none` honours prefers-reduced-motion without JS.
+ */
 export function ProjectVisual({
   project,
   label,
@@ -39,6 +57,10 @@ export function ProjectVisual({
 
   return (
     <>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 animate-pulse bg-bg-elevated motion-reduce:animate-none"
+      />
       <Image
         src={project.image}
         alt={label || project.title}

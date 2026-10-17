@@ -5,6 +5,13 @@ import { sendLeadEmail, type LeadAttachment } from "@/lib/email";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+// IM Flow's public API. The app lives at flow.imvision.se/crm and its backend
+// serves both /crm and /api on :8005 — `/api/` is therefore the correct base,
+// not `/crm/api/` (that prefix falls through to the SPA and returns HTML).
+// NOTE: flow.imvision.se's nginx `location /api/` must point at :8005. A deploy
+// on this host has twice rewritten those proxypass lines to :8080 (the lager
+// app), which silently 404s every ticket and pushes users onto the mailto
+// fallback. If tickets stop arriving, check that first.
 const BASE = process.env.FLOW_API_BASE || "https://flow.imvision.se/api";
 
 // ──────────────────────────────────────────────────────────
@@ -240,7 +247,6 @@ export async function POST(req: NextRequest) {
   // buy/rental → /api/sales-enquiry (sales project)
   // ──────────────────────────────────────────────────────────
 
-  let flowId: string | null = null;     // numeric id from Flow
   let flowRef: string | null = null;    // human-readable ref (IM-0042 / PRJ-0003)
 
   if (/service/i.test(routingKey)) {

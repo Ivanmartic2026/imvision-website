@@ -10,6 +10,28 @@ interface GalleryImage {
   alt: string;
 }
 
+/**
+ * Skeleton shown while a gallery image has not painted yet.
+ *
+ * It is rendered BEHIND the image rather than as an overlay that waits for
+ * `onLoad`. The image stays opaque, so it covers the placeholder the instant it
+ * paints and no fade bookkeeping is needed. The overlay variant is unsafe here:
+ * an image already in cache when React hydrates never fires `onLoad`, so an
+ * image that starts at `opacity-0` would stay invisible for good.
+ *
+ * A failed image leaves the pulsing skeleton visible as a neutral placeholder
+ * instead of a broken-image icon. `motion-reduce:animate-none` honours
+ * prefers-reduced-motion without JS.
+ */
+function GallerySkeleton() {
+  return (
+    <div
+      aria-hidden="true"
+      className="absolute inset-0 animate-pulse bg-bg-elevated motion-reduce:animate-none"
+    />
+  );
+}
+
 export function ProjectGallery({
   images,
   label = "Gallery",
@@ -60,13 +82,13 @@ export function ProjectGallery({
             key={active.src}
             type="button"
             onClick={() => setLightboxOpen(true)}
-            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.45, ease: [0.22, 0.61, 0.36, 1] }}
             className="absolute inset-0 h-full w-full cursor-zoom-in"
             aria-label={active.alt}
           >
+            <GallerySkeleton />
             <Image
               src={active.src}
               alt={active.alt}
@@ -143,12 +165,14 @@ export function ProjectGallery({
               className="relative h-full w-full max-w-6xl"
               onClick={(e) => e.stopPropagation()}
             >
+              <GallerySkeleton />
               <Image
                 src={active.src}
                 alt={active.alt}
                 fill
                 sizes="100vw"
                 className="object-contain"
+                priority
               />
             </div>
 

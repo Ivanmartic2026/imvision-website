@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { SalesMidCta } from "@/components/sections/sales/SalesMidCta";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/effects/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/effects/StaggerReveal";
@@ -168,6 +169,11 @@ export default function RentalPage() {
           </div>
         </section>
 
+        {/* Mid-page CTA: the rental scope is now clear, so this is the first
+            natural point to offer a way forward without waiting for the
+            closing band. */}
+        <SalesMidCta locale="en" variant="rental" />
+
         <section className="section section-space overflow-hidden bg-bg-elevated">
           <div className="section-inner">
             <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
@@ -236,6 +242,10 @@ export default function RentalPage() {
             </div>
           </div>
         </section>
+
+        {/* Second mid-page CTA: the delivery process is explained, so the
+            reader can act without scrolling to the closing band. */}
+        <SalesMidCta locale="en" variant="rental" />
 
         <section className="section section-space bg-background">
           <div className="section-inner">
