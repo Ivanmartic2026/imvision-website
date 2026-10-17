@@ -82,7 +82,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     caseStudy: {
       // Källa: longDescription beskriver den flervisions LED-installationen på köpcentrum.
       challenge:
-        "Skapa ett digitalt 360-graderslandmärke mitt i ett stort köpcentrum som drar kampanjer, event och varumärkesaktiveringar till sin mittpunkt.",
+        "Skapa ett digitalt landmärke i 360 grader mitt i ett stort köpcentrum som drar kampanjer, event och varumärkesaktiveringar till sin mittpunkt.",
       response:
         "Två monumentala LED-ringar (en per våningsplan) kombinerat med tre stora LED-kuber med full 360-graders synlighet.",
       delivery: [
@@ -240,7 +240,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
       challenge:
         "Skapa en sammanhållen digital displaymiljö för SAS lounger och Express Check-in i hela Norden.",
       response:
-        "LED- och displaylösningar anpassade efter varje plats arkitektur, betraktningsavstånd, omgivande ljus och driftkrav.",
+        "LED- och displaylösningar anpassade efter arkitekturen på varje plats, betraktningsavstånd, omgivande ljus och driftkrav.",
       delivery: [
         "Leverans och installation av LED för SAS lounger i hela Norden",
         "Installation av displaysystem för Express Check-in",

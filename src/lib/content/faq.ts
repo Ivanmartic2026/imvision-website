@@ -32,8 +32,8 @@ export const homeFaqs: FaqItem[] = [
       sv: "Hur lång tid tar det från förfrågan till färdig installation?",
     },
     answer: {
-      en: "A typical permanent installation takes a few weeks, depending on scope. We start with a site analysis, move through design and engineering, then handle construction, assembly, setup, and programming. We coordinate the entire chain, so you do not have to manage multiple suppliers.",
-      sv: "En typisk permanent installation tar några veckor, beroende på omfattningen. Vi börjar med en platsanalys, går igenom design och projektering, och hanterar därefter konstruktion, montage, driftsättning och programmering. Vi koordinerar hela kedjan så att ni inte behöver hantera flera leverantörer.",
+      en: "It depends on scope, site access and panel lead times, so we give you a concrete schedule with the quote. The work itself runs from site analysis through design and engineering to construction, assembly, setup and programming. We coordinate the entire chain, so you do not have to manage multiple suppliers.",
+      sv: "Det beror på omfattning, åtkomst till platsen och leveranstider för panelerna, så ni får en konkret tidsplan tillsammans med offerten. Arbetet löper från platsanalys via design och projektering till konstruktion, montage, driftsättning och programmering. Vi koordinerar hela kedjan så att ni inte behöver hantera flera leverantörer.",
     },
   },
   {
