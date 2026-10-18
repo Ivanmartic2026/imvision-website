@@ -84,7 +84,7 @@ const copy = {
     ctaBody:
       "Talk to our service team about a maintenance plan tailored to your installation.",
     ctaButton: "Get a service quote",
-    serviceName: "LED Service & Support",
+    serviceName: "LED service and support",
     serviceDescription:
       "Installation, monitoring, maintenance and long-term support for LED displays — priority response from the team that built your system.",
     serviceType: "LED service",
@@ -172,7 +172,7 @@ export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
     heading: locale === "sv" ? "Anmäl ett serviceärende" : "Report a service ticket",
     body:
       locale === "sv"
-        ? "Har du ett tekniskt problem eller behöver support på en installation? Anmäl ärendet så återkommer vi inom 24 timmar."
+        ? "Har ni ett tekniskt problem eller behöver ni support på en installation? Anmäl ärendet så återkommer vi inom 24 timmar."
         : "Have a technical issue or need support on an installation? Report it and we reply within 24 hours.",
     button: locale === "sv" ? "Anmäl serviceärende" : "Report a service ticket",
   };

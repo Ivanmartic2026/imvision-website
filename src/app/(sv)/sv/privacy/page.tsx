@@ -77,7 +77,7 @@ export default function SwedishPrivacyPage() {
               <h2 className="mt-12 text-2xl font-medium text-text-primary">8. Kontakt</h2>
               <p>
                 Frågor om integritet kan skickas till{" "}
-                <a href="mailto:info@imvision.se" className="text-accent hover:underline">
+                <a href="mailto:info@imvision.se" className="font-medium text-accent underline underline-offset-2 decoration-accent/60 hover:decoration-accent">
                   info@imvision.se
                 </a>{" "}
                 eller per post till IM Vision Group AB, Herkulesvägen 56, 553 02 Jönköping, Sverige.

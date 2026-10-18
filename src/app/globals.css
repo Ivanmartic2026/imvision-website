@@ -313,6 +313,15 @@ main img {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Long Swedish compounds ("tillgänglighetsanpassningskrav") must never push a
+   heading or display paragraph past the viewport. Breaking is preferable to a
+   horizontal scrollbar, and `hyphens: auto` needs the page's lang attribute —
+   which both root layouts set server-side. */
+h1, h2, h3, h4, .display-xl, .display-lg, .heading-section, .h2-display, .h2-sub {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
 /* ── Pointer targets ─────────────────────────────────────────────────────────
    WCAG 2.2 AA (2.5.8 Target Size Minimum): every interactive element gets at
    least 44×44 px. Text links keep their visual size — the box grows around the

@@ -13,7 +13,7 @@ export const homeFaqs: FaqItem[] = [
     },
     answer: {
       en: "It depends on how you plan to use it. If you need a permanent installation — in a shop, office building, or public space — buying makes sense. If you need a display for a specific event, product launch, or seasonal campaign, renting is more flexible. Both options include our full range of support: design, installation or on-site setup, and service.",
-      sv: "Det beror på hur du tänker använda den. Behöver du en permanent installation — i en butik, ett kontor eller en offentlig miljö — är köp det rätt valet. Behöver du en skärm för ett specifikt event, en produktpresentation eller en säsongsaktivering passar hyra bättre. Båda alternativen ingår vårt fulla stöd: design, installation eller uppsättning på plats, och service.",
+      sv: "Det beror på hur ni ska använda den. Behöver ni en permanent installation — i en butik, ett kontor eller en offentlig miljö — är köp det rätt valet. Behöver ni en skärm för ett specifikt event, en produktpresentation eller en säsongsaktivering passar hyra bättre. Båda alternativen ingår vårt fulla stöd: design, installation eller uppsättning på plats, och service.",
     },
   },
   {
@@ -23,7 +23,7 @@ export const homeFaqs: FaqItem[] = [
     },
     answer: {
       en: "There is no fixed price — each project is unique. What matters are the size you need, the pixel pitch (resolution), whether it is installed indoors or outdoors, and whether a custom solution is required. We provide a free quotation based on your specific requirements, so you know exactly what you are getting before you commit.",
-      sv: "Det finns inget fast pris — varje projekt är unikt. Det som avgör är storleken du behöver, pixelavståndet (upplösningen), om det installeras inomhus eller utomhus, och om en anpassad lösning krävs. Vi lämnar en kostnadsfri offert baserad på era specifika krav, så att ni vet exakt vad ni får innan ni bestämmer er.",
+      sv: "Det finns inget fast pris — varje projekt är unikt. Det som avgör är storleken ni behöver, pixelavståndet (upplösningen), om det installeras inomhus eller utomhus, och om en anpassad lösning krävs. Vi lämnar en kostnadsfri offert baserad på era specifika krav, så att ni vet exakt vad ni får innan ni bestämmer er.",
     },
   },
   {

@@ -54,7 +54,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     category: "Westfield Mall of Scandinavia — Stockholm",
     description: "En av Europas största DOOH-skärmar. 525 m² vid Westfield Mall of Scandinavia.",
     longDescription:
-      "The Icon mäter 41 × 13 meter — totalt 525 m² — och är en av Europas största DOOH-skärmar samt Nordens största kommersiella skärm. Den dubbelsidiga ytan syns från motorväg, gångstråk och passerande tåg.",
+      "The Icon mäter 41 × 13 meter — totalt 525 m² — och är en av Europas största DOOH-skärmar. Den dubbelsidiga ytan syns från motorväg, gångstråk och passerande tåg.",
     location: "Solna",
     specsSize: "525 m² · 41 × 13 m",
     specsType: "Dubbelsidig DOOH",
@@ -63,7 +63,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
       challenge:
         "Skapa en av Europas största digitala utomhusskärmar på en nyckelplats i Stockholm med synlighet från motorväg, gångstråk och passerande tåg.",
       response:
-        "En 41 × 13 meters dubbelsidig display på 525 m² — Nordens största kommersiella skärm.",
+        "En 41 × 13 meters dubbelsidig display på 525 m² — en av Europas största DOOH-skärmar.",
       delivery: [
         "Installation av en 525 m² dubbelsidig LED-skärm vid Westfield Mall of Scandinavia",
       ],
@@ -349,7 +349,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     longDescription:
       "Ett utkast till en sammanhållen lösning för digital kommunikation i dagligvaruhandeln, med fokus på tydlig information, kampanjinnehåll och god läsbarhet i varierande butiksljus.",
     location: "Göteborg",
-    specsType: "Digital skyltning",
+    specsType: "LED-skärmar i butik",
   },
   "automotive-industry": {
     title: "Bilshowroom",

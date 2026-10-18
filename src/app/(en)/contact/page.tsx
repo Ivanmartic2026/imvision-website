@@ -58,7 +58,7 @@ export default function ContactPage() {
           locale="en"
           label="Contact"
           title="Contact IM Vision"
-          description="Get help with permanent LED installations, LED rentals and technical support. Tell us about your project and we'll reply the same business day."
+          description="Get help with permanent LED installations, LED rentals and technical support. Tell us about your project and we reply within 24 hours."
         >
           <Suspense
             fallback={<ContactForm locale="en" variant="panel" defaultCategory="buy" />}

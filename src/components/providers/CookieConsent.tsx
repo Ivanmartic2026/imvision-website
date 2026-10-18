@@ -106,7 +106,7 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
           step1Title: "Vi använder cookies",
           step1Text:
             "Vi använder analyscookies för att förstå hur sajten används. " +
-            "Inga cookies sätts förrän du accepterat, och ingen personlig information skickas.",
+            "Inga cookies sätts förrän ni har samtyckt, och ingen personlig information skickas.",
           accept: "Acceptera alla",
           necessary: "Endast nödvändiga",
           customise: "Anpassa",

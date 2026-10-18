@@ -102,7 +102,7 @@ export function ContactForm({
       },
       service: {
         value: "service" as const,
-        title: locale === "sv" ? "Service & support" : "Service & support",
+        title: locale === "sv" ? "Service och support" : "Service & support",
         submitLabel: locale === "sv" ? "Skicka serviceärende" : "Send support case",
         recipient: "service@imvision.se",
         messagePlaceholder:
@@ -116,15 +116,15 @@ export function ContactForm({
 
   const t = useMemo(
     () => ({
-      title: locale === "sv" ? "Hur kan vi hjälpa dig?" : "How can we help you?",
+      title: locale === "sv" ? "Hur kan vi hjälpa er?" : "How can we help you?",
       subtitle:
         locale === "sv"
           ? "Välj vad det gäller så återkommer vi inom 24 timmar."
           : "Choose what it concerns and we reply within 24 hours.",
       phone: "010 330 46 36",
-      helpNow: locale === "sv" ? "Behöver du hjälp direkt?" : "Need help right now?",
+      helpNow: locale === "sv" ? "Behöver ni hjälp direkt?" : "Need help right now?",
       callUs: locale === "sv" ? "Ring oss under kontorstid." : "Call us during office hours.",
-      preferEmail: locale === "sv" ? "Föredrar du e-post?" : "Prefer email?",
+      preferEmail: locale === "sv" ? "Föredrar ni e-post?" : "Prefer email?",
       common: {
         name: locale === "sv" ? "Namn" : "Name",
         namePlaceholder: locale === "sv" ? "Ert namn" : "Your name",

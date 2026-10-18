@@ -120,7 +120,7 @@ export const projects: Project[] = [
     description:
       "One of Europe's largest DOOH screens. 525 m² at Westfield Mall of Scandinavia.",
     longDescription:
-      "The Icon measures 41 × 13 metres — 525 m² in total — making it one of Europe's largest DOOH screens and the largest commercial screen in the Nordics. The double-sided display is visible from motorways, pedestrian areas, and passing trains.",
+      "The Icon measures 41 × 13 metres — 525 m² in total — making it one of Europe's largest DOOH screens. The double-sided display is visible from motorways, pedestrian areas, and passing trains.",
     image: "/images/projects/the-icon.jpg",
     visualLabel: "The Icon — Westfield Mall of Scandinavia",
     imageCredit: "© Ocean Outdoor",
@@ -129,7 +129,7 @@ export const projects: Project[] = [
       challenge:
         "Create one of Europe's largest digital out-of-home screens in a prime Stockholm location where it is visible from motorways, pedestrian areas, and passing trains.",
       response:
-        "A 41 × 13 metre double-sided display covering 525 m² — the largest commercial screen in the Nordics.",
+        "A 41 × 13 metre double-sided display covering 525 m² — one of Europe's largest DOOH screens.",
       delivery: [
         "Installation of a 525 m² double-sided LED display at Westfield Mall of Scandinavia",
       ],
@@ -352,7 +352,7 @@ export const projects: Project[] = [
     location: "Six European markets",
     year: "2025",
     specs: { size: "Approx. 160 locations · 220 touchpoints", type: "Digital in-store rollout" },
-    tags: ["Retail", "Digital signage", "Rollout"],
+    tags: ["Retail", "In-store LED", "Rollout"],
     verified: true,
   },
   {
@@ -383,7 +383,7 @@ export const projects: Project[] = [
       outcome:
         "One coherent visual identity throughout the passenger journey — built for clear communication, reliable operation, and a premium Scandinavian experience.",
     },
-    tags: ["Aviation", "Lounges", "Digital signage"],
+    tags: ["Aviation", "Lounges", "In-store LED"],
     verified: true,
   },
   {
@@ -391,7 +391,7 @@ export const projects: Project[] = [
     title: "A façade that turns",
     category: "Nordstan P-hus — Gothenburg",
     description:
-      "26.88 × 7.68 metres of LED around the corner of Nils Ericsonsgatan and Kanaltorget. 224 cast cabinets on a twelve-metre radius — custom steel structure, in-house engineering, and our own installation team.",
+      "26.88 × 7.68 m of LED wrapping the corner of Nils Ericsonsgatan and Kanaltorget. 224 cast cabinets on a twelve-metre radius — custom steel structure and in-house engineering.",
     longDescription:
       "26.88 × 7.68 metres of LED around the corner of Nils Ericsonsgatan and Kanaltorget. 224 cast cabinets on a twelve-metre radius — custom steel structure, in-house engineering, and our own installation team.",
     image: "",
@@ -539,9 +539,9 @@ export const projects: Project[] = [
       pixelPitch: "P3.9",
       brightness: "1200 nits",
       size: "18m²",
-      type: "Digital Signage",
+      type: "In-store LED screens",
     },
-    tags: ["Retail", "Digital Signage", "Indoor"],
+    tags: ["Retail", "In-store LED", "Indoor"],
     verified: false,
   },
   {
@@ -571,7 +571,7 @@ export const projects: Project[] = [
     category: "Digital Out-of-Home",
     description: "A concept study for high-brightness outdoor displays in urban environments.",
     longDescription:
-      "An editorial concept study for weatherproof outdoor LED displays in high-traffic urban environments. Designed for 24/7 operation, the screens would deliver brilliant visibility in direct sunlight and withstand harsh Nordic winters.",
+      "An editorial concept study for weatherproof outdoor LED displays in high-traffic urban environments. Designed for continuous operation, the screens would deliver brilliant visibility in direct sunlight and withstand harsh Nordic winters.",
     image:
       "https://images.unsplash.com/photo-1555445054-8488d058d2a0?w=1920&q=80",
     location: "Copenhagen, Denmark",

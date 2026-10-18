@@ -58,7 +58,7 @@ export default function SwedishContactPage() {
           locale="sv"
           label="Kontakt"
           title="Kontakta IM Vision"
-          description="Vi hjälper dig med permanenta LED-installationer, uthyrning och teknisk support. Berätta om ditt projekt så återkommer vi samma arbetsdag."
+          description="Vi hjälper er med permanenta LED-installationer, uthyrning och teknisk support. Berätta om ert projekt så återkommer vi inom 24 timmar."
         >
           <Suspense
             fallback={<ContactForm locale="sv" variant="panel" defaultCategory="buy" />}

@@ -146,7 +146,7 @@ const KNOWS_ABOUT = [
   "LED displays",
   "LED walls",
   "LED screens",
-  "Digital signage",
+  "In-store LED screens",
   "DOOH (digital out-of-home)",
   "LED installation",
   "LED rental",

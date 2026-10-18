@@ -20,7 +20,7 @@ export function ContactSuccessState({ locale, category, flowRef }: ContactSucces
   const categoryTitles: Record<ContactCategory, string> = {
     buy: locale === "sv" ? "Köpa LED" : "Buy LED",
     rental: locale === "sv" ? "Hyra LED" : "Rent LED",
-    service: locale === "sv" ? "Service & support" : "Service & support",
+    service: locale === "sv" ? "Service och support" : "Service & support",
   };
 
   const isService = category === "service";
@@ -79,7 +79,7 @@ export function ContactSuccessState({ locale, category, flowRef }: ContactSucces
 
         <div className="flex-1">
           <p className="text-xl font-semibold text-text-primary">
-            {locale === "sv" ? "Tack, vi har tagit emot din förfrågan." : "Thank you, we have received your enquiry."}
+            {locale === "sv" ? "Tack, vi har tagit emot er förfrågan." : "Thank you, we have received your enquiry."}
           </p>
           <p className="mt-2 leading-relaxed">
             {locale === "sv"

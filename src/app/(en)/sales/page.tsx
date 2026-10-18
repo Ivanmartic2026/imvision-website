@@ -10,7 +10,7 @@ export const metadata: Metadata = pageMeta({
   // must not appear in visible text, titles, meta, OG/Twitter or alt text.
   title: "Permanent LED Screens for Retail, Property and Public Spaces",
   description:
-    "IM Vision designs, engineers, installs and services permanent LED screens for retail, property and public spaces across the Nordics and Europe. We reply within 24 hours.",
+    "IM Vision designs, engineers, installs and services permanent LED screens for retail, property and public spaces. We reply within 24 hours.",
   image: "/images/photon-material/permanent-retail.jpg",
   imageWidth: 1448,
   imageHeight: 1086,

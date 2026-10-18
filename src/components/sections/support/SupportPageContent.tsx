@@ -132,7 +132,7 @@ const copy = {
           "Ja. Vi erbjuder operatörsutbildning, vägledning för innehållshantering och grundläggande felsökning som en del av de flesta installationer och serviceavtal.",
       },
     ],
-    ctaTitle: "Behöver du fortfarande hjälp?",
+    ctaTitle: "Behöver ni fortfarande hjälp?",
     ctaBody: "Vårt supportteam svarar inom 24 timmar på servicefrågor och tekniska frågor.",
     ctaCall: "Ring support",
     ctaContact: "Anmäl ärende",

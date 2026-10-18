@@ -31,6 +31,16 @@ function localizeProject(project: Project, locale: Locale): Project {
     category: copy.category,
     description: copy.description,
     longDescription: copy.longDescription,
+    // The location badge under each card is the most visible label on the card:
+    // it read "Solna, Sweden" and "Six European markets" on the Swedish page
+    // because only the title/category/description were localised.
+    location: copy.location ?? project.location,
+    specs: {
+      ...project.specs,
+      ...(copy.specsSize ? { size: copy.specsSize } : {}),
+      ...(copy.specsType ? { type: copy.specsType } : {}),
+      ...(copy.location ? { location: copy.location } : {}),
+    },
   };
 }
 

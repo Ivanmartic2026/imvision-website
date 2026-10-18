@@ -96,7 +96,7 @@ export function FaqSection({ locale = "en" }: { locale?: Locale }) {
         <p className="mx-auto mt-10 max-w-2xl text-center text-text-secondary">
           {locale === "sv" ? (
             <>
-              Hittar du inte svaret?{" "}
+              Hittar ni inte svaret?{" "}
               <Link
                 href={localizedHref(locale, "/contact/")}
                 prefetch={false}

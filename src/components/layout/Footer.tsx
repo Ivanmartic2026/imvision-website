@@ -15,7 +15,7 @@ const footerGroups: Array<{
     links: [
       [{ en: "Buy LED", sv: "Köpa LED" }, "/sales/"],
       [{ en: "Rent LED", sv: "Hyra LED" }, "/rental/"],
-      [{ en: "Service & support", sv: "Service & support" }, "/service/"],
+      [{ en: "Service & support", sv: "Service och support" }, "/service/"],
     ],
   },
   {

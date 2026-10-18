@@ -23,7 +23,7 @@ export function NextSteps({ locale, category }: NextStepsProps) {
           step: "01",
           title: locale === "sv" ? "Ärendet är registrerat" : "Case is registered",
           desc: locale === "sv"
-            ? "Ditt ärende finns nu hos vår supportavdelning med all information du har angett."
+            ? "Ert ärende finns nu hos vår supportavdelning med all information ni har angett."
             : "Your case is now with our support team with all the information you provided.",
         },
         {
@@ -44,16 +44,16 @@ export function NextSteps({ locale, category }: NextStepsProps) {
     : [
         {
           step: "01",
-          title: locale === "sv" ? "Vi läser din förfrågan" : "We review your enquiry",
+          title: locale === "sv" ? "Vi läser er förfrågan" : "We review your enquiry",
           desc: locale === "sv"
-            ? "Vi går igenom dina uppgifter och bedömer vad som behövs."
+            ? "Vi går igenom era uppgifter och bedömer vad som behövs."
             : "We review your details and assess what is needed.",
         },
         {
           step: "02",
           title: locale === "sv" ? "Rätt person hör av sig" : "The right person reaches out",
           desc: locale === "sv"
-            ? "En säljare med rätt kompetens kontaktar dig för att stämma av behov och förutsättningar."
+            ? "En säljare med rätt kompetens kontaktar er för att stämma av behov och förutsättningar."
             : "A salesperson with the right expertise contacts you to confirm requirements and conditions.",
         },
         {
@@ -123,7 +123,7 @@ export function NextSteps({ locale, category }: NextStepsProps) {
       <div className="flex items-center gap-2 rounded-[12px_4px_12px_12px] bg-accent/10 px-4 py-2.5">
         <Clock size={16} className="shrink-0 text-accent" />
         <span className="text-sm font-medium text-text-secondary">
-          {locale === "sv" ? "Vi svarar inom 24 timmar — alla veckodagar" : "Usually the same business day — we reply on weekdays 08:00–17:00"}
+          {locale === "sv" ? "Vi svarar inom 24 timmar — alla veckodagar" : "We reply within 24 hours — every weekday"}
         </span>
       </div>
 
@@ -143,7 +143,7 @@ export function NextSteps({ locale, category }: NextStepsProps) {
         <p className="text-sm font-semibold text-text-primary">
           {isService
             ? locale === "sv"
-              ? "Vad vi behöver från dig"
+              ? "Vad vi behöver från er"
               : "What we need from you"
             : locale === "sv"
               ? "Förbered detta för att snabba på ärendet"

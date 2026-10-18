@@ -37,7 +37,7 @@ export function ContactTypeSelector({ locale, selected, onSelect, name = "contac
         locale === "sv" ? "Event, mässor och tillfälliga installationer." : "Events, fairs and temporary installations.",
     },
     service: {
-      title: locale === "sv" ? "Service & support" : "Service & support",
+      title: locale === "sv" ? "Service och support" : "Service & support",
       description: locale === "sv" ? "Support och reparation." : "Support and repair.",
     },
   };

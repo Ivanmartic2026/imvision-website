@@ -410,7 +410,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
 
                 <div className="mt-6 border-l border-accent py-5 pl-6 sm:pl-8">
                   <h3 className="eyebrow text-accent">{t.outcomeEyebrow}</h3>
-                  <p className="mt-5 max-w-5xl text-[clamp(1.8rem,3.6vw,3.5rem)] font-medium leading-[1.08] tracking-[-0.04em] text-text-primary">
+                  <p className="mt-5 max-w-5xl break-words text-[clamp(1.6rem,3.6vw,3.5rem)] font-medium leading-[1.12] tracking-[-0.03em] text-text-primary">
                     {caseStudy.outcome}
                   </p>
                 </div>
