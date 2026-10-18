@@ -305,13 +305,19 @@ export async function POST(req: NextRequest) {
   const emailOk = emailResult.status === "fulfilled" && emailResult.value === true;
 
   if (!emailOk) {
-    console.error("[/api/contact] Resend failed, returning mailto fallback");
-    const mailto = buildMailtoUrl(recipient, subject, fields);
-    return NextResponse.json({
-      ok: true,
-      fallbackMailto: mailto,
-      ...(flowRef && { ref: flowRef }),
-    });
+    // Har Flow redan tagit emot ärendet är det tryggat: CRM:et skickar både
+    // kundbekräftelsen och den interna aviseringen via sin egen SMTP
+    // (apps/core/public_website.py). Resend-anropet är då en dubblering, och
+    // dess fel ska varken öppna användarens mejlklient i onödan eller få
+    // formuläret att se ut som att det misslyckades.
+    if (flowRef) {
+      console.warn("[/api/contact] Resend failed, but Flow recorded", flowRef);
+      return NextResponse.json({ ok: true, ref: flowRef });
+    }
+
+    // Ingenting registrerat någonstans — då är mailto den enda vägen kvar.
+    console.error("[/api/contact] Resend failed and Flow unavailable, returning mailto fallback");
+    return NextResponse.json({ ok: true, fallbackMailto: buildMailtoUrl(recipient, subject, fields) });
   }
 
   return NextResponse.json({
