@@ -30,7 +30,7 @@ async function syncToSupport(data: {
   address: string;
   message: string;
   fileName?: string;
-}): Promise<string | null> {
+}): Promise<{ ok: boolean; ref: string | null }> {
   // Fältnamnen är Flow-endpointens kontrakt (apps/core/public_website.py).
   // De hette tidigare _name/_email/_phone_number — ett Jotform-format som
   // endpointen aldrig tog emot, så varje anrop avvisades tyst.
@@ -50,14 +50,14 @@ async function syncToSupport(data: {
     });
     if (!res.ok) {
       console.warn("[/api/contact] Support sync failed:", res.status, res.statusText);
-      return null;
+      return { ok: false, ref: null };
     }
     const json = await res.json().catch(() => ({}));
     // Flow svarar { ok, ref } där ref är CRM:ets eget ärendenummer (S-1644).
-    return (json as { ref?: string }).ref ?? null;
+    return { ok: true, ref: (json as { ref?: string }).ref ?? null };
   } catch (err) {
     console.warn("[/api/contact] Support sync error:", err);
-    return null;
+    return { ok: false, ref: null };
   }
 }
 
@@ -75,7 +75,7 @@ async function syncToSales(data: {
   eventDate: string;
   message: string;
   fileName?: string;
-}): Promise<string | null> {
+}): Promise<{ ok: boolean; ref: string | null }> {
   const payload = {
     name: data.name,
     email: data.email,
@@ -96,15 +96,16 @@ async function syncToSales(data: {
     });
     if (!res.ok) {
       console.warn("[/api/contact] Sales sync failed:", res.status, res.statusText);
-      return null;
+      return { ok: false, ref: null };
     }
     const json = await res.json().catch(() => ({}));
     // Säljförfrågan hamnar i CRM:ets säljinkorg, som inte har ett kundvänt
-    // nummer än. Inget ref att visa — kunden får sin bekräftelse på mejl.
-    return (json as { ref?: string }).ref ?? null;
+    // nummer än. Den kan alltså ha lyckats UTAN att ha något ref — därför
+    // returneras ok separat.
+    return { ok: true, ref: (json as { ref?: string }).ref ?? null };
   } catch (err) {
     console.warn("[/api/contact] Sales sync error:", err);
-    return null;
+    return { ok: false, ref: null };
   }
 }
 
@@ -249,25 +250,29 @@ export async function POST(req: NextRequest) {
   // buy/rental → /api/sales-enquiry (sales project)
   // ──────────────────────────────────────────────────────────
 
-  let flowRef: string | null = null;    // human-readable ref (IM-0042 / PRJ-0003)
+  let flowRef: string | null = null;    // human-readable ref (S-1644)
+  // Skilt från flowRef: en säljförfrågan kan registreras utan att ha ett
+  // nummer att visa kunden. Fallbacken ska styras av om något SPARADES.
+  let flowOk = false;
 
   if (/service/i.test(routingKey)) {
     // ── Support / felanmälan ───────────────────────────────
-    const ticketNum = await syncToSupport({
+    const support = await syncToSupport({
       name, email, phone,
       company: company || "",
       address: address || "",
       message,
       fileName: fileName || undefined,
     });
-    if (ticketNum) {
-      flowRef = ticketNum;
-      console.log("[/api/contact] Support ticket created:", ticketNum);
+    flowOk = support.ok;
+    if (support.ref) {
+      flowRef = support.ref;
+      console.log("[/api/contact] Support ticket created:", support.ref);
     }
   } else {
     // ── Sales / köp / hyra ─────────────────────────────────
     const category = (/buy|rental/i.test(routingKey) ? "buy" : "rental") as "buy" | "rental";
-    const projNum = await syncToSales({
+    const sales = await syncToSales({
       category,
       name, email, phone,
       company: company || "",
@@ -276,9 +281,10 @@ export async function POST(req: NextRequest) {
       message,
       fileName: fileName || undefined,
     });
-    if (projNum) {
-      flowRef = projNum;
-      console.log("[/api/contact] Sales project created:", projNum);
+    flowOk = sales.ok;
+    if (sales.ref) {
+      flowRef = sales.ref;
+      console.log("[/api/contact] Sales enquiry created:", sales.ref);
     }
   }
 
@@ -310,8 +316,8 @@ export async function POST(req: NextRequest) {
     // (apps/core/public_website.py). Resend-anropet är då en dubblering, och
     // dess fel ska varken öppna användarens mejlklient i onödan eller få
     // formuläret att se ut som att det misslyckades.
-    if (flowRef) {
-      console.warn("[/api/contact] Resend failed, but Flow recorded", flowRef);
+    if (flowOk) {
+      console.warn("[/api/contact] Resend failed, but Flow recorded the enquiry");
       return NextResponse.json({ ok: true, ref: flowRef });
     }
 
