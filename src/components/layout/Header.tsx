@@ -9,8 +9,8 @@ import { Menu, X, Phone, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Locale, localizedHref } from "@/lib/i18n";
 import { CONTACT } from "@/lib/seo";
-import { AnalyticsEvent, pushEvent } from "@/lib/analytics";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import { QuoteCta } from "@/components/providers/QuickQuote";
 
 const navLinks = [
   { en: "Buy LED", sv: "Köpa LED", href: "/sales/" },
@@ -31,6 +31,7 @@ export function Header({
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const mobilePanelRef = useRef<HTMLDivElement>(null);
+  const suppressFocusRestore = useRef(false);
   const pathname = usePathname();
   const { scrollYProgress } = useScroll();
 
@@ -85,7 +86,8 @@ export function Header({
       window.clearTimeout(focusTimer);
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
-      opener?.focus?.();
+      if (!suppressFocusRestore.current) opener?.focus?.();
+      suppressFocusRestore.current = false;
     };
   }, [mobileOpen]);
 
@@ -157,27 +159,15 @@ export function Header({
               <span className="hidden xl:inline">{CONTACT.phone}</span>
               <span className="xl:hidden">{locale === "sv" ? "Ring" : "Call"}</span>
             </a>
-            <Link
-              href={isActive(localizedHref(locale, "/contact/")) ? "#contact-form" : localizedHref(locale, "/contact/")}
-              prefetch={false}
-              onClick={() => {
-                pushEvent(AnalyticsEvent.ctaClick, { source: "header", cta: "quote" });
-                pushEvent(AnalyticsEvent.quoteRequest, { source: "header" });
-                // On the contact page this is an in-page anchor: the browser
-                // scrolls, but keyboard focus would stay in the header. Move it
-                // into the form panel so the next Tab lands in the form.
-                if (isActive(localizedHref(locale, "/contact/"))) {
-                  window.setTimeout(
-                    () => document.getElementById("contact-form")?.focus({ preventScroll: true }),
-                    0
-                  );
-                }
-              }}
-              className="group/cta inline-flex min-h-11 items-center gap-1.5 rounded-[12px_4px_12px_12px] border border-accent bg-[#91a9a1] px-4 text-[13px] font-semibold text-[#070807] shadow-[0_8px_24px_rgba(0,0,0,.18)] transition-[background-color,box-shadow,transform] duration-[500ms] ease-[cubic-bezier(.22,.61,.36,1)] hover:-translate-y-0.5 hover:bg-accent-soft hover:shadow-[0_12px_32px_rgba(0,0,0,.24)]"
-            >
-              {locale === "sv" ? "Få offert" : "Get a quote"}
-              <ArrowRight size={14} strokeWidth={2} className="transition-transform duration-[500ms] group-hover/cta:translate-x-[2px]" />
-            </Link>
+            {/* One primary CTA across the whole site: it opens the quick
+                enquiry panel in place (on /contact/ it scrolls to the form,
+                which is already on screen). */}
+            <QuoteCta
+              locale={locale}
+              source="header"
+              className="group/cta min-h-11 gap-1.5 rounded-[12px_4px_12px_12px] px-4 text-[13px] shadow-[0_8px_24px_rgba(0,0,0,.18)] hover:shadow-[0_12px_32px_rgba(0,0,0,.24)]"
+              icon={<ArrowRight size={14} strokeWidth={2} className="transition-transform duration-[500ms] group-hover/cta:translate-x-[2px]" />}
+            />
             <LanguageSwitcher locale={locale} />
           </div>
 
@@ -238,7 +228,12 @@ export function Header({
                     <Link
                       href={localizedHref(locale, link.href)}
                       prefetch={false}
-                      onClick={() => setMobileOpen(false)}
+                      onClick={() => {
+                    // The quick-quote panel manages its own focus; returning
+                    // focus to the hamburger would fight it.
+                    suppressFocusRestore.current = true;
+                    setMobileOpen(false);
+                  }}
                       className="flex min-h-14 items-center justify-between py-5 text-3xl font-medium tracking-[-0.04em] text-text-primary"
                     >
                       {link[locale]}
@@ -248,22 +243,26 @@ export function Header({
                 ))}
               </div>
               <div className="mt-auto space-y-4 pt-8">
-                <Link
-                  href={localizedHref(locale, "/contact/")}
-                  prefetch={false}
+                <QuoteCta
+                  locale={locale}
+                  source="mobile_menu"
                   onClick={() => {
+                    // The quick-quote panel manages its own focus; returning
+                    // focus to the hamburger would fight it.
+                    suppressFocusRestore.current = true;
                     setMobileOpen(false);
-                    pushEvent(AnalyticsEvent.ctaClick, { source: "mobile_menu", cta: "quote" });
-                    pushEvent(AnalyticsEvent.quoteRequest, { source: "mobile_menu" });
                   }}
-                  className="flex min-h-12 items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent bg-accent px-5 py-4 text-base font-semibold text-background shadow-[0_10px_30px_rgba(0,0,0,.24)] transition-transform active:scale-[.98]"
-                >
-                  {locale === "sv" ? "Få offert" : "Get a quote"}
-                  <ArrowRight size={17} strokeWidth={2} />
-                </Link>
+                  className="w-full rounded-[14px_5px_14px_14px] px-5 py-4 text-base shadow-[0_10px_30px_rgba(0,0,0,.24)]"
+                  icon={<ArrowRight size={17} strokeWidth={2} />}
+                />
                 <a
                   href={`tel:${CONTACT.phoneE164}`}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => {
+                    // The quick-quote panel manages its own focus; returning
+                    // focus to the hamburger would fight it.
+                    suppressFocusRestore.current = true;
+                    setMobileOpen(false);
+                  }}
                   className="flex min-h-12 items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent/40 bg-accent/10 px-5 py-4 text-base font-medium text-text-primary transition-colors hover:border-accent hover:bg-accent/20"
                 >
                   <Phone size={17} className="text-accent" strokeWidth={1.75} />

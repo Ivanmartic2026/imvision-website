@@ -165,6 +165,27 @@ function recipientFor(type: string): string {
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
+/**
+ * Light-touch abuse protection: no CAPTCHA (it costs conversion), so the
+ * server keeps a per-IP sliding window. This is per serverless instance, so it
+ * is a speed bump rather than a wall — the honeypot and the required-field
+ * validation do the heavy lifting, and this stops a naive flood from a single
+ * client. Values are deliberately generous: a real visitor asking three
+ * questions in ten minutes must never be blocked.
+ */
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX = 8;
+const recentByIp = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const hits = (recentByIp.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+  hits.push(now);
+  recentByIp.set(ip, hits);
+  if (recentByIp.size > 5000) recentByIp.clear(); // bound the map
+  return hits.length > RATE_LIMIT_MAX;
+}
+
 // ──────────────────────────────────────────────────────────
 // Main handler
 // ──────────────────────────────────────────────────────────
@@ -181,6 +202,17 @@ export async function POST(req: NextRequest) {
   const honey = form.get("honeypot") ?? form.get("company-url");
   if (typeof honey === "string" && honey.trim() !== "") {
     return NextResponse.json({ ok: true });
+  }
+
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Too many requests. Please call or email us instead." },
+      { status: 429 },
+    );
   }
 
   const fields: { label: string; value: string }[] = [];
@@ -229,8 +261,19 @@ export async function POST(req: NextRequest) {
   }
 
   // Server-side required-field validation (defence in depth).
-  if (!name || !message || (!email && !phone)) {
+  //
+  // The quick-enquiry panel (kind=quick) asks for three things and only the
+  // contact field and the subject line are required — asking for a name before
+  // the first contact is the kind of friction that loses the lead. The email
+  // still arrives with a usable sender, and the follow-up form asks for the
+  // rest.
+  const kind = String(form.get("kind") ?? "").trim();
+  const isQuick = kind === "quick";
+  if (!message || (!email && !phone) || (!isQuick && !name)) {
     return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
+  }
+  if (!name) {
+    name = email ? email.split("@")[0] : "Snabbförfrågan";
   }
   if (email && !EMAIL_RE.test(email)) {
     return NextResponse.json({ error: "Invalid email address." }, { status: 400 });

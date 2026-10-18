@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { QuoteCta } from "@/components/providers/QuickQuote";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Locale, localizedHref } from "@/lib/i18n";
 
@@ -27,9 +27,12 @@ export function ContactCTA({ locale = "en" }: { locale?: Locale }) {
             </div>
             <div className="lg:col-span-4 lg:flex lg:justify-end">
               <div>
-                <Button href={localizedHref(locale, "/contact/")} size="large" icon={<ArrowRight size={18} />}>
-                  {locale === "sv" ? "Få offert" : "Get a quote"}
-                </Button>
+                <QuoteCta
+                  locale={locale}
+                  source="contact_cta"
+                  className="px-7 text-base"
+                  icon={<ArrowRight size={18} />}
+                />
               </div>
             </div>
           </div>
