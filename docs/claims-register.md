@@ -1,7 +1,7 @@
 # Påståenderegister — imvision.se
 
 Regel: **inget påstående visas som fakta förrän ägaren bekräftat det och angett källa.**
-Status per 2026-10-18 (fas 3). Uppdatera den här filen när något bekräftas eller tas bort.
+Status per 2026-10-18 (efter granskning och publiceringsförberedelse). Uppdatera den här filen när något bekräftas eller tas bort.
 
 Statusar: `bekräftat` (finns källa i repo eller av ägaren) · `ej belagt` (visas inte) · `borttaget` (fanns, är borta) · `neutraliserat` (omformulerat utan siffra).
 
@@ -17,9 +17,9 @@ Statusar: `bekräftat` (finns källa i repo eller av ägaren) · `ej belagt` (vi
 | "hela Europa" / "across Europe" | hero, `/about`, `/projects`, `/sales`, `/rental`, `/support`, root-metadata, manifest, llms.txt | ersatt av "Norden och Europa" / "the Nordics and Europe" | neutraliserat |
 | "håller i 10 år, inte 10 månader" | startsidans hero-kort (Köpa LED) | ersatt av "byggd för långsiktig drift" | neutraliserat |
 | "Nordens största" (The Icon) | `/projects` (sv) | ersatt av "en av Europas största DOOH-skärmar" (samma formulering som i projektbeskrivningen) | neutraliserat |
-| ~13 mn besökare/år (The Geminis) | projektmall (sv) | **kvar — kräver källa + år från ägaren**, annars bort | ej belagt |
-| 162 010 kontakter/dag (Södertull City) | projektmall (sv) | **kvar — kräver källa + år från ägaren**, annars bort | ej belagt |
-| "IM Monitoring" (namngiven tjänst) | projekten `ocean-outdoor-operations` (sv+en) | **kvar — ägaren måste bekräfta att tjänsten heter så** | ej belagt |
+| ~13 mn besökare/år, 90 min besökstid, "längsta i Sverige" (The Geminis) | projektmall (sv+en) | borttaget — ingen källa; kvar står "ett av Sveriges mest besökta köpcentrum" | borttaget |
+| 162 010 kontakter/dag (Södertull City) | projektmall (sv+en) | borttaget — ingen källa; kvar står trafikslaget (buss, bil, fotgängare) och formatet | borttaget |
+| "IM Monitoring" (namngiven tjänst) | `ocean-outdoor-operations` (sv+en) | neutraliserat till "vår fjärrövervakning" / "our remote monitoring service" — skrivs tillbaka om ägaren bekräftar namnet | neutraliserat |
 | Svarstid "samma arbetsdag" / "en arbetsdag" / "så snart som möjligt" | `/contact` (sv+en), `/sales` mid-CTA, formulär, kvittens, nästa steg | ersatt av ägarbeslutat **"Svar inom 24 timmar" / "We reply within 24 hours"** | borttaget |
 
 ## 2. Bekräftat (får visas)

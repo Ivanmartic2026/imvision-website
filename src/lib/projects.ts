@@ -182,21 +182,21 @@ export const projects: Project[] = [
     description:
       "Four large-format portrait screens create a high-impact digital centre point at Westfield Täby Centrum.",
     longDescription:
-      "The Geminis brings together four large-format digital portrait screens in the central square at Westfield Täby Centrum. The location welcomes around 13 million visitors annually, with an average visit time of more than 90 minutes — the longest average visit among shopping centres in Sweden.",
+      "The Geminis brings together four large-format digital portrait screens in the central square at Westfield Täby Centrum. The location is one of Sweden's busiest shopping centres, which makes the central square a high-traffic position for brand communication.",
     image: "/images/projects/the-geminis.jpg",
     visualLabel: "The Geminis — Westfield Täby Centrum",
     imageCredit: "© Ocean Outdoor",
     caseStudy: {
       // Source: longDescription describes four portrait screens at Täby Centrum.
       challenge:
-        "Create a high-impact digital centre point at one of Sweden's busiest shopping centres, welcoming 13 million visitors annually.",
+        "Create a high-impact digital centre point in the central square of one of Sweden's busiest shopping centres.",
       response:
         "Four large-format portrait screens positioned in the central square at Westfield Täby Centrum.",
       delivery: [
         "Installation of four portrait-format LED screens in the central square",
       ],
       outcome:
-        "A high-impact digital presence at a location with over 13 million annual visitors and an average visit time exceeding 90 minutes.",
+        "A high-impact digital presence in the central square of one of Sweden's busiest shopping centres.",
     },
     sourceUrl: "https://oceanoutdoor.com/se/ooh-site/the-icon-geminis/",
     location: "Täby, Sweden",
@@ -300,16 +300,16 @@ export const projects: Project[] = [
     title: "Södertull City",
     category: "Södra Vallgatan — Malmö",
     description:
-      "A large-format city screen at one of central Malmö's busiest meeting points, reaching around 162,010 contacts every day.",
+      "A large-format city screen at one of central Malmö's busiest meeting points, meeting bus, car and pedestrian traffic in the commercial heart of the city.",
     longDescription:
-      "Södertull City is a 7.37 m² large-format screen on the corner of Södra Vallgatan in central Malmö, one block from Gustav Adolfs Torg. The placement meets bus, car, and pedestrian traffic in the city's commercial heart and reaches around 162,010 contacts per day. Advertising format: 936 × 832 pixels. Spot length: 5 seconds.",
+      "Södertull City is a 7.37 m² large-format screen on the corner of Södra Vallgatan in central Malmö, one block from Gustav Adolfs Torg. The placement meets bus, car, and pedestrian traffic in the city's commercial heart and reaches a central Malmö location. Advertising format: 936 × 832 pixels. Spot length: 5 seconds.",
     image: "/images/projects/sodertull-city.jpg",
     visualLabel: "Project photo — Södertull City",
     location: "Malmö, Sweden",
     year: "",
     specs: { size: "7.37 m²", type: "Large-format city DOOH · 936 × 832 · 5 s" },
     caseStudy: {
-      // Source: longDescription describes a 7.37 m² city screen with 162,010 daily contacts.
+      // Source: longDescription describes a 7.37 m² city screen in central Malmö.
       challenge:
         "Create a high-impact large-format city screen at one of Malmö's busiest commercial intersections.",
       response:
@@ -318,7 +318,7 @@ export const projects: Project[] = [
         "Installation of a 7.37 m² large-format screen at a high-traffic city intersection",
       ],
       outcome:
-        "A city screen reaching around 162,010 contacts per day in Malmö's commercial heart.",
+        "A city screen reaching a central Malmö location in Malmö's commercial heart.",
     },
     tags: ["DOOH", "City centre", "Retail"],
     verified: true,
@@ -461,9 +461,9 @@ export const projects: Project[] = [
     title: "Screens never left alone",
     category: "Ocean Outdoor — Nationwide operations",
     description:
-      "Operations agreements for Mall of Scandinavia and Täby Centrum. Inspection before launch, connection to IM Monitoring, and action before the client needs to call.",
+      "Operations agreements for Mall of Scandinavia and Täby Centrum. Inspection before launch, connection to our remote monitoring service, and action before the client needs to call.",
     longDescription:
-      "Operations agreements for Mall of Scandinavia and Täby Centrum. Inspection before launch, connection to IM Monitoring, and action before the client needs to call.",
+      "Operations agreements for Mall of Scandinavia and Täby Centrum. Inspection before launch, connection to our remote monitoring service, and action before the client needs to call.",
     image: "",
     visualPlaceholder: true,
     visualLabel: "Ocean Outdoor — Sverige",
@@ -471,17 +471,17 @@ export const projects: Project[] = [
     year: "",
     specs: { type: "Monitoring & operations" },
     role: ["operated", "monitored"],
-    roleSource: 'longDescription: "Operations agreements for Mall of Scandinavia and Täby Centrum… connection to IM Monitoring"',
+    roleSource: 'longDescription: "Operations agreements for Mall of Scandinavia and Täby Centrum… connection to our remote monitoring service"',
     caseStudy: {
       // Source: longDescription describes operations agreements with inspection, monitoring, and proactive action.
       challenge:
         "Ensure critical digital screens at major Swedish shopping centres never go unnoticed when issues arise.",
       response:
-        "Inspection before launch, connection to IM Monitoring, and proactive action before the client needs to call.",
+        "Inspection before launch, connection to our remote monitoring service, and proactive action before the client needs to call.",
       delivery: [
         "Pre-launch inspection for Mall of Scandinalia screens",
         "Pre-launch inspection for Täby Centrum screens",
-        "Connection to IM Monitoring for continuous oversight",
+        "Connection to our remote monitoring service for continuous oversight",
       ],
       outcome:
         "Proactive operations for screens at Mall of Scandinavia and Täby Centrum — action before the client needs to call.",

@@ -99,20 +99,20 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     category: "Westfield Täby Centrum — Stockholm",
     description: "Fyra storformatsskärmar skapar en digital mittpunkt i Westfield Täby Centrum.",
     longDescription:
-      "The Geminis samlar fyra digitala porträttskärmar i storformat på torget i Westfield Täby Centrum. Platsen välkomnar omkring 13 miljoner besökare per år och har en genomsnittlig besökstid på över 90 minuter — den längsta genomsnittliga besökstiden bland Sveriges köpcentrum.",
+      "The Geminis samlar fyra digitala porträttskärmar i storformat på torget i Westfield Täby Centrum. Platsen är ett av Sveriges mest besökta köpcentrum, vilket gör torget till en position med hög exponering för varumärkeskommunikation.",
     location: "Täby",
     specsType: "4 digitala porträttskärmar i storformat",
     caseStudy: {
       // Källa: longDescription beskriver fyra porträttskärmar på en av Sveriges mest besökta platser.
       challenge:
-        "Skapa en högkontrastig digital mittpunkt på ett av Sveriges mest besökta köpcentrum med 13 miljoner besökare årligen.",
+        "Skapa en högkontrastig digital mittpunkt på torget i ett av Sveriges mest besökta köpcentrum.",
       response:
         "Fyra digitala porträttskärmar i storformat placerade på torget i Westfield Täby Centrum.",
       delivery: [
         "Installation av fyra porträttskärmar i storformat på centrala torget",
       ],
       outcome:
-        "En högkontrastig digital närvaro på en plats med över 13 miljoner årliga besökare och genomsnittlig besökstid över 90 minuter.",
+        "En högkontrastig digital närvaro på torget i ett av Sveriges mest besökta köpcentrum.",
     },
   },
   "the-curve": {
@@ -183,14 +183,14 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
   "sodertull-city": {
     title: "Södertull City",
     category: "Södra Vallgatan — Malmö",
-    description: "En 7,37 m² storformatsskärm mitt i centrala Malmö med cirka 162 010 kontakter per dag.",
+    description: "En 7,37 m² storformatsskärm i ett centralt läge i Malmö.",
     longDescription:
-      "Södertull City är en 7,37 m² storformatsskärm på hörnet av Södra Vallgatan i centrala Malmö, ett kvarter från Gustav Adolfs Torg. Placeringen möter buss-, bil- och fotgängartrafik i stadens kommersiella hjärta och når cirka 162 010 kontakter per dag. Annonsformat: 936 × 832 pixlar. Spotlängd: 5 sekunder.",
+      "Södertull City är en 7,37 m² storformatsskärm på hörnet av Södra Vallgatan i centrala Malmö, ett kvarter från Gustav Adolfs Torg. Placeringen möter buss-, bil- och fotgängartrafik i stadens kommersiella hjärta. Annonsformat: 936 × 832 pixlar. Spotlängd: 5 sekunder.",
     location: "Malmö",
     specsSize: "7,37 m²",
     specsType: "City-DOOH i storformat · 936 × 832 · 5 s",
     caseStudy: {
-      // Källa: longDescription beskriver en 7,37 m² cityskärm med 162 010 dagliga kontakter.
+      // Källa: longDescription beskriver en 7,37 m² cityskärm i centrala Malmö.
       challenge:
         "Skapa en högkontrastig storformatsskärm på en av Malmös mest trafikerade kommersiella korsningar.",
       response:
@@ -199,7 +199,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
         "Installation av en 7,37 m² storformatsskärm på en vältrafikerad stadskorsning",
       ],
       outcome:
-        "En cityskärm som når cirka 162 010 kontakter per dag i Malmös kommersiella hjärta.",
+        "En cityskärm som möter förbipasserande i Malmös kommersiella hjärta.",
     },
   },
   kappahl: {
@@ -300,7 +300,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     category: "Ocean Outdoor — Rikstäckande drift",
     description: "Driftavtal för Mall of Scandinavia och Täby Centrum.",
     longDescription:
-      "Driftavtal för Mall of Scandinavia och Täby Centrum. Besiktning före start, uppkoppling mot IM Monitoring, åtgärd innan kunden hunnit ringa.",
+      "Driftavtal för Mall of Scandinavia och Täby Centrum. Besiktning före start, uppkoppling mot vår fjärrövervakning, åtgärd innan kunden hunnit ringa.",
     location: "Sverige",
     specsType: "Övervakning och drift",
     caseStudy: {
@@ -308,11 +308,11 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
       challenge:
         "Säkerställ att kritiska digitala skärmar på svenska köpcentrum aldrig står oupptäckta.",
       response:
-        "Besiktning före start, uppkoppling mot IM Monitoring och proaktiv åtgärd innan kunden behöver kontakta oss.",
+        "Besiktning före start, uppkoppling mot vår fjärrövervakning och proaktiv åtgärd innan kunden behöver kontakta oss.",
       delivery: [
         "Besiktning före lansering för Mall of Scandinavia-skärmar",
         "Besiktning före lansering för Täby Centrum-skärmar",
-        "Uppkoppling mot IM Monitoring för kontinuerlig övervakning",
+        "Uppkoppling mot vår fjärrövervakning för kontinuerlig övervakning",
       ],
       outcome:
         "Proaktiv drift för skärmar på Mall of Scandinavia och Täby Centrum — åtgärd innan kunden behöver ringa.",
