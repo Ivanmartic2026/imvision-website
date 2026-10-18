@@ -218,7 +218,7 @@ export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
             <h2 id="service-capabilities" className="sr-only">
               {t.servicesTitle}
             </h2>
-            <StaggerReveal className="grid gap-6 md:grid-cols-2">
+            <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {t.services.map((service) => (
                 <StaggerItem key={service.title}>
                   <div className="premium-card h-full bg-bg-elevated p-8">

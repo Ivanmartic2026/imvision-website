@@ -88,7 +88,7 @@ export function StoryTimeline({ locale = "en" }: { locale?: Locale }) {
               const imageFirst = index % 2 === 1;
 
               return (
-                <article key={step.number} className="grid items-center gap-8 lg:grid-cols-12 lg:gap-16">
+                <article key={step.number} className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
                   <motion.div
                     initial={{ y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}

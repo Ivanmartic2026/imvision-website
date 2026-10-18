@@ -40,7 +40,7 @@ export default function ProjectsPage() {
                 <Link
                   key={project.slug}
                   href={`/projects/${project.slug}/`}
-                  className="group grid min-h-[520px] border-b border-border-subtle bg-bg-elevated last:border-b-0 lg:grid-cols-2"
+                  className="group grid grid-cols-1 min-h-[520px] border-b border-border-subtle bg-bg-elevated last:border-b-0 lg:grid-cols-2"
                 >
                   <div className={`media-frame relative aspect-[16/10] overflow-hidden lg:aspect-auto ${index % 2 === 1 ? "lg:order-2" : ""}`}>
                     <ProjectVisual project={project} label={project.title} />

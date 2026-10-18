@@ -11,7 +11,7 @@ export function SalesArchitecturalIntegration({ content }: SalesSectionProps) {
   return (
     <section className="theme-light section section-space bg-background">
       <div className="section-inner">
-        <div className="light-gate overflow-hidden border border-border-subtle bg-bg-elevated/95 backdrop-blur-sm transition-all duration-700 ease-[cubic-bezier(.22,.61,.36,1)] hover:border-accent/20 hover:shadow-[0_28px_80px_rgba(0,0,0,.14)]">          <div className="grid lg:grid-cols-2">
+        <div className="light-gate overflow-hidden border border-border-subtle bg-bg-elevated/95 backdrop-blur-sm transition-all duration-700 ease-[cubic-bezier(.22,.61,.36,1)] hover:border-accent/20 hover:shadow-[0_28px_80px_rgba(0,0,0,.14)]">          <div className="grid grid-cols-1 lg:grid-cols-2">
             <motion.div
               initial={{ clipPath: "inset(0 100% 0 0)" }}
               whileInView={{ clipPath: "inset(0 0 0 0)" }}

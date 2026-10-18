@@ -10,7 +10,7 @@ export function SalesProjectForm({ locale, content }: SalesSectionProps) {
   return (
     <section className="section section-space bg-bg-elevated">
       <div className="section-inner">
-        <div className="grid gap-14 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-14 lg:grid-cols-12">
           <Reveal className="lg:col-span-4">
             <p className="eyebrow text-accent">{projectForm.eyebrow}</p>
             <h2 className="heading-section mt-7 text-text-primary">{projectForm.title}</h2>

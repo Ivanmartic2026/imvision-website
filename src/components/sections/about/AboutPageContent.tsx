@@ -107,7 +107,7 @@ export function AboutPageContent({ locale = "en" }: { locale?: Locale }) {
 
         <section className="section section-space">
           <div className="section-inner">
-            <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
               <Reveal>
                 <h2 className="max-w-[15ch] text-4xl font-[470] leading-[1.08] tracking-[-0.04em] text-text-primary sm:text-5xl lg:text-6xl">
                   {t.introHead}
@@ -131,7 +131,7 @@ export function AboutPageContent({ locale = "en" }: { locale?: Locale }) {
 
         <section className="section border-y border-border-subtle bg-bg-elevated py-24 md:py-32 lg:py-36">
           <div className="section-inner">
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {t.stats.map((stat, index) => (
                 <Reveal key={stat.label} delay={index * 0.1}>
                   <div className="text-center">
@@ -158,7 +158,7 @@ export function AboutPageContent({ locale = "en" }: { locale?: Locale }) {
               </Reveal>
             </div>
 
-            <StaggerReveal className="grid gap-6 md:grid-cols-3">
+            <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {t.values.map((value) => (
                 <StaggerItem key={value.title}>
                   <div className="premium-card h-full bg-bg-elevated p-8">

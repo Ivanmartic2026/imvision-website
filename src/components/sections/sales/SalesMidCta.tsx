@@ -62,7 +62,7 @@ export function SalesMidCta({ locale = "en", variant }: SalesMidCtaProps) {
             className="absolute -right-24 -top-24 h-48 w-48 rounded-full bg-accent/8 blur-[60px]"
           />
 
-          <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-16">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start lg:gap-16">
             <div className="lg:col-span-7">
               <p className="eyebrow text-accent">{t.heading}</p>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-text-secondary sm:text-lg">
@@ -90,7 +90,7 @@ export function SalesMidCta({ locale = "en", variant }: SalesMidCtaProps) {
                 </span>
                 <a
                   href={`tel:${phoneE164}`}
-                  className="text-sm text-text-muted transition-colors duration-300 hover:text-text-primary"
+                  className="tap text-sm text-text-muted transition-colors duration-300 hover:text-text-primary"
                 >
                   {t.phone}
                 </a>

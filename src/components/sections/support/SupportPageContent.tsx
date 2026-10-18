@@ -141,7 +141,7 @@ export function SupportPageContent({ locale = "en" }: { locale?: Locale }) {
             <h2 id="support-resources" className="sr-only">
               {t.resourcesTitle}
             </h2>
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {t.resources.map((resource, index) => (
                 <Reveal key={resource.title} delay={index * 0.1}>
                   <div className="premium-card h-full bg-bg-elevated p-8">

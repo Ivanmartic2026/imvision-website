@@ -103,7 +103,7 @@ export function ProofSection({ locale = "en" }: { locale?: Locale }) {
         <StatsRow locale={locale} />
 
         {/* ------- Featured projects ------- */}
-        <div className="mt-16 grid gap-7 lg:mt-24 lg:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-7 lg:mt-24 lg:grid-cols-3">
           {SELECTED_SLUGS.map((slug, index) => {
             const base = projects.find((p) => p.slug === slug)!;
             const project = localizeProject(locale, base);
@@ -142,7 +142,7 @@ function StatsRow({ locale }: { locale: Locale }) {
         ];
 
   return (
-    <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat, i) => (
         <motion.div
           key={stat.label}

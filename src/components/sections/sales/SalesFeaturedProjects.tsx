@@ -16,7 +16,7 @@ export function SalesFeaturedProjects({ locale, content }: SalesSectionProps) {
   return (
     <section id="utvalda-installationer" className="section section-space bg-background">
       <div className="section-inner">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-6">
             <p className="eyebrow text-accent">{featuredProjects.eyebrow}</p>
             <h2 className="heading-section mt-7 text-text-primary">{featuredProjects.title}</h2>
@@ -26,7 +26,7 @@ export function SalesFeaturedProjects({ locale, content }: SalesSectionProps) {
           </Reveal>
         </div>
 
-        <StaggerReveal className="mt-16 grid gap-6 md:grid-cols-2 lg:mt-24 lg:grid-cols-3" stagger={0.12}>
+        <StaggerReveal className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:mt-24 lg:grid-cols-3" stagger={0.12}>
           {projects.map((project) => (
             <StaggerItem key={project.slug}>
               <a

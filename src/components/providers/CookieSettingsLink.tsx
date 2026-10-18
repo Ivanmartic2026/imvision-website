@@ -9,7 +9,7 @@ export function CookieSettingsLink({ locale = "en" }: { locale?: Locale }) {
     <button
       type="button"
       onClick={() => window.dispatchEvent(new Event(CONSENT_REOPEN))}
-      className="transition-colors hover:text-text-primary"
+      className="tap min-w-11 justify-center transition-colors hover:text-text-primary"
     >
       {locale === "sv" ? "Cookie-inställningar" : "Cookie settings"}
     </button>

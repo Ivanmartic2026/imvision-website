@@ -41,13 +41,13 @@ export function PortfolioPreview({ locale = "en" }: { locale?: Locale }) {
               {locale === "sv" ? "Skärmen är bara en del av upplevelsen." : "The screen is only one part of the experience."}
             </h2>
           </div>
-          <Link href={localizedHref(locale, "/projects/")} className="group inline-flex items-center gap-2 self-start border-b border-accent pb-1 text-sm font-semibold text-text-primary lg:self-auto">
+          <Link href={localizedHref(locale, "/projects/")} className="tap group items-center gap-2 self-start border-b border-accent pb-1 text-sm font-semibold text-text-primary lg:self-auto">
             {locale === "sv" ? "Visa projektarkivet" : "View project archive"}
             <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
 
-        <div className="mt-16 grid gap-7 lg:mt-24 lg:grid-cols-2">
+        <div className="mt-16 grid grid-cols-1 gap-7 lg:mt-24 lg:grid-cols-2">
           {environments.map((item, index) => (
             <motion.figure
               key={item.title}

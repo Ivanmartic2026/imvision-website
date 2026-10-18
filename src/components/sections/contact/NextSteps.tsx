@@ -164,14 +164,14 @@ export function NextSteps({ locale, category }: NextStepsProps) {
         <div className="flex items-center gap-6 text-sm text-text-secondary">
           <a
             href={`tel:+46103304636`}
-            className="inline-flex items-center gap-1.5 font-medium text-text-primary underline underline-offset-4 transition-colors hover:text-accent focus-visible:ring-2 focus-visible:ring-accent"
+            className="inline-flex min-h-11 items-center gap-1.5 font-medium text-text-primary underline underline-offset-4 transition-colors hover:text-accent focus-visible:ring-2 focus-visible:ring-accent"
           >
             <Phone size={14} />
             {phone}
           </a>
           <a
             href={`mailto:${email}`}
-            className="inline-flex items-center gap-1.5 font-medium text-text-primary underline underline-offset-4 transition-colors hover:text-accent focus-visible:ring-2 focus-visible:ring-accent"
+            className="inline-flex min-h-11 items-center gap-1.5 font-medium text-text-primary underline underline-offset-4 transition-colors hover:text-accent focus-visible:ring-2 focus-visible:ring-accent"
           >
             <Mail size={14} />
             {email}

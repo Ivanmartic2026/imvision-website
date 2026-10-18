@@ -105,7 +105,7 @@ export function SalesHero({ locale, content }: SalesSectionProps) {
             <h1 className="mt-7 max-w-6xl text-balance text-[clamp(3.5rem,8.4vw,8.5rem)] font-[470] leading-[0.92] tracking-[-0.055em] text-text-primary">
               {hero.title}
             </h1>
-            <div className="mt-8 grid gap-8 border-t border-white/20 pt-7 lg:grid-cols-12 lg:items-end">
+            <div className="mt-8 grid grid-cols-1 gap-8 border-t border-white/20 pt-7 lg:grid-cols-12 lg:items-end">
               <motion.p
                 initial={{ y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

@@ -60,9 +60,13 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
               id="hero-title"
               className="max-w-[980px] text-balance font-[var(--font-heading)] text-[clamp(2.85rem,12vw,5.25rem)] font-semibold leading-[0.92] tracking-[-0.04em] text-text-primary sm:text-[clamp(3.4rem,7.5vw,6rem)]"
             >
+              {/* The two block-spans are a visual line break only. The literal
+                  space between them keeps textContent (screen readers, copy,
+                  search snippets) at "LED som formar upplevelsen." instead of
+                  the run-together "formarupplevelsen". */}
               <span className="block">
                 {locale === "sv" ? "LED som formar" : "Light, built"}
-              </span>
+              </span>{" "}
               <span className="block">
                 {locale === "sv" ? "upplevelsen." : "into space."}
               </span>
@@ -80,7 +84,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
                 : "Buy or rent — installed, serviced and operated by us, across Europe."}
             </p>
 
-            <div className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2">
+            <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2">
               {[
                 {
                   title: locale === "sv" ? "Köpa LED" : "Buy LED",
@@ -144,7 +148,7 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
             <div className="mt-5">
               <Link
                 href={localizedHref(locale, "/contact/")}
-                className="group inline-flex items-center gap-2 text-sm font-medium text-text-primary transition-colors hover:text-accent-soft"
+                className="tap group gap-2 text-sm font-medium text-text-primary transition-colors hover:text-accent-soft"
               >
                 {locale === "sv" ? "Osäker på vad ni behöver? Prata med oss" : "Not sure what you need? Talk to us"}
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
