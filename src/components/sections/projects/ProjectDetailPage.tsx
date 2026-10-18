@@ -9,6 +9,7 @@ import {
   Monitor,
   Wrench,
   ArrowUpRight,
+  ArrowRight,
 } from "lucide-react";
 import type { ProjectRole } from "@/lib/projects";
 import { Header } from "@/components/layout/Header";
@@ -49,7 +50,7 @@ const labels = {
     challengeHeading: "One space. Many visual modes.",
     responseEyebrow: "IM / Response",
     deliveryEyebrow: "IM / Delivery logic",
-    outcomeEyebrow: "Intended outcome",
+    outcomeEyebrow: "Outcome",
     galleryHeading: "Photo gallery",
     aboutHeading: "About the project",
     projectFacts: "Project facts",
@@ -58,6 +59,7 @@ const labels = {
     detailsTitleVerified: "Project details",
     detailsTitleDraft: "Draft specification",
     relatedHeading: "Related projects",
+    nextProjectLabel: "Next project",
     relatedServicesHeading: "Related services",
     backLink: "Back to all projects",
     discussButton: "Get a quote",
@@ -74,7 +76,7 @@ const labels = {
     challengeHeading: "Ett rum. Många visuella lägen.",
     responseEyebrow: "IM / Svar",
     deliveryEyebrow: "IM / Leveranslogik",
-    outcomeEyebrow: "Förväntat resultat",
+    outcomeEyebrow: "Resultat",
     galleryHeading: "Bildspel",
     aboutHeading: "Om projektet",
     projectFacts: "Projektfakta",
@@ -83,6 +85,7 @@ const labels = {
     detailsTitleVerified: "Projektdetaljer",
     detailsTitleDraft: "Utkast till specifikation",
     relatedHeading: "Relaterade projekt",
+    nextProjectLabel: "Nästa projekt",
     relatedServicesHeading: "Relaterade tjänster",
     backLink: "Tillbaka till alla projekt",
     discussButton: "Få offert",
@@ -203,6 +206,16 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
     .sort((a, b) => b.score - a.score)
     .slice(0, 2)
     .map(({ p }) => localizeRelatedProject(locale, p));
+
+  // "Next project" walks the verified portfolio in its published order and
+  // wraps at the end, so every case page has a forward path that is not the
+  // same two related cards.
+  const verifiedOrder = projects.filter((p) => p.verified === true);
+  const currentIndex = verifiedOrder.findIndex((p) => p.slug === project.slug);
+  const nextProject =
+    currentIndex >= 0 && verifiedOrder.length > 1
+      ? verifiedOrder[(currentIndex + 1) % verifiedOrder.length]
+      : null;
 
   return (
     <>
@@ -352,9 +365,14 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                 <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
                   <div className="lg:col-span-5">
                     <p className="eyebrow text-accent">{t.challengeEyebrow}</p>
+                    {/* Unique per project — the same sentence on every case
+                        page told search engines the pages were duplicates. */}
                     <h2 className="mt-7 text-[clamp(2.5rem,4.8vw,4.8rem)] font-medium leading-[0.98] tracking-[-0.045em] text-text-primary">
-                      {t.challengeHeading}
+                      {t.challengeEyebrow} — {copy.title}
                     </h2>
+                    <p className="mt-5 max-w-md text-lg leading-relaxed text-text-muted">
+                      {t.challengeHeading}
+                    </p>
                   </div>
                   <div className="lg:col-span-5 lg:col-start-8 lg:pt-12">
                     <p className="text-xl leading-relaxed text-text-secondary">
@@ -365,13 +383,17 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
 
                 <div className="mt-20 grid grid-cols-1 gap-px overflow-hidden rounded-[24px_6px_24px_24px] border border-border-subtle bg-border-subtle lg:grid-cols-2">
                   <article className="bg-bg-elevated p-8 sm:p-10 lg:p-14">
-                    <span className="font-mono text-xs text-accent">{t.responseEyebrow}</span>
+                    <h3 className="font-mono text-xs uppercase tracking-[0.12em] text-accent">
+                      {t.responseEyebrow}
+                    </h3>
                     <p className="mt-10 text-2xl leading-relaxed tracking-[-0.025em] text-text-primary">
                       {caseStudy.response}
                     </p>
                   </article>
                   <article className="bg-bg-elevated p-8 sm:p-10 lg:p-14">
-                    <span className="font-mono text-xs text-accent">{t.deliveryEyebrow}</span>
+                    <h3 className="font-mono text-xs uppercase tracking-[0.12em] text-accent">
+                      {t.deliveryEyebrow}
+                    </h3>
                     <ol className="mt-8 divide-y divide-border-subtle border-y border-border-subtle">
                       {caseStudy.delivery.map((item, index) => (
                         <li
@@ -387,7 +409,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                 </div>
 
                 <div className="mt-6 border-l border-accent py-5 pl-6 sm:pl-8">
-                  <p className="eyebrow text-accent">{t.outcomeEyebrow}</p>
+                  <h3 className="eyebrow text-accent">{t.outcomeEyebrow}</h3>
                   <p className="mt-5 max-w-5xl text-[clamp(1.8rem,3.6vw,3.5rem)] font-medium leading-[1.08] tracking-[-0.04em] text-text-primary">
                     {caseStudy.outcome}
                   </p>
@@ -597,10 +619,33 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
               </div>
             )}
 
+            {nextProject && (
+              <nav aria-label={t.nextProjectLabel} className="mt-20 border-t border-border-subtle pt-8">
+                <Link
+                  href={localizedHref(locale, `/projects/${nextProject.slug}/`)}
+                  prefetch={false}
+                  className="group flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
+                >
+                  <span>
+                    <span className="block font-mono text-xs uppercase tracking-[0.14em] text-text-muted">
+                      {t.nextProjectLabel}
+                    </span>
+                    <span className="mt-3 block text-3xl font-medium tracking-[-0.03em] text-text-primary sm:text-4xl">
+                      {localizeRelatedProject(locale, nextProject).title}
+                    </span>
+                  </span>
+                  <ArrowRight
+                    size={22}
+                    className="text-accent transition-transform group-hover:translate-x-1"
+                  />
+                </Link>
+              </nav>
+            )}
+
             <div className="mt-16">
               <Link
                 href={localizedHref(locale, "/projects/")}
-                className="inline-flex items-center gap-2 text-sm font-medium text-text-secondary transition-colors hover:text-accent"
+                className="tap items-center gap-2 text-sm font-medium text-text-secondary transition-colors hover:text-accent"
               >
                 <ArrowLeft size={16} /> {t.backLink}
               </Link>
