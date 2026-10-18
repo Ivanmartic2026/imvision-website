@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,6 +30,7 @@ export function Header({
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobilePanelRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const { scrollYProgress } = useScroll();
 
@@ -46,14 +47,45 @@ export function Header({
 
   useEffect(() => {
     if (!mobileOpen) return;
+    const panel = mobilePanelRef.current;
+    const focusables = () =>
+      Array.from(
+        panel?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        ) ?? []
+      ).filter((el) => el.offsetParent !== null);
+
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMobileOpen(false);
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+      // Focus trap: the menu is a modal dialog, so Tab must not reach the page
+      // behind it. Wrap from the last focusable element back to the first.
+      const items = focusables();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
+
+    // Remember where focus came from and give it back on close.
+    const opener = document.activeElement as HTMLElement | null;
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
+    const focusTimer = window.setTimeout(() => focusables()[0]?.focus(), 60);
     return () => {
+      window.clearTimeout(focusTimer);
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
+      opener?.focus?.();
     };
   }, [mobileOpen]);
 
@@ -77,7 +109,12 @@ export function Header({
               : "theme-dark border-transparent bg-transparent"
         )}
       >
-        <div className="mx-auto flex h-[78px] max-w-[1600px] items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16">
+        <div
+          className={cn(
+            "mx-auto flex max-w-[1600px] items-center justify-between px-4 transition-[height] duration-[250ms] ease-[cubic-bezier(.22,.61,.36,1)] sm:px-8 lg:px-12 xl:px-16",
+            scrolled ? "h-[62px]" : "h-[78px]"
+          )}
+        >
           {/* prefetch disabled: static export has no RSC segment endpoints, so
               Next's Link prefetch would 404 (navigation falls back to full load). */}
           <Link href={localizedHref(locale, "/")} prefetch={false} aria-label={locale === "sv" ? "IM Vision startsida" : "IM Vision home"} className="tap relative z-50">
@@ -172,6 +209,7 @@ export function Header({
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            ref={mobilePanelRef}
             id="mobile-navigation"
             role="dialog"
             aria-modal="true"
@@ -201,7 +239,7 @@ export function Header({
                       href={localizedHref(locale, link.href)}
                       prefetch={false}
                       onClick={() => setMobileOpen(false)}
-                      className="flex items-center justify-between py-5 text-3xl font-medium tracking-[-0.04em] text-text-primary"
+                      className="flex min-h-14 items-center justify-between py-5 text-3xl font-medium tracking-[-0.04em] text-text-primary"
                     >
                       {link[locale]}
                       <span className="font-mono text-xs text-text-muted">0{index + 1}</span>
@@ -218,7 +256,7 @@ export function Header({
                     pushEvent(AnalyticsEvent.ctaClick, { source: "mobile_menu", cta: "quote" });
                     pushEvent(AnalyticsEvent.quoteRequest, { source: "mobile_menu" });
                   }}
-                  className="flex items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent bg-accent px-5 py-4 text-base font-semibold text-background shadow-[0_10px_30px_rgba(0,0,0,.24)] transition-transform active:scale-[.98]"
+                  className="flex min-h-12 items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent bg-accent px-5 py-4 text-base font-semibold text-background shadow-[0_10px_30px_rgba(0,0,0,.24)] transition-transform active:scale-[.98]"
                 >
                   {locale === "sv" ? "Få offert" : "Get a quote"}
                   <ArrowRight size={17} strokeWidth={2} />
@@ -226,13 +264,13 @@ export function Header({
                 <a
                   href={`tel:${CONTACT.phoneE164}`}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent/40 bg-accent/10 px-5 py-4 text-base font-medium text-text-primary transition-colors hover:border-accent hover:bg-accent/20"
+                  className="flex min-h-12 items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent/40 bg-accent/10 px-5 py-4 text-base font-medium text-text-primary transition-colors hover:border-accent hover:bg-accent/20"
                 >
                   <Phone size={17} className="text-accent" strokeWidth={1.75} />
                   {CONTACT.phone}
                 </a>
                 <div className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
-                  Jönköping · Stockholm · Europe
+                  Jönköping · Saltsjö-Boo
                 </div>
               </div>
             </nav>

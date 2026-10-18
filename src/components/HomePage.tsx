@@ -4,7 +4,6 @@ import { Hero } from "@/components/sections/Hero";
 import { StoryTimeline } from "@/components/sections/StoryTimeline";
 import { ServicesPreview } from "@/components/sections/ServicesPreview";
 import { Technology } from "@/components/sections/Technology";
-import { PortfolioPreview } from "@/components/sections/PortfolioPreview";
 import { ProjectSlider } from "@/components/sections/ProjectSlider";
 import { ProofSection } from "@/components/sections/ProofSection";
 import { FaqSection } from "@/components/sections/FaqSection";
@@ -12,7 +11,16 @@ import { ContactCTA } from "@/components/sections/ContactCTA";
 import { BusinessIntro } from "@/components/sections/BusinessIntro";
 import { Locale } from "@/lib/i18n";
 
-/** Shared home layout, rendered by both /(en)/page and /(sv)/sv/page. */
+/**
+ * Shared home layout, rendered by both /(en)/page and /(sv)/sv/page.
+ *
+ * Order (MASTERPROMPT §6): hero → proof → positioning → buy/rent → projects →
+ * process → why us → FAQ → final CTA. Two things were deliberately removed:
+ *  • `PortfolioPreview` — it repeated the project cards and carried the
+ *    "environments" list; projects are shown once, in `ProjectSlider`.
+ *  • The duplicate statistics block — replaced by verified project facts in
+ *    `ProofSection` (see docs/claims-register.md).
+ */
 export function HomePage({ locale = "en" }: { locale?: Locale }) {
   return (
     <>
@@ -21,15 +29,12 @@ export function HomePage({ locale = "en" }: { locale?: Locale }) {
       <Header locale={locale} />
       <main id="main-content">
         <Hero locale={locale} />
-        <BusinessIntro locale={locale} />
-        <ProjectSlider locale={locale} />
-        <ServicesPreview locale={locale} />
-        <Technology locale={locale} />
-        <PortfolioPreview locale={locale} />
-        <StoryTimeline locale={locale} />
-        {/* Credibility before objections: show the delivered work first, then
-            answer the purchase questions, then ask for the contact. */}
         <ProofSection locale={locale} />
+        <BusinessIntro locale={locale} />
+        <ServicesPreview locale={locale} />
+        <ProjectSlider locale={locale} />
+        <StoryTimeline locale={locale} />
+        <Technology locale={locale} />
         <FaqSection locale={locale} />
         <ContactCTA locale={locale} />
       </main>

@@ -256,9 +256,15 @@ export function ProjectSlider({ locale = "en" }: ProjectSliderProps) {
 
         <div className="relative mt-10 lg:mt-14">
           {/* Mobile / tablet: native horizontal scroll */}
+          {/* tabIndex + role/aria-label: a scroll container has to be reachable
+              by keyboard so the cards can be scrolled without a mouse
+              (WCAG 2.1.1). Tab stops: the region, then each project link. */}
           <div
             ref={nativeTrackRef}
-            className="scrollbar-hide -mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 lg:hidden"
+            tabIndex={0}
+            role="group"
+            aria-label={locale === "sv" ? "Projektkarusell, bläddra med piltangenterna" : "Project carousel, scroll with the arrow keys"}
+            className="scrollbar-hide -mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background lg:hidden"
           >
             {slides.map((project, index) => renderCard(project, index, false, "span"))}
           </div>

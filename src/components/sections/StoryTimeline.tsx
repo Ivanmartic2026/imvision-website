@@ -11,8 +11,10 @@ const process = [
     number: "01",
     title: "Analysis",
     titleSv: "Analys",
-    description: "We analyse the site, its use, and the technical conditions.",
-    descriptionSv: "Vi analyserar platsen, användningen och de tekniska förutsättningarna.",
+    description:
+      "We review the site, how it will be used and the conditions it imposes. You get a documented basis to decide on.",
+    descriptionSv:
+      "Vi går igenom platsen, användningen och förutsättningarna. Ni får ett underlag att besluta på.",
     image: "/images/photon-material/event-rental.jpg",
     imageLabel: "Spatial study",
     imageLabelSv: "Platsanalys",
@@ -21,8 +23,10 @@ const process = [
     number: "02",
     title: "Design and engineering",
     titleSv: "Design och projektering",
-    description: "We develop a solution adapted to its setting, architecture, and content.",
-    descriptionSv: "Vi utvecklar en lösning anpassad för miljö, arkitektur och innehåll.",
+    description:
+      "We define the screen geometry and plan power, signal, cooling, mounting and safety.",
+    descriptionSv:
+      "Vi bestämmer skärmens utformning och planerar kraft, signal, kyla, infästning och säkerhet.",
     image: "/images/photon-material/engineering-calibration.jpg",
     imageLabel: "Engineering detail",
     imageLabelSv: "Teknisk detalj",
@@ -31,8 +35,9 @@ const process = [
     number: "03",
     title: "Delivery and installation",
     titleSv: "Leverans och installation",
-    description: "We deliver, install, program, and commission the complete system.",
-    descriptionSv: "Vi levererar, installerar, programmerar och driftsätter hela systemet.",
+    description:
+      "We deliver, mount, commission and calibrate the complete system.",
+    descriptionSv: "Vi levererar, monterar, driftsätter och kalibrerar hela systemet.",
     image: "/images/photon-material/architectural-facade.jpg",
     imageLabel: "Architectural integration",
     imageLabelSv: "Arkitektonisk integration",
@@ -41,8 +46,10 @@ const process = [
     number: "04",
     title: "Service and operation",
     titleSv: "Service och drift",
-    description: "After installation, we offer service agreements, support, and preventive maintenance for maximum reliability.",
-    descriptionSv: "Efter installation erbjuder vi serviceavtal, support och förebyggande underhåll för maximal driftsäkerhet.",
+    description:
+      "You get documentation, training and a service agreement with preventive maintenance and support.",
+    descriptionSv:
+      "Ni får dokumentation, utbildning och serviceavtal med förebyggande underhåll och support.",
     image: "/images/photon-material/permanent-retail.jpg",
     imageLabel: "Operational environment",
     imageLabelSv: "Driftsmiljö",
