@@ -81,6 +81,7 @@ export function SalesHero({ locale, content }: SalesSectionProps) {
             alt={hero.imageAlt}
             fill
             loading="eager"
+            fetchPriority="high"
             sizes="100vw"
             className="object-cover object-center"
             priority

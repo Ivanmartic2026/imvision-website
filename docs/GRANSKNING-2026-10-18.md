@@ -59,6 +59,28 @@ formulärfel), `tools/parity.mjs` (siffror SV↔EN), `tools/quote-test.mjs`,
 10. **Svenska "&"-etiketter** ("Service & support") → "Service och support".
 11. **Meta-längder**: startsidans titel 78 → 44 tecken, två långa beskrivningar trimmade.
 
+## Efter publicering (2026-10-18)
+
+Pushat till `main` (`769dc92`) och Vercel-deployen gick live. Samma granskning körd mot
+`https://imvision.se`:
+
+- **0 fel** på alla 56 rutter, 49 interna länkar, schema, hreflang, axe och overflow.
+- Alla 18 huvud-URL:er svarar 200, svarstid 67–421 ms.
+- Riktig LCP i Chrome (mobil viewport, DPR 3): `/sv/` 312 ms, `/sv/projects/` 188 ms,
+  `/sv/sales/` 176 ms — CLS 0. TTFB 40–42 ms.
+- Lighthouse mobil (simulerad): `/sv/` **P90**, `/sv/projects/` **P88**,
+  `/sv/contact/` **P88**, `/sv/rental/` **P87** — A11y/BP/SEO 100 på alla.
+  `/sv/sales/` P65 och `/sv/service/` P72 var utliggare; orsaken var mätbar och är
+  åtgärdad (se nedan) och verifieras vid nästa deploy.
+
+### Prestandafixar hittade av live-mätningen
+1. **Säljsidans hero-bild** saknade `fetchPriority="high"` på själva `<img>` (preloaden
+   fanns men utan prioritet) → LCP-elementet målade sent. Attributet tillagt.
+2. **`PageHeader`-rubriken** animerades in med `motion.h1` (translate). På alla sidor som
+   använder PageHeader är den H1 LCP-elementet, och entrance-transformen sköt upp största
+   målningen med >1 s i mobil Throttling. H1:an är nu statisk; rörelsen ligger kvar på
+   etiketten och ingressen.
+
 ## Kvarstående varningar (avsiktliga)
 
 - `/sales/` titel 72 tecken och `/sv/sales/` 75 tecken — exakt de titlar som ägaren
