@@ -7,9 +7,15 @@ interface ContactErrorStateProps {
   locale: "en" | "sv";
   recipient: string;
   onRetry: () => void;
+  /**
+   * Pre-filled mailto (subject + body with the submitted values). Used by the
+   * form so a failed submit never costs the user what they typed — this link is
+   * also the reliable path when a popup blocker swallows window.open().
+   */
+  mailtoHref?: string;
 }
 
-export function ContactErrorState({ locale, recipient, onRetry }: ContactErrorStateProps) {
+export function ContactErrorState({ locale, recipient, onRetry, mailtoHref }: ContactErrorStateProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -28,7 +34,7 @@ export function ContactErrorState({ locale, recipient, onRetry }: ContactErrorSt
           </p>
           <p className="mt-2 leading-relaxed">
             {locale === "sv" ? "Försök igen eller kontakta oss på" : "Please try again or contact us at"}{" "}
-            <a href={`mailto:${recipient}`} className="font-medium text-accent underline underline-offset-4 hover:text-accent-dim">
+            <a href={mailtoHref ?? `mailto:${recipient}`} className="font-medium text-accent underline underline-offset-4 hover:text-accent-dim">
               {recipient}
             </a>
             .

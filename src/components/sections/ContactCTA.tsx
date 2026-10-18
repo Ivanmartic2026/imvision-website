@@ -10,7 +10,7 @@ export function ContactCTA({ locale = "en" }: { locale?: Locale }) {
   return (
     <section id="contact" className="theme-light section section-space bg-background text-text-primary" aria-labelledby="contact-title">
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.8, ease: [0.22, 0.61, 0.36, 1] }}

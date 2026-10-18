@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from "motion/react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { ProjectVisual } from "@/components/sections/ProjectVisual";
 import { Locale, localizedHref } from "@/lib/i18n";
 import { projects, Project } from "@/lib/projects";
 import { swedishProjectCopy } from "@/lib/projects-sv";
@@ -147,7 +147,7 @@ export function ProjectSlider({ locale = "en" }: ProjectSliderProps) {
   ) => (
     <motion.article
       key={project.slug}
-      initial={{ opacity: 0, y: 28 }}
+      initial={{ y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.75, delay: index * 0.08, ease: [0.22, 0.61, 0.36, 1] }}
@@ -162,16 +162,20 @@ export function ProjectSlider({ locale = "en" }: ProjectSliderProps) {
         className="light-gate block h-full overflow-hidden border border-border-subtle bg-bg-elevated/60 backdrop-blur-sm transition-all duration-[700ms] ease-[cubic-bezier(.22,.61,.36,1)] hover:-translate-y-1.5 hover:border-accent/30 hover:bg-bg-elevated hover:shadow-[0_28px_80px_rgba(0,0,0,.22),0_0_40px_rgba(145,169,161,.08)]"
       >
         <div className="relative aspect-[4/3] overflow-hidden">
-          <Image
-            src={project.image}
-            alt={project.visualLabel || project.title}
-            fill
+          {/* ProjectVisual, not a bare <Image>: three verified projects in the
+              archive ship without a photo (visualPlaceholder), and one of them —
+              nordstan-facade — is in SLIDER_PROJECTS. A raw <Image> would emit
+              src="" for it, which makes the browser re-request the current page.
+              ProjectVisual renders the CSS placeholder for those and adds the
+              loading skeleton for the rest. */}
+          <ProjectVisual
+            project={project}
+            label={project.visualLabel}
             sizes={
               isPinned
                 ? "(max-width: 1024px) 76vw, (max-width: 1280px) 38vw, 32vw"
                 : "(max-width: 768px) 85vw, (max-width: 1024px) 45vw, 33vw"
             }
-            className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.22,.61,.36,1)] group-hover:scale-[1.04]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#070807]/60 via-transparent to-transparent" />
           <div className="absolute inset-x-0 bottom-0 h-px photon-seam" />
@@ -201,7 +205,7 @@ export function ProjectSlider({ locale = "en" }: ProjectSliderProps) {
     <section
       ref={sectionRef}
       id="projekt-slider"
-      className="relative z-30 -mt-8 rounded-tl-[32px] rounded-tr-[8px] bg-background lg:h-screen"
+      className="theme-dark relative z-30 -mt-8 rounded-tl-[32px] rounded-tr-[8px] bg-background lg:h-screen"
       style={{ height: isLg ? `calc(100vh + ${scrollDistance}px)` : "auto" }}
       aria-labelledby="project-slider-title"
     >

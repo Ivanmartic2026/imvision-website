@@ -34,7 +34,7 @@ export function PageHeader({ label, title, description, children, className }: P
         <div className="section-inner max-w-6xl">
           {label && (
             <motion.span
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.22, 0.61, 0.36, 1] }}
               className="mb-7 inline-flex items-center gap-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-accent"
@@ -62,7 +62,7 @@ export function PageHeader({ label, title, description, children, className }: P
           </motion.h1>
           {description && (
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, delay: 0.28, ease: [0.22, 0.61, 0.36, 1] }}
               className="mt-9 max-w-[620px] text-lg leading-[1.75] text-text-secondary sm:text-xl"
@@ -72,7 +72,7 @@ export function PageHeader({ label, title, description, children, className }: P
           )}
           {children && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, delay: 0.35, ease: [0.22, 0.61, 0.36, 1] }}
               className="mt-8"

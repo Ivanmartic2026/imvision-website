@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowDown, ArrowRight, CalendarRange, Radio, Truck } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { SalesMidCta } from "@/components/sections/sales/SalesMidCta";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/effects/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/effects/StaggerReveal";
@@ -67,6 +68,10 @@ export default function SwedishRentalPage() {
           </div>
         </section>
 
+        {/* Mid-page CTA: uthyrningens omfattning är nu tydlig, så det här är
+            första naturliga stället att erbjuda en väg vidare. */}
+        <SalesMidCta locale="sv" variant="rental" />
+
         <section className="section section-space bg-bg-elevated">
           <div className="section-inner grid gap-14 lg:grid-cols-12">
             <Reveal className="lg:col-span-4"><p className="eyebrow text-accent">Från idé till genomförande</p><h2 className="heading-section mt-7">Ett tryggt flöde hela vägen.</h2></Reveal>
@@ -75,6 +80,10 @@ export default function SwedishRentalPage() {
             </StaggerReveal>
           </div>
         </section>
+
+        {/* Andra mitt-CTA:n: processen är genomgången och läsaren är redo att
+            agera utan att skrolla till den avslutande banden. */}
+        <SalesMidCta locale="sv" variant="rental" />
 
         <section className="section section-space"><div className="section-inner"><div className="light-gate border border-border-subtle bg-bg-elevated p-8 sm:p-12 lg:p-20"><Reveal><p className="eyebrow text-accent">Börja med idén</p><h2 className="mt-7 max-w-5xl text-[clamp(2.7rem,6vw,6.5rem)] font-[470] leading-[0.97] tracking-[-0.052em]">Låt tekniken försvinna in i upplevelsen.</h2><div className="mt-9"><Button href="/sv/contact/" size="large" icon={<ArrowRight size={18} />}>Berätta om ert event</Button></div></Reveal></div></div></section>
       </main>

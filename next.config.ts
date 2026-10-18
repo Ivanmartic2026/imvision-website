@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Dev-only. Next blocks cross-origin requests to its dev resources (the HMR
+  // endpoint and the client bootstrap) unless the host is listed here. Without
+  // this, opening `next dev` from another machine on the LAN/Tailscale serves
+  // the HTML but never hydrates React — every <Reveal> stays at opacity:0 and
+  // the page looks empty. No effect on `next build` / production.
+  allowedDevOrigins: ["100.64.153.89", "192.168.11.120"],
   // Server runtime (Vercel) — NOT static export — so App Router API routes
   // (e.g. /api/contact) run server-side. Do not re-add `output: "export"`.
   images: {

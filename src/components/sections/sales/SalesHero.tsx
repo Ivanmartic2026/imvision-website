@@ -95,7 +95,7 @@ export function SalesHero({ locale, content }: SalesSectionProps) {
         >
           <div className="section-inner">
             <motion.p
-              initial={{ opacity: 0, y: 22 }}
+              initial={{ y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 0.61, 0.36, 1] }}
               className="eyebrow text-accent"
@@ -107,7 +107,7 @@ export function SalesHero({ locale, content }: SalesSectionProps) {
             </h1>
             <div className="mt-8 grid gap-8 border-t border-white/20 pt-7 lg:grid-cols-12 lg:items-end">
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.48, ease: [0.22, 0.61, 0.36, 1] }}
                 className="max-w-xl text-lg leading-relaxed text-[#d0d5d2] sm:text-xl lg:col-span-6"
@@ -115,7 +115,7 @@ export function SalesHero({ locale, content }: SalesSectionProps) {
                 {hero.subhead}
               </motion.p>
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.58, ease: [0.22, 0.61, 0.36, 1] }}
                 className="flex flex-col gap-3 sm:flex-row lg:col-span-6 lg:justify-end"
@@ -132,7 +132,6 @@ export function SalesHero({ locale, content }: SalesSectionProps) {
               </motion.div>
             </div>
             <motion.p
-              initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.9, ease: [0.22, 0.61, 0.36, 1] }}
               className="mt-6 font-mono text-[0.625rem] uppercase tracking-[0.13em] text-white/55"

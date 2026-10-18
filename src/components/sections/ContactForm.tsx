@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Locale } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 import { Input, Textarea, FileUpload, FormField, UploadedFile } from "@/components/ui/form";
 import { ContactTypeSelector } from "./contact/ContactTypeSelector";
 import { ContactSuccessState } from "./contact/ContactSuccessState";
@@ -36,6 +37,14 @@ interface ContactFormProps {
   defaultCategory?: ContactCategory;
   /** Hide the 3-card category selector (use with defaultCategory for a single-purpose form). */
   hideSelector?: boolean;
+  /**
+   * "panel" renders the whole form — heading, selector and fields — inside one
+   * card that is visible immediately (used by the contact page hero). The
+   * default keeps the previous stacked presentation for embedded forms.
+   */
+  variant?: "default" | "panel";
+  /** Element id for the panel wrapper, so header CTAs can deep-link to the form. */
+  id?: string;
 }
 
 export function ContactForm({
@@ -43,15 +52,24 @@ export function ContactForm({
   compact = false,
   defaultCategory,
   hideSelector = false,
+  variant = "default",
+  id = "contact-form",
 }: ContactFormProps) {
+  const isPanel = variant === "panel";
+  const optionalSuffix = locale === "sv" ? "(valfritt)" : "(optional)";
   const [selectedCategory, setSelectedCategory] = useState<ContactCategory | null>(defaultCategory ?? null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const [flowRef, setFlowRef] = useState<string | undefined>(undefined);
   const [files, setFiles] = useState<UploadedFile[]>([]);
+  const [submitAttempted, setSubmitAttempted] = useState(false);
+  // Pre-filled mailto for the error state: the in-page link is the reliable
+  // fallback when a popup blocker swallows window.open().
+  const [fallbackHref, setFallbackHref] = useState<string | undefined>(undefined);
   const formId = useId();
   const started = useRef(false);
+  const summaryRef = useRef<HTMLDivElement | null>(null);
 
   // form_start – vid första interaktionen med formuläret (ingen PII).
   const handleFirstInteraction = () => {
@@ -141,6 +159,7 @@ export function ContactForm({
     register,
     handleSubmit,
     setValue,
+    getValues,
     reset,
     formState: { errors },
   } = useForm<ContactFormData>({
@@ -155,29 +174,66 @@ export function ContactForm({
   }, [selectedCategory, setValue]);
 
   function selectCategory(category: ContactCategory) {
+    const previous = getValues();
     setSelectedCategory(category);
     setSubmitError(false);
     setFlowRef(undefined);
+    setSubmitAttempted(false);
+    // Keep everything the user already typed; only drop the fields that belong
+    // to the category they are leaving (eventDate/location vs installation).
     reset(
       {
         category,
-        name: "",
-        phone: "",
-        email: "",
-        company: "",
+        name: previous.name ?? "",
+        phone: previous.phone ?? "",
+        email: previous.email ?? "",
+        company: previous.company ?? "",
+        message: previous.message ?? "",
         eventDate: "",
         location: "",
         installation: "",
-        message: "",
       },
       { keepDefaultValues: false }
     );
-    setFiles([]);
   }
 
   function getErrorMessage(path: keyof typeof t.errors) {
     return errors[path] ? t.errors[path] : undefined;
   }
+
+  /**
+   * mailto fallback used when the API call fails. It carries the submitted
+   * values in the body so a server/network failure never costs the user what
+   * they just typed. Capped to keep the URL within mail-client limits.
+   */
+  function buildMailtoFallback(category: ContactCategory, data: ContactFormData) {
+    const config = categories[category];
+    const subject = locale === "sv" ? `Ny ${config.title} från imvision.se` : `New ${config.title} from imvision.se`;
+    const lines = [
+      [t.common.name, data.name],
+      [t.common.phone, data.phone],
+      [t.common.email, data.email],
+      [t.common.company, data.company],
+      [t.common.eventDate, data.eventDate],
+      [t.common.location, data.location],
+      [t.common.installation, data.installation],
+      [t.common.message, data.message],
+    ]
+      .filter(([, value]) => typeof value === "string" && value.trim().length > 0)
+      .map(([label, value]) => `${label}: ${value}`);
+    const body = lines.join("\n").slice(0, 1800);
+    return `mailto:${config.recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+
+  // Move focus to the error summary once validation errors are rendered, so
+  // keyboard and screen-reader users land on the explanation instead of
+  // hunting through the form.
+  useEffect(() => {
+    if (!submitAttempted) return;
+    if (Object.keys(errors).length === 0) return;
+    const frame = requestAnimationFrame(() => summaryRef.current?.focus());
+    return () => cancelAnimationFrame(frame);
+  }, [submitAttempted, errors]);
 
   const onSubmit = async (data: ContactFormData) => {
     if (typeof document !== "undefined") {
@@ -188,6 +244,7 @@ export function ContactForm({
     setIsSubmitting(true);
     setSubmitError(false);
     setFlowRef(undefined);
+    setFallbackHref(undefined);
     const config = categories[data.category];
 
     try {
@@ -223,8 +280,10 @@ export function ContactForm({
         setIsSuccess(true);
         setSubmitError(false);
       } else {
-        // Server returned error status — open mailto as courtesy.
-        window.open(`mailto:${config.recipient}?subject=${encodeURIComponent(`Ny ${config.title} från imvision.se`)}`, "_blank");
+        // Server returned error status — offer a pre-filled mailto as courtesy.
+        const mailto = buildMailtoFallback(data.category, data);
+        setFallbackHref(mailto);
+        window.open(mailto, "_blank");
         setSubmitError(true);
       }
 
@@ -238,8 +297,10 @@ export function ContactForm({
         { form_id: "contact", category: data.category },
       );
     } catch {
-      // Network failure / fetch crash — open mailto so the user can still send.
-      window.open(`mailto:${config.recipient}?subject=${encodeURIComponent(`Ny ${config.title} från imvision.se`)}`, "_blank");
+      // Network failure / fetch crash — offer a pre-filled mailto so the user can still send.
+      const mailto = buildMailtoFallback(data.category, data);
+      setFallbackHref(mailto);
+      window.open(mailto, "_blank");
       setSubmitError(true);
     } finally {
       setIsSubmitting(false);
@@ -256,18 +317,37 @@ export function ContactForm({
         locale={locale}
         recipient={categories[selectedCategory].recipient}
         onRetry={() => setSubmitError(false)}
+        mailtoHref={fallbackHref}
       />
     );
   }
 
+  const errorCount = Object.keys(errors).filter((key) => key !== "category" && key !== "honeypot").length;
+
   return (
-    <div className={compact ? "space-y-6" : "space-y-10 sm:space-y-12"}>
+    <div
+      id={isPanel ? id : undefined}
+      tabIndex={isPanel ? -1 : undefined}
+      className={cn(
+        isPanel && "outline-none",
+        compact ? "space-y-6" : "space-y-10 sm:space-y-12",
+        isPanel &&
+          "space-y-3.5 rounded-3xl border border-border-subtle bg-bg-surface p-4 shadow-[0_20px_60px_rgba(0,0,0,.20)] sm:p-6 scroll-mt-28"
+      )}
+    >
       {!compact && (
-        <div className="text-center">
-          {/* h2, not h1: the page's single h1 is the PageHeader above this form.
-              Two h1s on one page is a heading-hierarchy defect for SEO + a11y. */}
-          <h2 className="text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">{t.title}</h2>
-          <p className="mx-auto mt-3 max-w-lg text-text-secondary">{t.subtitle}</p>
+        <div className={cn(isPanel ? "text-left" : "text-center")}>
+          {/* h2, not h1: the page's single h1 is the hero heading. Two h1s on
+              one page is a heading-hierarchy defect for SEO + a11y. */}
+          <h2
+            className={cn(
+              "font-semibold tracking-tight text-text-primary",
+              isPanel ? "text-2xl" : "text-3xl sm:text-4xl"
+            )}
+          >
+            {t.title}
+          </h2>
+          {!isPanel && <p className="mx-auto mt-3 max-w-lg text-text-secondary">{t.subtitle}</p>}
         </div>
       )}
 
@@ -276,170 +356,225 @@ export function ContactForm({
         <ContactTypeSelector locale={locale} selected={selectedCategory} onSelect={selectCategory} />
       )}
 
-      {/* Expanded form */}
-      <AnimatePresence>
-        {selectedCategory && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: [0.22, 0.61, 0.36, 1] }}
-            className="overflow-hidden"
-          >
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              onFocusCapture={handleFirstInteraction}
-              onChangeCapture={handleFirstInteraction}
-              className="mx-auto max-w-2xl space-y-5 rounded-3xl border border-border-subtle bg-bg-surface p-6 shadow-[0_12px_40px_rgba(0,0,0,.05)] sm:p-10"
+      {/* Validation summary: the single place that explains what needs fixing,
+          announced and focused as soon as an invalid submit happens. */}
+      {submitAttempted && errorCount > 0 && (
+        <div
+          ref={summaryRef}
+          role="alert"
+          tabIndex={-1}
+          className="rounded-2xl border border-red-400/40 bg-red-400/10 px-4 py-3 text-sm text-red-300 outline-none focus-visible:ring-2 focus-visible:ring-red-400/60"
+        >
+          <strong className="font-semibold text-red-200">
+            {locale === "sv" ? `Kontrollera ${errorCount} fält` : `Check ${errorCount} field${errorCount === 1 ? "" : "s"}`}
+          </strong>
+          {" — "}
+          {locale === "sv"
+            ? "fälten är markerade nedan."
+            : "the fields are marked below."}
+        </div>
+      )}
+
+      {/* Expanded form — no entrance animation in panel mode so the form is
+          visible from the first paint (and survives a failed hydration). */}
+      {isPanel ? (
+        renderForm()
+      ) : (
+        <AnimatePresence>
+          {selectedCategory && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 0.61, 0.36, 1] }}
+              className="overflow-hidden"
             >
-              <input type="hidden" {...register("category")} value={selectedCategory} />
-
-              <div className="grid gap-5 sm:grid-cols-2">
-                <FormField id={`${formId}-name`} label={t.common.name} required error={getErrorMessage("name")}>
-                  <Input
-                    id={`${formId}-name`}
-                    autoComplete="name"
-                    aria-invalid={errors.name ? "true" : undefined}
-                    {...register("name")}
-                    placeholder={t.common.namePlaceholder}
-                    error={!!errors.name}
-                    // Auto-focus on desktop only to avoid mobile scroll jumps
-                    autoFocus={typeof window !== "undefined" && window.matchMedia("(min-width: 640px)").matches}
-                  />
-                </FormField>
-
-                <FormField id={`${formId}-phone`} label={t.common.phone} required error={getErrorMessage("phone")}>
-                  <Input
-                    id={`${formId}-phone`}
-                    type="tel"
-                    autoComplete="tel"
-                    aria-invalid={errors.phone ? "true" : undefined}
-                    {...register("phone")}
-                    placeholder={t.common.phonePlaceholder}
-                    error={!!errors.phone}
-                  />
-                </FormField>
-
-                <FormField
-                  id={`${formId}-email`}
-                  label={t.common.email}
-                  required
-                  error={getErrorMessage("email")}
-                  className="sm:col-span-2"
-                >
-                  <Input
-                    id={`${formId}-email`}
-                    type="email"
-                    autoComplete="email"
-                    aria-invalid={errors.email ? "true" : undefined}
-                    {...register("email")}
-                    placeholder={t.common.emailPlaceholder}
-                    error={!!errors.email}
-                  />
-                </FormField>
-
-                {selectedCategory === "rental" && (
-                  <>
-                    <FormField id={`${formId}-eventDate`} label={t.common.eventDate} error={undefined}>
-                      <Input
-                        id={`${formId}-eventDate`}
-                        {...register("eventDate")}
-                        placeholder={t.common.eventDatePlaceholder}
-                      />
-                    </FormField>
-                    <FormField id={`${formId}-location`} label={t.common.location} error={undefined}>
-                      <Input
-                        id={`${formId}-location`}
-                        {...register("location")}
-                        placeholder={t.common.locationPlaceholder}
-                      />
-                    </FormField>
-                  </>
-                )}
-
-                {selectedCategory === "service" && (
-                  <>
-                    <FormField id={`${formId}-company`} label={t.common.company} error={undefined}>
-                      <Input
-                        id={`${formId}-company`}
-                        autoComplete="organization"
-                        {...register("company")}
-                        placeholder={t.common.companyPlaceholder}
-                      />
-                    </FormField>
-                    <FormField id={`${formId}-installation`} label={t.common.installation} error={undefined}>
-                      <Input
-                        id={`${formId}-installation`}
-                        {...register("installation")}
-                        placeholder={t.common.installationPlaceholder}
-                      />
-                    </FormField>
-                  </>
-                )}
-
-                <FormField
-                  id={`${formId}-message`}
-                  label={
-                    selectedCategory === "service"
-                      ? locale === "sv"
-                        ? "Beskriv felet"
-                        : "Describe the issue"
-                      : t.common.message
-                  }
-                  required
-                  error={getErrorMessage("message")}
-                  className="sm:col-span-2"
-                >
-                  <Textarea
-                    id={`${formId}-message`}
-                    rows={4}
-                    aria-invalid={errors.message ? "true" : undefined}
-                    {...register("message")}
-                    placeholder={categories[selectedCategory].messagePlaceholder}
-                    error={!!errors.message}
-                  />
-                </FormField>
-              </div>
-
-              <FileUpload
-                files={files}
-                onChange={setFiles}
-                label={t.common.attachments}
-                description={t.common.attachmentsDescription}
-                limitText={t.common.attachmentsLimit}
-              />
-
-              {/* Honeypot */}
-              <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
-                <label htmlFor={`${formId}-company-url`}>Company website</label>
-                <input
-                  id={`${formId}-company-url`}
-                  type="text"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  {...register("honeypot")}
-                />
-              </div>
-
-              <div className="pt-2">
-                <Button
-                  type="submit"
-                  size="large"
-                  loading={isSubmitting}
-                  icon={<ArrowRight size={18} />}
-                  className="w-full sm:w-auto"
-                >
-                  {isSubmitting
-                    ? locale === "sv"
-                      ? "Skickar..."
-                      : "Sending..."
-                    : categories[selectedCategory].submitLabel}
-                </Button>
-              </div>
-            </form>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              {renderForm()}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
     </div>
   );
+
+  function renderForm() {
+    if (!selectedCategory) return null;
+    const fileField = (
+      <FileUpload
+        files={files}
+        onChange={setFiles}
+        label={t.common.attachments}
+        description={t.common.attachmentsDescription}
+        limitText={t.common.attachmentsLimit}
+        compact={isPanel}
+        dragLabel={locale === "sv" ? "Klicka för att ladda upp" : "Click to upload"}
+        dragHint={locale === "sv" ? "eller släpp filer här" : "or drop files here"}
+      />
+    );
+    return (
+      <form
+        onSubmit={handleSubmit(onSubmit, () => setSubmitAttempted(true))}
+        onFocusCapture={handleFirstInteraction}
+        onChangeCapture={handleFirstInteraction}
+        className={cn(
+          isPanel ? "space-y-3.5" : "space-y-5",
+          !isPanel && "mx-auto max-w-2xl rounded-3xl border border-border-subtle bg-bg-surface p-6 shadow-[0_12px_40px_rgba(0,0,0,.05)] sm:p-10"
+        )}
+      >
+        <input type="hidden" {...register("category")} value={selectedCategory} />
+
+        <div className={cn("grid", isPanel ? "gap-3.5 sm:grid-cols-2 lg:grid-cols-3" : "gap-5 sm:grid-cols-2")}>
+          <FormField id={`${formId}-name`} label={t.common.name} required error={getErrorMessage("name")}>
+            <Input
+              id={`${formId}-name`}
+              autoComplete="name"
+              aria-invalid={errors.name ? "true" : undefined}
+              {...register("name")}
+              placeholder={t.common.namePlaceholder}
+              error={!!errors.name}
+              // Auto-focus only when the form appears after an explicit choice —
+              // never in panel mode, where it would scroll the page on load.
+              autoFocus={
+                !isPanel && typeof window !== "undefined" && window.matchMedia("(min-width: 640px)").matches
+              }
+            />
+          </FormField>
+
+          <FormField id={`${formId}-phone`} label={t.common.phone} required error={getErrorMessage("phone")}>
+            <Input
+              id={`${formId}-phone`}
+              type="tel"
+              autoComplete="tel"
+              aria-invalid={errors.phone ? "true" : undefined}
+              {...register("phone")}
+              placeholder={t.common.phonePlaceholder}
+              error={!!errors.phone}
+            />
+          </FormField>
+
+          <FormField id={`${formId}-email`} label={t.common.email} required error={getErrorMessage("email")}>
+            <Input
+              id={`${formId}-email`}
+              type="email"
+              autoComplete="email"
+              aria-invalid={errors.email ? "true" : undefined}
+              {...register("email")}
+              placeholder={t.common.emailPlaceholder}
+              error={!!errors.email}
+            />
+          </FormField>
+
+          <FormField
+            id={`${formId}-company`}
+            label={`${t.common.company} ${optionalSuffix}`}
+            error={undefined}
+          >
+            <Input
+              id={`${formId}-company`}
+              autoComplete="organization"
+              {...register("company")}
+              placeholder={t.common.companyPlaceholder}
+            />
+          </FormField>
+
+          {selectedCategory === "rental" && (
+            <>
+              <FormField id={`${formId}-eventDate`} label={`${t.common.eventDate} ${optionalSuffix}`} error={undefined}>
+                <Input
+                  id={`${formId}-eventDate`}
+                  {...register("eventDate")}
+                  placeholder={t.common.eventDatePlaceholder}
+                />
+              </FormField>
+              <FormField id={`${formId}-location`} label={`${t.common.location} ${optionalSuffix}`} error={undefined}>
+                <Input
+                  id={`${formId}-location`}
+                  {...register("location")}
+                  placeholder={t.common.locationPlaceholder}
+                />
+              </FormField>
+            </>
+          )}
+
+          {selectedCategory === "service" && (
+            <>
+              <FormField id={`${formId}-installation`} label={`${t.common.installation} ${optionalSuffix}`} error={undefined}>
+                <Input
+                  id={`${formId}-installation`}
+                  {...register("installation")}
+                  placeholder={t.common.installationPlaceholder}
+                />
+              </FormField>
+            </>
+          )}
+
+          {isPanel && <div className="sm:col-span-2">{fileField}</div>}
+
+          <FormField
+            id={`${formId}-message`}
+            label={
+              selectedCategory === "service"
+                ? locale === "sv"
+                  ? "Beskriv felet"
+                  : "Describe the issue"
+                : t.common.message
+            }
+            required
+            error={getErrorMessage("message")}
+            className={isPanel ? "sm:col-span-2 lg:col-span-3" : "sm:col-span-2"}
+          >
+            <Textarea
+              id={`${formId}-message`}
+              rows={isPanel ? 2 : 4}
+              aria-invalid={errors.message ? "true" : undefined}
+              {...register("message")}
+              placeholder={categories[selectedCategory].messagePlaceholder}
+              error={!!errors.message}
+            />
+          </FormField>
+        </div>
+
+        {!isPanel && fileField}
+
+        {/* Honeypot */}
+        <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+          <label htmlFor={`${formId}-company-url`}>Company website</label>
+          <input
+            id={`${formId}-company-url`}
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            {...register("honeypot")}
+          />
+        </div>
+
+        <div className="space-y-3 pt-1">
+          <Button
+            type="submit"
+            size="large"
+            loading={isSubmitting}
+            icon={<ArrowRight size={18} />}
+            className={cn("w-full", !isPanel && "sm:w-auto")}
+          >
+            {isSubmitting
+              ? locale === "sv"
+                ? "Skickar..."
+                : "Sending..."
+              : categories[selectedCategory].submitLabel}
+          </Button>
+          {isPanel && (
+            <p className="text-center text-xs leading-relaxed text-text-muted">
+              {locale === "sv" ? "Vi svarar samma arbetsdag. Brådskande? Ring " : "We reply the same business day. Urgent? Call "}
+              <a
+                href="tel:+46103304636"
+                className="inline-flex min-h-11 items-center px-1 text-accent-soft underline decoration-accent-soft/40 underline-offset-4 transition-colors hover:text-accent"
+              >
+                {t.phone}
+              </a>
+            </p>
+          )}
+        </div>
+      </form>
+    );
+  }
 }

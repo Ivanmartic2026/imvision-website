@@ -31,7 +31,7 @@ const footerGroups: Array<{
 
 export function Footer({ locale = "en" }: { locale?: Locale }) {
   return (
-    <footer className="border-t border-border-subtle bg-[#070807]">
+    <footer className="theme-dark border-t border-border-subtle bg-[#070807]">
       <div className="section py-16 lg:py-24">
         <div className="section-inner">
           <div className="grid gap-16 lg:grid-cols-12">
@@ -60,7 +60,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                 <ul className="mt-5 space-y-3">
                   {group.links.map(([label, href]) => (
                     <li key={label.en}>
-                      <Link href={localizedHref(locale, href)} prefetch={false} className="text-sm text-text-secondary transition-colors hover:text-text-primary">
+                      <Link href={localizedHref(locale, href)} prefetch={false} className="inline-flex min-h-9 items-center text-sm text-text-secondary transition-colors hover:text-text-primary">
                         {label[locale]}
                       </Link>
                     </li>
@@ -74,8 +74,8 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                 {locale === "sv" ? "Kontakt" : "Contact"}
               </h2>
               <div className="mt-5 space-y-3 text-sm text-text-secondary">
-                <a href="mailto:info@imvision.se" className="block transition-colors hover:text-text-primary">info@imvision.se</a>
-                <a href="tel:+46103304636" className="block transition-colors hover:text-text-primary">010 330 46 36</a>
+                <a href="mailto:info@imvision.se" className="flex min-h-9 items-center transition-colors hover:text-text-primary">info@imvision.se</a>
+                <a href="tel:+46103304636" className="flex min-h-9 items-center transition-colors hover:text-text-primary">010 330 46 36</a>
                 {[
                   { label: locale === "sv" ? "Huvudkontor" : "Head office", street: CONTACT.street, line2: `${CONTACT.postalCode} ${CONTACT.locality}` },
                   { label: locale === "sv" ? "Lager & kontor" : "Warehouse & office", street: STOCKHOLM_LOCATION.street, line2: `${STOCKHOLM_LOCATION.postalCode} ${STOCKHOLM_LOCATION.locality}` },
@@ -105,7 +105,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                             ? `Följ IM Vision på ${platform}`
                             : `Follow IM Vision on ${platform}`
                         }
-                        className="text-text-muted transition-colors hover:text-accent"
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-text-muted transition-colors hover:text-accent"
                       >
                         <Icon />
                       </a>

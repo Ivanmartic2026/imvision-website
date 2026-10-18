@@ -73,8 +73,8 @@ export function Header({
                   : "border-black/[0.08]"
               )
             : scrolled
-              ? "border-white/[.06] bg-[#070807]/88 backdrop-blur-2xl"
-              : "border-transparent bg-transparent"
+              ? cn("theme-dark border-white/[.06] bg-[#070807]/88 backdrop-blur-2xl")
+              : "theme-dark border-transparent bg-transparent"
         )}
       >
         <div className="mx-auto flex h-[78px] max-w-[1600px] items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16">
@@ -113,7 +113,7 @@ export function Header({
           <div className="hidden items-center gap-3 lg:flex">
             <a
               href={`tel:${CONTACT.phoneE164}`}
-              className="inline-flex items-center gap-2 rounded-[12px_4px_12px_12px] border border-accent/40 bg-accent/10 px-3.5 py-2 text-[13px] font-medium text-text-primary transition-colors hover:border-accent hover:bg-accent/20"
+              className="inline-flex min-h-11 items-center gap-2 rounded-[12px_4px_12px_12px] border border-accent/40 bg-accent/10 px-3.5 text-[13px] font-medium text-text-primary transition-colors hover:border-accent hover:bg-accent/20"
               aria-label={locale === "sv" ? `Ring oss på ${CONTACT.phone}` : `Call us on ${CONTACT.phone}`}
             >
               <Phone size={15} className="text-accent" strokeWidth={1.75} />
@@ -121,13 +121,22 @@ export function Header({
               <span className="xl:hidden">{locale === "sv" ? "Ring" : "Call"}</span>
             </a>
             <Link
-              href={localizedHref(locale, "/contact/")}
+              href={isActive(localizedHref(locale, "/contact/")) ? "#contact-form" : localizedHref(locale, "/contact/")}
               prefetch={false}
               onClick={() => {
                 pushEvent(AnalyticsEvent.ctaClick, { source: "header", cta: "quote" });
                 pushEvent(AnalyticsEvent.quoteRequest, { source: "header" });
+                // On the contact page this is an in-page anchor: the browser
+                // scrolls, but keyboard focus would stay in the header. Move it
+                // into the form panel so the next Tab lands in the form.
+                if (isActive(localizedHref(locale, "/contact/"))) {
+                  window.setTimeout(
+                    () => document.getElementById("contact-form")?.focus({ preventScroll: true }),
+                    0
+                  );
+                }
               }}
-              className="group/cta inline-flex items-center gap-1.5 rounded-[12px_4px_12px_12px] border border-accent bg-accent px-4 py-2 text-[13px] font-semibold text-[#070807] shadow-[0_8px_24px_rgba(0,0,0,.18)] transition-[background-color,box-shadow,transform] duration-[500ms] ease-[cubic-bezier(.22,.61,.36,1)] hover:-translate-y-0.5 hover:bg-accent-soft hover:shadow-[0_12px_32px_rgba(0,0,0,.24)]"
+              className="group/cta inline-flex min-h-11 items-center gap-1.5 rounded-[12px_4px_12px_12px] border border-accent bg-[#91a9a1] px-4 text-[13px] font-semibold text-[#070807] shadow-[0_8px_24px_rgba(0,0,0,.18)] transition-[background-color,box-shadow,transform] duration-[500ms] ease-[cubic-bezier(.22,.61,.36,1)] hover:-translate-y-0.5 hover:bg-accent-soft hover:shadow-[0_12px_32px_rgba(0,0,0,.24)]"
             >
               {locale === "sv" ? "Få offert" : "Get a quote"}
               <ArrowRight size={14} strokeWidth={2} className="transition-transform duration-[500ms] group-hover/cta:translate-x-[2px]" />
@@ -176,7 +185,9 @@ export function Header({
             <nav className="mx-auto flex min-h-full max-w-xl flex-col pb-8" aria-label="Mobile navigation">
               <div className="flex items-center justify-between">
                 <p className="eyebrow text-accent">IM / {locale === "sv" ? "Meny" : "Menu"}</p>
-                <LanguageSwitcher locale={locale} />
+                <div className="flex items-center gap-2">
+                  <LanguageSwitcher locale={locale} />
+                </div>
               </div>
               <div className="mt-10 divide-y divide-border-subtle border-y border-border-subtle">
                 {navLinks.map((link, index) => (
@@ -207,7 +218,7 @@ export function Header({
                     pushEvent(AnalyticsEvent.ctaClick, { source: "mobile_menu", cta: "quote" });
                     pushEvent(AnalyticsEvent.quoteRequest, { source: "mobile_menu" });
                   }}
-                  className="flex items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent bg-accent px-5 py-4 text-base font-semibold text-[#070807] shadow-[0_10px_30px_rgba(0,0,0,.24)] transition-transform active:scale-[.98]"
+                  className="flex items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent bg-accent px-5 py-4 text-base font-semibold text-background shadow-[0_10px_30px_rgba(0,0,0,.24)] transition-transform active:scale-[.98]"
                 >
                   {locale === "sv" ? "Få offert" : "Get a quote"}
                   <ArrowRight size={17} strokeWidth={2} />

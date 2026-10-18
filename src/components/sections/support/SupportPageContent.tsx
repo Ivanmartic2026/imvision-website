@@ -212,7 +212,7 @@ export function SupportPageContent({ locale = "en" }: { locale?: Locale }) {
                     {t.ctaCall}
                   </Button>
                   <Button
-                    href={localizedHref(locale, "/contact/")}
+                    href={localizedHref(locale, "/contact/?topic=service")}
                     size="large"
                     icon={<ArrowRight size={18} />}
                   >

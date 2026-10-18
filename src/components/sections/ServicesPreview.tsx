@@ -53,7 +53,7 @@ export function ServicesPreview({ locale = "en" }: { locale?: Locale }) {
           {services.map((service, index) => (
             <motion.article
               key={service.title}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.8, delay: index * 0.08, ease: [0.22, 0.61, 0.36, 1] }}

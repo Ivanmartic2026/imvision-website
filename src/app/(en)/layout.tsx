@@ -10,6 +10,10 @@ export const viewport = rootViewport;
 // Root layout for the English site (URLs at "/"). One of two per-locale root
 // layouts — this one statically declares <html lang="en"> at SSR (no client-side
 // lang patching needed), which the previous single-root layout could not do.
+//
+// No theme script: see the matching note in the Swedish root layout — the site
+// is designed dark, and a global light mode failed contrast audits.
+
 export default function EnglishRootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {

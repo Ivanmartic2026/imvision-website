@@ -90,7 +90,7 @@ export function StoryTimeline({ locale = "en" }: { locale?: Locale }) {
               return (
                 <article key={step.number} className="grid items-center gap-8 lg:grid-cols-12 lg:gap-16">
                   <motion.div
-                    initial={{ opacity: 0, y: 24 }}
+                    initial={{ y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-10%" }}
                     transition={{ duration: 0.85, ease: [0.22, 0.61, 0.36, 1] }}

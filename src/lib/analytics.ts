@@ -18,6 +18,8 @@ export const analyticsEnabled = /^G-[A-Z0-9]+$/i.test(GA_ID);
 export const CONSENT_KEY = "im-cookie-consent";
 /** Event för att öppna samtyckesbannern igen (t.ex. från sidfoten). */
 export const CONSENT_REOPEN = "im:open-consent";
+/** Event som skickas när samtycket ändras – andra komponenter kan lyssna. */
+export const CONSENT_CHANGED = "im:consent-changed";
 
 /** Stabila eventnamn enligt GA4:s rekommendationer (snake_case). */
 export const AnalyticsEvent = {
