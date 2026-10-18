@@ -38,6 +38,8 @@ export function SalesPage({ locale }: SalesPageProps) {
         <SalesMidCta locale={locale} variant="sales" />
         <SalesResponsibility locale={locale} content={content} />
         <SalesService locale={locale} content={content} />
+        {/* Mid-CTA at ~75 % — reader has seen projects and service overview, right before the contact form. Captures late-scrollers. */}
+        <SalesMidCta locale={locale} variant="sales" />
         <SalesProjectForm locale={locale} content={content} />
         <SalesFinalCta locale={locale} content={content} />
       </main>

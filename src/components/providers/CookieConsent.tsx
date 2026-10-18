@@ -45,7 +45,13 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
     // Öppna banner igen – bryt ut för återvisning.
     const handleReopen = () => {
       // Läs nuvarande analys-inställning så att steg 2 kan vara förifylld.
-      setAnalyticsEnabled(localStorage.getItem(CONSENT_KEY) === "granted");
+      // localStorage kan kasta (Safari privat läge blockerar även läsning) —
+      // ett oskyddat getItem här skulle krascha sidan för den besökaren.
+      try {
+        setAnalyticsEnabled(localStorage.getItem(CONSENT_KEY) === "granted");
+      } catch {
+        setAnalyticsEnabled(false);
+      }
       setConsent(null);
       setStep(2); // anpassa-vyn förvaldas vid återöppning
     };
@@ -55,18 +61,31 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
 
   // Flytta fokus till utfälld panel när steg 2 öppnas.
   const step2Ref = useRef<HTMLDivElement>(null);
-  const [prevStep, setPrevStep] = useState(1);
+  // Ref i stället för state: förra varianten läste och skrev samma state i
+  // effekten, vilket gav en extra render vid varje stegbyte.
+  const prevStepRef = useRef(1);
 
   useEffect(() => {
-    if (step === 2 && prevStep === 1) {
+    if (step === 2 && prevStepRef.current === 1) {
       step2Ref.current?.focus();
     }
-    setPrevStep(step);
-  }, [step, prevStep]);
+    prevStepRef.current = step;
+  }, [step]);
 
   // Escape stänger steg 2 och går tillbaka till steg 1.
   const handleEscape = useCallback(() => {
     if (step === 2) setStep(1);
+  }, [step]);
+
+  // ...och tangentbordsvägen: handleEscape användes tidigare bara av
+  // stäng-krysset, så Escape gjorde ingenting för tangentbordsanvändare.
+  useEffect(() => {
+    if (step !== 2) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setStep(1);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [step]);
 
   // Animation – mjuk in-glidning, respektera preferens.
