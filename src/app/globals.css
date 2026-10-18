@@ -265,6 +265,24 @@ main img {
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent 72%);
 }
 
+/* ── Quick-enquiry panel motion ──────────────────────────────────────────────
+   Only transform/opacity, and only applied through `motion-safe:` so users who
+   ask for reduced motion get the panel instantly. */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes sheetUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ── Pointer targets ─────────────────────────────────────────────────────────
    WCAG 2.2 AA (2.5.8 Target Size Minimum): every interactive element gets at
    least 44×44 px. Text links keep their visual size — the box grows around the

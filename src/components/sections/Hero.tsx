@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { QuoteCta } from "@/components/providers/QuickQuote";
 import { CONTACT } from "@/lib/seo";
 import { Locale, localizedHref } from "@/lib/i18n";
 
@@ -95,14 +95,12 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
                 repeat it as two large cards — that duplicated the section and
                 pushed the proof, projects and process below the fold. */}
             <div className="mt-9 flex flex-col items-start gap-4 sm:mt-11 sm:flex-row sm:items-center sm:gap-6">
-              <Button
-                href={localizedHref(locale, "/contact/") + "#contact-form"}
-                size="large"
+              <QuoteCta
+                locale={locale}
+                source="hero"
+                className="w-full px-7 text-base sm:w-auto"
                 icon={<ArrowRight size={18} />}
-                className="w-full sm:w-auto"
-              >
-                {locale === "sv" ? "Få offert" : "Get a quote"}
-              </Button>
+              />
               <Link
                 href={localizedHref(locale, "/projects/")}
                 prefetch={false}

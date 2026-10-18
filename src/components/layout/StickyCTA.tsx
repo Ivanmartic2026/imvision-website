@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Phone, ArrowRight } from "lucide-react";
-import { Locale, localizedHref } from "@/lib/i18n";
+import { Locale } from "@/lib/i18n";
+import { QuoteCta } from "@/components/providers/QuickQuote";
 import { CONTACT } from "@/lib/seo";
 import { AnalyticsEvent, pushEvent, CONSENT_KEY } from "@/lib/analytics";
 
@@ -64,7 +64,6 @@ export function StickyCTA({ locale = "en" }: { locale?: Locale }) {
     : locale === "sv"
       ? "Få offert"
       : "Get a quote";
-  const quoteHref = onContact ? "#contact-form" : localizedHref(locale, "/contact/");
   const callLabel = locale === "sv" ? "Ring" : "Call";
 
   return (
@@ -88,24 +87,14 @@ export function StickyCTA({ locale = "en" }: { locale?: Locale }) {
               <Phone size={17} className="text-accent" strokeWidth={1.75} />
               {callLabel}
             </a>
-            <Link
-              href={quoteHref}
-              prefetch={onContact ? false : undefined}
-              onClick={() => {
-                pushEvent(AnalyticsEvent.ctaClick, { source: "sticky_cta", cta: "quote" });
-                pushEvent(AnalyticsEvent.quoteRequest, { source: "sticky_cta" });
-                if (onContact) {
-                  window.setTimeout(
-                    () => document.getElementById("contact-form")?.focus({ preventScroll: true }),
-                    0
-                  );
-                }
-              }}
-              className="flex min-h-[52px] flex-1 items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent bg-accent px-5 text-[15px] font-semibold text-background shadow-[0_10px_30px_rgba(0,0,0,.28)] transition-transform active:scale-[.98]"
+            <QuoteCta
+              locale={locale}
+              source="sticky_cta"
+              className="min-h-[52px] flex-1 rounded-[14px_5px_14px_14px] px-5 text-[15px] shadow-[0_10px_30px_rgba(0,0,0,.28)]"
+              icon={<ArrowRight size={17} strokeWidth={2} />}
             >
               {quoteLabel}
-              <ArrowRight size={17} strokeWidth={2} />
-            </Link>
+            </QuoteCta>
           </div>
         </motion.div>
       )}
