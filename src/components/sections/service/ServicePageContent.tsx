@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Headphones, Settings, ShieldCheck, Zap, ArrowRight } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -12,6 +13,7 @@ import { StaggerReveal, StaggerItem } from "@/components/effects/StaggerReveal";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Locale } from "@/lib/i18n";
 import { serviceLd } from "@/lib/seo";
+import { localizedHref } from "@/lib/i18n";
 
 const copy = {
   en: {
@@ -194,7 +196,7 @@ export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-text-secondary">{ticket.body}</p>
               {!ticketOpen ? (
-                <div className="mt-8 flex justify-center">
+                <div className="mt-8 flex flex-col items-center gap-4">
                   <Button
                     type="button"
                     onClick={() => setTicketOpen(true)}
@@ -203,6 +205,17 @@ export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
                   >
                     {ticket.button}
                   </Button>
+                  {/* Service = agreements and maintenance; Support = tickets,
+                      documentation and FAQs. The two pages must point at each
+                      other so nobody lands on the wrong one. */}
+                  <Link
+                    href={localizedHref(locale, "/support/")}
+                    className="tap gap-2 text-sm font-medium text-text-secondary underline decoration-accent/60 underline-offset-4 transition-colors hover:text-text-primary"
+                  >
+                    {locale === "sv"
+                      ? "Söker ni dokumentation eller vanliga frågor? Gå till Support"
+                      : "Looking for documentation or FAQs? Go to Support"}
+                  </Link>
                 </div>
               ) : (
                 <div className="mt-10 text-left">

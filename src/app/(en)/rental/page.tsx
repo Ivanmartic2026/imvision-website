@@ -13,6 +13,8 @@ import {
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SalesMidCta } from "@/components/sections/sales/SalesMidCta";
+import { RentalQuickForm } from "@/components/sections/rental/RentalQuickForm";
+import { QuoteCta } from "@/components/providers/QuickQuote";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/effects/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/effects/StaggerReveal";
@@ -112,12 +114,11 @@ export default function RentalPage() {
                   </p>
                 </Reveal>
                 <Reveal delay={0.22} className="flex flex-col gap-3 sm:flex-row lg:col-span-6 lg:justify-end">
-                  <Button href="/contact/" size="large" icon={<ArrowRight size={18} />}>
-                    Plan your event
-                  </Button>
-                  <Button href="#rental-scope" variant="secondary" size="large" icon={<ArrowDown size={18} />}>
+                  <QuoteCta locale="en" source="rental_hero" category="rental" className="px-7 text-base" icon={<ArrowRight size={18} />} />
+                  <a href="#rental-scope" className="tap justify-center gap-2 px-2 text-sm font-semibold text-text-primary underline decoration-accent underline-offset-4">
                     Explore rental
-                  </Button>
+                    <ArrowDown size={16} />
+                  </a>
                 </Reveal>
               </div>
               <p className="mt-6 font-mono text-[0.625rem] uppercase tracking-[0.13em] text-white/55">
@@ -172,7 +173,7 @@ export default function RentalPage() {
         {/* Mid-page CTA: the rental scope is now clear, so this is the first
             natural point to offer a way forward without waiting for the
             closing band. */}
-        <SalesMidCta locale="en" variant="rental" />
+        <RentalQuickForm locale="en" />
 
         <section className="section section-space overflow-hidden bg-bg-elevated">
           <div className="section-inner">
@@ -243,8 +244,6 @@ export default function RentalPage() {
           </div>
         </section>
 
-        {/* Second mid-page CTA: the delivery process is explained, so the
-            reader can act without scrolling to the closing band. */}
         <SalesMidCta locale="en" variant="rental" />
 
         <section className="section section-space bg-background">
@@ -261,9 +260,7 @@ export default function RentalPage() {
                   into a considered rental system and technical delivery plan.
                 </p>
                 <div className="mt-9">
-                  <Button href="/contact/" size="large" icon={<ArrowRight size={18} />}>
-                    Discuss your event
-                  </Button>
+                  <QuoteCta locale="en" source="rental_final" category="rental" className="px-7 text-base" icon={<ArrowRight size={18} />} />
                 </div>
               </Reveal>
             </div>
