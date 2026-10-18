@@ -110,7 +110,7 @@ export default function RentalPage() {
               </h1>
               <div className="mt-8 grid grid-cols-1 gap-8 border-t border-white/20 pt-7 lg:grid-cols-12 lg:items-end">
                 <Reveal delay={0.16} className="lg:col-span-6">
-                  <p className="max-w-xl text-lg leading-relaxed text-[#d0d5d2] sm:text-xl">
+                  <p className="max-w-xl text-lg leading-relaxed text-accent-soft sm:text-xl">
                     Engineered LED environments for launches, exhibitions, live
                     productions, and temporary spaces — delivered as one complete
                     technical system.

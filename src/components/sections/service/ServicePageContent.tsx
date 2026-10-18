@@ -235,7 +235,7 @@ export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
               {t.services.map((service) => (
                 <StaggerItem key={service.title}>
                   <div className="premium-card h-full bg-bg-elevated p-8">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-[12px_4px_12px_12px] bg-accent/10 text-accent">
                       <service.icon size={26} strokeWidth={1.5} />
                     </div>
                     <h3 className="mt-8 text-xl font-medium text-text-primary">{service.title}</h3>

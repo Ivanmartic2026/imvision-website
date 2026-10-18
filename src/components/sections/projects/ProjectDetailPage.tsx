@@ -259,7 +259,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
         </PageHeader>
 
         {/* Compact fact row — key details visible at a glance before the hero image. */}
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="section"><div className="section-inner">
           <div className="mt-4 grid grid-cols-2 gap-y-3 gap-x-8 sm:grid-cols-4 lg:grid-cols-6">
             {/* Year */}
             {project.year && (
@@ -310,12 +310,12 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
               </div>
             )}
           </div>
-        </div>
+        </div></div>
 
         {/* IM / Roll — role badges with icon and source attribution. Hidden when the
             project has no documented role (e.g. Ocean Outdoor sites). */}
         {project.role?.length && (
-          <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="section"><div className="section-inner">
             <div className="mt-6 flex flex-wrap items-center gap-3">
               {project.role.map((r) => (
                 <span
@@ -331,7 +331,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                 </span>
               ))}
             </div>
-          </div>
+          </div></div>
         )}
 
         <section className="section py-12 lg:py-20">

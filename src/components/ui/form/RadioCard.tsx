@@ -34,12 +34,12 @@ export function RadioCard({
   return (
     <label
       className={cn(
-        "group relative flex cursor-pointer flex-col gap-2.5 rounded-2xl border p-5 transition-all duration-300 ease-[cubic-bezier(.22,.61,.36,1)]",
+        "group relative flex cursor-pointer flex-col gap-2.5 rounded-[12px_4px_12px_12px] border p-5 transition-all duration-300 ease-[cubic-bezier(.22,.61,.36,1)]",
         checked
-          ? "border-accent bg-accent/[0.06]"
-          : "border-border-subtle bg-bg-surface hover:border-border-strong hover:bg-bg-elevated",
+          ? "border-accent bg-accent/[0.10]"
+          : "border-[var(--btn-border)] bg-bg-surface hover:border-accent/70 hover:bg-bg-elevated",
         // Keyboard focus lands on the visually hidden radio — mirror it on the card.
-        "has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-accent has-[input:focus-visible]:ring-offset-2 has-[input:focus-visible]:ring-offset-background",
+        "has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-inset has-[input:focus-visible]:ring-accent",
         className
       )}
     >

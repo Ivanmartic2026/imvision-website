@@ -110,7 +110,7 @@ export function SalesHero({ locale, content }: SalesSectionProps) {
                 initial={{ y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.48, ease: [0.22, 0.61, 0.36, 1] }}
-                className="max-w-xl text-lg leading-relaxed text-[#d0d5d2] sm:text-xl lg:col-span-6"
+                className="max-w-xl text-lg leading-relaxed text-accent-soft sm:text-xl lg:col-span-6"
               >
                 {hero.subhead}
               </motion.p>

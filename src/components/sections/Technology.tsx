@@ -29,7 +29,7 @@ export function Technology({ locale = "en" }: { locale?: Locale }) {
               <h2 id="technology-title" className="heading-section mt-6">
                 {locale === "sv" ? "Från idé till färdig drift" : "From idea to reliable operation"}
               </h2>
-              <p className="mt-6 text-lg text-[#a9b0ad] sm:text-xl">
+              <p className="mt-6 text-lg text-text-secondary sm:text-xl">
                 {locale === "sv" ? "Vi tar ansvar för hela leveransen." : "We take responsibility for the complete delivery."}
               </p>
             </div>

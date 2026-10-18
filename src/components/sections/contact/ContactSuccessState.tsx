@@ -69,7 +69,7 @@ export function ContactSuccessState({ locale, category, flowRef }: ContactSucces
       transition={{ duration, ease: [0.22, 0.61, 0.36, 1] }}
       role="status"
       aria-live="polite"
-      className="rounded-3xl border border-accent/25 bg-accent/10 p-8 text-text-secondary"
+      className="rounded-[24px_8px_24px_24px] border border-accent/25 bg-accent/10 p-8 text-text-secondary"
     >
       <div className="flex items-start gap-4">
         {/* Checkmark badge */}

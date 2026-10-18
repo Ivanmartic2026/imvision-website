@@ -332,7 +332,7 @@ export function ContactForm({
         isPanel && "outline-none",
         compact ? "space-y-6" : "space-y-10 sm:space-y-12",
         isPanel &&
-          "space-y-3.5 rounded-3xl border border-border-subtle bg-bg-surface p-4 shadow-[0_20px_60px_rgba(0,0,0,.20)] sm:p-6 scroll-mt-28"
+          "space-y-3.5 rounded-[24px_8px_24px_24px] border border-border-subtle bg-bg-surface p-4 shadow-[0_20px_60px_rgba(0,0,0,.20)] sm:p-6 scroll-mt-28"
       )}
     >
       {!compact && (
@@ -363,7 +363,7 @@ export function ContactForm({
           ref={summaryRef}
           role="alert"
           tabIndex={-1}
-          className="rounded-2xl border border-red-400/40 bg-red-400/10 px-4 py-3 text-sm text-red-300 outline-none focus-visible:ring-2 focus-visible:ring-red-400/60"
+          className="rounded-[12px_4px_12px_12px] border border-red-400/40 bg-red-400/10 px-4 py-3 text-sm text-red-300 outline-none focus-visible:ring-2 focus-visible:ring-red-400/60"
         >
           <strong className="font-semibold text-red-200">
             {locale === "sv" ? `Kontrollera ${errorCount} fält` : `Check ${errorCount} field${errorCount === 1 ? "" : "s"}`}
@@ -418,7 +418,7 @@ export function ContactForm({
         onChangeCapture={handleFirstInteraction}
         className={cn(
           isPanel ? "space-y-3.5" : "space-y-5",
-          !isPanel && "mx-auto max-w-2xl rounded-3xl border border-border-subtle bg-bg-surface p-6 shadow-[0_12px_40px_rgba(0,0,0,.05)] sm:p-10"
+          !isPanel && "mx-auto max-w-2xl rounded-[24px_8px_24px_24px] border border-border-subtle bg-bg-surface p-6 shadow-[0_12px_40px_rgba(0,0,0,.05)] sm:p-10"
         )}
       >
         <input type="hidden" {...register("category")} value={selectedCategory} />

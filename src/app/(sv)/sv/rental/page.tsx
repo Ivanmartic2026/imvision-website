@@ -52,7 +52,7 @@ export default function SwedishRentalPage() {
                 <span className="block text-accent-soft">ögonblicket.</span>
               </h1>
               <div className="mt-8 grid grid-cols-1 gap-8 border-t border-white/20 pt-7 lg:grid-cols-12 lg:items-end">
-                <Reveal delay={0.16} className="lg:col-span-6"><p className="max-w-xl text-lg leading-relaxed text-[#d0d5d2] sm:text-xl">Projekterade LED-miljöer för lanseringar, utställningar, liveproduktioner och tillfälliga rum – levererade som ett komplett tekniskt system.</p></Reveal>
+                <Reveal delay={0.16} className="lg:col-span-6"><p className="max-w-xl text-lg leading-relaxed text-accent-soft sm:text-xl">Projekterade LED-miljöer för lanseringar, utställningar, liveproduktioner och tillfälliga rum – levererade som ett komplett tekniskt system.</p></Reveal>
                 <Reveal delay={0.22} className="flex flex-col gap-3 sm:flex-row lg:col-span-6 lg:justify-end">
                   <QuoteCta locale="sv" source="rental_hero" category="rental" className="px-7 text-base" icon={<ArrowRight size={18} />} />
                   <a href="#rental-scope" className="tap justify-center gap-2 px-2 text-sm font-semibold text-text-primary underline decoration-accent underline-offset-4">

@@ -43,6 +43,18 @@ Tre, definierade i `globals.css`: `.h2-display` (största sektionsrubriken),
 `.heading-section` (standard) och `.h2-sub` (sekundär rubrik i band).
 Använd dem i stället för egna `text-[clamp(...)]`-strängar.
 
+## Former i praktiken (tre nivåer)
+
+| Nivå | Radie | Exempel |
+|---|---|---|
+| Kort/yta | `24px 8px 24px 24px` | projektkort, paneler, formulärkort, notiser |
+| Kontroll | `12px 4px 12px 12px` | knappar, inmatningsfält, select, textarea, filuppladdning, radiokort, ikonknappar |
+| Etikett | `8px 3px 8px 8px` / `10px 3px` | små badges på bilder och kort |
+| Pill | `rounded-full` | chips, karusellpilar, filter |
+
+Fokusmarkering på kontroller: `ring-2 ring-inset ring-accent` — inset så att ringen
+aldrig klipps av en förälder eller ritas som en dubbel ram utanför kortet.
+
 ## Mätning
 
 `~/Desktop/imvision-website/tools/buttons.mjs` inventerar alla knappliknande element

@@ -151,7 +151,7 @@ export function StoryTimeline({ locale = "en" }: { locale?: Locale }) {
                       <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#f2f0e9]">
                         IM / {locale === "sv" ? step.imageLabelSv : step.imageLabel}
                       </span>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#a9b0ad]">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-text-secondary">
                         {locale === "sv" ? "Konceptvisualisering" : "Concept visualisation"}
                       </span>
                     </div>

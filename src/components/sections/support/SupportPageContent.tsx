@@ -166,7 +166,7 @@ export function SupportPageContent({ locale = "en" }: { locale?: Locale }) {
               {t.resources.map((resource, index) => (
                 <Reveal key={resource.title} delay={index * 0.1}>
                   <div className="premium-card flex h-full flex-col bg-bg-elevated p-8">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-[12px_4px_12px_12px] bg-accent/10 text-accent">
                       <resource.icon size={26} strokeWidth={1.5} />
                     </div>
                     <h3 className="mt-8 text-xl font-medium text-text-primary">{resource.title}</h3>

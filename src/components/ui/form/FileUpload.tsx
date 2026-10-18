@@ -135,7 +135,7 @@ export function FileUpload({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         className={cn(
-          compact ? "cursor-pointer rounded-2xl border border-dashed px-4 py-3 transition-all duration-200 ease-[cubic-bezier(.22,.61,.36,1)]" : "cursor-pointer rounded-2xl border-2 border-dashed p-5 transition-all duration-200 ease-[cubic-bezier(.22,.61,.36,1)]",
+          compact ? "cursor-pointer rounded-[12px_4px_12px_12px] border border-dashed px-4 py-3 transition-all duration-200 ease-[cubic-bezier(.22,.61,.36,1)]" : "cursor-pointer rounded-2xl border-2 border-dashed p-5 transition-all duration-200 ease-[cubic-bezier(.22,.61,.36,1)]",
           "hover:border-accent/50 hover:bg-bg-elevated",
           isDragging ? "border-accent bg-accent/[0.06]" : "border-border-subtle bg-bg-surface",
           error && "border-red-400/50"
@@ -169,7 +169,7 @@ export function FileUpload({
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-2 text-center">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-bg-elevated text-accent">
+            <span className="flex h-10 w-10 items-center justify-center rounded-[8px_3px_8px_8px] bg-bg-elevated text-accent">
               <Upload size={20} />
             </span>
             <span className="text-sm text-text-secondary">
