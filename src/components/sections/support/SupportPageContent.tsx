@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { BookOpen, Download, MessageCircle, ArrowRight } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -21,17 +22,23 @@ const copy = {
       {
         icon: BookOpen,
         title: "Documentation",
-        description: "Access user manuals, installation guides, and specifications.",
+        description: "Manuals, installation guides and specifications for your installation — request them from the service desk.",
+        href: "mailto:support@imvision.se?subject=Documentation%20request",
+        cta: "Request documentation",
       },
       {
         icon: Download,
-        title: "Software Downloads",
-        description: "Download control software, firmware, and configuration tools.",
+        title: "Software and firmware",
+        description: "Control software, firmware and configuration tools are released per installation.",
+        href: "mailto:support@imvision.se?subject=Software%20and%20firmware%20request",
+        cta: "Request software",
       },
       {
         icon: MessageCircle,
-        title: "Open a Ticket",
-        description: "Describe your issue and our support team will respond quickly.",
+        title: "Report an issue",
+        description: "Describe the fault or the question and we reply within 24 hours.",
+        href: "/contact/?topic=service",
+        cta: "Report an issue",
       },
     ],
     faqTitle: "Frequently asked questions",
@@ -78,17 +85,23 @@ const copy = {
       {
         icon: BookOpen,
         title: "Dokumentation",
-        description: "Manualer, installationsguider och specifikationer för levererade system.",
+        description: "Manualer, installationsguider och specifikationer för er installation — begär dem från service desk.",
+        href: "mailto:support@imvision.se?subject=Dokumentation",
+        cta: "Begär dokumentation",
       },
       {
         icon: Download,
-        title: "Mjukvarunedladdningar",
-        description: "Ladda ned styrmjukvara, firmware och konfigurationsverktyg.",
+        title: "Mjukvara och firmware",
+        description: "Styrprogramvara, firmware och konfigurationsverktyg släpps per installation.",
+        href: "mailto:support@imvision.se?subject=Mjukvara%20och%20firmware",
+        cta: "Begär mjukvara",
       },
       {
         icon: MessageCircle,
-        title: "Beskriv ärendet",
-        description: "Beskriv problemet så svarar vårt supportteam så snabbt som möjligt.",
+        title: "Anmäl ärende",
+        description: "Beskriv felet eller frågan så återkommer vi inom 24 timmar.",
+        href: "/contact/?topic=service",
+        cta: "Anmäl ärende",
       },
     ],
     faqTitle: "Vanliga frågor",
@@ -138,18 +151,38 @@ export function SupportPageContent({ locale = "en" }: { locale?: Locale }) {
 
         <section className="section section-space" aria-labelledby="support-resources">
           <div className="section-inner">
-            <h2 id="support-resources" className="sr-only">
-              {t.resourcesTitle}
-            </h2>
+            <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <h2 id="support-resources" className="text-3xl font-medium tracking-[-0.03em] text-text-primary sm:text-4xl">
+                {t.resourcesTitle}
+              </h2>
+              <Link
+                href={localizedHref(locale, "/service/")}
+                className="tap gap-2 text-sm font-medium text-text-secondary underline decoration-accent/60 underline-offset-4 transition-colors hover:text-text-primary"
+              >
+                {locale === "sv" ? "Läs om serviceavtal och underhåll" : "Service agreements and maintenance"}
+              </Link>
+            </div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {t.resources.map((resource, index) => (
                 <Reveal key={resource.title} delay={index * 0.1}>
-                  <div className="premium-card h-full bg-bg-elevated p-8">
+                  <div className="premium-card flex h-full flex-col bg-bg-elevated p-8">
                     <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10 text-accent">
                       <resource.icon size={26} strokeWidth={1.5} />
                     </div>
                     <h3 className="mt-8 text-xl font-medium text-text-primary">{resource.title}</h3>
                     <p className="mt-3 text-text-secondary">{resource.description}</p>
+                    {resource.href && (
+                      <a
+                        href={
+                          resource.href.startsWith("/")
+                            ? localizedHref(locale, resource.href.replace("?topic=service", "")) + "?topic=service"
+                            : resource.href
+                        }
+                        className="tap mt-auto gap-2 pt-6 text-sm font-semibold text-text-primary underline decoration-accent underline-offset-4 transition-colors hover:text-accent-soft"
+                      >
+                        {resource.cta}
+                      </a>
+                    )}
                   </div>
                 </Reveal>
               ))}

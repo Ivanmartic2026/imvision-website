@@ -50,7 +50,7 @@ export function SalesTechnicalPrinciples({ content }: SalesSectionProps) {
                     <div className="grid grid-cols-1 gap-4 py-5 sm:grid-cols-[auto_1fr]">
                       <Icon size={20} strokeWidth={1.5} className="text-accent-dim" />
                       <div>
-                        <span className="font-medium text-text-primary">{item.label}</span>
+                        <h3 className="font-medium text-text-primary">{item.label}</h3>
                         <p className="mt-1 text-sm leading-relaxed text-text-secondary">{item.description}</p>
                       </div>
                     </div>
