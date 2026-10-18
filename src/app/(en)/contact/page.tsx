@@ -13,7 +13,7 @@ export const metadata = pageMeta({
   path: "/contact/",
   title: "Contact — LED Display Sales, Rental & Service",
   description:
-    "Talk to IM Vision about buying, renting, installing or servicing LED displays across Europe. We reply within one business day.",
+    "Talk to IM Vision about buying, renting, installing or servicing LED screens across the Nordics and Europe. We reply within 24 hours.",
 });
 
 const contactPageLd = {

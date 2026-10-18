@@ -28,7 +28,7 @@ export function ContactCTA({ locale = "en" }: { locale?: Locale }) {
             <div className="lg:col-span-4 lg:flex lg:justify-end">
               <div>
                 <Button href={localizedHref(locale, "/contact/")} size="large" icon={<ArrowRight size={18} />}>
-                  {locale === "sv" ? "Starta ett projekt" : "Start a project"}
+                  {locale === "sv" ? "Få offert" : "Get a quote"}
                 </Button>
               </div>
             </div>

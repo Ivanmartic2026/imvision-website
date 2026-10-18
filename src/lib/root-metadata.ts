@@ -9,11 +9,11 @@ import { SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE } from "@/lib/seo";
 export const rootMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "IM Vision — LED display solutions across Europe",
+    default: "IM Vision — LED screens for the Nordics and Europe",
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "IM Vision designs, engineers, installs and services premium LED displays for retail, events and digital-out-of-home — one accountable partner across Europe.",
+    "IM Vision designs, engineers, installs and services premium LED displays for retail, events and digital-out-of-home — one accountable partner across the Nordics and Europe.",
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME }],
   creator: SITE_NAME,
@@ -34,16 +34,16 @@ export const rootMetadata: Metadata = {
     alternateLocale: "sv_SE",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: "IM Vision — LED display solutions across Europe",
+    title: "IM Vision — LED screens for the Nordics and Europe",
     description:
-      "Buy, rent, install and service premium LED displays — one accountable partner across Europe.",
+      "Buy, rent, install and service premium LED displays — one accountable partner across the Nordics and Europe.",
     images: [{ url: DEFAULT_OG_IMAGE, width: 1672, height: 941, alt: "IM Vision LED installation" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "IM Vision — LED display solutions across Europe",
+    title: "IM Vision — LED screens for the Nordics and Europe",
     description:
-      "Buy, rent, install and service premium LED displays — one accountable partner across Europe.",
+      "Buy, rent, install and service premium LED displays — one accountable partner across the Nordics and Europe.",
     images: [DEFAULT_OG_IMAGE],
   },
   robots: {

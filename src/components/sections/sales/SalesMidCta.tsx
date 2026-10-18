@@ -30,12 +30,12 @@ export function SalesMidCta({ locale = "en", variant }: SalesMidCtaProps) {
     sv: {
       sales: {
         heading: "Redo att räkna på ert projekt?",
-        body: "Skicka era förutsättningar så återkommer vi med förslag och offert — normalt samma arbetsdag.",
+        body: "Skicka era förutsättningar så återkommer vi med förslag och offert inom 24 timmar.",
         phone: "010 330 46 36",
       },
       rental: {
         heading: "Har ni ett datum i sikte?",
-        body: "Berätta datum, plats och skärmstorlek så föreslår vi ett komplett hyrespaket — normalt samma arbetsdag.",
+        body: "Berätta datum, plats och skärmstorlek så föreslår vi ett komplett hyrespaket inom 24 timmar.",
         phone: "010 330 46 36",
       },
     },

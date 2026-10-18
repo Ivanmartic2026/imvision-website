@@ -8,7 +8,7 @@ export const metadata: Metadata = pageMeta({
   path: "/about/",
   title: "About Us — LED Display Partner Across Europe",
   description:
-    "IM Vision designs, engineers, installs and services advanced LED display solutions — one accountable partner across Europe.",
+    "IM Vision designs, engineers, installs and services advanced LED display solutions — one accountable partner across the Nordics and Europe.",
 });
 
 export default function AboutPage() {

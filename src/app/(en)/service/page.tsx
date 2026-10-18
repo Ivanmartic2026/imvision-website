@@ -7,10 +7,10 @@ export const metadata: Metadata = pageMeta({
   locale: "en",
   path: "/service/",
   // Was "Service & Support" — 17 characters, and indistinguishable from /support/.
-  // Now states the offering and carries the "digital signage" vocabulary.
-  title: "Digital Signage & LED Display Maintenance",
+  // Owner decision: "LED screens" only; no "digital signage" in any served string.
+  title: "LED Screen Service and Maintenance",
   description:
-    "Installation, monitoring, maintenance and long-term support for digital signage and LED displays — priority response from the team that built your system.",
+    "Installation, monitoring, maintenance and long-term support for LED screens — priority response from the team that built your system. We reply within 24 hours.",
 });
 
 export default function ServicePage() {

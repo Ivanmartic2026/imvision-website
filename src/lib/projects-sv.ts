@@ -30,7 +30,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
       "En dubbelsidig digital pylon med två LED-skärmar på 4,0 × 1,75 meter, levererad och driftsatt vid Boland City i Uppsala.",
     longDescription:
       "Den 18 augusti 2026 färdigställdes och driftsattes den fristående pylonen vid Rapsgatan i Boland City. Pylonen bär två Unilumin USK5.9-skärmar monterade rygg mot rygg — totalt 14 m² aktiv skärmyta — under en belyst topskylt. En ljussensor styr ljusstyrkan automatiskt, och två 4G-routrar ger fjärråtkomst till innehåll och skärmstyrning utan platsbesök. Leveransen omfattade stålpylon och fasadbeklädnad, ett integrerat teknikutrymme i pylonens nederdel samt fullständig idrifttagning, injustering och funktionsprov.",
-    location: "Uppsala, Sverige",
+    location: "Uppsala",
     specsSize: "14,0 m² · 2 × 4,0 × 1,75 m",
     specsType: "Dubbelsidig digital pylon",
     caseStudy: {
@@ -55,7 +55,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     description: "En av Europas största DOOH-skärmar. 525 m² vid Westfield Mall of Scandinavia.",
     longDescription:
       "The Icon mäter 41 × 13 meter — totalt 525 m² — och är en av Europas största DOOH-skärmar samt Nordens största kommersiella skärm. Den dubbelsidiga ytan syns från motorväg, gångstråk och passerande tåg.",
-    location: "Solna, Sverige",
+    location: "Solna",
     specsSize: "525 m² · 41 × 13 m",
     specsType: "Dubbelsidig DOOH",
     caseStudy: {
@@ -77,7 +77,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     description: "Två monumentala LED-ringar och tre LED-kuber skapar ett digitalt landmärke i 360 grader.",
     longDescription:
       "The Halo förenar två monumentala LED-ringar — en på varje våningsplan — med tre stora LED-kuber som ger exponering i 360 grader. Mitt i Westfield Mall of Scandinavia skapar installationen en naturlig samlingspunkt för kampanjer, event och varumärkesaktiveringar.",
-    location: "Solna, Sverige",
+    location: "Solna",
     specsType: "2 LED-ringar · 3 LED-kuber · 360°",
     caseStudy: {
       // Källa: longDescription beskriver den flervisions LED-installationen på köpcentrum.
@@ -100,7 +100,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     description: "Fyra storformatsskärmar skapar en digital mittpunkt i Westfield Täby Centrum.",
     longDescription:
       "The Geminis samlar fyra digitala porträttskärmar i storformat på torget i Westfield Täby Centrum. Platsen välkomnar omkring 13 miljoner besökare per år och har en genomsnittlig besökstid på över 90 minuter — den längsta genomsnittliga besökstiden bland Sveriges köpcentrum.",
-    location: "Täby, Sverige",
+    location: "Täby",
     specsType: "4 digitala porträttskärmar i storformat",
     caseStudy: {
       // Källa: longDescription beskriver fyra porträttskärmar på en av Sveriges mest besökta platser.
@@ -121,7 +121,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     description: "En 40 m² böjd LED-skärm följer fasaden på Westfield Täby Centrum.",
     longDescription:
       "The Curve är en 40 m² böjd LED-skärm integrerad längs fasaden på Westfield Täby Centrum. Den svepande geometrin förvandlar byggnadens kant till en väl synlig digital storformatsyta och ger kampanjer en naturlig närvaro i en av Sveriges största shoppingdestinationer.",
-    location: "Täby, Sverige",
+    location: "Täby",
     specsSize: "40 m²",
     specsType: "Böjd DOOH i storformat",
     caseStudy: {
@@ -143,7 +143,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     description: "Tre stora högupplösta skärmar skapar en digital närvaro under Sergels torgs ikoniska fontän.",
     longDescription:
       "The Icon @ The Node samlar tre stora högupplösta skärmar, vardera sex meter breda, under den ikoniska fontänen vid Sergels torg. I ett av Stockholms mest trafikerade nav möter installationen ett konstant flöde av stockholmare, pendlare och besökare från morgon till kväll.",
-    location: "Stockholm, Sverige",
+    location: "Stockholm",
     specsSize: "3 skärmar · 6 m breda",
     specsType: "DOOH i storformat med rörlig bild",
     caseStudy: {
@@ -160,12 +160,12 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     },
   },
   "e4-tradet-nord": {
-    title: "E4 Trädet Nord — Impact",
+    title: "E4 Trädet — Impact",
     category: "Upplands Väsby — Stockholm",
     description: "Digital storformatsmedia längs E4:an, riktad mot Stockholmspendlare och resenärer till Arlanda.",
     longDescription:
-      "E4 Trädet Nord står i Upplands Väsby längs den vältrafikerade E4:an. Den digitala storformatsytan möter både pendlare till och från Stockholm och resenärer på väg mot Arlanda — med tydlig närvaro längs en av regionens viktigaste trafikleder.",
-    location: "Upplands Väsby, Sverige",
+      "E4 Trädet står i Upplands Väsby längs den vältrafikerade E4:an. Den digitala storformatsytan möter både pendlare till och från Stockholm och resenärer på väg mot Arlanda — med tydlig närvaro längs en av regionens viktigaste trafikleder.",
+    location: "Upplands Väsby",
     specsType: "Digital vägkantsmedia i storformat",
     caseStudy: {
       // Källa: longDescription beskriver E4-placeringen och målgrupp.
@@ -186,7 +186,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     description: "En 7,37 m² storformatsskärm mitt i centrala Malmö med cirka 162 010 kontakter per dag.",
     longDescription:
       "Södertull City är en 7,37 m² storformatsskärm på hörnet av Södra Vallgatan i centrala Malmö, ett kvarter från Gustav Adolfs Torg. Placeringen möter buss-, bil- och fotgängartrafik i stadens kommersiella hjärta och når cirka 162 010 kontakter per dag. Annonsformat: 936 × 832 pixlar. Spotlängd: 5 sekunder.",
-    location: "Malmö, Sverige",
+    location: "Malmö",
     specsSize: "7,37 m²",
     specsType: "City-DOOH i storformat · 936 × 832 · 5 s",
     caseStudy: {
@@ -204,7 +204,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
   },
   kappahl: {
     title: "Kappahl",
-    category: "Digital in-store — europeisk retailutrullning",
+    category: "Butiksnätverk — europeisk utrullning",
     description:
       "Ett skalbart digitalt butiksnätverk för kampanjer och varumärkeskommunikation på cirka 160 platser i sex marknader.",
     longDescription:
@@ -227,7 +227,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     },
   },
   "sas-nordic-lounges": {
-    title: "SAS — Lounger & Express Check-in",
+    title: "SAS — Lounger och Express Check-in",
     category: "Flygplatser i Norden",
     description:
       "En sammanhållen digital displaymiljö i SAS lounger och Express Check-in runt om i Norden.",
@@ -255,7 +255,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     description: "26,88 × 7,68 meter LED runt hörnet Nils Ericsonsgatan–Kanaltorget.",
     longDescription:
       "26,88 × 7,68 meter LED runt hörnet Nils Ericsonsgatan–Kanaltorget. 224 gjutna kabinett på en radie av tolv meter — egen stålstomme, egen konstruktion, egna montörer.",
-    location: "Göteborg, Sverige",
+    location: "Göteborg",
     specsSize: "26,88 × 7,68 m",
     specsType: "Böjd utomhus-LED · 224 gjutna kabinett · 12 m radie",
     caseStudy: {
@@ -279,7 +279,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     description: "Digitala ytor mitt i ett av Sveriges största köpcentrum.",
     longDescription:
       "Digitala ytor mitt i ett av Sveriges största köpcentrum. Installerade för att synas — servade för att aldrig sluta.",
-    location: "Täby, Sverige",
+    location: "Täby",
     specsType: "Retail-LED",
     caseStudy: {
       // Källa: longDescription beskriver digitala ytor installerade och servade på ett av Sveriges största köpcentrum.
@@ -324,7 +324,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     description: "En flexibel visuell scen för butik och liveupplevelser.",
     longDescription:
       "Ett redaktionellt projektutkast som utforskar hur högupplöst LED, reflekterande material och kontrollerad ljussättning kan förvandla en modemiljö till en flexibel visuell scen.",
-    location: "Stockholm, Sverige",
+    location: "Stockholm",
     specsSize: "24 m²",
     specsType: "LED-vägg inomhus",
     caseStudy: {
@@ -348,7 +348,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     description: "Ljusstark och energieffektiv digital kommunikation för butiksmiljön.",
     longDescription:
       "Ett utkast till en sammanhållen lösning för digital kommunikation i dagligvaruhandeln, med fokus på tydlig information, kampanjinnehåll och god läsbarhet i varierande butiksljus.",
-    location: "Göteborg, Sverige",
+    location: "Göteborg",
     specsType: "Digital skyltning",
   },
   "automotive-industry": {
@@ -357,7 +357,7 @@ export const swedishProjectCopy: Record<string, SwedishProjectCopy> = {
     description: "En filmisk LED-miljö som ger varje bil rätt inramning.",
     longDescription:
       "Ett redaktionellt koncept för ett premiumshowroom där en omslutande LED-yta skapar flexibla miljöer för lanseringar, presentationer och den dagliga kundupplevelsen.",
-    location: "Malmö, Sverige",
+    location: "Malmö",
     specsType: "Böjd LED-vägg",
   },
   "outdoor-advertising-dooh": {

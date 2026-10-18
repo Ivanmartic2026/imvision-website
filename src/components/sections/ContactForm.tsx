@@ -119,8 +119,8 @@ export function ContactForm({
       title: locale === "sv" ? "Hur kan vi hjälpa dig?" : "How can we help you?",
       subtitle:
         locale === "sv"
-          ? "Välj vad du behöver hjälp med så återkommer vi samma arbetsdag."
-          : "Choose what you need help with and we'll reply the same business day.",
+          ? "Välj vad det gäller så återkommer vi inom 24 timmar."
+          : "Choose what it concerns and we reply within 24 hours.",
       phone: "010 330 46 36",
       helpNow: locale === "sv" ? "Behöver du hjälp direkt?" : "Need help right now?",
       callUs: locale === "sv" ? "Ring oss under kontorstid." : "Call us during office hours.",
@@ -564,7 +564,7 @@ export function ContactForm({
           </Button>
           {isPanel && (
             <p className="text-center text-xs leading-relaxed text-text-muted">
-              {locale === "sv" ? "Vi svarar samma arbetsdag. Brådskande? Ring " : "We reply the same business day. Urgent? Call "}
+              {locale === "sv" ? "Vi svarar inom 24 timmar. Brådskande? Ring " : "We reply within 24 hours. Urgent? Call "}
               <a
                 href="tel:+46103304636"
                 className="inline-flex min-h-11 items-center px-1 text-accent-soft underline decoration-accent-soft/40 underline-offset-4 transition-colors hover:text-accent"

@@ -19,8 +19,8 @@ const process = [
   },
   {
     number: "02",
-    title: "Design & Engineering",
-    titleSv: "Design & Projektering",
+    title: "Design and engineering",
+    titleSv: "Design och projektering",
     description: "We develop a solution adapted to its setting, architecture, and content.",
     descriptionSv: "Vi utvecklar en lösning anpassad för miljö, arkitektur och innehåll.",
     image: "/images/photon-material/engineering-calibration.jpg",
@@ -29,8 +29,8 @@ const process = [
   },
   {
     number: "03",
-    title: "Delivery & Installation",
-    titleSv: "Leverans & Installation",
+    title: "Delivery and installation",
+    titleSv: "Leverans och installation",
     description: "We deliver, install, program, and commission the complete system.",
     descriptionSv: "Vi levererar, installerar, programmerar och driftsätter hela systemet.",
     image: "/images/photon-material/architectural-facade.jpg",
@@ -39,8 +39,8 @@ const process = [
   },
   {
     number: "04",
-    title: "Protect performance",
-    titleSv: "Service & Drift",
+    title: "Service and operation",
+    titleSv: "Service och drift",
     description: "After installation, we offer service agreements, support, and preventive maintenance for maximum reliability.",
     descriptionSv: "Efter installation erbjuder vi serviceavtal, support och förebyggande underhåll för maximal driftsäkerhet.",
     image: "/images/photon-material/permanent-retail.jpg",
@@ -145,7 +145,7 @@ export function StoryTimeline({ locale = "en" }: { locale?: Locale }) {
                         IM / {locale === "sv" ? step.imageLabelSv : step.imageLabel}
                       </span>
                       <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#a9b0ad]">
-                        {locale === "sv" ? "Konceptbild" : "Concept image"}
+                        {locale === "sv" ? "Konceptvisualisering" : "Concept visualisation"}
                       </span>
                     </div>
                     <div className="absolute inset-x-0 top-0 h-px photon-seam" />

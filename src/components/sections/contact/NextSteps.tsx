@@ -123,7 +123,7 @@ export function NextSteps({ locale, category }: NextStepsProps) {
       <div className="flex items-center gap-2 rounded-[12px_4px_12px_12px] bg-accent/10 px-4 py-2.5">
         <Clock size={16} className="shrink-0 text-accent" />
         <span className="text-sm font-medium text-text-secondary">
-          {locale === "sv" ? "Normalt samma arbetsdag — vi återkommer veckodagar 08:00–17:00" : "Usually the same business day — we reply on weekdays 08:00–17:00"}
+          {locale === "sv" ? "Vi svarar inom 24 timmar — alla veckodagar" : "Usually the same business day — we reply on weekdays 08:00–17:00"}
         </span>
       </div>
 

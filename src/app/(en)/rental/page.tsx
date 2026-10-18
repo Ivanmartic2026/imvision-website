@@ -74,7 +74,7 @@ export const metadata: Metadata = pageMeta({
   path: "/rental/",
   title: "LED Rental for Events",
   description:
-    "Event-grade LED screens delivered, installed, run and de-rigged by IM Vision's own crew — for launches, exhibitions and activations across Europe.",
+    "Event-grade LED screens delivered, installed, run and de-rigged by IM Vision's own crew — for launches, exhibitions and activations across the Nordics and Europe.",
 });
 
 export default function RentalPage() {
@@ -275,7 +275,7 @@ export default function RentalPage() {
         data={serviceLd("en", {
           name: "LED Rental for Events",
           description:
-            "Event-grade LED screens delivered, installed, run and de-rigged by IM Vision's own crew — for launches, exhibitions and activations across Europe.",
+            "Event-grade LED screens delivered, installed, run and de-rigged by IM Vision's own crew — for launches, exhibitions and activations across the Nordics and Europe.",
           serviceType: "LED rental",
         })}
       />

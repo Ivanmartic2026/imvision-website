@@ -8,7 +8,7 @@ export const metadata: Metadata = pageMeta({
   path: "/support/",
   title: "Support och service för LED-skärmar",
   description:
-    "IM Visions supportcenter för LED-skärmar — vanliga frågor, dokumentation, fjärrövervakning och direktkontakt för service och underhåll i hela Europa.",
+    "IM Visions supportcenter för LED-skärmar — vanliga frågor, dokumentation, fjärrövervakning och direktkontakt för service och underhåll i Norden och Europa.",
 });
 
 export default function SwedishSupportPage() {
