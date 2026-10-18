@@ -34,9 +34,11 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
     <footer className="theme-dark border-t border-border-subtle bg-[#070807]">
       <div className="section py-16 lg:py-24">
         <div className="section-inner">
-          <div className="grid gap-16 lg:grid-cols-12">
+          <div className="grid grid-cols-1 gap-16 lg:grid-cols-12">
             <div className="lg:col-span-6">
-              <Image src="/logo.png" alt="IM Vision" width={150} height={41} className="h-7 w-auto" />
+              <Link href={localizedHref(locale, "/")} prefetch={false} className="tap -ml-1 w-fit px-1" aria-label={locale === "sv" ? "IM Vision – till startsidan" : "IM Vision – back to home"}>
+                <Image src="/logo.png" alt="IM Vision" width={150} height={41} className="h-7 w-auto" />
+              </Link>
               <p className="mt-7 max-w-md text-lg leading-relaxed text-text-secondary">
                 {locale === "sv"
                   ? "IM Vision utvecklar, levererar och installerar professionella LED-lösningar för permanenta installationer och event i hela Europa. Med egen projektering, installation och service säkerställer vi kvalitet genom hela projektets livscykel."
@@ -45,7 +47,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
               <Link
                 href={localizedHref(locale, "/contact/")}
                 prefetch={false}
-                className="group mt-8 inline-flex items-center gap-2 border-b border-accent pb-1 text-sm font-semibold text-text-primary"
+                className="tap group mt-8 gap-2 border-b border-accent text-sm font-semibold text-text-primary"
               >
                 {locale === "sv" ? "Starta ett projekt" : "Start a project"}
                 <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -53,29 +55,29 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
             </div>
 
             {footerGroups.map((group) => (
-              <div key={group.title.en} className="lg:col-span-2">
-                <h2 className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-text-muted">
+              <nav key={group.title.en} aria-label={group.title[locale]} className="lg:col-span-2">
+                <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-text-muted">
                   {group.title[locale]}
-                </h2>
+                </p>
                 <ul className="mt-5 space-y-3">
                   {group.links.map(([label, href]) => (
                     <li key={label.en}>
-                      <Link href={localizedHref(locale, href)} prefetch={false} className="inline-flex min-h-9 items-center text-sm text-text-secondary transition-colors hover:text-text-primary">
+                      <Link href={localizedHref(locale, href)} prefetch={false} className="tap text-sm text-text-secondary transition-colors hover:text-text-primary">
                         {label[locale]}
                       </Link>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </nav>
             ))}
 
-            <div className="lg:col-span-2">
-              <h2 className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-text-muted">
+            <nav aria-label={locale === "sv" ? "Kontakt" : "Contact"} className="lg:col-span-2">
+              <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-text-muted">
                 {locale === "sv" ? "Kontakt" : "Contact"}
-              </h2>
+              </p>
               <div className="mt-5 space-y-3 text-sm text-text-secondary">
-                <a href="mailto:info@imvision.se" className="flex min-h-9 items-center transition-colors hover:text-text-primary">info@imvision.se</a>
-                <a href="tel:+46103304636" className="flex min-h-9 items-center transition-colors hover:text-text-primary">010 330 46 36</a>
+                <a href="mailto:info@imvision.se" className="tap-block transition-colors hover:text-text-primary">info@imvision.se</a>
+                <a href="tel:+46103304636" className="tap-block transition-colors hover:text-text-primary">010 330 46 36</a>
                 {[
                   { label: locale === "sv" ? "Huvudkontor" : "Head office", street: CONTACT.street, line2: `${CONTACT.postalCode} ${CONTACT.locality}` },
                   { label: locale === "sv" ? "Lager & kontor" : "Warehouse & office", street: STOCKHOLM_LOCATION.street, line2: `${STOCKHOLM_LOCATION.postalCode} ${STOCKHOLM_LOCATION.locality}` },
@@ -85,7 +87,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${office.street}, ${office.line2}, Sweden`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block leading-snug transition-colors hover:text-text-primary"
+                    className="flex min-h-11 flex-col justify-center leading-snug transition-colors hover:text-text-primary"
                   >
                     <span className="block text-[11px] uppercase tracking-[0.12em] text-text-muted">{office.label}</span>
                     {office.street}, {office.line2}
@@ -113,20 +115,24 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                   })}
                 </div>
               </div>
-            </div>
+            </nav>
           </div>
 
           <div className="mt-16 flex flex-col gap-4 border-t border-border-subtle pt-6 text-xs text-text-muted sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} IM Vision. {locale === "sv" ? "Alla rättigheter förbehållna." : "All rights reserved."}</p>
+            {/* Legal identity — owner-confirmed values live in lib/seo.ts. */}
+            <p>
+              © {new Date().getFullYear()} {CONTACT.legalName} · {locale === "sv" ? "Org.nr" : "Reg. no."}{" "}
+              {CONTACT.orgNumber}. {locale === "sv" ? "Alla rättigheter förbehållna." : "All rights reserved."}
+            </p>
             {/* Wraps: the Swedish labels are long and the row gained a fourth item
                 (Servicevillkor). Without flex-wrap the row overflowed the mobile
                 viewport by ~47px on every /sv/ page. */}
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-              <Link href={localizedHref(locale, "/privacy/")} prefetch={false} className="transition-colors hover:text-text-primary">
+              <Link href={localizedHref(locale, "/privacy/")} prefetch={false} className="tap min-w-11 justify-center transition-colors hover:text-text-primary">
                 {locale === "sv" ? "Integritetspolicy" : "Privacy"}
               </Link>
               <span aria-hidden className="text-border-subtle">|</span>
-              <Link href={localizedHref(locale, "/terms/")} prefetch={false} className="transition-colors hover:text-text-primary">
+              <Link href={localizedHref(locale, "/terms/")} prefetch={false} className="tap min-w-11 justify-center transition-colors hover:text-text-primary">
                 {locale === "sv" ? "Användarvillkor" : "Terms"}
               </Link>
               {/* Swedish-only legal document — no English twin exists, so the link is
@@ -135,7 +141,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
               {locale === "sv" && (
                 <>
                   <span aria-hidden className="text-border-subtle">|</span>
-                  <Link href="/sv/servicevillkor/" prefetch={false} className="transition-colors hover:text-text-primary">
+                  <Link href="/sv/servicevillkor/" prefetch={false} className="tap min-w-11 justify-center transition-colors hover:text-text-primary">
                     Servicevillkor
                   </Link>
                 </>

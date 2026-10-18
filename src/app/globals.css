@@ -265,6 +265,32 @@ main img {
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent 72%);
 }
 
+/* ── Pointer targets ─────────────────────────────────────────────────────────
+   WCAG 2.2 AA (2.5.8 Target Size Minimum): every interactive element gets at
+   least 44×44 px. Text links keep their visual size — the box grows around the
+   label, so a link that looked like a 20 px line of text is now a 44 px target
+   without changing the layout rhythm. Use `.tap` on inline links/buttons and
+   `.tap-block` when the link must fill the width of its column. */
+.tap {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.tap-block {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.tap-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

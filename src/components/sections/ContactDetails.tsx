@@ -22,7 +22,7 @@ export function ContactDetails({ locale = "en" }: { locale?: Locale }) {
   return (
     <div className="mt-16 border-t border-border-subtle pt-16 lg:mt-20 lg:pt-20">
       <p className="eyebrow text-accent">{isSv ? "Direktkontakt" : "Direct contact"}</p>
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <a
           href={`tel:${CONTACT.phoneE164}`}
           className="group premium-card flex items-start gap-4 bg-bg-elevated p-5"
@@ -98,7 +98,7 @@ export function ContactDetails({ locale = "en" }: { locale?: Locale }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={isSv ? `Följ IM Vision på ${platform}` : `Follow IM Vision on ${platform}`}
-                className="flex h-10 w-10 items-center justify-center rounded-[10px_3px_10px_10px] border border-border-subtle text-text-muted transition-colors hover:border-accent/50 hover:text-accent"
+                className="flex h-11 w-11 items-center justify-center rounded-[10px_3px_10px_10px] border border-border-subtle text-text-muted transition-colors hover:border-accent/50 hover:text-accent"
               >
                 <Icon />
               </a>

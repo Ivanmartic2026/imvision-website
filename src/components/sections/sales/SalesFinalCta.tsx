@@ -44,13 +44,13 @@ export function SalesFinalCta({ locale, content }: SalesSectionProps) {
             <div className="relative mt-8 flex flex-col gap-2 text-sm text-text-secondary sm:flex-row sm:gap-8">
               <a
                 href={`tel:${finalCta.phoneE164}`}
-                className="transition-colors duration-300 hover:text-text-primary"
+                className="tap transition-colors duration-300 hover:text-text-primary"
               >
                 {finalCta.phone}
               </a>
               <a
                 href={`mailto:${finalCta.email}`}
-                className="transition-colors duration-300 hover:text-text-primary"
+                className="tap transition-colors duration-300 hover:text-text-primary"
               >
                 {finalCta.email}
               </a>

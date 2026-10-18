@@ -349,7 +349,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
 
             {caseStudy && (
               <div className="mt-20">
-                <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+                <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
                   <div className="lg:col-span-5">
                     <p className="eyebrow text-accent">{t.challengeEyebrow}</p>
                     <h2 className="mt-7 text-[clamp(2.5rem,4.8vw,4.8rem)] font-medium leading-[0.98] tracking-[-0.045em] text-text-primary">
@@ -363,7 +363,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                   </div>
                 </div>
 
-                <div className="mt-20 grid gap-px overflow-hidden rounded-[24px_6px_24px_24px] border border-border-subtle bg-border-subtle lg:grid-cols-2">
+                <div className="mt-20 grid grid-cols-1 gap-px overflow-hidden rounded-[24px_6px_24px_24px] border border-border-subtle bg-border-subtle lg:grid-cols-2">
                   <article className="bg-bg-elevated p-8 sm:p-10 lg:p-14">
                     <span className="font-mono text-xs text-accent">{t.responseEyebrow}</span>
                     <p className="mt-10 text-2xl leading-relaxed tracking-[-0.025em] text-text-primary">
@@ -439,7 +439,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
               </dl>
             </div>
 
-            <div className="mt-12 grid gap-12 lg:grid-cols-3">
+            <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-3">
               <div className="lg:col-span-2">
                 {/* On three English projects (nordstan-facade, taby-centrum,
                     ocean-outdoor-operations) longDescription is byte-identical to
@@ -570,7 +570,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                 <h2 className="text-3xl font-medium tracking-[-0.035em] text-text-primary">
                   {t.relatedHeading}
                 </h2>
-                <div className="mt-8 grid gap-6 md:grid-cols-2">
+                <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
                   {relatedProjects.map((related) => (
                     <Link
                       key={related.slug}

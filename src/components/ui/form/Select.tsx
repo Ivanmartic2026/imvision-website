@@ -15,7 +15,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         <select
           ref={ref}
           className={cn(
-            "min-h-14 w-full appearance-none rounded-2xl border bg-bg-surface px-5 py-4 pr-12 text-text-primary outline-none transition-all duration-[500ms] ease-[cubic-bezier(.22,.61,.36,1)]",
+            "min-h-14 w-full min-w-0 appearance-none rounded-2xl border bg-bg-surface px-5 py-4 pr-12 text-text-primary outline-none transition-all duration-[500ms] ease-[cubic-bezier(.22,.61,.36,1)]",
             "focus:border-accent/70 focus:bg-bg-surface focus:px-6 focus:py-5 focus:shadow-[0_0_0_4px_rgba(145,169,161,.08)]",
             error
               ? "border-red-400/70 focus:border-red-400/70 focus:shadow-[0_0_0_4px_rgba(248,113,113,.08)]"

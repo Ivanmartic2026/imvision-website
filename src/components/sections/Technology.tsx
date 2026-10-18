@@ -23,7 +23,7 @@ export function Technology({ locale = "en" }: { locale?: Locale }) {
           <div className="absolute inset-x-0 top-0 h-px photon-seam" />
           <div className="absolute right-0 top-0 h-full w-1/2 opacity-[0.12] image-grid-overlay" aria-hidden="true" />
 
-          <div className="relative grid gap-14 lg:grid-cols-12 lg:items-end">
+          <div className="relative grid grid-cols-1 gap-14 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-6">
               <SectionLabel>{locale === "sv" ? "Varför IM Vision" : "Why IM Vision"}</SectionLabel>
               <h2 id="technology-title" className="heading-section mt-6">
@@ -35,7 +35,7 @@ export function Technology({ locale = "en" }: { locale?: Locale }) {
             </div>
 
             <div className="lg:col-span-5 lg:col-start-8">
-              <ul className="grid gap-px overflow-hidden rounded-[20px_6px_20px_20px] border border-white/10 bg-white/10 sm:grid-cols-2">
+              <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-[20px_6px_20px_20px] border border-white/10 bg-white/10 sm:grid-cols-2">
                 {capabilities.map(([titleEn, titleSv], index) => (
                   <motion.li
                     key={titleEn}

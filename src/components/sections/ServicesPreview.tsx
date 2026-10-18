@@ -49,7 +49,7 @@ export function ServicesPreview({ locale = "en" }: { locale?: Locale }) {
           </h2>
         </div>
 
-        <div className="mt-16 grid gap-6 lg:mt-24 lg:grid-cols-2">
+        <div className="mt-16 grid grid-cols-1 gap-6 lg:mt-24 lg:grid-cols-2">
           {services.map((service, index) => (
             <motion.article
               key={service.title}

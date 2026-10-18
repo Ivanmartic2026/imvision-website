@@ -100,10 +100,10 @@ export default function RentalPage() {
                 <p className="eyebrow text-accent">IM / Rental systems</p>
               </Reveal>
               <h1 className="mt-7 max-w-5xl text-balance text-[clamp(3.5rem,8.4vw,8.5rem)] font-[470] leading-[0.92] tracking-[-0.055em] text-text-primary">
-                Built for the
+                Built for the{" "}
                 <span className="block text-accent-soft">moment.</span>
               </h1>
-              <div className="mt-8 grid gap-8 border-t border-white/20 pt-7 lg:grid-cols-12 lg:items-end">
+              <div className="mt-8 grid grid-cols-1 gap-8 border-t border-white/20 pt-7 lg:grid-cols-12 lg:items-end">
                 <Reveal delay={0.16} className="lg:col-span-6">
                   <p className="max-w-xl text-lg leading-relaxed text-[#d0d5d2] sm:text-xl">
                     Engineered LED environments for launches, exhibitions, live
@@ -129,7 +129,7 @@ export default function RentalPage() {
 
         <section id="rental-scope" className="theme-light section section-space bg-background">
           <div className="section-inner">
-            <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
               <div className="lg:col-span-5">
                 <Reveal>
                   <p className="eyebrow text-accent-dim">Rental, engineered</p>
@@ -147,7 +147,7 @@ export default function RentalPage() {
               </Reveal>
             </div>
 
-            <StaggerReveal className="mt-16 grid border-y border-border-subtle md:grid-cols-3 lg:mt-24">
+            <StaggerReveal className="mt-16 grid grid-cols-1 border-y border-border-subtle md:grid-cols-3 lg:mt-24">
               {capabilities.map((capability) => (
                 <StaggerItem key={capability.title}>
                   <article className="group h-full border-b border-border-subtle py-8 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0 md:last:pr-0 lg:py-10">
@@ -176,7 +176,7 @@ export default function RentalPage() {
 
         <section className="section section-space overflow-hidden bg-bg-elevated">
           <div className="section-inner">
-            <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
+            <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-16">
               <div className="lg:col-span-4">
                 <Reveal>
                   <p className="eyebrow text-accent">From brief to live</p>
@@ -194,7 +194,7 @@ export default function RentalPage() {
                 <StaggerReveal className="border-t border-border-subtle">
                   {timeline.map((item, index) => (
                     <StaggerItem key={item.step}>
-                      <article className="grid gap-4 border-b border-border-subtle py-7 sm:grid-cols-[4rem_1fr_1.4fr] sm:items-start sm:gap-7">
+                      <article className="grid grid-cols-1 gap-4 border-b border-border-subtle py-7 sm:grid-cols-[4rem_1fr_1.4fr] sm:items-start sm:gap-7">
                         <span className="font-mono text-xs text-accent">
                           {String(index + 1).padStart(2, "0")}
                         </span>
@@ -216,7 +216,7 @@ export default function RentalPage() {
         <section className="theme-light section section-space bg-background">
           <div className="section-inner">
             <div className="light-gate overflow-hidden border border-border-subtle bg-bg-elevated">
-              <div className="grid lg:grid-cols-12">
+              <div className="grid grid-cols-1 lg:grid-cols-12">
                 <div className="p-7 sm:p-10 lg:col-span-7 lg:p-14 xl:p-16">
                   <Reveal>
                     <p className="eyebrow text-accent-dim">Complete delivery</p>

@@ -370,7 +370,7 @@ export default function SwedishServiceTermsPage() {
 
         <section className="section section-space">
           <div className="section-inner max-w-3xl">
-            <dl className="mb-14 grid gap-px overflow-hidden rounded-[20px_6px_20px_20px] border border-border-subtle bg-border-subtle sm:grid-cols-3">
+            <dl className="mb-14 grid grid-cols-1 gap-px overflow-hidden rounded-[20px_6px_20px_20px] border border-border-subtle bg-border-subtle sm:grid-cols-3">
               <div className="bg-bg-elevated p-5">
                 <dt className="text-xs uppercase tracking-[0.14em] text-text-muted">Företag</dt>
                 <dd className="mt-2 text-text-primary">IM Vision Group AB</dd>

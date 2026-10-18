@@ -46,7 +46,7 @@ export function ContactHero({ locale = "en", label, title, description, children
       />
       <div className="section relative z-10 w-full">
         <div className="section-inner max-w-6xl">
-          <div className="grid items-start gap-9 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-14">
+          <div className="grid grid-cols-1 items-start gap-9 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-14">
             <div className="min-w-0 lg:pt-3">
               <span className="mb-6 inline-flex items-center gap-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-accent">
                 <span className="h-px w-8 bg-accent" />

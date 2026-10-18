@@ -225,7 +225,7 @@ export function ProjectSlider({ locale = "en" }: ProjectSliderProps) {
           <div className="flex items-center justify-between gap-4 lg:justify-start">
             <Link
               href={localizedHref(locale, "/projects/")}
-              className="group inline-flex items-center gap-2 self-start border-b border-accent pb-1 text-sm font-semibold text-text-primary lg:self-auto"
+              className="tap group gap-2 self-start border-b border-accent text-sm font-semibold text-text-primary lg:self-auto"
             >
               {locale === "sv" ? "Utforska alla projekt" : "Explore all projects"}
               <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

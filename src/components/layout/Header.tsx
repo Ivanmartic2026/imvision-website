@@ -80,7 +80,7 @@ export function Header({
         <div className="mx-auto flex h-[78px] max-w-[1600px] items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16">
           {/* prefetch disabled: static export has no RSC segment endpoints, so
               Next's Link prefetch would 404 (navigation falls back to full load). */}
-          <Link href={localizedHref(locale, "/")} prefetch={false} aria-label={locale === "sv" ? "IM Vision startsida" : "IM Vision home"} className="relative z-50">
+          <Link href={localizedHref(locale, "/")} prefetch={false} aria-label={locale === "sv" ? "IM Vision startsida" : "IM Vision home"} className="tap relative z-50">
             <Image
               src="/logo.png"
               alt="IM Vision"

@@ -150,6 +150,9 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
             className="fixed inset-x-0 bottom-0 z-[90]"
+            role="dialog"
+            aria-modal="false"
+            aria-label={step === 2 ? t.title : t.step1Title}
           >
             <motion.div
               className={`${MAX_WIDTH} mx-auto mb-3 sm:absolute sm:right-5 sm:bottom-5 sm:mb-0`}
@@ -169,7 +172,7 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
                     type="button"
                     onClick={handleEscape}
                     aria-label={locale === "sv" ? "Stäng cookie-inställningar" : "Close cookie settings"}
-                    className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-[10px_3px_10px_10px] text-text-secondary transition-colors hover:bg-white/[.06] hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    className="absolute right-2 top-2 flex h-11 w-11 items-center justify-center rounded-[10px_3px_10px_10px] text-text-secondary transition-colors hover:bg-white/[.06] hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   >
                     <X size={16} />
                   </button>
@@ -177,9 +180,9 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
 
                 <div className="p-4 sm:p-5">
                   {/* Rubrik – skärmläsare + visuellt diskret */}
-                  <h2 className="mb-3 text-sm font-semibold text-text-primary">
+                  <p className="mb-3 text-sm font-semibold text-text-primary">
                     {step === 2 ? t.title : t.step1Title}
-                  </h2>
+                  </p>
 
                   {step === 1 ? <Step1 /> : <Step2 />}
                 </div>
@@ -203,14 +206,14 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
             <button
               type="button"
               onClick={() => decide("granted")}
-              className="rounded-[10px_3px_10px_10px] bg-accent px-4 py-2.5 text-sm font-medium leading-tight text-[#070807] transition-colors hover:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="inline-flex min-h-11 items-center justify-center rounded-[10px_3px_10px_10px] bg-accent px-4 py-2.5 text-sm font-medium leading-tight text-[#070807] transition-colors hover:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               {t.accept}
             </button>
             <button
               type="button"
               onClick={() => decide("denied")}
-              className="rounded-[10px_3px_10px_10px] border border-border-strong px-4 py-2.5 text-sm font-medium leading-tight text-text-secondary transition-colors hover:bg-white/[.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="inline-flex min-h-11 items-center justify-center rounded-[10px_3px_10px_10px] border border-border-strong px-4 py-2.5 text-sm font-medium leading-tight text-text-secondary transition-colors hover:bg-white/[.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               {t.necessary}
             </button>
@@ -219,7 +222,7 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
             <button
               type="button"
               onClick={() => setStep(2)}
-              className="font-medium text-text-muted transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="tap font-medium text-text-muted transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label={t.customise}
             >
               {t.customise}
@@ -228,7 +231,7 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
             <Link
               href={localizedHref(locale, "/privacy/")}
               prefetch={false}
-              className="font-medium text-text-muted transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="tap font-medium text-text-muted transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               {t.privacy}
             </Link>
@@ -310,7 +313,7 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
           <button
             type="button"
             onClick={saveChoices}
-            className="rounded-[10px_3px_10px_10px] bg-accent px-4 py-2.5 text-sm font-medium leading-tight text-[#070807] transition-colors hover:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="inline-flex min-h-11 items-center justify-center rounded-[10px_3px_10px_10px] bg-accent px-4 py-2.5 text-sm font-medium leading-tight text-[#070807] transition-colors hover:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {t.save}
           </button>

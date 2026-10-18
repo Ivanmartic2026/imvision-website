@@ -18,7 +18,7 @@ export function ContactCTA({ locale = "en" }: { locale?: Locale }) {
       >
         <div className="light-gate relative overflow-hidden border border-border-subtle bg-bg-surface px-7 py-12 sm:px-12 lg:px-20 lg:py-24">
           <div className="absolute inset-x-0 top-0 h-px photon-seam" />
-          <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-8">
               <SectionLabel>{locale === "sv" ? "Nästa steg" : "Next step"}</SectionLabel>
               <h2 id="contact-title" className="display-lg mt-8 max-w-5xl">
