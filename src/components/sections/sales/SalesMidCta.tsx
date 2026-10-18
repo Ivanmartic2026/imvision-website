@@ -2,8 +2,8 @@
 
 import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { Button } from "@/components/ui/Button";
-import { Locale, localizedHref } from "@/lib/i18n";
+import { QuoteCta } from "@/components/providers/QuickQuote";
+import { Locale } from "@/lib/i18n";
 
 interface SalesMidCtaProps {
   locale?: Locale;
@@ -23,19 +23,19 @@ export function SalesMidCta({ locale = "en", variant }: SalesMidCtaProps) {
       },
       rental: {
         heading: "Got a date in sight?",
-        body: "Tell us your date, venue and screen size and we'll propose a complete rental package — usually the same working day.",
+        body: "Tell us your date, venue and screen size and we propose a complete rental package within 24 hours.",
         phone: "+46 10 330 46 36",
       },
     },
     sv: {
       sales: {
         heading: "Redo att räkna på ert projekt?",
-        body: "Skicka era förutsättningar så återkommer vi med förslag och offert — normalt samma arbetsdag.",
+        body: "Skicka era förutsättningar så återkommer vi med förslag och offert inom 24 timmar.",
         phone: "010 330 46 36",
       },
       rental: {
         heading: "Har ni ett datum i sikte?",
-        body: "Berätta datum, plats och skärmstorlek så föreslår vi ett komplett hyrespaket — normalt samma arbetsdag.",
+        body: "Berätta datum, plats och skärmstorlek så föreslår vi ett komplett hyrespaket inom 24 timmar.",
         phone: "010 330 46 36",
       },
     },
@@ -43,7 +43,6 @@ export function SalesMidCta({ locale = "en", variant }: SalesMidCtaProps) {
 
   const t = texts[locale]?.[variant] ?? texts["en"][variant];
   const phoneE164 = "+46103304636";
-  const contactHref = localizedHref(locale, "/contact/");
 
   return (
     <section className="section section-space bg-background">
@@ -62,7 +61,7 @@ export function SalesMidCta({ locale = "en", variant }: SalesMidCtaProps) {
             className="absolute -right-24 -top-24 h-48 w-48 rounded-full bg-accent/8 blur-[60px]"
           />
 
-          <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-16">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start lg:gap-16">
             <div className="lg:col-span-7">
               <p className="eyebrow text-accent">{t.heading}</p>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-text-secondary sm:text-lg">
@@ -74,23 +73,18 @@ export function SalesMidCta({ locale = "en", variant }: SalesMidCtaProps) {
               <div className="flex flex-col items-end gap-4">
                 <span className="relative inline-flex">
                   <span className="absolute inset-0 rounded-[12px_4px_12px_12px] bg-accent/15 blur-xl" />
-                  <Button
-                    href={contactHref}
-                    size="default"
+                  {/* One primary CTA — it opens the quick enquiry panel with
+                      the right category already selected. */}
+                  <QuoteCta
+                    locale={locale}
+                    source={variant === "sales" ? "sales_mid_cta" : "rental_mid_cta"}
+                    category={variant === "sales" ? "buy" : "rental"}
                     icon={<ArrowRight size={14} />}
-                  >
-                    {variant === "sales"
-                      ? locale === "sv"
-                        ? "Begär offert"
-                        : "Request a quote"
-                      : locale === "sv"
-                        ? "Boka via kontakt"
-                        : "Book via contact"}
-                  </Button>
+                  />
                 </span>
                 <a
                   href={`tel:${phoneE164}`}
-                  className="text-sm text-text-muted transition-colors duration-300 hover:text-text-primary"
+                  className="tap text-sm text-text-muted transition-colors duration-300 hover:text-text-primary"
                 >
                   {t.phone}
                 </a>

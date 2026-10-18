@@ -4,6 +4,8 @@ import { ArrowDown, ArrowRight, CalendarRange, Radio, Truck } from "lucide-react
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SalesMidCta } from "@/components/sections/sales/SalesMidCta";
+import { RentalQuickForm } from "@/components/sections/rental/RentalQuickForm";
+import { QuoteCta } from "@/components/providers/QuickQuote";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/effects/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/effects/StaggerReveal";
@@ -17,7 +19,7 @@ const capabilities = [
 ];
 
 const process = [
-  ["01", "Brief", "Syfte, lokal, publik, innehåll och produktionsschema."],
+  ["01", "Förfrågan", "Syfte, lokal, publik, innehåll och produktionsschema."],
   ["02", "Projektering", "Skärmgeometri, betraktningsavstånd, riggning, kraft och signalflöde."],
   ["03", "Förberedelse", "Systemtest, innehållskontroll, logistik och bemanning."],
   ["04", "Leverans", "Installation, kalibrering, teknisk drift och kontrollerad demontering."],
@@ -27,7 +29,10 @@ export const metadata: Metadata = pageMeta({
   locale: "sv",
   path: "/rental/",
   title: "LED-uthyrning för event",
-  description: "Eventklassade LED-skärmar som IM Visions egen personal levererar, installerar, kör och river — för lanseringar, mässor och aktiveringar i hela Europa.",
+  description: "Eventklassade LED-skärmar som IM Visions egen personal levererar, installerar, kör och river — för lanseringar, mässor och aktiveringar i Norden och Europa.",
+  image: "/images/photon-material/event-rental.jpg",
+  imageWidth: 1448,
+  imageHeight: 1086,
 });
 
 export default function SwedishRentalPage() {
@@ -43,13 +48,17 @@ export default function SwedishRentalPage() {
             <div className="section-inner">
               <Reveal><p className="eyebrow text-accent">IM / Uthyrningssystem</p></Reveal>
               <h1 className="mt-7 max-w-5xl text-balance text-[clamp(3.5rem,8.4vw,8.5rem)] font-[470] leading-[0.92] tracking-[-0.055em] text-text-primary">
-                Skapat för<span className="block text-accent-soft">ögonblicket.</span>
+                Skapat för{" "}
+                <span className="block text-accent-soft">ögonblicket.</span>
               </h1>
-              <div className="mt-8 grid gap-8 border-t border-white/20 pt-7 lg:grid-cols-12 lg:items-end">
-                <Reveal delay={0.16} className="lg:col-span-6"><p className="max-w-xl text-lg leading-relaxed text-[#d0d5d2] sm:text-xl">Projekterade LED-miljöer för lanseringar, utställningar, liveproduktioner och tillfälliga rum – levererade som ett komplett tekniskt system.</p></Reveal>
+              <div className="mt-8 grid grid-cols-1 gap-8 border-t border-white/20 pt-7 lg:grid-cols-12 lg:items-end">
+                <Reveal delay={0.16} className="lg:col-span-6"><p className="max-w-xl text-lg leading-relaxed text-accent-soft sm:text-xl">Projekterade LED-miljöer för lanseringar, utställningar, liveproduktioner och tillfälliga rum – levererade som ett komplett tekniskt system.</p></Reveal>
                 <Reveal delay={0.22} className="flex flex-col gap-3 sm:flex-row lg:col-span-6 lg:justify-end">
-                  <Button href="/sv/contact/" size="large" icon={<ArrowRight size={18} />}>Planera ert event</Button>
-                  <Button href="#rental-scope" variant="secondary" size="large" icon={<ArrowDown size={18} />}>Utforska uthyrning</Button>
+                  <QuoteCta locale="sv" source="rental_hero" category="rental" className="px-7 text-base" icon={<ArrowRight size={18} />} />
+                  <a href="#rental-scope" className="tap justify-center gap-2 px-2 text-sm font-semibold text-text-primary underline decoration-accent underline-offset-4">
+                    Utforska uthyrning
+                    <ArrowDown size={16} />
+                  </a>
                 </Reveal>
               </div>
               <p className="mt-6 font-mono text-[0.625rem] uppercase tracking-[0.13em] text-white/55">Konceptmiljö · Photon Material-studie</p>
@@ -60,7 +69,7 @@ export default function SwedishRentalPage() {
         <section id="rental-scope" className="theme-light section section-space bg-background">
           <div className="section-inner">
             <Reveal><p className="eyebrow text-accent-dim">Uthyrning med precision</p><h2 className="heading-section mt-7 max-w-5xl text-text-primary">Tillfälligt på plats. Genomtänkt in i minsta detalj.</h2></Reveal>
-            <StaggerReveal className="mt-16 grid border-y border-border-subtle md:grid-cols-3 lg:mt-24">
+            <StaggerReveal className="mt-16 grid grid-cols-1 border-y border-border-subtle md:grid-cols-3 lg:mt-24">
               {capabilities.map((item) => (
                 <StaggerItem key={item.number}><article className="h-full border-b border-border-subtle py-8 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0 md:last:pr-0 lg:py-10"><div className="flex justify-between"><item.icon size={25} strokeWidth={1.4} className="text-accent-dim" /><span className="font-mono text-xs text-text-muted">{item.number}</span></div><h3 className="mt-16 text-2xl font-medium tracking-[-0.035em] text-text-primary">{item.title}</h3><p className="mt-4 leading-relaxed text-text-secondary">{item.text}</p></article></StaggerItem>
               ))}
@@ -73,26 +82,26 @@ export default function SwedishRentalPage() {
         <SalesMidCta locale="sv" variant="rental" />
 
         <section className="section section-space bg-bg-elevated">
-          <div className="section-inner grid gap-14 lg:grid-cols-12">
+          <div className="section-inner grid grid-cols-1 gap-14 lg:grid-cols-12">
             <Reveal className="lg:col-span-4"><p className="eyebrow text-accent">Från idé till genomförande</p><h2 className="heading-section mt-7">Ett tryggt flöde hela vägen.</h2></Reveal>
             <StaggerReveal className="border-t border-border-subtle lg:col-span-7 lg:col-start-6">
-              {process.map(([number, title, text]) => <StaggerItem key={number}><article className="grid gap-4 border-b border-border-subtle py-7 sm:grid-cols-[4rem_1fr_1.5fr]"><span className="font-mono text-xs text-accent">{number}</span><h3 className="text-xl font-medium text-text-primary">{title}</h3><p className="text-text-secondary">{text}</p></article></StaggerItem>)}
+              {process.map(([number, title, text]) => <StaggerItem key={number}><article className="grid grid-cols-1 gap-4 border-b border-border-subtle py-7 sm:grid-cols-[4rem_1fr_1.5fr]"><span className="font-mono text-xs text-accent">{number}</span><h3 className="text-xl font-medium text-text-primary">{title}</h3><p className="text-text-secondary">{text}</p></article></StaggerItem>)}
             </StaggerReveal>
           </div>
         </section>
 
-        {/* Andra mitt-CTA:n: processen är genomgången och läsaren är redo att
-            agera utan att skrolla till den avslutande banden. */}
-        <SalesMidCta locale="sv" variant="rental" />
+        {/* Datum, plats och storlek går att lämna direkt på sidan — utan att
+            först välja mellan fyra CTA-block. */}
+        <RentalQuickForm locale="sv" />
 
-        <section className="section section-space"><div className="section-inner"><div className="light-gate border border-border-subtle bg-bg-elevated p-8 sm:p-12 lg:p-20"><Reveal><p className="eyebrow text-accent">Börja med idén</p><h2 className="mt-7 max-w-5xl text-[clamp(2.7rem,6vw,6.5rem)] font-[470] leading-[0.97] tracking-[-0.052em]">Låt tekniken försvinna in i upplevelsen.</h2><div className="mt-9"><Button href="/sv/contact/" size="large" icon={<ArrowRight size={18} />}>Berätta om ert event</Button></div></Reveal></div></div></section>
+        <section className="section section-space"><div className="section-inner"><div className="light-gate border border-border-subtle bg-bg-elevated p-8 sm:p-12 lg:p-20"><Reveal><p className="eyebrow text-accent">Börja med idén</p><h2 className="h2-display mt-7 max-w-5xl">Låt tekniken försvinna in i upplevelsen.</h2><div className="mt-9"><QuoteCta locale="sv" source="rental_final" category="rental" className="px-7 text-base" icon={<ArrowRight size={18} />} /></div></Reveal></div></div></section>
       </main>
       <Footer locale="sv" />
       <JsonLd
         data={serviceLd("sv", {
           name: "LED-uthyrning för event",
           description:
-            "Eventklassade LED-skärmar som IM Visions egen personal levererar, installerar, kör och river — för lanseringar, mässor och aktiveringar i hela Europa.",
+            "Eventklassade LED-skärmar som IM Visions egen personal levererar, installerar, kör och river — för lanseringar, mässor och aktiveringar i Norden och Europa.",
           serviceType: "LED-uthyrning",
         })}
       />

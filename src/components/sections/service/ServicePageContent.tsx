@@ -1,17 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Headphones, Settings, ShieldCheck, Zap, ArrowRight } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { ContactForm } from "@/components/sections/ContactForm";
-import { Reveal } from "@/components/effects/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/effects/StaggerReveal";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Locale } from "@/lib/i18n";
 import { serviceLd } from "@/lib/seo";
+import { localizedHref } from "@/lib/i18n";
 
 const copy = {
   en: {
@@ -22,9 +23,9 @@ const copy = {
     services: [
       {
         icon: Headphones,
-        title: "24/7 Support",
+        title: "Service desk",
         description:
-          "Our support team is always available to diagnose issues and coordinate rapid response.",
+          "One team to diagnose the issue, dispatch a technician and keep you updated until the screen is back.",
       },
       {
         icon: Settings,
@@ -36,7 +37,7 @@ const copy = {
         icon: ShieldCheck,
         title: "SLA Coverage",
         description:
-          "Guaranteed response times, spare module programs, and uptime commitments.",
+          "Agreed service levels, spare module programs and a maintenance plan for your installation.",
       },
       {
         icon: Zap,
@@ -61,7 +62,7 @@ const copy = {
         name: "Professional",
         price: "Custom",
         features: [
-          "24/7 phone support",
+          "Priority phone support",
           "Remote monitoring",
           "Quarterly maintenance",
           "Priority on-site response",
@@ -72,7 +73,7 @@ const copy = {
         price: "Custom",
         features: [
           "Dedicated account manager",
-          "Uptime SLA guarantees",
+          "Agreed uptime and response levels",
           "On-site spare inventory",
           "Custom training program",
         ],
@@ -81,8 +82,8 @@ const copy = {
     ctaTitle: "Protect your investment",
     ctaBody:
       "Talk to our service team about a maintenance plan tailored to your installation.",
-    ctaButton: "Talk to a Service Specialist",
-    serviceName: "LED Service & Support",
+    ctaButton: "Get a service quote",
+    serviceName: "LED service and support",
     serviceDescription:
       "Installation, monitoring, maintenance and long-term support for LED displays — priority response from the team that built your system.",
     serviceType: "LED service",
@@ -110,7 +111,7 @@ const copy = {
         icon: ShieldCheck,
         title: "Serviceavtal",
         description:
-          "Tydliga responstider, reservdelsprogram och drifttidsåtaganden anpassade efter er installation.",
+          "Avtalade servicenivåer, reservdelsprogram och en underhållsplan för er installation.",
       },
       {
         icon: Zap,
@@ -135,7 +136,7 @@ const copy = {
         name: "Professional",
         price: "Enligt överenskommelse",
         features: [
-          "Telefonsupport dygnet runt",
+          "Prioriterad telefonsupport",
           "Fjärrövervakning",
           "Kvartalsvis underhåll",
           "Prioriterad respons på plats",
@@ -146,7 +147,7 @@ const copy = {
         price: "Enligt överenskommelse",
         features: [
           "Dedikerad kundansvarig",
-          "Drifttidsgarantier",
+          "Avtalade drift- och responstider",
           "Reservdelslager på plats",
           "Anpassat utbildningsprogram",
         ],
@@ -154,7 +155,7 @@ const copy = {
     ],
     ctaTitle: "Skydda investeringen",
     ctaBody: "Prata med vårt serviceteam om en underhållsplan anpassad efter er installation.",
-    ctaButton: "Prata med serviceteamet",
+    ctaButton: "Få serviceoffert",
     serviceName: "LED-service och support",
     serviceDescription:
       "Installation, övervakning, underhåll och långsiktig support för LED-system — prioriterad respons från teamet som byggde er installation.",
@@ -170,8 +171,8 @@ export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
     heading: locale === "sv" ? "Anmäl ett serviceärende" : "Report a service ticket",
     body:
       locale === "sv"
-        ? "Har du ett tekniskt problem eller behöver support på en installation? Öppna ett serviceärende så återkommer vårt team så snart som möjligt."
-        : "Have a technical issue or need support on an installation? Open a service ticket and our team will get back to you as soon as possible.",
+        ? "Har ni ett tekniskt problem eller behöver ni support på en installation? Anmäl ärendet så återkommer vi inom 24 timmar."
+        : "Have a technical issue or need support on an installation? Report it and we reply within 24 hours.",
     button: locale === "sv" ? "Anmäl serviceärende" : "Report a service ticket",
   };
 
@@ -189,12 +190,12 @@ export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
         >
           <div className="section-inner">
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">
+              <h2 className="h2-sub">
                 {ticket.heading}
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-text-secondary">{ticket.body}</p>
               {!ticketOpen ? (
-                <div className="mt-8 flex justify-center">
+                <div className="mt-8 flex flex-col items-center gap-4">
                   <Button
                     type="button"
                     onClick={() => setTicketOpen(true)}
@@ -203,6 +204,17 @@ export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
                   >
                     {ticket.button}
                   </Button>
+                  {/* Service = agreements and maintenance; Support = tickets,
+                      documentation and FAQs. The two pages must point at each
+                      other so nobody lands on the wrong one. */}
+                  <Link
+                    href={localizedHref(locale, "/support/")}
+                    className="tap gap-2 text-sm font-medium text-text-secondary underline decoration-accent/60 underline-offset-4 transition-colors hover:text-text-primary"
+                  >
+                    {locale === "sv"
+                      ? "Söker ni dokumentation eller vanliga frågor? Gå till Support"
+                      : "Looking for documentation or FAQs? Go to Support"}
+                  </Link>
                 </div>
               ) : (
                 <div className="mt-10 text-left">
@@ -218,11 +230,11 @@ export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
             <h2 id="service-capabilities" className="sr-only">
               {t.servicesTitle}
             </h2>
-            <StaggerReveal className="grid gap-6 md:grid-cols-2">
+            <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {t.services.map((service) => (
                 <StaggerItem key={service.title}>
                   <div className="premium-card h-full bg-bg-elevated p-8">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-[12px_4px_12px_12px] bg-accent/10 text-accent">
                       <service.icon size={26} strokeWidth={1.5} />
                     </div>
                     <h3 className="mt-8 text-xl font-medium text-text-primary">{service.title}</h3>

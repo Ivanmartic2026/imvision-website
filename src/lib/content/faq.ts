@@ -9,11 +9,11 @@ export const homeFaqs: FaqItem[] = [
   {
     question: {
       en: "Should I buy or rent an LED display?",
-      sv: "Ska jag köpa eller hyra en LED-skärm?",
+      sv: "Ska vi köpa eller hyra en LED-skärm?",
     },
     answer: {
       en: "It depends on how you plan to use it. If you need a permanent installation — in a shop, office building, or public space — buying makes sense. If you need a display for a specific event, product launch, or seasonal campaign, renting is more flexible. Both options include our full range of support: design, installation or on-site setup, and service.",
-      sv: "Det beror på hur du tänker använda den. Behöver du en permanent installation — i en butik, ett kontor eller en offentlig miljö — är köp det rätt valet. Behöver du en skärm för ett specifikt event, en produktpresentation eller en säsongsaktivering passar hyra bättre. Båda alternativen ingår vårt fulla stöd: design, installation eller uppsättning på plats, och service.",
+      sv: "Det beror på hur ni ska använda den. Behöver ni en permanent installation — i en butik, ett kontor eller en offentlig miljö — är köp det rätt valet. Behöver ni en skärm för ett specifikt event, en produktpresentation eller en säsongsaktivering passar hyra bättre. Båda alternativen ingår vårt fulla stöd: design, installation eller uppsättning på plats, och service.",
     },
   },
   {
@@ -23,7 +23,7 @@ export const homeFaqs: FaqItem[] = [
     },
     answer: {
       en: "There is no fixed price — each project is unique. What matters are the size you need, the pixel pitch (resolution), whether it is installed indoors or outdoors, and whether a custom solution is required. We provide a free quotation based on your specific requirements, so you know exactly what you are getting before you commit.",
-      sv: "Det finns inget fast pris — varje projekt är unikt. Det som avgör är storleken du behöver, pixelavståndet (upplösningen), om det installeras inomhus eller utomhus, och om en anpassad lösning krävs. Vi lämnar en kostnadsfri offert baserad på era specifika krav, så att ni vet exakt vad ni får innan ni bestämmer er.",
+      sv: "Det finns inget fast pris — varje projekt är unikt. Det som avgör är storleken ni behöver, pixelavståndet (upplösningen), om det installeras inomhus eller utomhus, och om en anpassad lösning krävs. Vi lämnar en kostnadsfri offert baserad på era specifika krav, så att ni vet exakt vad ni får innan ni bestämmer er.",
     },
   },
   {
@@ -32,8 +32,8 @@ export const homeFaqs: FaqItem[] = [
       sv: "Hur lång tid tar det från förfrågan till färdig installation?",
     },
     answer: {
-      en: "It depends on scope, site access and panel lead times, so we give you a concrete schedule with the quote. The work itself runs from site analysis through design and engineering to construction, assembly, setup and programming. We coordinate the entire chain, so you do not have to manage multiple suppliers.",
-      sv: "Det beror på omfattning, åtkomst till platsen och leveranstider för panelerna, så ni får en konkret tidsplan tillsammans med offerten. Arbetet löper från platsanalys via design och projektering till konstruktion, montage, driftsättning och programmering. Vi koordinerar hela kedjan så att ni inte behöver hantera flera leverantörer.",
+      en: "A typical permanent installation takes a few weeks, depending on scope. We start with a site analysis, move through design and engineering, then handle construction, assembly, setup, and programming. We coordinate the entire chain, so you do not have to manage multiple suppliers.",
+      sv: "En typisk permanent installation tar några veckor, beroende på omfattningen. Vi börjar med en platsanalys, går igenom design och projektering, och hanterar därefter konstruktion, montage, driftsättning och programmering. Vi koordinerar hela kedjan så att ni inte behöver hantera flera leverantörer.",
     },
   },
   {
@@ -52,8 +52,8 @@ export const homeFaqs: FaqItem[] = [
       sv: "Vad händer efter installationen?",
     },
     answer: {
-      en: "Your LED display continues to perform. We offer service agreements that cover preventive maintenance, remote monitoring, spare part management, software updates, and guaranteed response times. You can also contact us for ad-hoc support and training for your team.",
-      sv: "Er LED-skärm fortsätter att prester. Vi erbjuder serviceavtal som omfattar förebyggande underhåll, fjärrövervakning, reservdelshantering, mjukvaruuppdateringar och garanterade responstider. Ni kan också kontakta oss för stöd och utbildning för er personal.",
+      en: "Your LED screens keep performing. We offer service agreements that cover preventive maintenance, remote monitoring, spare part management, software updates and agreed response levels. We reply to service enquiries within 24 hours. You can also contact us for ad-hoc support and training for your team.",
+      sv: "Era LED-skärmar fortsätter att prestera. Vi erbjuder serviceavtal som omfattar förebyggande underhåll, fjärrövervakning, reservdelshantering, mjukvaruuppdateringar och avtalade responstider. Vi svarar på serviceförfrågningar inom 24 timmar. Ni kan också kontakta oss för stöd och utbildning för er personal.",
     },
   },
   {
@@ -82,7 +82,7 @@ export const homeFaqs: FaqItem[] = [
       sv: "Var arbetar ni?",
     },
     answer: {
-      en: "Our headquarters is in Jönköping, and we have a warehouse and office in the Stockholm area. We deliver, install, and service projects throughout Sweden and across Europe. Contact us at 010 330 46 36 or info@imvision.se to discuss your project location.",
+      en: "Our headquarters is in Jönköping, and we have a warehouse and office in the Stockholm area. We deliver, install, and service projects throughout Sweden and across the Nordics and Europe. Contact us at 010 330 46 36 or info@imvision.se to discuss your project location.",
       sv: "Vårt huvudkontor finns i Jönköping och vi har lager och kontor i Stockholmsområdet. Vi levererar, installerar och serviceprojekt i hela Sverige och över Europa. Kontakta oss på 010 330 46 36 eller info@imvision.se för att diskutera er projektplats.",
     },
   },

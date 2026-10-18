@@ -80,7 +80,7 @@ export default function TermsPage() {
               <h2 className="mt-12 text-2xl font-medium text-text-primary">9. Contact</h2>
               <p>
                 For questions about these terms, please contact{" "}
-                <a href="mailto:info@imvision.se" className="text-accent hover:underline">
+                <a href="mailto:info@imvision.se" className="font-medium text-accent underline underline-offset-2 decoration-accent/60 hover:decoration-accent">
                   info@imvision.se
                 </a>
                 .

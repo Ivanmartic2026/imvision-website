@@ -6,11 +6,14 @@ import { pageMeta, pageBreadcrumbLd, serviceLd } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   locale: "sv",
   path: "/sales/",
-  // Swedish keeps "LED" first: Search Console shows Swedish demand using "LED skärm",
-  // not "digital skyltning", so the latter is a secondary term here — not a swap.
-  title: "Permanenta LED-skärmar och digital skyltning",
+  // Owner decision (MASTERPROMPT §2): "LED-skärmar" everywhere — never
+  // "digital skyltning" in visible text, titles, meta, OG/Twitter or alt text.
+  title: "Permanenta LED-skärmar för butik, fastighet och offentlig miljö",
   description:
-    "IM Vision projekterar, installerar och servar permanenta LED-skärmar och digital skyltning för retail, fastigheter och offentliga miljöer i hela Europa.",
+    "IM Vision projekterar, installerar och servar permanenta LED-skärmar för butik, fastighet och offentlig miljö i Norden och Europa. Ni får offert inom 24 timmar.",
+  image: "/images/photon-material/permanent-retail.jpg",
+  imageWidth: 1448,
+  imageHeight: 1086,
 });
 
 export default function SwedishSalesPage() {
@@ -21,7 +24,7 @@ export default function SwedishSalesPage() {
         data={serviceLd("sv", {
           name: "Permanenta LED-installationer",
           description:
-            "Design, projektering, installation och service av permanenta LED-system för retail, fastigheter och offentliga miljöer i hela Europa.",
+            "Design, projektering, installation och service av permanenta LED-system för butik, fastighet och offentlig miljö i Norden och Europa.",
           serviceType: "LED-installation",
         })}
       />

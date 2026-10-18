@@ -118,7 +118,7 @@ export function LanguagePrompt() {
                 onClick={() => handleSelect("en")}
                 aria-label="English"
                 aria-current={activeLocale === "en" ? "true" : undefined}
-                className="group relative px-6 py-3 text-text-secondary transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60 sm:px-8 sm:py-4"
+                className="group relative min-h-11 px-6 py-3 text-text-secondary transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60 sm:px-8 sm:py-4"
               >
                 <span className={activeLocale === "en" ? "text-text-primary" : undefined}>English</span>
                 {activeLocale === "en" && (
@@ -138,7 +138,7 @@ export function LanguagePrompt() {
                 onClick={() => handleSelect("sv")}
                 aria-label="Svenska"
                 aria-current={activeLocale === "sv" ? "true" : undefined}
-                className="group relative px-6 py-3 text-text-secondary transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60 sm:px-8 sm:py-4"
+                className="group relative min-h-11 px-6 py-3 text-text-secondary transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60 sm:px-8 sm:py-4"
               >
                 <span className={activeLocale === "sv" ? "text-text-primary" : undefined}>Svenska</span>
                 {activeLocale === "sv" && (

@@ -31,6 +31,16 @@ function localizeProject(project: Project, locale: Locale): Project {
     category: copy.category,
     description: copy.description,
     longDescription: copy.longDescription,
+    // The location badge under each card is the most visible label on the card:
+    // it read "Solna, Sweden" and "Six European markets" on the Swedish page
+    // because only the title/category/description were localised.
+    location: copy.location ?? project.location,
+    specs: {
+      ...project.specs,
+      ...(copy.specsSize ? { size: copy.specsSize } : {}),
+      ...(copy.specsType ? { type: copy.specsType } : {}),
+      ...(copy.location ? { location: copy.location } : {}),
+    },
   };
 }
 
@@ -225,7 +235,7 @@ export function ProjectSlider({ locale = "en" }: ProjectSliderProps) {
           <div className="flex items-center justify-between gap-4 lg:justify-start">
             <Link
               href={localizedHref(locale, "/projects/")}
-              className="group inline-flex items-center gap-2 self-start border-b border-accent pb-1 text-sm font-semibold text-text-primary lg:self-auto"
+              className="tap group gap-2 self-start border-b border-accent text-sm font-semibold text-text-primary lg:self-auto"
             >
               {locale === "sv" ? "Utforska alla projekt" : "Explore all projects"}
               <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -256,9 +266,15 @@ export function ProjectSlider({ locale = "en" }: ProjectSliderProps) {
 
         <div className="relative mt-10 lg:mt-14">
           {/* Mobile / tablet: native horizontal scroll */}
+          {/* tabIndex + role/aria-label: a scroll container has to be reachable
+              by keyboard so the cards can be scrolled without a mouse
+              (WCAG 2.1.1). Tab stops: the region, then each project link. */}
           <div
             ref={nativeTrackRef}
-            className="scrollbar-hide -mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 lg:hidden"
+            tabIndex={0}
+            role="group"
+            aria-label={locale === "sv" ? "Projektkarusell, bläddra med piltangenterna" : "Project carousel, scroll with the arrow keys"}
+            className="scrollbar-hide -mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background lg:hidden"
           >
             {slides.map((project, index) => renderCard(project, index, false, "span"))}
           </div>

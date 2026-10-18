@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { QuoteCta } from "@/components/providers/QuickQuote";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Locale, localizedHref } from "@/lib/i18n";
 
@@ -18,7 +18,7 @@ export function ContactCTA({ locale = "en" }: { locale?: Locale }) {
       >
         <div className="light-gate relative overflow-hidden border border-border-subtle bg-bg-surface px-7 py-12 sm:px-12 lg:px-20 lg:py-24">
           <div className="absolute inset-x-0 top-0 h-px photon-seam" />
-          <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-8">
               <SectionLabel>{locale === "sv" ? "Nästa steg" : "Next step"}</SectionLabel>
               <h2 id="contact-title" className="display-lg mt-8 max-w-5xl">
@@ -27,9 +27,12 @@ export function ContactCTA({ locale = "en" }: { locale?: Locale }) {
             </div>
             <div className="lg:col-span-4 lg:flex lg:justify-end">
               <div>
-                <Button href={localizedHref(locale, "/contact/")} size="large" icon={<ArrowRight size={18} />}>
-                  {locale === "sv" ? "Starta ett projekt" : "Start a project"}
-                </Button>
+                <QuoteCta
+                  locale={locale}
+                  source="contact_cta"
+                  className="px-7 text-base"
+                  icon={<ArrowRight size={18} />}
+                />
               </div>
             </div>
           </div>

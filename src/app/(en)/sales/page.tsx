@@ -6,11 +6,14 @@ import { pageMeta, pageBreadcrumbLd, serviceLd } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   locale: "en",
   path: "/sales/",
-  // "digital signage" is the vocabulary the incoming English demand actually uses —
-  // see the note in docs/seo/SEO-NEXT-STEPS.md §2. Kept alongside "LED", not instead of it.
-  title: "Digital Signage & Permanent LED Installations",
+  // Owner decision (MASTERPROMPT §2): "LED screens" everywhere — "digital signage"
+  // must not appear in visible text, titles, meta, OG/Twitter or alt text.
+  title: "Permanent LED Screens for Retail, Property and Public Spaces",
   description:
-    "IM Vision designs, engineers, installs and services digital signage and permanent LED systems for retail, property and public environments across Europe.",
+    "IM Vision designs, engineers, installs and services permanent LED screens for retail, property and public spaces. We reply within 24 hours.",
+  image: "/images/photon-material/permanent-retail.jpg",
+  imageWidth: 1448,
+  imageHeight: 1086,
 });
 
 export default function EnglishSalesPage() {
@@ -21,7 +24,7 @@ export default function EnglishSalesPage() {
         data={serviceLd("en", {
           name: "Permanent LED Installations",
           description:
-            "Design, engineering, installation and service of permanent LED systems for retail, property and public environments across Europe.",
+            "Design, engineering, installation and service of permanent LED systems for retail, property and public spaces across the Nordics and Europe.",
           serviceType: "LED installation",
         })}
       />

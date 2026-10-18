@@ -14,7 +14,7 @@ export function SalesUseCases({ content }: SalesSectionProps) {
   return (
     <section id="sales-scope" className="theme-light section section-space bg-background">
       <div className="section-inner">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-6">
             <p className="eyebrow text-accent-dim">{useCases.eyebrow}</p>
             <h2 className="heading-section mt-7 text-text-primary">{useCases.title}</h2>
@@ -30,7 +30,7 @@ export function SalesUseCases({ content }: SalesSectionProps) {
             const Icon = icons[index];
             return (
               <StaggerItem key={item.number}>
-                <article className="group grid border-t border-border-subtle py-12 transition-colors duration-700 ease-[cubic-bezier(.22,.61,.36,1)] hover:bg-white/[.015] lg:grid-cols-12 lg:gap-16 lg:py-20">
+                <article className="group grid grid-cols-1 border-t border-border-subtle py-12 transition-colors duration-700 ease-[cubic-bezier(.22,.61,.36,1)] hover:bg-white/[.015] lg:grid-cols-12 lg:gap-16 lg:py-20">
                   <div
                     className={`relative aspect-[4/3] overflow-hidden rounded-[24px_8px_24px_24px] border border-transparent transition-all duration-700 ease-[cubic-bezier(.22,.61,.36,1)] group-hover:-translate-y-1 group-hover:border-border-subtle group-hover:shadow-[0_28px_80px_rgba(0,0,0,.12)] lg:col-span-6 ${
                       isEven ? "lg:order-1" : "lg:order-2"

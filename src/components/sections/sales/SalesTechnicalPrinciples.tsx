@@ -13,7 +13,7 @@ export function SalesTechnicalPrinciples({ content }: SalesSectionProps) {
   return (
     <section className="section section-space bg-bg-elevated">
       <div className="section-inner">
-        <div className="light-gate overflow-hidden border border-border-subtle bg-bg-surface/95 backdrop-blur-sm transition-all duration-700 ease-[cubic-bezier(.22,.61,.36,1)] hover:border-accent/20 hover:shadow-[0_28px_80px_rgba(0,0,0,.22)]">          <div className="grid lg:grid-cols-2">
+        <div className="light-gate overflow-hidden border border-border-subtle bg-bg-surface/95 backdrop-blur-sm transition-all duration-700 ease-[cubic-bezier(.22,.61,.36,1)] hover:border-accent/20 hover:shadow-[0_28px_80px_rgba(0,0,0,.22)]">          <div className="grid grid-cols-1 lg:grid-cols-2">
             <motion.div
               initial={{ clipPath: "inset(0 0 0 100%)" }}
               whileInView={{ clipPath: "inset(0 0 0 0)" }}
@@ -47,10 +47,10 @@ export function SalesTechnicalPrinciples({ content }: SalesSectionProps) {
                   const Icon = [ScanLine, SunMedium, Building2, Wrench][index];
                   return (
                   <StaggerItem key={item.label}>
-                    <div className="grid gap-4 py-5 sm:grid-cols-[auto_1fr]">
+                    <div className="grid grid-cols-1 gap-4 py-5 sm:grid-cols-[auto_1fr]">
                       <Icon size={20} strokeWidth={1.5} className="text-accent-dim" />
                       <div>
-                        <span className="font-medium text-text-primary">{item.label}</span>
+                        <h3 className="font-medium text-text-primary">{item.label}</h3>
                         <p className="mt-1 text-sm leading-relaxed text-text-secondary">{item.description}</p>
                       </div>
                     </div>

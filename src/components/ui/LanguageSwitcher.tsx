@@ -50,7 +50,7 @@ function ActivePill({ reduceMotion }: { reduceMotion: boolean | null }) {
         ease: [0.22, 0.61, 0.36, 1],
       }}
       aria-hidden="true"
-      className="absolute inset-0 rounded-[10px_3px_10px_10px] bg-text-primary/[0.08]"
+      className="absolute inset-0 rounded-[12px_4px_12px_12px] bg-text-primary/[0.08]"
     />
   );
 }
@@ -77,7 +77,7 @@ export function LanguageSwitcher({ locale, className }: LanguageSwitcherProps) {
 
   const linkClass = (isActive: boolean) =>
     cn(
-      "group relative inline-flex min-h-11 items-center rounded-[10px_3px_10px_10px] px-3 transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60",
+      "group relative inline-flex min-h-11 items-center rounded-[12px_4px_12px_12px] px-3 transition-colors duration-300 hover:text-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/60",
       isActive ? "font-semibold text-text-primary" : "text-text-secondary"
     );
 
@@ -92,7 +92,7 @@ export function LanguageSwitcher({ locale, className }: LanguageSwitcherProps) {
           prefetch={false}
           lang="en"
           hrefLang="en"
-          aria-label="English"
+          aria-label="EN — English"
           aria-current={locale === "en" ? "true" : undefined}
           onClick={handleSwitchClick}
           className={linkClass(locale === "en")}
@@ -119,7 +119,7 @@ export function LanguageSwitcher({ locale, className }: LanguageSwitcherProps) {
           prefetch={false}
           lang="sv"
           hrefLang="sv"
-          aria-label="Svenska"
+          aria-label="SV — Svenska"
           aria-current={locale === "sv" ? "true" : undefined}
           onClick={handleSwitchClick}
           className={linkClass(locale === "sv")}

@@ -116,14 +116,14 @@ const sv: SalesContent = {
   meta: {
     title: "Permanenta LED-installationer | IM Vision",
     description:
-      "IM Vision designar, projekterar, installerar och servar permanenta LED-system för retail, fastigheter och offentliga miljöer i hela Europa.",
+      "IM Vision designar, projekterar, installerar och servar permanenta LED-system för retail, fastigheter och offentliga miljöer i Norden och Europa.",
   },
   hero: {
     eyebrow: "IM / Permanent LED",
     title: "LED som blir en del av arkitekturen.",
     subhead:
       "Vi designar, projekterar, installerar och servar permanenta LED-system för retail, fastigheter och offentliga miljöer.",
-    primaryCta: "Starta ert projekt",
+    primaryCta: "Få offert",
     secondaryCta: "Se hur vi arbetar",
     image: "/images/photon-material/permanent-retail.jpg",
     imageAlt: "Permanenta LED-installation i premium retail-miljö",
@@ -174,31 +174,26 @@ const sv: SalesContent = {
     steps: [
       {
         number: "01",
-        title: "Platsanalys",
+        title: "Analys",
         description:
-          "Vi analyserar rum, konstruktion, ljus, siktlinjer, betraktningsavstånd och daglig drift.",
+          "Vi går igenom platsen, användningen och förutsättningarna. Ni får ett underlag att besluta på.",
       },
       {
         number: "02",
-        title: "Design",
+        title: "Design och projektering",
         description:
-          "Vi definierar displaygeometri, upplösning, innehållsbeteende och arkitektonisk integration.",
+          "Vi bestämmer skärmens utformning och planerar kraft, signal, kyla, infästning och säkerhet.",
       },
       {
         number: "03",
-        title: "Projektering",
-        description:
-          "Vi planerar kraft, signal, värmehantering, infästning, säkerhet, åtkomst och systemstyrning.",
+        title: "Leverans och installation",
+        description: "Vi levererar, monterar, driftsätter och kalibrerar hela systemet.",
       },
       {
         number: "04",
-        title: "Installation",
-        description: "Vi samordnar leverans, montage, inriktning, driftsättning och kalibrering.",
-      },
-      {
-        number: "05",
-        title: "Drift och service",
-        description: "Ni får dokumentation, utbildning, underhåll och långsiktig teknisk support.",
+        title: "Service och drift",
+        description:
+          "Ni får dokumentation, utbildning och serviceavtal med förebyggande underhåll och support.",
       },
     ],
   },
@@ -270,7 +265,7 @@ const sv: SalesContent = {
     cta: "Läs om service och support",
   },
   projectForm: {
-    eyebrow: "Starta ert projekt",
+    eyebrow: "Berätta om ert projekt",
     title: "Dela er förfrågan.",
     body: "Fyll i formuläret så öppnas ert e-postprogram med en färdig förfrågan.",
   },
@@ -279,7 +274,7 @@ const sv: SalesContent = {
     title: "Låt oss börja med platsen.",
     body:
       "Dela ritningar, miljö, önskad upplevelse och tidsplan. Vi hjälper er att definiera rätt permanent LED-system.",
-    primaryCta: "Starta ert projekt",
+    primaryCta: "Få offert",
     phone: "010 330 46 36",
     phoneE164: "+46103304636",
     email: "info@imvision.se",
@@ -290,7 +285,7 @@ const en: SalesContent = {
   meta: {
     title: "Permanent LED Installations | IM Vision",
     description:
-      "IM Vision designs, engineers, installs and services permanent LED systems for retail, property and public environments across Europe.",
+      "IM Vision designs, engineers, installs and services permanent LED systems for retail, property and public environments across the Nordics and Europe.",
   },
   hero: {
     eyebrow: "IM / Permanent LED",
@@ -347,28 +342,26 @@ const en: SalesContent = {
     steps: [
       {
         number: "01",
-        title: "Site analysis",
-        description: "We analyse the room, structure, light, sightlines, viewing distance and daily operation.",
+        title: "Analysis",
+        description:
+          "We review the site, how it will be used and the conditions it imposes. You get a documented basis to decide on.",
       },
       {
         number: "02",
-        title: "Design",
-        description: "We define display geometry, resolution, content behaviour and architectural integration.",
+        title: "Design and engineering",
+        description:
+          "We define the screen geometry and plan power, signal, cooling, mounting and safety.",
       },
       {
         number: "03",
-        title: "Engineering",
-        description: "We plan power, signal, thermal management, mounting, safety, access and system control.",
+        title: "Delivery and installation",
+        description: "We deliver, mount, commission and calibrate the complete system.",
       },
       {
         number: "04",
-        title: "Installation",
-        description: "We coordinate delivery, assembly, alignment, commissioning and calibration.",
-      },
-      {
-        number: "05",
-        title: "Operation & service",
-        description: "You receive documentation, training, maintenance and long-term technical support.",
+        title: "Service and operation",
+        description:
+          "You get documentation, training and a service agreement with preventive maintenance and support.",
       },
     ],
   },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,8 +9,9 @@ import { Menu, X, Phone, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Locale, localizedHref } from "@/lib/i18n";
 import { CONTACT } from "@/lib/seo";
-import { AnalyticsEvent, pushEvent } from "@/lib/analytics";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import { QuoteCta } from "@/components/providers/QuickQuote";
+import { Button } from "@/components/ui/Button";
 
 const navLinks = [
   { en: "Buy LED", sv: "Köpa LED", href: "/sales/" },
@@ -30,6 +31,8 @@ export function Header({
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobilePanelRef = useRef<HTMLDivElement>(null);
+  const suppressFocusRestore = useRef(false);
   const pathname = usePathname();
   const { scrollYProgress } = useScroll();
 
@@ -46,14 +49,46 @@ export function Header({
 
   useEffect(() => {
     if (!mobileOpen) return;
+    const panel = mobilePanelRef.current;
+    const focusables = () =>
+      Array.from(
+        panel?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        ) ?? []
+      ).filter((el) => el.offsetParent !== null);
+
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMobileOpen(false);
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+      // Focus trap: the menu is a modal dialog, so Tab must not reach the page
+      // behind it. Wrap from the last focusable element back to the first.
+      const items = focusables();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
+
+    // Remember where focus came from and give it back on close.
+    const opener = document.activeElement as HTMLElement | null;
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
+    const focusTimer = window.setTimeout(() => focusables()[0]?.focus(), 60);
     return () => {
+      window.clearTimeout(focusTimer);
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
+      if (!suppressFocusRestore.current) opener?.focus?.();
+      suppressFocusRestore.current = false;
     };
   }, [mobileOpen]);
 
@@ -73,14 +108,19 @@ export function Header({
                   : "border-black/[0.08]"
               )
             : scrolled
-              ? "border-white/[.06] bg-[#070807]/88 backdrop-blur-2xl"
-              : "border-transparent bg-transparent"
+              ? cn("theme-dark border-white/[.06] bg-[#070807]/88 backdrop-blur-2xl")
+              : "theme-dark border-transparent bg-transparent"
         )}
       >
-        <div className="mx-auto flex h-[78px] max-w-[1600px] items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16">
+        <div
+          className={cn(
+            "mx-auto flex max-w-[1600px] items-center justify-between px-4 transition-[height] duration-[250ms] ease-[cubic-bezier(.22,.61,.36,1)] sm:px-8 lg:px-12 xl:px-16",
+            scrolled ? "h-[62px]" : "h-[78px]"
+          )}
+        >
           {/* prefetch disabled: static export has no RSC segment endpoints, so
               Next's Link prefetch would 404 (navigation falls back to full load). */}
-          <Link href={localizedHref(locale, "/")} prefetch={false} aria-label={locale === "sv" ? "IM Vision startsida" : "IM Vision home"} className="relative z-50">
+          <Link href={localizedHref(locale, "/")} prefetch={false} aria-label={locale === "sv" ? "IM Vision startsida" : "IM Vision home"} className="tap relative z-50">
             <Image
               src="/logo.png"
               alt="IM Vision"
@@ -111,27 +151,25 @@ export function Header({
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <a
+            <Button
               href={`tel:${CONTACT.phoneE164}`}
-              className="inline-flex items-center gap-2 rounded-[12px_4px_12px_12px] border border-accent/40 bg-accent/10 px-3.5 py-2 text-[13px] font-medium text-text-primary transition-colors hover:border-accent hover:bg-accent/20"
-              aria-label={locale === "sv" ? `Ring oss på ${CONTACT.phone}` : `Call us on ${CONTACT.phone}`}
+              variant="secondary"
+              size="sm"
+              icon={<Phone size={15} className="text-accent" strokeWidth={2} />}
+              className="px-3.5"
             >
-              <Phone size={15} className="text-accent" strokeWidth={1.75} />
               <span className="hidden xl:inline">{CONTACT.phone}</span>
               <span className="xl:hidden">{locale === "sv" ? "Ring" : "Call"}</span>
-            </a>
-            <Link
-              href={localizedHref(locale, "/contact/")}
-              prefetch={false}
-              onClick={() => {
-                pushEvent(AnalyticsEvent.ctaClick, { source: "header", cta: "quote" });
-                pushEvent(AnalyticsEvent.quoteRequest, { source: "header" });
-              }}
-              className="group/cta inline-flex items-center gap-1.5 rounded-[12px_4px_12px_12px] border border-accent bg-accent px-4 py-2 text-[13px] font-semibold text-[#070807] shadow-[0_8px_24px_rgba(0,0,0,.18)] transition-[background-color,box-shadow,transform] duration-[500ms] ease-[cubic-bezier(.22,.61,.36,1)] hover:-translate-y-0.5 hover:bg-accent-soft hover:shadow-[0_12px_32px_rgba(0,0,0,.24)]"
-            >
-              {locale === "sv" ? "Få offert" : "Get a quote"}
-              <ArrowRight size={14} strokeWidth={2} className="transition-transform duration-[500ms] group-hover/cta:translate-x-[2px]" />
-            </Link>
+            </Button>
+            {/* One primary CTA across the whole site: it opens the quick
+                enquiry panel in place (on /contact/ it scrolls to the form,
+                which is already on screen). */}
+            <QuoteCta
+              locale={locale}
+              source="header"
+              className="group/cta min-h-11 gap-1.5 rounded-[12px_4px_12px_12px] px-4 text-[13px] shadow-[0_8px_24px_rgba(0,0,0,.18)] hover:shadow-[0_12px_32px_rgba(0,0,0,.24)]"
+              icon={<ArrowRight size={14} strokeWidth={2} className="transition-transform duration-[500ms] group-hover/cta:translate-x-[2px]" />}
+            />
             <LanguageSwitcher locale={locale} />
           </div>
 
@@ -163,6 +201,7 @@ export function Header({
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            ref={mobilePanelRef}
             id="mobile-navigation"
             role="dialog"
             aria-modal="true"
@@ -176,7 +215,9 @@ export function Header({
             <nav className="mx-auto flex min-h-full max-w-xl flex-col pb-8" aria-label="Mobile navigation">
               <div className="flex items-center justify-between">
                 <p className="eyebrow text-accent">IM / {locale === "sv" ? "Meny" : "Menu"}</p>
-                <LanguageSwitcher locale={locale} />
+                <div className="flex items-center gap-2">
+                  <LanguageSwitcher locale={locale} />
+                </div>
               </div>
               <div className="mt-10 divide-y divide-border-subtle border-y border-border-subtle">
                 {navLinks.map((link, index) => (
@@ -189,8 +230,13 @@ export function Header({
                     <Link
                       href={localizedHref(locale, link.href)}
                       prefetch={false}
-                      onClick={() => setMobileOpen(false)}
-                      className="flex items-center justify-between py-5 text-3xl font-medium tracking-[-0.04em] text-text-primary"
+                      onClick={() => {
+                    // The quick-quote panel manages its own focus; returning
+                    // focus to the hamburger would fight it.
+                    suppressFocusRestore.current = true;
+                    setMobileOpen(false);
+                  }}
+                      className="flex min-h-14 items-center justify-between py-5 text-3xl font-medium tracking-[-0.04em] text-text-primary"
                     >
                       {link[locale]}
                       <span className="font-mono text-xs text-text-muted">0{index + 1}</span>
@@ -199,29 +245,29 @@ export function Header({
                 ))}
               </div>
               <div className="mt-auto space-y-4 pt-8">
-                <Link
-                  href={localizedHref(locale, "/contact/")}
-                  prefetch={false}
+                <QuoteCta
+                  locale={locale}
+                  source="mobile_menu"
                   onClick={() => {
+                    // The quick-quote panel manages its own focus; returning
+                    // focus to the hamburger would fight it.
+                    suppressFocusRestore.current = true;
                     setMobileOpen(false);
-                    pushEvent(AnalyticsEvent.ctaClick, { source: "mobile_menu", cta: "quote" });
-                    pushEvent(AnalyticsEvent.quoteRequest, { source: "mobile_menu" });
                   }}
-                  className="flex items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent bg-accent px-5 py-4 text-base font-semibold text-[#070807] shadow-[0_10px_30px_rgba(0,0,0,.24)] transition-transform active:scale-[.98]"
-                >
-                  {locale === "sv" ? "Få offert" : "Get a quote"}
-                  <ArrowRight size={17} strokeWidth={2} />
-                </Link>
+                  size="lg"
+                  className="w-full"
+                  icon={<ArrowRight size={17} strokeWidth={2} />}
+                />
                 <a
                   href={`tel:${CONTACT.phoneE164}`}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent/40 bg-accent/10 px-5 py-4 text-base font-medium text-text-primary transition-colors hover:border-accent hover:bg-accent/20"
+                  className="flex min-h-12 items-center justify-center gap-2 rounded-[12px_4px_12px_12px] border-[1.5px] border-[var(--btn-border)] px-5 text-base font-semibold text-text-primary transition-colors hover:border-accent hover:bg-accent/12"
                 >
-                  <Phone size={17} className="text-accent" strokeWidth={1.75} />
+                  <Phone size={17} className="text-accent" strokeWidth={2} />
                   {CONTACT.phone}
                 </a>
                 <div className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
-                  Jönköping · Stockholm · Europe
+                  Jönköping · Saltsjö-Boo
                 </div>
               </div>
             </nav>

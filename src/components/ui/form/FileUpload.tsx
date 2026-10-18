@@ -21,6 +21,8 @@ interface FileUploadProps {
   dragLabel?: string;
   dragHint?: string;
   error?: string;
+  /** Render a single compact row instead of the large drop zone (tighter forms). */
+  compact?: boolean;
 }
 
 const MAX_FILES = 5;
@@ -52,6 +54,7 @@ export function FileUpload({
   dragLabel,
   dragHint,
   error,
+  compact = false,
 }: FileUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -132,7 +135,7 @@ export function FileUpload({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         className={cn(
-          "cursor-pointer rounded-2xl border-2 border-dashed p-5 transition-all duration-200 ease-[cubic-bezier(.22,.61,.36,1)]",
+          compact ? "cursor-pointer rounded-[12px_4px_12px_12px] border border-dashed px-4 py-3 transition-all duration-200 ease-[cubic-bezier(.22,.61,.36,1)]" : "cursor-pointer rounded-2xl border-2 border-dashed p-5 transition-all duration-200 ease-[cubic-bezier(.22,.61,.36,1)]",
           "hover:border-accent/50 hover:bg-bg-elevated",
           isDragging ? "border-accent bg-accent/[0.06]" : "border-border-subtle bg-bg-surface",
           error && "border-red-400/50"
@@ -151,17 +154,32 @@ export function FileUpload({
           aria-label={label || dragLabel || "Upload files"}
           className="sr-only"
         />
-        <div className="flex flex-col items-center justify-center gap-2 text-center">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-bg-elevated text-accent">
-            <Upload size={20} />
-          </span>
-          <span className="text-sm text-text-secondary">
-            <span className="font-medium text-text-primary">{dragLabel || "Click to upload"}</span>{" "}
-            {dragHint || "or drag and drop files here"}
-          </span>
-          {description && <span className="text-xs text-text-muted">{description}</span>}
-          <span className="text-xs text-text-muted">{limitText || `Max ${maxFiles} files, ${maxSizeMB} MB each`}</span>
-        </div>
+        {compact ? (
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+            <span className="inline-flex min-h-11 items-center gap-2 text-sm text-text-secondary">
+              <span className="text-accent">
+                <Upload size={16} />
+              </span>
+              <span>
+                <span className="font-medium text-text-primary">{dragLabel || "Click to upload"}</span>{" "}
+                {dragHint || "or drop files here"}
+              </span>
+            </span>
+            <span className="text-xs text-text-muted">{limitText || `Max ${maxFiles} files, ${maxSizeMB} MB each`}</span>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-2 text-center">
+            <span className="flex h-10 w-10 items-center justify-center rounded-[8px_3px_8px_8px] bg-bg-elevated text-accent">
+              <Upload size={20} />
+            </span>
+            <span className="text-sm text-text-secondary">
+              <span className="font-medium text-text-primary">{dragLabel || "Click to upload"}</span>{" "}
+              {dragHint || "or drag and drop files here"}
+            </span>
+            {description && <span className="text-xs text-text-muted">{description}</span>}
+            <span className="text-xs text-text-muted">{limitText || `Max ${maxFiles} files, ${maxSizeMB} MB each`}</span>
+          </div>
+        )}
       </div>
 
       {files.length > 0 && (

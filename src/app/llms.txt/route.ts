@@ -41,7 +41,7 @@ export function GET() {
 
   const body = `# IM Vision
 
-> IM Vision (${CONTACT.legalName}, org.nr ${CONTACT.orgNumber}) designs, engineers, installs and services professional LED display solutions for permanent installations and events across Europe. One accountable partner — in-house engineering, installation, service and operation.
+> IM Vision (${CONTACT.legalName}, org.nr ${CONTACT.orgNumber}) designs, engineers, installs and services professional LED display solutions for permanent installations and events across the Nordics and Europe. One accountable partner — in-house engineering, installation, service and operation.
 
 Head office in Jönköping, Sweden, with a warehouse and office in the Stockholm area (Saltsjö-Boo). Bilingual website: English at the root, Swedish under /sv/.
 
@@ -65,7 +65,7 @@ Head office in Jönköping, Sweden, with a warehouse and office in the Stockholm
 - [Projekt](${SITE_URL}/sv/projects/)
 
 ## Expertise
-LED displays, LED walls, LED screens, digital signage, DOOH (digital out-of-home), LED installation, LED rental, display service and maintenance.
+LED displays, LED walls, LED screens, DOOH (digital out-of-home — digital advertising screens), LED installation, LED rental, display service and maintenance.
 
 ## Notable projects
 ${notable}

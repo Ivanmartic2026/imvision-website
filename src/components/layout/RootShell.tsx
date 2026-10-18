@@ -1,6 +1,7 @@
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { LanguageGate } from "@/components/providers/LanguageGate";
 import { Analytics } from "@/components/providers/Analytics";
+import { QuickQuoteProvider } from "@/components/providers/QuickQuote";
 import { StickyCTA } from "@/components/layout/StickyCTA";
 import { BackToTop } from "@/components/ui/BackToTop";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -35,9 +36,15 @@ export function RootShell({
       >
         {locale === "sv" ? "Hoppa till huvudinnehållet" : "Skip to main content"}
       </a>
-      <SmoothScroll>{children}</SmoothScroll>
-      <StickyCTA locale={locale} />
-      <BackToTop locale={locale} />
+      {/* The quick-enquiry panel lives above every page: any "Få offert"
+          trigger on the site opens it without a page change. */}
+      {/* The sticky bar and back-to-top also live inside the provider: their
+          CTAs are the same "Få offert" trigger and must open the same panel. */}
+      <QuickQuoteProvider locale={locale}>
+        <SmoothScroll>{children}</SmoothScroll>
+        <StickyCTA locale={locale} />
+        <BackToTop locale={locale} />
+      </QuickQuoteProvider>
       <LanguageGate />
       <Analytics locale={locale} />
       <JsonLd data={siteGraphLd()} />

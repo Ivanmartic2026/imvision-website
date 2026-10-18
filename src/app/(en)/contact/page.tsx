@@ -1,8 +1,10 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { PageHeader } from "@/components/layout/PageHeader";
+import { Suspense } from "react";
 import { ContactForm } from "@/components/sections/ContactForm";
+import { ContactFormPanel } from "@/components/sections/contact/ContactFormPanel";
 import { ContactDetails } from "@/components/sections/ContactDetails";
+import { ContactHero } from "@/components/sections/contact/ContactHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMeta, pageBreadcrumbLd, CONTACT, SITE_URL } from "@/lib/seo";
 
@@ -11,13 +13,25 @@ export const metadata = pageMeta({
   path: "/contact/",
   title: "Contact — LED Display Sales, Rental & Service",
   description:
-    "Talk to IM Vision about buying, renting, installing or servicing LED displays across Europe. We reply within one business day.",
+    "Talk to IM Vision about buying, renting, installing or servicing LED screens across the Nordics and Europe. We reply within 24 hours.",
 });
 
 const contactPageLd = {
   "@context": "https://schema.org",
   "@graph": [
     pageBreadcrumbLd("en", "/contact/", "Contact"),
+    // ContactPage ties the page itself to the organisation and the contact
+    // point, so search engines can treat it as the canonical contact surface.
+    {
+      "@type": "ContactPage",
+      "@id": `${SITE_URL}/contact/#contactpage`,
+      url: `${SITE_URL}/contact/`,
+      name: "Contact",
+      inLanguage: "en",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: { "@id": `${SITE_URL}/#organization` },
+      mainEntity: { "@id": `${SITE_URL}/#contact` },
+    },
     {
       "@type": "ContactPoint",
       "@id": `${SITE_URL}/#contact`,
@@ -40,16 +54,21 @@ export default function ContactPage() {
       <JsonLd data={contactPageLd} />
       <Header locale="en" variant="light" />
       <main id="main-content">
-        <PageHeader
+        <ContactHero
+          locale="en"
           label="Contact"
           title="Contact IM Vision"
-          description="Get help with permanent LED installations, LED rentals and technical support. Tell us about your project and we'll reply the same business day."
-          className="pt-[220px] md:pt-[240px] lg:pt-[260px]"
-        />
-        <section className="theme-light section section-space bg-background !pt-12 md:!pt-16 lg:!pt-20">
+          description="Get help with permanent LED installations, LED rentals and technical support. Tell us about your project and we reply within 24 hours."
+        >
+          <Suspense
+            fallback={<ContactForm locale="en" variant="panel" defaultCategory="buy" />}
+          >
+            <ContactFormPanel locale="en" />
+          </Suspense>
+        </ContactHero>
+        <section className="theme-light section bg-background pb-16 pt-4 md:pb-20">
           <div className="section-inner">
-            <ContactForm />
-            <ContactDetails />
+            <ContactDetails locale="en" />
           </div>
         </section>
       </main>

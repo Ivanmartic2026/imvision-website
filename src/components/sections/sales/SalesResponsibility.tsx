@@ -10,7 +10,7 @@ export function SalesResponsibility({ content }: SalesSectionProps) {
   return (
     <section className="theme-light section section-space bg-background">
       <div className="section-inner">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-5">
             <p className="eyebrow text-accent-dim">{responsibility.eyebrow}</p>
             <h2 className="heading-section mt-7 text-text-primary">{responsibility.title}</h2>

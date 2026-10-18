@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { Button } from "@/components/ui/Button";
 import {
   AnimatePresence,
   motion,
@@ -45,7 +46,7 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
     const handleReopen = () => {
       // Läs nuvarande analys-inställning så att steg 2 kan vara förifylld.
       // localStorage kan kasta (Safari privat läge blockerar även läsning) —
-      // ett oskyddat getItem här skulle krascha hela sidan för den besökaren.
+      // ett oskyddat getItem här skulle krascha sidan för den besökaren.
       try {
         setAnalyticsEnabled(localStorage.getItem(CONSENT_KEY) === "granted");
       } catch {
@@ -76,7 +77,7 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
     if (step === 2) setStep(1);
   }, [step]);
 
-  // ...och tangentbordsvägen. handleEscape användes tidigare bara av
+  // ...och tangentbordsvägen: handleEscape användes tidigare bara av
   // stäng-krysset, så Escape gjorde ingenting för tangentbordsanvändare.
   useEffect(() => {
     if (step !== 2) return;
@@ -124,7 +125,7 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
           step1Title: "Vi använder cookies",
           step1Text:
             "Vi använder analyscookies för att förstå hur sajten används. " +
-            "Inga cookies sätts förrän du accepterat, och ingen personlig information skickas.",
+            "Inga cookies sätts förrän ni har samtyckt, och ingen personlig information skickas.",
           accept: "Acceptera alla",
           necessary: "Endast nödvändiga",
           customise: "Anpassa",
@@ -168,12 +169,10 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            // Landmark med namn: originalet (den inbyggda bannern i Analytics)
-            // hade role="region" + aria-label. Utan det annonseras bara en
-            // lös <h2> utan sammanhang för skärmläsare.
-            role="region"
-            aria-label={t.title}
             className="fixed inset-x-0 bottom-0 z-[90]"
+            role="dialog"
+            aria-modal="false"
+            aria-label={step === 2 ? t.title : t.step1Title}
           >
             <motion.div
               className={`${MAX_WIDTH} mx-auto mb-3 sm:absolute sm:right-5 sm:bottom-5 sm:mb-0`}
@@ -193,7 +192,7 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
                     type="button"
                     onClick={handleEscape}
                     aria-label={locale === "sv" ? "Stäng cookie-inställningar" : "Close cookie settings"}
-                    className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-[10px_3px_10px_10px] text-text-secondary transition-colors hover:bg-white/[.06] hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    className="absolute right-2 top-2 flex h-11 w-11 items-center justify-center rounded-[10px_3px_10px_10px] text-text-secondary transition-colors hover:bg-white/[.06] hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   >
                     <X size={16} />
                   </button>
@@ -201,9 +200,9 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
 
                 <div className="p-4 sm:p-5">
                   {/* Rubrik – skärmläsare + visuellt diskret */}
-                  <h2 className="mb-3 text-sm font-semibold text-text-primary">
+                  <p className="mb-3 text-sm font-semibold text-text-primary">
                     {step === 2 ? t.title : t.step1Title}
-                  </h2>
+                  </p>
 
                   {step === 1 ? <Step1 /> : <Step2 />}
                 </div>
@@ -224,26 +223,18 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
         </p>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => decide("granted")}
-              className="rounded-[10px_3px_10px_10px] bg-accent px-4 py-2.5 text-sm font-medium leading-tight text-[#070807] transition-colors hover:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
+            <Button type="button" size="sm" onClick={() => decide("granted")}>
               {t.accept}
-            </button>
-            <button
-              type="button"
-              onClick={() => decide("denied")}
-              className="rounded-[10px_3px_10px_10px] border border-border-strong px-4 py-2.5 text-sm font-medium leading-tight text-text-secondary transition-colors hover:bg-white/[.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
+            </Button>
+            <Button type="button" size="sm" variant="secondary" onClick={() => decide("denied")}>
               {t.necessary}
-            </button>
+            </Button>
           </div>
           <div className="flex items-center gap-3 text-xs">
             <button
               type="button"
               onClick={() => setStep(2)}
-              className="font-medium text-text-muted transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="tap font-medium text-text-muted transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label={t.customise}
             >
               {t.customise}
@@ -252,7 +243,7 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
             <Link
               href={localizedHref(locale, "/privacy/")}
               prefetch={false}
-              className="font-medium text-text-muted transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="tap font-medium text-text-muted transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               {t.privacy}
             </Link>
@@ -334,7 +325,7 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
           <button
             type="button"
             onClick={saveChoices}
-            className="rounded-[10px_3px_10px_10px] bg-accent px-4 py-2.5 text-sm font-medium leading-tight text-[#070807] transition-colors hover:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="inline-flex min-h-11 items-center justify-center rounded-[10px_3px_10px_10px] bg-accent px-4 py-2.5 text-sm font-medium leading-tight text-[#070807] transition-colors hover:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {t.save}
           </button>

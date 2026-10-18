@@ -7,7 +7,7 @@ export const metadata: Metadata = pageMeta({
   path: "/",
   title: "Köp, hyr, installera och serva LED",
   description:
-    "IM Vision designar, projekterar, installerar och servar avancerade LED-skärmar — en ansvarig partner i hela Europa.",
+    "IM Vision designar, projekterar, installerar och servar avancerade LED-skärmar — en ansvarig partner i Norden och Europa.",
 });
 
 export default function SwedishHomePage() {

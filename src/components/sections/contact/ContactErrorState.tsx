@@ -7,16 +7,22 @@ interface ContactErrorStateProps {
   locale: "en" | "sv";
   recipient: string;
   onRetry: () => void;
+  /**
+   * Pre-filled mailto (subject + body with the submitted values). Used by the
+   * form so a failed submit never costs the user what they typed — this link is
+   * also the reliable path when a popup blocker swallows window.open().
+   */
+  mailtoHref?: string;
 }
 
-export function ContactErrorState({ locale, recipient, onRetry }: ContactErrorStateProps) {
+export function ContactErrorState({ locale, recipient, onRetry, mailtoHref }: ContactErrorStateProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.22, 0.61, 0.36, 1] }}
       role="alert"
-      className="rounded-3xl border border-red-400/30 bg-red-400/10 p-8 text-text-secondary"
+      className="rounded-[24px_8px_24px_24px] border border-red-400/30 bg-red-400/10 p-8 text-text-secondary"
     >
       <div className="flex items-start gap-4">
         <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-red-400/20 text-red-500">
@@ -28,7 +34,7 @@ export function ContactErrorState({ locale, recipient, onRetry }: ContactErrorSt
           </p>
           <p className="mt-2 leading-relaxed">
             {locale === "sv" ? "Försök igen eller kontakta oss på" : "Please try again or contact us at"}{" "}
-            <a href={`mailto:${recipient}`} className="font-medium text-accent underline underline-offset-4 hover:text-accent-dim">
+            <a href={mailtoHref ?? `mailto:${recipient}`} className="font-medium text-accent underline underline-offset-4 hover:text-accent-dim">
               {recipient}
             </a>
             .
@@ -36,7 +42,7 @@ export function ContactErrorState({ locale, recipient, onRetry }: ContactErrorSt
           <button
             type="button"
             onClick={onRetry}
-            className="mt-5 inline-flex items-center gap-2 rounded-xl bg-bg-surface px-4 py-2.5 text-sm font-medium text-text-primary transition-colors hover:bg-bg-elevated"
+            className="mt-5 inline-flex items-center gap-2 rounded-[12px_4px_12px_12px] bg-bg-surface px-4 py-2.5 text-sm font-medium text-text-primary transition-colors hover:bg-bg-elevated"
           >
             {locale === "sv" ? "Försök igen" : "Try again"}
           </button>

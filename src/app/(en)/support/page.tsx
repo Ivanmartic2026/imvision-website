@@ -8,7 +8,10 @@ export const metadata: Metadata = pageMeta({
   path: "/support/",
   title: "LED Display Support & Service",
   description:
-    "IM Vision support centre for LED displays — FAQs, documentation, remote monitoring and direct contact for service and maintenance across Europe.",
+    "IM Vision support centre for LED displays — FAQs, documentation, remote monitoring and direct contact for service and maintenance across the Nordics and Europe.",
+  image: "/images/photon-material/engineering-calibration.jpg",
+  imageWidth: 1448,
+  imageHeight: 1086,
 });
 
 export default function SupportPage() {

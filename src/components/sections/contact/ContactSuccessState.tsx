@@ -20,7 +20,7 @@ export function ContactSuccessState({ locale, category, flowRef }: ContactSucces
   const categoryTitles: Record<ContactCategory, string> = {
     buy: locale === "sv" ? "Köpa LED" : "Buy LED",
     rental: locale === "sv" ? "Hyra LED" : "Rent LED",
-    service: locale === "sv" ? "Service & support" : "Service & support",
+    service: locale === "sv" ? "Service och support" : "Service & support",
   };
 
   const isService = category === "service";
@@ -69,7 +69,7 @@ export function ContactSuccessState({ locale, category, flowRef }: ContactSucces
       transition={{ duration, ease: [0.22, 0.61, 0.36, 1] }}
       role="status"
       aria-live="polite"
-      className="rounded-3xl border border-accent/25 bg-accent/10 p-8 text-text-secondary"
+      className="rounded-[24px_8px_24px_24px] border border-accent/25 bg-accent/10 p-8 text-text-secondary"
     >
       <div className="flex items-start gap-4">
         {/* Checkmark badge */}
@@ -79,12 +79,12 @@ export function ContactSuccessState({ locale, category, flowRef }: ContactSucces
 
         <div className="flex-1">
           <p className="text-xl font-semibold text-text-primary">
-            {locale === "sv" ? "Tack, vi har tagit emot din förfrågan." : "Thank you, we have received your enquiry."}
+            {locale === "sv" ? "Tack, vi har tagit emot er förfrågan." : "Thank you, we have received your enquiry."}
           </p>
           <p className="mt-2 leading-relaxed">
             {locale === "sv"
-              ? "En person från rätt avdelning återkommer så snart som möjligt, normalt samma arbetsdag."
-              : "Someone from the right team will get back to you as soon as possible, usually the same business day."}
+              ? "En person från rätt avdelning återkommer inom 24 timmar."
+              : "Someone from the right team will get back to you within 24 hours."}
           </p>
 
           {/* ───────── Flow reference (only when present) ───────── */}

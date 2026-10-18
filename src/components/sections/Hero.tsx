@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { QuoteCta } from "@/components/providers/QuickQuote";
+import { CONTACT } from "@/lib/seo";
 import { Locale, localizedHref } from "@/lib/i18n";
 
 export function Hero({ locale = "en" }: { locale?: Locale }) {
@@ -33,7 +35,11 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
       >
         <Image
           src="/images/photon-material/hero-experience-centre.jpg"
-          alt="Concept visualization of a monumental LED wall integrated into a dark architectural experience centre"
+          alt={
+            locale === "sv"
+              ? "Konceptvisualisering av en monumental LED-vägg i ett mörkt arkitektoniskt upplevelsecenter"
+              : "Concept visualization of a monumental LED wall integrated into a dark architectural experience centre"
+          }
           fill
           loading="eager"
           fetchPriority="high"
@@ -60,9 +66,13 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
               id="hero-title"
               className="max-w-[980px] text-balance font-[var(--font-heading)] text-[clamp(2.85rem,12vw,5.25rem)] font-semibold leading-[0.92] tracking-[-0.04em] text-text-primary sm:text-[clamp(3.4rem,7.5vw,6rem)]"
             >
+              {/* The two block-spans are a visual line break only. The literal
+                  space between them keeps textContent (screen readers, copy,
+                  search snippets) at "LED som formar upplevelsen." instead of
+                  the run-together "formarupplevelsen". */}
               <span className="block">
                 {locale === "sv" ? "LED som formar" : "Light, built"}
-              </span>
+              </span>{" "}
               <span className="block">
                 {locale === "sv" ? "upplevelsen." : "into space."}
               </span>
@@ -76,79 +86,52 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
 
             <p className="body mt-4 max-w-2xl font-normal text-text-secondary sm:mt-5">
               {locale === "sv"
-                ? "Köp eller hyr — installerat, servat och driftat av oss, i hela Europa."
-                : "Buy or rent — installed, serviced and operated by us, across Europe."}
+                ? "Köp eller hyr — installerat, servat och driftat av oss, i Norden och Europa."
+                : "Buy or rent — installed, serviced and operated by us, across the Nordics and Europe."}
             </p>
 
-            <div className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2">
-              {[
-                {
-                  title: locale === "sv" ? "Köpa LED" : "Buy LED",
-                  description:
-                    locale === "sv"
-                      ? "En lösning som håller i 10 år, inte 10 månader."
-                      : "A solution built to last years, not months.",
-                  href: "/sales/",
-                  accent: "green",
-                },
-                {
-                  title: locale === "sv" ? "Hyra LED" : "Rent LED",
-                  description:
-                    locale === "sv"
-                      ? "Rätt skärm, på plats, i tid – varje gång."
-                      : "The right screen, on site, on time — every time.",
-                  href: "/rental/",
-                  accent: "warm",
-                },
-              ].map((choice) => {
-                const isGreen = choice.accent === "green";
-                return (
-                  <Link
-                    key={choice.title}
-                    href={localizedHref(locale, choice.href)}
-                    className={`
-                      group relative flex min-h-[160px] flex-col justify-end overflow-hidden rounded-[24px_8px_24px_24px] border p-6 backdrop-blur-xl transition-all duration-[800ms] ease-[cubic-bezier(.22,.61,.36,1)] hover:-translate-y-1.5 sm:min-h-[200px] sm:p-8
-                      ${
-                        isGreen
-                          ? "border-accent/40 bg-[#0b0d0c]/92 shadow-[0_24px_70px_rgba(0,0,0,.24)] hover:border-accent hover:bg-[#111412]/96 hover:shadow-[0_36px_96px_rgba(0,0,0,.38),0_0_50px_var(--accent-glow)]"
-                          : "border-accent-warm/25 bg-[#0b0d0c]/78 hover:border-accent-warm/55 hover:bg-[#111412]/88 hover:shadow-[0_36px_96px_rgba(0,0,0,.34),0_0_40px_rgba(184,161,132,.10)]"
-                      }
-                    `}
-                  >
-                    <div
-                      className={`pointer-events-none absolute inset-0 opacity-60 transition-opacity duration-[800ms] group-hover:opacity-100 ${
-                        isGreen
-                          ? "bg-[radial-gradient(circle_at_85%_15%,rgba(145,169,161,.12),transparent_34%)]"
-                          : "bg-[radial-gradient(circle_at_85%_15%,rgba(184,161,132,.10),transparent_34%)]"
-                      }`}
-                    />
-                    <h2 className="relative max-w-[12ch] font-[var(--font-heading)] text-3xl font-semibold leading-[1.08] tracking-[-0.03em] text-text-primary sm:text-4xl">
-                      {choice.title}
-                    </h2>
-                    <p className="relative mt-3 max-w-[31rem] pr-10 text-sm leading-[1.65] text-text-secondary sm:mt-4 sm:text-base">
-                      {choice.description}
-                    </p>
-                    <ArrowUpRight
-                      size={22}
-                      className={`
-                        absolute bottom-6 right-6 transition-[color,transform] duration-[700ms] ease-[cubic-bezier(.22,.61,.36,1)] group-hover:translate-x-1 group-hover:-translate-y-1
-                        ${isGreen ? "text-text-muted group-hover:text-accent" : "text-text-muted group-hover:text-accent-warm"}
-                        sm:bottom-8 sm:right-8
-                      `}
-                    />
-                  </Link>
-                );
-              })}
+            {/* One primary CTA. The Buy/Rent choice lives in its own section
+                further down the page (and in the header), so the hero does not
+                repeat it as two large cards — that duplicated the section and
+                pushed the proof, projects and process below the fold. */}
+            <div className="mt-9 flex flex-col items-start gap-4 sm:mt-11 sm:flex-row sm:items-center sm:gap-6">
+              <QuoteCta
+                locale={locale}
+                source="hero"
+                className="w-full px-7 text-base sm:w-auto"
+                icon={<ArrowRight size={18} />}
+              />
+              <Link
+                href={localizedHref(locale, "/projects/")}
+                prefetch={false}
+                className="tap gap-2 border-b border-accent text-sm font-semibold text-text-primary transition-colors hover:text-accent-soft"
+              >
+                {locale === "sv" ? "Se projekt" : "See projects"}
+                <ArrowUpRight size={16} />
+              </Link>
             </div>
 
-            <div className="mt-5">
+            <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-1 text-sm text-text-secondary">
               <Link
-                href={localizedHref(locale, "/contact/")}
-                className="group inline-flex items-center gap-2 text-sm font-medium text-text-primary transition-colors hover:text-accent-soft"
+                href={localizedHref(locale, "/sales/")}
+                prefetch={false}
+                className="tap transition-colors hover:text-text-primary"
               >
-                {locale === "sv" ? "Osäker på vad ni behöver? Prata med oss" : "Not sure what you need? Talk to us"}
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                {locale === "sv" ? "Köpa LED" : "Buy LED"}
               </Link>
+              <Link
+                href={localizedHref(locale, "/rental/")}
+                prefetch={false}
+                className="tap transition-colors hover:text-text-primary"
+              >
+                {locale === "sv" ? "Hyra LED" : "Rent LED"}
+              </Link>
+              <a
+                href={`tel:${CONTACT.phoneE164}`}
+                className="tap transition-colors hover:text-text-primary"
+              >
+                {locale === "sv" ? `Ring ${CONTACT.phone}` : `Call ${CONTACT.phone}`}
+              </a>
             </div>
           </motion.div>
         </div>

@@ -14,10 +14,11 @@ const services = [
     titleSv: "Permanent LED",
     description: "For façades, retail, offices, showrooms, and public environments.",
     descriptionSv: "För fasader, butiker, kontor, showrooms och offentliga miljöer.",
-    tags: ["Architectural LED systems", "Transparent LED", "Retail", "Corporate", "DOOH", "Digital signage"],
-    tagsSv: ["Arkitektoniska LED-system", "Transparent LED", "Retail", "Corporate", "DOOH", "Digital signage"],
+    tags: ["Architectural LED systems", "Transparent LED", "Retail", "Corporate", "DOOH", "In-store LED"],
+    tagsSv: ["Arkitektoniska LED-system", "Transparent LED", "Butik", "Företag", "DOOH", "LED i butik"],
     image: "/images/photon-material/permanent-retail.jpg",
     alt: "Concept visualization of an architectural LED wall integrated into a premium retail interior",
+    altSv: "Konceptvisualisering av en arkitektonisk LED-vägg i en exklusiv butiksmiljö",
     href: "/sales/",
     cta: "Explore permanent solutions",
     ctaSv: "Utforska permanenta lösningar",
@@ -32,6 +33,7 @@ const services = [
     tagsSv: ["Konserter", "Mässor", "Sport", "Företagsevent", "TV-produktion", "Produktlanseringar"],
     image: "/images/photon-material/event-rental.jpg",
     alt: "Concept visualization of a large LED stage at a premium product launch",
+    altSv: "Konceptvisualisering av en stor LED-scen vid en exklusiv produktlansering",
     href: "/rental/",
     cta: "Explore event solutions",
     ctaSv: "Utforska event-lösningar",
@@ -49,7 +51,7 @@ export function ServicesPreview({ locale = "en" }: { locale?: Locale }) {
           </h2>
         </div>
 
-        <div className="mt-16 grid gap-6 lg:mt-24 lg:grid-cols-2">
+        <div className="mt-16 grid grid-cols-1 gap-6 lg:mt-24 lg:grid-cols-2">
           {services.map((service, index) => (
             <motion.article
               key={service.title}
@@ -66,14 +68,14 @@ export function ServicesPreview({ locale = "en" }: { locale?: Locale }) {
                 >
                   <Image
                     src={service.image}
-                    alt={service.alt}
+                    alt={locale === "sv" ? service.altSv : service.alt}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.22,.61,.36,1)] group-hover:scale-[1.03]"
                   />
                   <div className="absolute inset-x-0 bottom-0 h-px photon-seam" />
                   <span className="absolute left-4 top-4 rounded-[10px_3px_10px_10px] bg-[#070807]/75 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-[#f2f0e9] backdrop-blur-md">
-                    {locale === "sv" ? "Konceptbild" : "Concept visual"} / {service.number}
+                    {locale === "sv" ? "Konceptvisualisering" : "Concept visualisation"} / {service.number}
                   </span>
                 </div>
                 <div className="flex flex-1 flex-col p-7 lg:p-9">
