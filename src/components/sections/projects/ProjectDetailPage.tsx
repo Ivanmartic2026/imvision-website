@@ -367,7 +367,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                     <p className="eyebrow text-accent">{t.challengeEyebrow}</p>
                     {/* Unique per project — the same sentence on every case
                         page told search engines the pages were duplicates. */}
-                    <h2 className="mt-7 text-[clamp(2.5rem,4.8vw,4.8rem)] font-medium leading-[0.98] tracking-[-0.045em] text-text-primary">
+                    <h2 className="h2-display mt-7 text-text-primary">
                       {t.challengeEyebrow} — {copy.title}
                     </h2>
                     <p className="mt-5 max-w-md text-lg leading-relaxed text-text-muted">
@@ -471,7 +471,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                     block is data-driven and returns the moment real copy is written. */}
                 {!caseStudy && (bodyText || project.sourceUrl) && (
                   <>
-                    <h2 className="text-3xl font-medium tracking-[-0.035em] text-text-primary sm:text-4xl">
+                    <h2 className="h2-sub">
                       {t.aboutHeading}
                     </h2>
                     {bodyText && (
@@ -630,7 +630,7 @@ export function ProjectDetailPage({ locale, project, copy }: ProjectDetailPagePr
                     <span className="block font-mono text-xs uppercase tracking-[0.14em] text-text-muted">
                       {t.nextProjectLabel}
                     </span>
-                    <span className="mt-3 block text-3xl font-medium tracking-[-0.03em] text-text-primary sm:text-4xl">
+                    <span className="mt-3 block h2-sub">
                       {localizeRelatedProject(locale, nextProject).title}
                     </span>
                   </span>

@@ -17,6 +17,10 @@
   --text-muted: #808983;
   --border: rgba(255, 255, 255, 0.06);
   --border-strong: rgba(255, 255, 255, 0.13);
+  /* Outline colour for secondary buttons/chips. Deliberately stronger than
+     --border-strong: an outline control must read as a control, not as a card
+     hairline. Flips to a solid grey inside .theme-light (see below). */
+  --btn-border: rgba(255, 255, 255, 0.30);
   --photon-seam: linear-gradient(90deg, #778f87 0%, #c7d2ce 52%, #b8a184 100%);
   --ease-premium: cubic-bezier(.22, .61, .36, 1);
   --shadow-card: 0 28px 80px rgba(0, 0, 0, 0.22), 0 2px 12px rgba(0, 0, 0, 0.12);
@@ -99,6 +103,7 @@ body {
   --text-muted: #5f6764;
   --border: #cdd1cc;
   --border-strong: #adb4ae;
+  --btn-border: #9aa39d;
   /* On light bands the sage accent (#91a9a1) drops to 2.2:1 as small text.
      Darken it for AA-compliant eyebrows/links; ≥4.8:1 on #f2f0e9 and white. */
   --accent: #4f6f66;
@@ -121,6 +126,10 @@ body {
   --accent-glow: rgba(145, 169, 161, 0.16);
   --border: rgba(255, 255, 255, 0.06);
   --border-strong: rgba(255, 255, 255, 0.13);
+  /* Outline colour for secondary buttons/chips. Deliberately stronger than
+     --border-strong: an outline control must read as a control, not as a card
+     hairline. Flips to a solid grey inside .theme-light (see below). */
+  --btn-border: rgba(255, 255, 255, 0.30);
 }
 
 .section-space {
@@ -166,6 +175,27 @@ body {
   font-weight: 500;
   line-height: 0.93;
   letter-spacing: -0.04em;
+}
+
+/* Section headline tiers. Three levels only — every section H2 on the site uses
+   one of them, so the type rhythm is identical from page to page.
+   .heading-section → standard section opener
+   .h2-display      → the largest section statement (contact CTA, process intro)
+   .h2-sub          → a secondary H2 inside a band (FAQ groups, list headings) */
+.h2-display {
+  font-family: var(--font-heading), var(--font-body), Inter, "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(2.7rem, 6vw, 6.5rem);
+  font-weight: 470;
+  line-height: 0.97;
+  letter-spacing: -0.052em;
+}
+
+.h2-sub {
+  font-family: var(--font-heading), var(--font-body), Inter, "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
 
 .heading-section {

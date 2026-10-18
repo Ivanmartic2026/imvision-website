@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { Button } from "@/components/ui/Button";
 import {
   AnimatePresence,
   motion,
@@ -203,20 +204,12 @@ export function CookieConsent({ locale = "en" }: { locale?: Locale }) {
         </p>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => decide("granted")}
-              className="inline-flex min-h-11 items-center justify-center rounded-[10px_3px_10px_10px] bg-accent px-4 py-2.5 text-sm font-medium leading-tight text-[#070807] transition-colors hover:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
+            <Button type="button" size="sm" onClick={() => decide("granted")}>
               {t.accept}
-            </button>
-            <button
-              type="button"
-              onClick={() => decide("denied")}
-              className="inline-flex min-h-11 items-center justify-center rounded-[10px_3px_10px_10px] border border-border-strong px-4 py-2.5 text-sm font-medium leading-tight text-text-secondary transition-colors hover:bg-white/[.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
+            </Button>
+            <Button type="button" size="sm" variant="secondary" onClick={() => decide("denied")}>
               {t.necessary}
-            </button>
+            </Button>
           </div>
           <div className="flex items-center gap-3 text-xs">
             <button

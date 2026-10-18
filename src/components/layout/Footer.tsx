@@ -107,7 +107,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                             ? `Följ IM Vision på ${platform}`
                             : `Follow IM Vision on ${platform}`
                         }
-                        className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-text-muted transition-colors hover:text-accent"
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-[12px_4px_12px_12px] text-text-muted transition-colors hover:text-accent"
                       >
                         <Icon />
                       </a>

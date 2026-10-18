@@ -106,7 +106,7 @@ export function ProjectGallery({
               type="button"
               onClick={prev}
               aria-label="Previous image"
-              className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#070807]/55 text-[#f2f0e9] backdrop-blur-md transition-colors duration-300 hover:bg-[#070807]/80"
+              className="absolute left-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#070807]/55 text-[#f2f0e9] backdrop-blur-md transition-colors duration-300 hover:bg-[#070807]/80"
             >
               <ChevronLeft size={18} />
             </button>
@@ -114,7 +114,7 @@ export function ProjectGallery({
               type="button"
               onClick={next}
               aria-label="Next image"
-              className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#070807]/55 text-[#f2f0e9] backdrop-blur-md transition-colors duration-300 hover:bg-[#070807]/80"
+              className="absolute right-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#070807]/55 text-[#f2f0e9] backdrop-blur-md transition-colors duration-300 hover:bg-[#070807]/80"
             >
               <ChevronRight size={18} />
             </button>

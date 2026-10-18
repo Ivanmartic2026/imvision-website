@@ -94,7 +94,7 @@ export default function SwedishRentalPage() {
             först välja mellan fyra CTA-block. */}
         <RentalQuickForm locale="sv" />
 
-        <section className="section section-space"><div className="section-inner"><div className="light-gate border border-border-subtle bg-bg-elevated p-8 sm:p-12 lg:p-20"><Reveal><p className="eyebrow text-accent">Börja med idén</p><h2 className="mt-7 max-w-5xl text-[clamp(2.7rem,6vw,6.5rem)] font-[470] leading-[0.97] tracking-[-0.052em]">Låt tekniken försvinna in i upplevelsen.</h2><div className="mt-9"><QuoteCta locale="sv" source="rental_final" category="rental" className="px-7 text-base" icon={<ArrowRight size={18} />} /></div></Reveal></div></div></section>
+        <section className="section section-space"><div className="section-inner"><div className="light-gate border border-border-subtle bg-bg-elevated p-8 sm:p-12 lg:p-20"><Reveal><p className="eyebrow text-accent">Börja med idén</p><h2 className="h2-display mt-7 max-w-5xl">Låt tekniken försvinna in i upplevelsen.</h2><div className="mt-9"><QuoteCta locale="sv" source="rental_final" category="rental" className="px-7 text-base" icon={<ArrowRight size={18} />} /></div></Reveal></div></div></section>
       </main>
       <Footer locale="sv" />
       <JsonLd

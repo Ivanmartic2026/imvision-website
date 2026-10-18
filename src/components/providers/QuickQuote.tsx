@@ -11,13 +11,15 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { ArrowRight, Check, Loader2, X } from "lucide-react";
+import { ArrowRight, Check, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import type { Locale } from "@/lib/i18n";
 import { CONTACT } from "@/lib/seo";
 import { AnalyticsEvent, pushEvent } from "@/lib/analytics";
 import { ContactForm } from "@/components/sections/ContactForm";
+import { Button } from "@/components/ui/Button";
+import { Chip } from "@/components/ui/Chip";
 import type { ContactCategory } from "@/components/sections/contact/types";
 
 /**
@@ -293,14 +295,16 @@ export function QuickQuoteProvider({
                   <p className="mt-2 text-sm text-text-secondary">{t.subtitle}</p>
                 )}
               </div>
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={close}
                 aria-label={t.close}
-                className="tap-icon -mr-2 -mt-1 shrink-0 rounded-[12px_4px_12px_12px] border border-border-subtle text-text-secondary transition-colors hover:border-border-strong hover:text-text-primary"
+                className="-mr-2 -mt-1 w-11 shrink-0 px-0"
+                icon={<X size={18} />}
               >
-                <X size={18} />
-              </button>
+                <span className="sr-only">{t.close}</span>
+              </Button>
             </div>
 
             <div className="px-6 pb-8 pt-6 sm:px-8">
@@ -330,13 +334,9 @@ export function QuickQuoteProvider({
                       id={`${id}-full`}
                     />
                   ) : (
-                    <button
-                      type="button"
-                      onClick={() => setShowFull(true)}
-                      className="tap text-sm font-semibold text-text-primary underline decoration-accent underline-offset-4"
-                    >
+                    <Button variant="link" size="sm" onClick={() => setShowFull(true)}>
                       {t.addDetails}
-                    </button>
+                    </Button>
                   )}
                 </div>
               ) : (
@@ -358,7 +358,7 @@ export function QuickQuoteProvider({
                       aria-invalid={errors.contact ? true : undefined}
                       aria-describedby={errors.contact ? `${id}-contact-error` : undefined}
                       className={cn(
-                        "min-h-12 w-full min-w-0 rounded-[12px_4px_12px_12px] border bg-[#111412] px-4 text-text-primary outline-none transition-colors placeholder:text-text-muted focus:border-accent",
+                        "min-h-12 w-full min-w-0 rounded-[12px_4px_12px_12px] border bg-[#111412] px-4 text-text-primary outline-none transition-[border-color,box-shadow] placeholder:text-text-muted focus:border-accent focus:ring-2 focus:ring-accent/35",
                         errors.contact ? "border-red-400/70" : "border-border-strong"
                       )}
                     />
@@ -373,20 +373,9 @@ export function QuickQuoteProvider({
                     <legend className="mb-2 block text-sm font-medium text-text-primary">{t.about}</legend>
                     <div className="mb-3 flex flex-wrap gap-2">
                       {(Object.keys(t.chips) as Category[]).map((key) => (
-                        <button
-                          key={key}
-                          type="button"
-                          onClick={() => setCategory(key)}
-                          aria-pressed={category === key}
-                          className={cn(
-                            "min-h-11 rounded-full border px-4 text-sm font-medium transition-colors",
-                            category === key
-                              ? "border-accent bg-accent/15 text-text-primary"
-                              : "border-border-strong text-text-secondary hover:border-text-secondary hover:text-text-primary"
-                          )}
-                        >
+                        <Chip key={key} selected={category === key} onClick={() => setCategory(key)}>
                           {t.chips[key]}
-                        </button>
+                        </Chip>
                       ))}
                     </div>
                     <textarea
@@ -399,7 +388,7 @@ export function QuickQuoteProvider({
                       aria-invalid={errors.message ? true : undefined}
                       aria-describedby={errors.message ? `${id}-message-error` : undefined}
                       className={cn(
-                        "min-h-24 w-full min-w-0 resize-y rounded-[12px_4px_12px_12px] border bg-[#111412] px-4 py-3 text-text-primary outline-none transition-colors placeholder:text-text-muted focus:border-accent",
+                        "min-h-24 w-full min-w-0 resize-y rounded-[12px_4px_12px_12px] border bg-[#111412] px-4 py-3 text-text-primary outline-none transition-[border-color,box-shadow] placeholder:text-text-muted focus:border-accent focus:ring-2 focus:ring-accent/35",
                         errors.message ? "border-red-400/70" : "border-border-strong"
                       )}
                     />
@@ -440,23 +429,16 @@ export function QuickQuoteProvider({
                     </div>
                   )}
 
-                  <button
+                  <Button
                     type="submit"
+                    size="md"
+                    fullWidth
+                    loading={isSending}
                     disabled={isSending}
-                    className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[12px_4px_12px_12px] border border-accent bg-[#91a9a1] px-5 font-semibold text-[#070807] transition-[background-color,transform] hover:bg-accent-soft active:scale-[.99] disabled:cursor-not-allowed disabled:opacity-70"
+                    icon={<ArrowRight size={17} />}
                   >
-                    {isSending ? (
-                      <>
-                        <Loader2 size={17} className="animate-spin" />
-                        {t.sending}
-                      </>
-                    ) : (
-                      <>
-                        {t.submit}
-                        <ArrowRight size={17} />
-                      </>
-                    )}
-                  </button>
+                    {isSending ? t.sending : t.submit}
+                  </Button>
 
                   <p className="text-xs leading-relaxed text-text-muted">
                     {t.consent}{" "}
@@ -489,6 +471,7 @@ export function QuoteCta({
   className,
   children,
   variant = "primary",
+  size = "md",
   icon,
   onClick,
 }: {
@@ -497,7 +480,8 @@ export function QuoteCta({
   category?: Category;
   className?: string;
   children?: ReactNode;
-  variant?: "primary" | "link";
+  variant?: "primary" | "secondary";
+  size?: "sm" | "md" | "lg";
   icon?: ReactNode;
   /** Side effect before the panel opens (e.g. closing the mobile menu). */
   onClick?: () => void;
@@ -507,30 +491,25 @@ export function QuoteCta({
   // On the contact page the full form is already on screen — there the CTA
   // scrolls to it instead of opening a panel on top of it.
   const onContactPage = !!pathname && /(^|\/)contact\/?$/.test(pathname);
-  const base =
-    variant === "primary"
-      ? "inline-flex min-h-12 items-center justify-center gap-2 rounded-[16px_6px_16px_16px] border border-accent bg-[#91a9a1] px-6 font-medium text-[#070807] shadow-[0_12px_34px_rgba(0,0,0,.16)] transition-[background-color,box-shadow,transform] duration-500 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-0.5 hover:bg-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[.985]"
-      : "inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-text-primary underline decoration-accent underline-offset-4 transition-colors hover:text-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
   const label = children ?? (locale === "sv" ? "Få offert" : "Get a quote");
   const href = locale === "sv" ? "/sv/contact/#contact-form" : "/contact/#contact-form";
 
   return (
-    <a
+    <Button
       href={href}
+      variant={variant}
+      size={size}
+      icon={icon}
+      className={className}
       onClick={(event) => {
-        // Without a provider (or with JS disabled) the link simply navigates.
-        console.log("[quote-cta] click", { hasCtx: !!quick, onContactPage, href });
         onClick?.();
         if (!quick || onContactPage) return;
         event.preventDefault();
         quick.open({ source, category });
       }}
-      className={cn(base, className)}
-      data-quick={quick ? "yes" : "no"}
     >
       {label}
-      {icon}
-    </a>
+    </Button>
   );
 }

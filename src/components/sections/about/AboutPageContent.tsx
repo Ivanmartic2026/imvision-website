@@ -111,7 +111,7 @@ export function AboutPageContent({ locale = "en" }: { locale?: Locale }) {
           <div className="section-inner">
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
               <Reveal>
-                <h2 className="max-w-[15ch] text-4xl font-[470] leading-[1.08] tracking-[-0.04em] text-text-primary sm:text-5xl lg:text-6xl">
+                <h2 className="heading-section max-w-[15ch]">
                   {t.introHead}
                 </h2>
               </Reveal>
@@ -154,7 +154,7 @@ export function AboutPageContent({ locale = "en" }: { locale?: Locale }) {
           <div className="section-inner">
             <div className="mb-16 max-w-3xl">
               <Reveal>
-                <h2 className="text-4xl font-[470] tracking-[-0.04em] text-text-primary sm:text-5xl">
+                <h2 className="heading-section">
                   {t.valuesTitle}
                 </h2>
               </Reveal>
@@ -180,7 +180,7 @@ export function AboutPageContent({ locale = "en" }: { locale?: Locale }) {
           <div className="section-inner">
             <div className="light-gate border border-border-subtle bg-[radial-gradient(circle_at_50%_0%,rgba(145,169,161,0.08),transparent_50%)] p-10 text-center lg:p-20">
               <Reveal>
-                <h2 className="text-4xl font-[470] tracking-[-0.04em] text-text-primary sm:text-5xl">
+                <h2 className="heading-section">
                   {t.ctaTitle}
                 </h2>
                 <p className="mx-auto mt-4 max-w-2xl text-lg text-text-secondary">{t.ctaBody}</p>

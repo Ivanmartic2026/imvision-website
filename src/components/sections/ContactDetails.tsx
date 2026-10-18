@@ -98,7 +98,7 @@ export function ContactDetails({ locale = "en" }: { locale?: Locale }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={isSv ? `Följ IM Vision på ${platform}` : `Follow IM Vision on ${platform}`}
-                className="flex h-11 w-11 items-center justify-center rounded-[10px_3px_10px_10px] border border-border-subtle text-text-muted transition-colors hover:border-accent/50 hover:text-accent"
+                className="flex h-11 w-11 items-center justify-center rounded-[12px_4px_12px_12px] border border-border-subtle text-text-muted transition-colors hover:border-accent/50 hover:text-accent"
               >
                 <Icon />
               </a>

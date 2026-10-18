@@ -11,6 +11,7 @@ import { Locale, localizedHref } from "@/lib/i18n";
 import { CONTACT } from "@/lib/seo";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 import { QuoteCta } from "@/components/providers/QuickQuote";
+import { Button } from "@/components/ui/Button";
 
 const navLinks = [
   { en: "Buy LED", sv: "Köpa LED", href: "/sales/" },
@@ -150,15 +151,16 @@ export function Header({
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <a
+            <Button
               href={`tel:${CONTACT.phoneE164}`}
-              className="inline-flex min-h-11 items-center gap-2 rounded-[12px_4px_12px_12px] border border-accent/40 bg-accent/10 px-3.5 text-[13px] font-medium text-text-primary transition-colors hover:border-accent hover:bg-accent/20"
-              aria-label={locale === "sv" ? `Ring oss på ${CONTACT.phone}` : `Call us on ${CONTACT.phone}`}
+              variant="secondary"
+              size="sm"
+              icon={<Phone size={15} className="text-accent" strokeWidth={2} />}
+              className="px-3.5"
             >
-              <Phone size={15} className="text-accent" strokeWidth={1.75} />
               <span className="hidden xl:inline">{CONTACT.phone}</span>
               <span className="xl:hidden">{locale === "sv" ? "Ring" : "Call"}</span>
-            </a>
+            </Button>
             {/* One primary CTA across the whole site: it opens the quick
                 enquiry panel in place (on /contact/ it scrolls to the form,
                 which is already on screen). */}
@@ -252,20 +254,16 @@ export function Header({
                     suppressFocusRestore.current = true;
                     setMobileOpen(false);
                   }}
-                  className="w-full rounded-[14px_5px_14px_14px] px-5 py-4 text-base shadow-[0_10px_30px_rgba(0,0,0,.24)]"
+                  size="lg"
+                  className="w-full"
                   icon={<ArrowRight size={17} strokeWidth={2} />}
                 />
                 <a
                   href={`tel:${CONTACT.phoneE164}`}
-                  onClick={() => {
-                    // The quick-quote panel manages its own focus; returning
-                    // focus to the hamburger would fight it.
-                    suppressFocusRestore.current = true;
-                    setMobileOpen(false);
-                  }}
-                  className="flex min-h-12 items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent/40 bg-accent/10 px-5 py-4 text-base font-medium text-text-primary transition-colors hover:border-accent hover:bg-accent/20"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex min-h-12 items-center justify-center gap-2 rounded-[12px_4px_12px_12px] border-[1.5px] border-[var(--btn-border)] px-5 text-base font-semibold text-text-primary transition-colors hover:border-accent hover:bg-accent/12"
                 >
-                  <Phone size={17} className="text-accent" strokeWidth={1.75} />
+                  <Phone size={17} className="text-accent" strokeWidth={2} />
                   {CONTACT.phone}
                 </a>
                 <div className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Check, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ArrowRight, Check } from "lucide-react";
 import type { Locale } from "@/lib/i18n";
 import { CONTACT } from "@/lib/seo";
+import { Button } from "@/components/ui/Button";
 
 /**
  * Rental mini-enquiry: date, place and approximate size — the three things
@@ -160,25 +160,15 @@ export function RentalQuickForm({ locale = "en" }: { locale?: Locale }) {
               )}
 
               <div className="sm:col-span-2 lg:col-span-4">
-                <button
+                <Button
                   type="submit"
+                  size="md"
+                  loading={status === "sending"}
                   disabled={status === "sending"}
-                  className={cn(
-                    "inline-flex min-h-12 items-center justify-center gap-2 rounded-[12px_4px_12px_12px] border border-accent bg-[#91a9a1] px-6 font-semibold text-[#070807] transition-colors hover:bg-accent-soft disabled:cursor-not-allowed disabled:opacity-70"
-                  )}
+                  icon={<ArrowRight size={17} />}
                 >
-                  {status === "sending" ? (
-                    <>
-                      <Loader2 size={17} className="animate-spin" />
-                      {t.sending}
-                    </>
-                  ) : (
-                    <>
-                      {t.submit}
-                      <ArrowRight size={17} />
-                    </>
-                  )}
-                </button>
+                  {status === "sending" ? t.sending : t.submit}
+                </Button>
               </div>
             </form>
           )}

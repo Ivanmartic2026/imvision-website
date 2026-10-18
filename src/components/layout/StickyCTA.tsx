@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Phone, ArrowRight } from "lucide-react";
 import { Locale } from "@/lib/i18n";
 import { QuoteCta } from "@/components/providers/QuickQuote";
+import { Button } from "@/components/ui/Button";
 import { CONTACT } from "@/lib/seo";
 import { AnalyticsEvent, pushEvent, CONSENT_KEY } from "@/lib/analytics";
 
@@ -78,19 +79,21 @@ export function StickyCTA({ locale = "en" }: { locale?: Locale }) {
           style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
         >
           <div className="mx-auto flex max-w-xl items-stretch gap-3">
-            <a
+            <Button
               href={`tel:${CONTACT.phoneE164}`}
+              variant="secondary"
+              size="lg"
               onClick={() => pushEvent(AnalyticsEvent.phoneClick, { source: "sticky_cta" })}
-              aria-label={locale === "sv" ? `Ring oss på ${CONTACT.phone}` : `Call us on ${CONTACT.phone}`}
-              className="flex min-h-[52px] items-center justify-center gap-2 rounded-[14px_5px_14px_14px] border border-accent/40 bg-accent/10 px-5 text-[15px] font-medium text-text-primary transition-transform active:scale-[.98]"
+              icon={<Phone size={17} className="text-accent" strokeWidth={2} />}
+              className="flex-1"
             >
-              <Phone size={17} className="text-accent" strokeWidth={1.75} />
               {callLabel}
-            </a>
+            </Button>
             <QuoteCta
               locale={locale}
               source="sticky_cta"
-              className="min-h-[52px] flex-1 rounded-[14px_5px_14px_14px] px-5 text-[15px] shadow-[0_10px_30px_rgba(0,0,0,.28)]"
+              size="lg"
+              className="flex-1"
               icon={<ArrowRight size={17} strokeWidth={2} />}
             >
               {quoteLabel}

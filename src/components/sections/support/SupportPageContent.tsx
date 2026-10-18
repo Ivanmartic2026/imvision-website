@@ -152,7 +152,7 @@ export function SupportPageContent({ locale = "en" }: { locale?: Locale }) {
         <section className="section section-space" aria-labelledby="support-resources">
           <div className="section-inner">
             <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-              <h2 id="support-resources" className="text-3xl font-medium tracking-[-0.03em] text-text-primary sm:text-4xl">
+              <h2 id="support-resources" className="h2-sub">
                 {t.resourcesTitle}
               </h2>
               <Link
@@ -194,7 +194,7 @@ export function SupportPageContent({ locale = "en" }: { locale?: Locale }) {
           <div className="section-inner">
             <div className="mb-12 max-w-3xl">
               <Reveal>
-                <h2 className="text-4xl font-[470] tracking-[-0.04em] text-text-primary sm:text-5xl">
+                <h2 className="heading-section">
                   {t.faqTitle}
                 </h2>
               </Reveal>
@@ -236,7 +236,7 @@ export function SupportPageContent({ locale = "en" }: { locale?: Locale }) {
           <div className="section-inner">
             <div className="light-gate border border-border-subtle bg-[radial-gradient(circle_at_50%_0%,rgba(145,169,161,0.08),transparent_50%)] p-10 text-center lg:p-20">
               <Reveal>
-                <h2 className="text-4xl font-[470] tracking-[-0.04em] text-text-primary sm:text-5xl">
+                <h2 className="heading-section">
                   {t.ctaTitle}
                 </h2>
                 <p className="mx-auto mt-4 max-w-2xl text-lg text-text-secondary">{t.ctaBody}</p>

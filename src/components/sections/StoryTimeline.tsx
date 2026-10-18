@@ -75,7 +75,7 @@ export function StoryTimeline({ locale = "en" }: { locale?: Locale }) {
         <div className="border-t border-border-subtle pt-8">
           <div className="max-w-5xl">
             <SectionLabel>{locale === "sv" ? "Processen" : "The process"}</SectionLabel>
-            <h2 id="process-title" className="mt-8 max-w-4xl text-[clamp(2.9rem,4.6vw,5.5rem)] font-[470] leading-[1.02] tracking-[-0.045em]">
+            <h2 id="process-title" className="mt-8 h2-display max-w-4xl">
               {locale === "sv" ? "Så arbetar vi" : "How we work"}
             </h2>
           </div>

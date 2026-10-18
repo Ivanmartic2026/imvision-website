@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Chip } from "@/components/ui/Chip";
 import { ProjectVisual } from "@/components/sections/ProjectVisual";
 import { projects, type Project } from "@/lib/projects";
 import { swedishProjectCopy } from "@/lib/projects-sv";
@@ -72,20 +72,9 @@ export function ProjectArchive({ locale = "en" }: { locale?: Locale }) {
 
           <div role="group" aria-label={locale === "sv" ? "Filtrera projekt" : "Filter projects"} className="flex flex-wrap gap-2">
             {FILTERS.map((f) => (
-              <button
-                key={f.key}
-                type="button"
-                aria-pressed={filter === f.key}
-                onClick={() => setFilter(f.key)}
-                className={cn(
-                  "min-h-11 rounded-full border px-4 text-sm font-medium transition-colors",
-                  filter === f.key
-                    ? "border-accent bg-accent/15 text-text-primary"
-                    : "border-border-strong text-text-secondary hover:border-text-secondary hover:text-text-primary"
-                )}
-              >
+              <Chip key={f.key} selected={filter === f.key} onClick={() => setFilter(f.key)}>
                 {f[locale]}
-              </button>
+              </Chip>
             ))}
           </div>
         </div>

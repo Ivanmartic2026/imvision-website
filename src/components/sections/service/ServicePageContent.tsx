@@ -191,7 +191,7 @@ export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
         >
           <div className="section-inner">
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">
+              <h2 className="h2-sub">
                 {ticket.heading}
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-text-secondary">{ticket.body}</p>

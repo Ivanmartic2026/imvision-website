@@ -224,7 +224,7 @@ export default function RentalPage() {
                 <div className="p-7 sm:p-10 lg:col-span-7 lg:p-14 xl:p-16">
                   <Reveal>
                     <p className="eyebrow text-accent-dim">Complete delivery</p>
-                    <h2 className="mt-7 max-w-3xl text-[clamp(2.5rem,5vw,5.4rem)] font-[470] leading-[1.0] tracking-[-0.05em] text-text-primary">
+                    <h2 className="h2-display mt-7 max-w-3xl text-text-primary">
                       The screen is only one part of the experience.
                     </h2>
                   </Reveal>
@@ -255,7 +255,7 @@ export default function RentalPage() {
               <div aria-hidden className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/10 blur-3xl" />
               <Reveal>
                 <p className="eyebrow text-accent">Start with the brief</p>
-                <h2 className="mt-7 max-w-4xl text-[clamp(2.7rem,6vw,6.5rem)] font-[470] leading-[0.97] tracking-[-0.052em] text-text-primary">
+                <h2 className="h2-display mt-7 max-w-4xl text-text-primary">
                   Make the technology disappear into the experience.
                 </h2>
                 <p className="mt-7 max-w-2xl text-lg leading-relaxed text-text-secondary sm:text-xl">
