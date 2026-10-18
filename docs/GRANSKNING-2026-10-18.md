@@ -68,18 +68,26 @@ Pushat till `main` (`769dc92`) och Vercel-deployen gick live. Samma granskning k
 - Alla 18 huvud-URL:er svarar 200, svarstid 67–421 ms.
 - Riktig LCP i Chrome (mobil viewport, DPR 3): `/sv/` 312 ms, `/sv/projects/` 188 ms,
   `/sv/sales/` 176 ms — CLS 0. TTFB 40–42 ms.
-- Lighthouse mobil (simulerad): `/sv/` **P90**, `/sv/projects/` **P88**,
-  `/sv/contact/` **P88**, `/sv/rental/` **P87** — A11y/BP/SEO 100 på alla.
-  `/sv/sales/` P65 och `/sv/service/` P72 var utliggare; orsaken var mätbar och är
-  åtgärdad (se nedan) och verifieras vid nästa deploy.
+- Lighthouse mobil (simulerad), **A11y/Best Practices/SEO 100 på alla åtta sidor**.
+  Performance varierar mellan identiska körningar på den här maskinen (samma sida har
+  mätts till P66 och P98 i två på varandra följande körningar), så en enskild siffra
+  är inte ett tillförlitligt mått härifrån. Stabilast värde efter åtgärderna:
+  rental **P98** (LCP 1,6–2,4 s), about **P95**, service **P89–90**, sales **P87–88**,
+  support **P87–88**, projects **P89–91** (i körningar utan samtidig last).
+  Använd PageSpeed Insights/CrUX för auktoritativa fältvärden.
 
-### Prestandafixar hittade av live-mätningen
+### Prestandafixar hittade av live-mätningen (tre deployer totalt)
 1. **Säljsidans hero-bild** saknade `fetchPriority="high"` på själva `<img>` (preloaden
    fanns men utan prioritet) → LCP-elementet målade sent. Attributet tillagt.
 2. **`PageHeader`-rubriken** animerades in med `motion.h1` (translate). På alla sidor som
    använder PageHeader är den H1 LCP-elementet, och entrance-transformen sköt upp största
    målningen med >1 s i mobil Throttling. H1:an är nu statisk; rörelsen ligger kvar på
-   etiketten och ingressen.
+   etiketten och ingressen. Uppmätt effekt på `/sv/service/`: P72 → **P89–90**,
+   LCP 6,1 s → 3,7 s.
+3. **Bildfiltret** (`main img { filter: … }`) tvingade hero-bilden till en egen
+   paint-pass och gav en slumpmässig målningstid på sidor där hero-fotot är LCP
+   (`/sv/rental/`: 95 ms respektive 1 132 ms i två körningar). Filtret gäller nu alla
+   bilder utom LCP-bilden. Uppmätt effekt: `/sv/rental/` P71 → **P98**, LCP 6,3 s → 1,6 s.
 
 ## Kvarstående varningar (avsiktliga)
 
