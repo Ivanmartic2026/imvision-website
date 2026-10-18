@@ -30,6 +30,9 @@ export const metadata: Metadata = pageMeta({
   path: "/rental/",
   title: "LED-uthyrning för event",
   description: "Eventklassade LED-skärmar som IM Visions egen personal levererar, installerar, kör och river — för lanseringar, mässor och aktiveringar i Norden och Europa.",
+  image: "/images/photon-material/event-rental.jpg",
+  imageWidth: 1448,
+  imageHeight: 1086,
 });
 
 export default function SwedishRentalPage() {

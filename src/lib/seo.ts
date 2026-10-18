@@ -62,6 +62,8 @@ export function pageMeta({
   title,
   description,
   image = DEFAULT_OG_IMAGE,
+  imageWidth = 1672,
+  imageHeight = 941,
   absoluteTitle,
 }: {
   locale: Locale;
@@ -69,6 +71,9 @@ export function pageMeta({
   title: string;
   description: string;
   image?: string;
+  /** Intrinsic size of `image` — OG images must declare what they really are. */
+  imageWidth?: number;
+  imageHeight?: number;
   absoluteTitle?: boolean;
 }): Metadata {
   const enUrl = localeUrl("en", path);
@@ -93,7 +98,7 @@ export function pageMeta({
       // Don't prepend the brand when the title is already absolute (it already
       // contains "IM Vision …") — avoids "IM Vision — IM Vision — …".
       images: [
-        { url: image, width: 1672, height: 941, alt: absoluteTitle ? title : `${SITE_NAME} — ${title}` },
+        { url: image, width: imageWidth, height: imageHeight, alt: absoluteTitle ? title : `${SITE_NAME} — ${title}` },
       ],
     },
     twitter: {

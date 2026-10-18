@@ -20,6 +20,18 @@ const contactPageLd = {
   "@context": "https://schema.org",
   "@graph": [
     pageBreadcrumbLd("sv", "/contact/", "Kontakt"),
+    // ContactPage ties the page itself to the organisation and the contact
+    // point, so search engines can treat it as the canonical contact surface.
+    {
+      "@type": "ContactPage",
+      "@id": `${SITE_URL}/contact/#contactpage`,
+      url: `${SITE_URL}/contact/`,
+      name: "Kontakt",
+      inLanguage: "sv",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: { "@id": `${SITE_URL}/#organization` },
+      mainEntity: { "@id": `${SITE_URL}/#contact` },
+    },
     {
       "@type": "ContactPoint",
       "@id": `${SITE_URL}/#contact`,

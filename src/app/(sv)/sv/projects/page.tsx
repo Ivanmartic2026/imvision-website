@@ -11,6 +11,9 @@ export const metadata: Metadata = pageMeta({
   path: "/projects/",
   title: "LED-projekt och installationer",
   description: "Utvalda LED-installationer, produkter och driftuppdrag från IM Vision i Norden och Europa.",
+  image: "/images/photon-material/architectural-facade.jpg",
+  imageWidth: 1536,
+  imageHeight: 1024,
 });
 
 export default function SwedishProjectsPage() {

@@ -11,6 +11,9 @@ export const metadata: Metadata = pageMeta({
   title: "Permanenta LED-skärmar för butik, fastighet och offentlig miljö",
   description:
     "IM Vision projekterar, installerar och servar permanenta LED-skärmar för butik, fastighet och offentlig miljö i Norden och Europa. Ni får offert inom 24 timmar.",
+  image: "/images/photon-material/permanent-retail.jpg",
+  imageWidth: 1448,
+  imageHeight: 1086,
 });
 
 export default function SwedishSalesPage() {

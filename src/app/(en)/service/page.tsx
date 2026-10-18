@@ -11,6 +11,9 @@ export const metadata: Metadata = pageMeta({
   title: "LED Screen Service and Maintenance",
   description:
     "Installation, monitoring, maintenance and long-term support for LED screens — priority response from the team that built your system. We reply within 24 hours.",
+  image: "/images/photon-material/engineering-calibration.jpg",
+  imageWidth: 1448,
+  imageHeight: 1086,
 });
 
 export default function ServicePage() {

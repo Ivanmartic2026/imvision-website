@@ -12,6 +12,9 @@ export const metadata: Metadata = pageMeta({
   title: "LED Display Projects & Installations",
   description:
     "Explore selected IM Vision LED installations — retail displays, architectural facades, event screens and digital-out-of-home delivered across the Nordics and Europe.",
+  image: "/images/photon-material/architectural-facade.jpg",
+  imageWidth: 1536,
+  imageHeight: 1024,
 });
 
 export default function ProjectsPage() {
