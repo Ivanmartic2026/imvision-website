@@ -7,7 +7,7 @@ export const metadata: Metadata = pageMeta({
   locale: "sv",
   path: "/about/",
   title: "Om oss — LED-leverantör i Sverige och Europa",
-  description: "IM Vision designar, projekterar, installerar och servar avancerade LED-system — en ansvarig partner i hela Europa.",
+  description: "IM Vision designar, projekterar, installerar och servar avancerade LED-system — en ansvarig partner i Norden och Europa.",
 });
 
 export default function SwedishAboutPage() {

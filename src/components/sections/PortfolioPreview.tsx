@@ -17,6 +17,7 @@ const environments = [
     descriptionSv: "Fasad- och transparenta displaykoncept planerade som en del av klimatskal, siktlinjer och omgivande ljus.",
     image: "/images/photon-material/architectural-facade.jpg",
     alt: "Concept visualization of a transparent LED media facade integrated into a Nordic office building",
+    altSv: "Konceptvisualisering av en transparent LED-mediafasad integrerad i en nordisk kontorsbyggnad",
   },
   {
     label: "Retail / Experience",
@@ -27,6 +28,7 @@ const environments = [
     descriptionSv: "Displaymiljöer som stödjer produkten, arkitekturen och människors rörelse genom rummet.",
     image: "/images/photon-material/permanent-retail.jpg",
     alt: "Concept visualization of an LED feature wall in a premium retail environment",
+    altSv: "Konceptvisualisering av en LED-vägg i en exklusiv butiksmiljö",
   },
 ];
 
@@ -63,14 +65,14 @@ export function PortfolioPreview({ locale = "en" }: { locale?: Locale }) {
               >
                 <Image
                   src={item.image}
-                  alt={item.alt}
+                  alt={locale === "sv" ? item.altSv : item.alt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.22,.61,.36,1)] group-hover:scale-[1.018]"
                 />
                 <div className="absolute inset-x-0 bottom-0 h-px photon-seam" />
                 <span className="absolute left-4 top-4 rounded-[10px_3px_10px_10px] bg-[#070807]/75 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-[#f2f0e9] backdrop-blur-md">
-                  {locale === "sv" ? "Visuell riktning / Koncept" : "Visual direction / Concept"}
+                  {locale === "sv" ? "Konceptvisualisering" : "Concept visualisation"}
                 </span>
               </div>
               <figcaption className="pt-6">

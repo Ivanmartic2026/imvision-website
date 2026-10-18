@@ -8,7 +8,7 @@ export const metadata: Metadata = pageMeta({
   path: "/service/",
   title: "Service och underhåll av LED-skärmar",
   description:
-    "Installation, övervakning, underhåll och långsiktig support för LED-skärmar och digital skyltning — prioriterad respons från teamet som byggde er installation.",
+    "Installation, övervakning, underhåll och långsiktig support för LED-skärmar — prioriterad respons från teamet som byggde er installation. Vi svarar inom 24 timmar.",
 });
 
 export default function SwedishServicePage() {

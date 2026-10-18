@@ -33,7 +33,11 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
       >
         <Image
           src="/images/photon-material/hero-experience-centre.jpg"
-          alt="Concept visualization of a monumental LED wall integrated into a dark architectural experience centre"
+          alt={
+            locale === "sv"
+              ? "Konceptvisualisering av en monumental LED-vägg i ett mörkt arkitektoniskt upplevelsecenter"
+              : "Concept visualization of a monumental LED wall integrated into a dark architectural experience centre"
+          }
           fill
           loading="eager"
           fetchPriority="high"
@@ -80,8 +84,8 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
 
             <p className="body mt-4 max-w-2xl font-normal text-text-secondary sm:mt-5">
               {locale === "sv"
-                ? "Köp eller hyr — installerat, servat och driftat av oss, i hela Europa."
-                : "Buy or rent — installed, serviced and operated by us, across Europe."}
+                ? "Köp eller hyr — installerat, servat och driftat av oss, i Norden och Europa."
+                : "Buy or rent — installed, serviced and operated by us, across the Nordics and Europe."}
             </p>
 
             <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2">
@@ -90,8 +94,8 @@ export function Hero({ locale = "en" }: { locale?: Locale }) {
                   title: locale === "sv" ? "Köpa LED" : "Buy LED",
                   description:
                     locale === "sv"
-                      ? "En lösning som håller i 10 år, inte 10 månader."
-                      : "A solution built to last years, not months.",
+                      ? "En lösning byggd för långsiktig drift."
+                      : "A solution built for long-term operation.",
                   href: "/sales/",
                   accent: "green",
                 },

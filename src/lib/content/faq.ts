@@ -9,7 +9,7 @@ export const homeFaqs: FaqItem[] = [
   {
     question: {
       en: "Should I buy or rent an LED display?",
-      sv: "Ska jag köpa eller hyra en LED-skärm?",
+      sv: "Ska vi köpa eller hyra en LED-skärm?",
     },
     answer: {
       en: "It depends on how you plan to use it. If you need a permanent installation — in a shop, office building, or public space — buying makes sense. If you need a display for a specific event, product launch, or seasonal campaign, renting is more flexible. Both options include our full range of support: design, installation or on-site setup, and service.",
@@ -52,8 +52,8 @@ export const homeFaqs: FaqItem[] = [
       sv: "Vad händer efter installationen?",
     },
     answer: {
-      en: "Your LED display continues to perform. We offer service agreements that cover preventive maintenance, remote monitoring, spare part management, software updates, and guaranteed response times. You can also contact us for ad-hoc support and training for your team.",
-      sv: "Er LED-skärm fortsätter att prester. Vi erbjuder serviceavtal som omfattar förebyggande underhåll, fjärrövervakning, reservdelshantering, mjukvaruuppdateringar och garanterade responstider. Ni kan också kontakta oss för stöd och utbildning för er personal.",
+      en: "Your LED screens keep performing. We offer service agreements that cover preventive maintenance, remote monitoring, spare part management, software updates and agreed response levels. We reply to service enquiries within 24 hours. You can also contact us for ad-hoc support and training for your team.",
+      sv: "Era LED-skärmar fortsätter att prestera. Vi erbjuder serviceavtal som omfattar förebyggande underhåll, fjärrövervakning, reservdelshantering, mjukvaruuppdateringar och avtalade responstider. Vi svarar på serviceförfrågningar inom 24 timmar. Ni kan också kontakta oss för stöd och utbildning för er personal.",
     },
   },
   {
@@ -82,7 +82,7 @@ export const homeFaqs: FaqItem[] = [
       sv: "Var arbetar ni?",
     },
     answer: {
-      en: "Our headquarters is in Jönköping, and we have a warehouse and office in the Stockholm area. We deliver, install, and service projects throughout Sweden and across Europe. Contact us at 010 330 46 36 or info@imvision.se to discuss your project location.",
+      en: "Our headquarters is in Jönköping, and we have a warehouse and office in the Stockholm area. We deliver, install, and service projects throughout Sweden and across the Nordics and Europe. Contact us at 010 330 46 36 or info@imvision.se to discuss your project location.",
       sv: "Vårt huvudkontor finns i Jönköping och vi har lager och kontor i Stockholmsområdet. Vi levererar, installerar och serviceprojekt i hela Sverige och över Europa. Kontakta oss på 010 330 46 36 eller info@imvision.se för att diskutera er projektplats.",
     },
   },

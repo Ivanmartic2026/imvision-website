@@ -116,14 +116,14 @@ const sv: SalesContent = {
   meta: {
     title: "Permanenta LED-installationer | IM Vision",
     description:
-      "IM Vision designar, projekterar, installerar och servar permanenta LED-system för retail, fastigheter och offentliga miljöer i hela Europa.",
+      "IM Vision designar, projekterar, installerar och servar permanenta LED-system för retail, fastigheter och offentliga miljöer i Norden och Europa.",
   },
   hero: {
     eyebrow: "IM / Permanent LED",
     title: "LED som blir en del av arkitekturen.",
     subhead:
       "Vi designar, projekterar, installerar och servar permanenta LED-system för retail, fastigheter och offentliga miljöer.",
-    primaryCta: "Starta ert projekt",
+    primaryCta: "Få offert",
     secondaryCta: "Se hur vi arbetar",
     image: "/images/photon-material/permanent-retail.jpg",
     imageAlt: "Permanenta LED-installation i premium retail-miljö",
@@ -270,7 +270,7 @@ const sv: SalesContent = {
     cta: "Läs om service och support",
   },
   projectForm: {
-    eyebrow: "Starta ert projekt",
+    eyebrow: "Berätta om ert projekt",
     title: "Dela er förfrågan.",
     body: "Fyll i formuläret så öppnas ert e-postprogram med en färdig förfrågan.",
   },
@@ -279,7 +279,7 @@ const sv: SalesContent = {
     title: "Låt oss börja med platsen.",
     body:
       "Dela ritningar, miljö, önskad upplevelse och tidsplan. Vi hjälper er att definiera rätt permanent LED-system.",
-    primaryCta: "Starta ert projekt",
+    primaryCta: "Få offert",
     phone: "010 330 46 36",
     phoneE164: "+46103304636",
     email: "info@imvision.se",
@@ -290,7 +290,7 @@ const en: SalesContent = {
   meta: {
     title: "Permanent LED Installations | IM Vision",
     description:
-      "IM Vision designs, engineers, installs and services permanent LED systems for retail, property and public environments across Europe.",
+      "IM Vision designs, engineers, installs and services permanent LED systems for retail, property and public environments across the Nordics and Europe.",
   },
   hero: {
     eyebrow: "IM / Permanent LED",

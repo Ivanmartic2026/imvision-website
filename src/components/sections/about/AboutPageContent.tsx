@@ -12,19 +12,20 @@ import { Locale, localizedHref } from "@/lib/i18n";
 const copy = {
   en: {
     label: "About",
-    title: "We are IMvision.",
+    title: "We are IM Vision.",
     description:
-      "We design, engineer, install, and maintain professional LED systems across Europe.",
+      "We design, engineer, install, and maintain professional LED systems across the Nordics and Europe.",
     introHead: "Technology, design, and scale — delivered with confidence.",
     introBody: [
       "With our head office in Jönköping and a warehouse and office in the Stockholm area, we serve clients across the Nordics and Europe. Our team combines deep technical expertise with a sharp eye for design, ensuring every installation is as reliable as it is impressive.",
       "From a single retail screen to a city-scale digital facade, we bring the same level of care, precision, and ambition to every project.",
     ],
+    // Verified facts only — no self-assessed scores. See docs/claims-register.md.
     stats: [
-      { value: "15+", label: "Years of experience" },
-      { value: "500+", label: "Projects delivered" },
-      { value: "98%", label: "Client satisfaction" },
-      { value: "24/7", label: "Support available" },
+      { value: "525 m²", label: "Largest single installation (The Icon)" },
+      { value: "~160", label: "Store locations in the Kappahl network" },
+      { value: "Jönköping", label: "Head office" },
+      { value: "Saltsjö-Boo", label: "Warehouse and office" },
     ],
     valuesTitle: "What drives us",
     values: [
@@ -47,26 +48,27 @@ const copy = {
           "We work alongside our clients, from the first sketch to years of ongoing support.",
       },
     ],
-    ctaTitle: "Let's build something extraordinary",
+    ctaTitle: "Tell us about your project",
     ctaBody:
       "Whether you are exploring LED for the first time or scaling an existing network, we would love to hear from you.",
-    ctaButton: "Get in Touch",
+    ctaButton: "Get a quote",
   },
   sv: {
     label: "Om oss",
-    title: "Vi är IMvision.",
+    title: "Vi är IM Vision.",
     description:
-      "Mer än en LED-leverantör. Vi designar, projekterar, installerar och underhåller avancerade displaylösningar i Sverige och Europa.",
+      "Mer än en LED-leverantör. Vi designar, projekterar, installerar och underhåller avancerade LED-lösningar i Norden och Europa.",
     introHead: "Teknik, design och skala — levererat med trygghet.",
     introBody: [
       "Med huvudkontor i Jönköping och lager och kontor i Stockholmsområdet arbetar vi med kunder i Norden och övriga Europa. Teamet förenar teknisk kompetens med en stark känsla för form, så att varje installation är lika driftsäker som imponerande.",
       "Från en enskild butiksskärm till en digital fasad i stadsskalan möter varje projekt samma omsorg, precision och ambition.",
     ],
+    // Endast verifierade fakta — inga självskattade betyg. Se docs/claims-register.md.
     stats: [
-      { value: "15+", label: "Års erfarenhet" },
-      { value: "500+", label: "Projekt levererade" },
-      { value: "98%", label: "Kundnöjdhet" },
-      { value: "24/7", label: "Support tillgänglig" },
+      { value: "525 m²", label: "Största enskilda installation (The Icon)" },
+      { value: "Ca 160", label: "Butiksplatser i Kappahls nätverk" },
+      { value: "Jönköping", label: "Huvudkontor" },
+      { value: "Saltsjö-Boo", label: "Lager och kontor" },
     ],
     valuesTitle: "Det som driver oss",
     values: [
@@ -89,10 +91,10 @@ const copy = {
           "Vi arbetar tillsammans med våra kunder från första skiss till långsiktig support.",
       },
     ],
-    ctaTitle: "Låt oss bygga något extraordinärt",
+    ctaTitle: "Berätta om ert projekt",
     ctaBody:
       "Oavsett om ni utforskar LED för första gången eller skalar upp ett befintligt nätverk vill vi gärna höra från er.",
-    ctaButton: "Kontakta oss",
+    ctaButton: "Få offert",
   },
 };
 

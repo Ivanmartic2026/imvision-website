@@ -17,7 +17,7 @@ const capabilities = [
 ];
 
 const process = [
-  ["01", "Brief", "Syfte, lokal, publik, innehåll och produktionsschema."],
+  ["01", "Förfrågan", "Syfte, lokal, publik, innehåll och produktionsschema."],
   ["02", "Projektering", "Skärmgeometri, betraktningsavstånd, riggning, kraft och signalflöde."],
   ["03", "Förberedelse", "Systemtest, innehållskontroll, logistik och bemanning."],
   ["04", "Leverans", "Installation, kalibrering, teknisk drift och kontrollerad demontering."],
@@ -27,7 +27,7 @@ export const metadata: Metadata = pageMeta({
   locale: "sv",
   path: "/rental/",
   title: "LED-uthyrning för event",
-  description: "Eventklassade LED-skärmar som IM Visions egen personal levererar, installerar, kör och river — för lanseringar, mässor och aktiveringar i hela Europa.",
+  description: "Eventklassade LED-skärmar som IM Visions egen personal levererar, installerar, kör och river — för lanseringar, mässor och aktiveringar i Norden och Europa.",
 });
 
 export default function SwedishRentalPage() {
@@ -93,7 +93,7 @@ export default function SwedishRentalPage() {
         data={serviceLd("sv", {
           name: "LED-uthyrning för event",
           description:
-            "Eventklassade LED-skärmar som IM Visions egen personal levererar, installerar, kör och river — för lanseringar, mässor och aktiveringar i hela Europa.",
+            "Eventklassade LED-skärmar som IM Visions egen personal levererar, installerar, kör och river — för lanseringar, mässor och aktiveringar i Norden och Europa.",
           serviceType: "LED-uthyrning",
         })}
       />

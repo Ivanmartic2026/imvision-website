@@ -8,10 +8,10 @@ export const dynamic = "force-static";
 // colours, and completes the mobile/PWA signals Google looks for.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${SITE_NAME} — LED display solutions across Europe`,
+    name: `${SITE_NAME} — LED screens for the Nordics and Europe`,
     short_name: SITE_NAME,
     description:
-      "Buy, rent, install and service premium LED displays — one accountable partner across Europe.",
+      "Buy, rent, install and service premium LED displays — one accountable partner across the Nordics and Europe.",
     start_url: "/",
     scope: "/",
     display: "standalone",

@@ -22,9 +22,9 @@ const copy = {
     services: [
       {
         icon: Headphones,
-        title: "24/7 Support",
+        title: "Service desk",
         description:
-          "Our support team is always available to diagnose issues and coordinate rapid response.",
+          "One team to diagnose the issue, dispatch a technician and keep you updated until the screen is back.",
       },
       {
         icon: Settings,
@@ -36,7 +36,7 @@ const copy = {
         icon: ShieldCheck,
         title: "SLA Coverage",
         description:
-          "Guaranteed response times, spare module programs, and uptime commitments.",
+          "Agreed service levels, spare module programs and a maintenance plan for your installation.",
       },
       {
         icon: Zap,
@@ -61,7 +61,7 @@ const copy = {
         name: "Professional",
         price: "Custom",
         features: [
-          "24/7 phone support",
+          "Priority phone support",
           "Remote monitoring",
           "Quarterly maintenance",
           "Priority on-site response",
@@ -72,7 +72,7 @@ const copy = {
         price: "Custom",
         features: [
           "Dedicated account manager",
-          "Uptime SLA guarantees",
+          "Agreed uptime and response levels",
           "On-site spare inventory",
           "Custom training program",
         ],
@@ -81,7 +81,7 @@ const copy = {
     ctaTitle: "Protect your investment",
     ctaBody:
       "Talk to our service team about a maintenance plan tailored to your installation.",
-    ctaButton: "Talk to a Service Specialist",
+    ctaButton: "Get a service quote",
     serviceName: "LED Service & Support",
     serviceDescription:
       "Installation, monitoring, maintenance and long-term support for LED displays — priority response from the team that built your system.",
@@ -110,7 +110,7 @@ const copy = {
         icon: ShieldCheck,
         title: "Serviceavtal",
         description:
-          "Tydliga responstider, reservdelsprogram och drifttidsåtaganden anpassade efter er installation.",
+          "Avtalade servicenivåer, reservdelsprogram och en underhållsplan för er installation.",
       },
       {
         icon: Zap,
@@ -135,7 +135,7 @@ const copy = {
         name: "Professional",
         price: "Enligt överenskommelse",
         features: [
-          "Telefonsupport dygnet runt",
+          "Prioriterad telefonsupport",
           "Fjärrövervakning",
           "Kvartalsvis underhåll",
           "Prioriterad respons på plats",
@@ -146,7 +146,7 @@ const copy = {
         price: "Enligt överenskommelse",
         features: [
           "Dedikerad kundansvarig",
-          "Drifttidsgarantier",
+          "Avtalade drift- och responstider",
           "Reservdelslager på plats",
           "Anpassat utbildningsprogram",
         ],
@@ -154,7 +154,7 @@ const copy = {
     ],
     ctaTitle: "Skydda investeringen",
     ctaBody: "Prata med vårt serviceteam om en underhållsplan anpassad efter er installation.",
-    ctaButton: "Prata med serviceteamet",
+    ctaButton: "Få serviceoffert",
     serviceName: "LED-service och support",
     serviceDescription:
       "Installation, övervakning, underhåll och långsiktig support för LED-system — prioriterad respons från teamet som byggde er installation.",
@@ -170,8 +170,8 @@ export function ServicePageContent({ locale = "en" }: { locale?: Locale }) {
     heading: locale === "sv" ? "Anmäl ett serviceärende" : "Report a service ticket",
     body:
       locale === "sv"
-        ? "Har du ett tekniskt problem eller behöver support på en installation? Öppna ett serviceärende så återkommer vårt team så snart som möjligt."
-        : "Have a technical issue or need support on an installation? Open a service ticket and our team will get back to you as soon as possible.",
+        ? "Har du ett tekniskt problem eller behöver support på en installation? Anmäl ärendet så återkommer vi inom 24 timmar."
+        : "Have a technical issue or need support on an installation? Report it and we reply within 24 hours.",
     button: locale === "sv" ? "Anmäl serviceärende" : "Report a service ticket",
   };
 

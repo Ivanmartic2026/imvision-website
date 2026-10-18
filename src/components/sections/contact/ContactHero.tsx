@@ -27,8 +27,8 @@ export function ContactHero({ locale = "en", label, title, description, children
   const head = words.join(" ");
 
   const bullets = isSv
-    ? ["Svar samma arbetsdag, mån–fre", "Installation, drift och service i hela Europa"]
-    : ["Reply within one business day, Mon–Fri", "Installation, operation and service across Europe"];
+    ? ["Svar inom 24 timmar", "Installation, drift och service i Norden och Europa"]
+    : ["Reply within 24 hours", "Installation, operation and service across the Nordics and Europe"];
 
   return (
     <section className="relative w-full overflow-hidden bg-background pb-10 pt-[84px] md:pt-[88px] lg:pb-12 lg:pt-[84px]">

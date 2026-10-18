@@ -41,15 +41,15 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
               </Link>
               <p className="mt-7 max-w-md text-lg leading-relaxed text-text-secondary">
                 {locale === "sv"
-                  ? "IM Vision utvecklar, levererar och installerar professionella LED-lösningar för permanenta installationer och event i hela Europa. Med egen projektering, installation och service säkerställer vi kvalitet genom hela projektets livscykel."
-                  : "IM Vision develops, supplies, and installs professional LED solutions for permanent installations and events throughout Europe. With in-house engineering, installation, and service, we ensure quality throughout the project lifecycle."}
+                  ? "IM Vision utvecklar, levererar och installerar professionella LED-lösningar för permanenta installationer och event i Norden och Europa. Med egen projektering, installation och service säkerställer vi kvalitet genom hela projektets livscykel."
+                  : "IM Vision develops, supplies, and installs professional LED solutions for permanent installations and events throughout the Nordics and Europe. With in-house engineering, installation, and service, we ensure quality throughout the project lifecycle."}
               </p>
               <Link
                 href={localizedHref(locale, "/contact/")}
                 prefetch={false}
                 className="tap group mt-8 gap-2 border-b border-accent text-sm font-semibold text-text-primary"
               >
-                {locale === "sv" ? "Starta ett projekt" : "Start a project"}
+                {locale === "sv" ? "Få offert" : "Get a quote"}
                 <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </div>

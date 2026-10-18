@@ -39,17 +39,17 @@ const copy = {
       {
         question: "How do I request emergency support?",
         answer:
-          "Call our 24/7 support line at 010 330 46 36 or email support@imvision.se. Enterprise clients receive priority on-site dispatch.",
+          "Call 010 330 46 36 or email support@imvision.se and we reply within 24 hours. Service-agreement clients get priority on-site response.",
       },
       {
         question: "What is covered under a service agreement?",
         answer:
-          "Depending on your tier, coverage includes preventive maintenance, remote monitoring, spare module management, software updates, and guaranteed response times.",
+          "Depending on the agreement, coverage includes preventive maintenance, remote monitoring, spare module management, software updates and agreed response levels.",
       },
       {
         question: "Can IM Vision monitor my displays remotely?",
         answer:
-          "Yes. Cloud-connected displays can be monitored 24/7 for health, temperature, signal status, and brightness performance.",
+          "Yes. Connected displays can be monitored for health, temperature, signal status and brightness, so we can act before an issue reaches your audience.",
       },
       {
         question: "How long do LED displays typically last?",
@@ -66,7 +66,7 @@ const copy = {
     ctaBody:
       "Our support team is available around the clock for service and technical questions.",
     ctaCall: "Call Support",
-    ctaContact: "Contact Us",
+    ctaContact: "Report an issue",
   },
   sv: {
     label: "Support",
@@ -96,17 +96,17 @@ const copy = {
       {
         question: "Hur beställer jag akut support?",
         answer:
-          "Ring vår supportlinje dygnet runt på 010 330 46 36 eller mejla support@imvision.se. Enterprise-kunder får prioriterad utryckning.",
+          "Ring 010 330 46 36 eller mejla support@imvision.se så återkommer vi inom 24 timmar. Kunder med serviceavtal får prioriterad utryckning.",
       },
       {
         question: "Vad ingår i ett serviceavtal?",
         answer:
-          "Beroende på nivå ingår förebyggande underhåll, fjärrövervakning, reservdelsprogram, mjukvaruuppdateringar och garanterade responstider.",
+          "Beroende på avtal ingår förebyggande underhåll, fjärrövervakning, reservdelsprogram, mjukvaruuppdateringar och avtalade responstider.",
       },
       {
         question: "Kan IM Vision övervaka våra skärmar på distans?",
         answer:
-          "Ja. Molnanlutna skärmar kan övervakas dygnet runt avseende hälsa, temperatur, signalstatus och ljusstyrka.",
+          "Ja. Anslutna skärmar kan övervakas avseende hälsa, temperatur, signalstatus och ljusstyrka, så att vi kan agera innan en avvikelse når er publik.",
       },
       {
         question: "Hur länge håller LED-skärmar?",
@@ -120,9 +120,9 @@ const copy = {
       },
     ],
     ctaTitle: "Behöver du fortfarande hjälp?",
-    ctaBody: "Vårt supportteam finns tillgängligt dygnet runt för service och tekniska frågor.",
+    ctaBody: "Vårt supportteam svarar inom 24 timmar på servicefrågor och tekniska frågor.",
     ctaCall: "Ring support",
-    ctaContact: "Kontakta oss",
+    ctaContact: "Anmäl ärende",
   },
 };
 

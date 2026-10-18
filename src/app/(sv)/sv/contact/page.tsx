@@ -13,7 +13,7 @@ export const metadata = pageMeta({
   path: "/contact/",
   title: "Kontakt — köp, hyra och service av LED-skärmar",
   description:
-    "Kontakta IM Vision om köp, hyra, installation eller service av LED-skärmar i hela Europa. Vi svarar inom en arbetsdag.",
+    "Kontakta IM Vision om köp, hyra, installation eller service av LED-skärmar i Norden och Europa. Vi svarar inom 24 timmar.",
 });
 
 const contactPageLd = {

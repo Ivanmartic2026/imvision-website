@@ -161,7 +161,7 @@ const LOGO_LD = {
 } as const;
 
 const ORG_DESCRIPTION =
-  "IM Vision designs, engineers, installs and services professional LED display solutions — for permanent installations and events across Europe.";
+  "IM Vision designs, engineers, installs and services professional LED display solutions — for permanent installations and events across the Nordics and Europe.";
 
 export function organizationLd() {
   return {

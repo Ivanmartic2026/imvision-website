@@ -83,8 +83,8 @@ export function ContactSuccessState({ locale, category, flowRef }: ContactSucces
           </p>
           <p className="mt-2 leading-relaxed">
             {locale === "sv"
-              ? "En person från rätt avdelning återkommer så snart som möjligt, normalt samma arbetsdag."
-              : "Someone from the right team will get back to you as soon as possible, usually the same business day."}
+              ? "En person från rätt avdelning återkommer inom 24 timmar."
+              : "Someone from the right team will get back to you within 24 hours."}
           </p>
 
           {/* ───────── Flow reference (only when present) ───────── */}
